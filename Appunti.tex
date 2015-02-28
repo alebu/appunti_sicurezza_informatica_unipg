@@ -1,0 +1,86 @@
+\documentclass [4pt,a4paper,oneside,openany]{book} %Classe del documento, formato carta, singola facciata, apertura capitoli pag destra/sinista (ininfluente se impostato oneside). Formato libro
+\usepackage[utf8]{inputenc}
+\usepackage{cite}
+\usepackage[italian]{babel} %Lingua Documento (da impostare per la sillabazione)
+\usepackage{graphicx} %Pacchetto necessario per la gestione delle immagini
+\usepackage{listings} %Per inserire codice
+\usepackage[usenames]{color} %Per permettere la colorazione dei caratteri
+\usepackage{subfigure}
+\usepackage{Pacchetti/algpseudocode} %Pacchetto per l'immissione di pseudocodice
+\usepackage[boxed]{Pacchetti/algorithm} %Pacchetto per l'immissione di pseudocodice
+\usepackage{amsmath} %Simboli matematici
+\usepackage{amsfonts} %Simboli matematici
+\usepackage{amssymb} %Simboli matematici
+\usepackage{Pacchetti/mcode}  %Pacchetto per l'immissione di codice matlab
+\lstloadlanguages{MATLAB}
+\usepackage {fancyhdr} %Pacchetto per la gestione accurata della pagina
+\usepackage {setspace} %Pacchetto necessario per i comandi successivi onehalfspacing, singlespacing....
+\usepackage{longtable} %Pacchetto per la gestione delle tabelle grandi
+\usepackage[colorlinks=true]{hyperref} %Segnalibri nel pdf finale, sotto relativi parametri
+\hypersetup{
+	bookmarksnumbered=true,
+	linkcolor=black,
+	citecolor=black,
+	urlcolor=black,
+}
+
+\usepackage{geometry} % Dimensione pagina
+\geometry{a4paper} % Formato carta
+\addtolength{\textheight}{75pt} %Margini
+\oddsidemargin 30pt
+
+
+\begin{document} %Inizio Documento
+
+%%FRONTESPIZIO%%=========================================
+\begin{titlepage}
+ \begin{center}
+     \includegraphics[width=6cm]{Immagini/logo.png}\\ %Logo dell'Università, cambiare il percorso, se necessario
+     \vspace{1em}
+     {\Large \textsc{Universit\`a degli studi di Perugia}}\\
+     \vspace{1em}
+     {\Large \textsc{Facolt\`a di Ingegneria}}\\
+     \vspace{5em}
+     {\LARGE \textbf{Appunti di Sicurezza Informatica}}\\
+ \end{center}
+ 
+ \vskip 2.5cm
+  \begin{center}
+	\Large{\textit{Burani Alessio}}\\[0.4cm]
+  \end{center}
+
+\vskip 2.5cm
+\begin{center}
+{\normalsize Anno Accademico 2014/2015}
+\end{center}
+\end{titlepage}
+
+
+%%INTESTAZIONI PAGINA%%====================================
+\pagestyle{fancy}
+\renewcommand{\chaptermark} [1]{\chaptername\ \thechapter.\ #1}{} 
+\renewcommand{\chaptermark}[1]{\markboth{\thechapter.\ #1}{}} 
+\renewcommand{\sectionmark}[1]{\markright{\thesection\ #1}}
+\fancyhf{}
+\fancyhead[LE,RO]{\bfseries\thepage} 
+\fancyhead[LO,RE]{\bfseries\leftmark} 
+\fancypagestyle{plain}{%
+\fancyhead{} % leva l'intestazione
+\renewcommand{\headrulewidth}{0pt} % e la linea
+}
+
+%%INDICE%%==============================================
+\tableofcontents
+
+
+%%CAPITOLI===============================================
+\input{Capitolo_1} 
+
+
+%%BIBLIOGRAFIA============================================
+\normalsize
+\newpage
+\bibliography{bibliografia}
+\bibliographystyle{plain}
+
+\end{document}

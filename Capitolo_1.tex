@@ -123,27 +123,72 @@ Per integrità si intende quindi la garanzia che le risorse possano essere modif
 
 Per disponibilità (availability) si intende quindi che le risorse siano accessibili, nei tempi e nei modi prestabiliti, alle parti autorizzate ogni volta che le richiedono: se una persona o un sistema dispone dei diritti di accesso ad una risorsa, l’accesso non deve essergli impedito. Spesso la disponibilità viene citata tramite il suo opposto: la \textbf{negazione di servizio} (\textbf{Denial of Service} o \textbf{DoS}). La disponibilità può assumere significati/sfumature diverse; una risorsa può trovarsi in uno stato intermedio tra i due opposti stati di piena disponibilità e di piena indisponibilità.
 
-\subsection{Conflittualità requisiti CIA}
+\subsubsection{Conflittualità requisiti CIA}
+Spesso i requisiti di confidenzialità, integrità e disponibilità possono essere in conflitto tra loro. E' quindi importante trovare il compromesso ottimo per la garanzia di tutti e tre. E' facile garantire la confidenzialità di una risorsa impedendo a chiunque di accedervi (e.g. se chiudo la risorsa in un blocco di cemento, sicuramente resterà confidenziale. Tuttavia la disponibilità della stessa verrebbe compromessa in senso assoluto).
 
 \subsection{Requisiti AAA}
+In aggiunta ai concetti CIA, sovente viene richiesto il soddisfacimento di ulteriori requisiti che vanno sotto l’acronimo A.A.A.
 
 \subsubsection{Assicurazione (Assurance)}
+Per assicurazione (assurance) si intende come viene fornita e gestita la fiducia reciproca tra le varie parti coinvolte nel sistema informativo. Tale requisito sopperisce la mancanza di regolamentazione, da parte dei requisiti C.I.A., dell'uso delle risorse di un sistema. E' teso quindi ad evitare un uso non consono dei vari asset del sistema. Tale concetto è ovviamente bidirezionale: così come il sistema deve fidarsi degli utenti (del fatto che non lo usino in modo inappropriato), gli utenti devono fidarsi del sistema (e.g.:trattamento dei dati personali). Il concetto di fiducia è tuttavia difficile da quantificare ed è legato al grado di confidenza sul comportamento che ci si attende dal sistema. Il requisito di assicurazione viene regolato agendo sui seguenti strumenti:
+\begin{itemize} 
+  \item \textbf{Politiche (Policies):} specifiche comportamentali che regolano l’operato degli attori del sistema
+  \item \textbf{Permessi (Permissions):} descrivono le operazioni ammesse/concesse e quelle proibite
+  \item \textbf{Protezioni (Protections):} implementazione dei meccanismi di sicurezza tesi ad applicare e far rispettare le politiche e i permessi di cui sopra
+  \item \textbf{Qualità del software:} lo sviluppo del software che rispetta standard di qualità rigorosi rende più difficile che il sistema si discosti dai comportamenti attesi 
+\end{itemize}
 
 \subsubsection{Autenticità (Authenticity)}
+L’autenticità è la capacità di provare che dichiarazioni, politiche e autorizzazioni rilasciate da persone o sistemi siano veritiere. Se non è garantita persone/sistemi possono sostenere argomentazioni non vere senza essere contraddetti da prove oggettive. Se è garantita, si dice anche che è soddisfatto il requisito del textbf{non-ripudio (non-ripudiation)}. Per non-ripudio si intende che dichiarazioni autentiche rilasciate da persone e/o sistemi NON possono essere negate. La firma digitale è il principale meccanismo crittografico che permette di ottenerlo. Un contesto in cui tale requisito è importante è, ad esempio, la PEC.
 
 \subsubsection{Anonimato (Anonymity)}
+Per anonimato (anonymity) si intende che non è possibile ottenere o risalire all’dentità di un individuo pur avendo accesso a determinati record/transazioni di un sistema informativo. Se un'organizzazione deve rendere pubblici alcuni dati dei suoi clienti/membri senza violarne la privacy, può adottare alcuni dei seguenti strumenti:
+\begin{itemize} 
+  \item \textbf{Aggregazione (Aggregation):} combinare mediante somme e/o medie i dati di diversi individui
+  \item \textbf{Miscelazione (Mixing):} permutare i dati dei singoli utenti in modo da preservare l’esito di predeterminate query
+  \item \textbf{Mediazione (Proxies):} utilizzare degli agenti fidati che si interpongono tra l’individuo e i sistemi con i quali interagisce
+  \item \textbf{Pseudonimi (Pseudonyms):} utilizzare delle identità fittizie eventualmente autenticate da una terza entità che funge da garante 
+\end{itemize}
 
 \subsection{Tipologie di Minacce e Attacchi}
+E' possibile classificare diverse minacce e attacchi rispetto a quali requisiti violano. Vediamone alcune:
 
 \subsubsection{Intercettazione (Eavesdropping)}
+Si ha un’intercettazione quando un’entità non autorizzata ha ottenuto l’accesso ad una risorsa. Generalmente questo tipo di attacchi avviene nella fase di trasmissione dell'informazione, e rappresenta una violazione alla confidenzialità. Esempi:
+\begin{itemize} 
+  \item copia illecita di file di programma o dati
+  \item intercettazione di una comunicazione telefonica
+  \item sniffing di pacchetti di dati
+\end{itemize}
+Un’intercettazione potrebbe essere molto difficile da rilevare, poiché un intercettatore “silenzioso” potrebbe essere molto abile e non lasciare tracce o concellarle. 
 
 \subsubsection{Alterazione (Alteration)}
+Si ha una alterazione o modifica quando un’entità non autorizzata, oltre ad accedere a una risorsa, interferisce con essa modificandola. Rappresenta una violazione alla confidenzialità. Esempi:
+\begin{itemize} 
+  \item attacchi di tipo textbf{man-in-the-middle}: un flusso di dati viene intercettato, modificato e ritrasmesso (rappresenta anche una minaccia alla confidenzialità)
+  \item virus informatici che modificano file di sistema critici in modo da eseguire azioni maliziose
+  \item cambiare i valori di un database o modificare un programma in modo che esegua dei calcoli diversi
+\end{itemize}
+Alcuni casi di alterazione possono essere facilmente rilevati, mentre altre modifiche, più sottili, possono essere estremamente difficili da individuare.
 
 \subsubsection{Interruzione (Denial-of-service)}
+In un’interruzione, una risorsa del sistema viene degradata o eliminata, diventando non disponibile o inutilizzabile. Rappresenta una minaccia alla disponibilità e/o all'integrità. Esempi:
+\begin{itemize} 
+  \item la distruzione o il sabotaggio di un dispositivo
+  \item la cancellazione di un file
+  \item la congestione di un Web server causata da un numero enorme di richieste artificiali
+\end{itemize}
 
 \subsubsection{Falsificazione (Masquerading)}
+La falsificazione consiste nella contraffazione di risorse (dati/hardware) da parti non autorizzate. Costituisce principalmente una violazione di autenticità, e a volte anche alla confidenzialità e/o all’integrità. Esempi:
+\begin{itemize} 
+  \item {phishing}: creazione di siti Web apparentemente identici agli originali allo scopo di frodarne gli utenti
+  \item textbf{spoofing}: spedizione di pacchetti dati con falsi indirizzi di ritorno
+\end{itemize}
+A volte le falsificazioni sono facilmente rilevabili, ma se attuate con abilità potrebbero essere del tutto indistinguibili da normali operazioni reali legittime.
 
 \subsubsection{Ripudio (Ripudiation)}
+Il ripudio consiste nel negare di aver effettuato una data azione. Ll’azione potrebbe essere la ricezione o la spedizione di un messaggio, così come l’esecuzione di una transazione. Spesso, riguarda il tentativo di recedere da un contratto (accordo) precedentemente assunto in cui era comunque previsto l’uso di ricevute (o simili) per dimostrare l’esecuzione di determinate operazioni. Si tratta di un attacco all’assicurazione.
 
 \subsubsection{Inferenza (Inference), Correlation and traceback}
 Per inferenza o attacco inferenziale si intendono un insieme di tecniche che utilizzando la statistica e l’algebra permettono di ricavare/stimare \textbf{informazioni sensibili} a partire da dati non sensibili. Rappresenta un attacco alla confidenzialità, e spesso è attuato nel contesto dei databases. Similmente, per correlation and traceback si intendono un insieme di tecniche basate sulla statistica e sull’algebra che permettono di determinare la sorgente di una particolare informazione o di un particolare flusso di dati.\newline \newline
@@ -160,12 +205,27 @@ Per inferenza o attacco inferenziale si intendono un insieme di tecniche che uti
   \item un meccanismo di protezione ritenuto sicuro da molti è preferibile ad uno noto solo a pochi. E' quindi bene evitare meccanismi di sicurezza basati sulla segretezza (security by obscurity).
 \end{itemize}
 
+
 \subsubsection{Separazione dei privilegi (Separation of privilege):} Più condizioni dovrebbero essere richieste per concedere l’accesso a risorse limitate o ottenere il permesso di effettuare una data azione. In genere questo principio comporta una separazione logico/funzionale delle componenti di un sistema.
 
 \subsubsection{Minimo privilegio (Least privilege):} Ogni parte di un sistema deve avere i privilegi minimi necessari allo svolgimento dei propri compiti. Per attività inusuali che richiedono maggiori privilegi conviene assegnare autorizzazioni temporanee fortemente limitate nel tempo. In questo modo si riduce il rischio di attacchi basati sulla scalata di privilegi.
 
 \subsubsection{Minimo meccanismo comune (Least common mechanism):} I meccanismi di sicurezza che per l’accesso e la gestione di risorse condivise non dovrebbero essere a loro volta condivisi o dovrebbero essere condivisi il meno possibile. E' quindi buona norma adottare tecniche di isolamento quali la virtualizzazione e il sandboxing (e.g. browser web: nessuna applicazione web può agire sul filesystem, eccetto attraverso i cookies). In questo modo vengono mitigati rischi derivanti da comportamenti malevoli di utenti cui spetta comunque l’accesso a una data risorsa condivisa.
 
-\subsubsection{Usabilità (Usability, Psychological acceptability):} 
+\subsubsection{Usabilità (Usability, Psychological acceptability):} I meccanismi di sicurezza non devono rendere più difficile l’accesso alle risorse. Le interfacce utente devono essere ben progettate, intuitive e di facile utilizzo, mentre i parametri di configurazioni inerenti aspetti di sicurezza devono essere di semplice comprensione e facilmente modificabili.
+
+\subsubsection{Fattore lavoro (Work factor):} Il costo necessario ad aggirare un meccanismo di sicurezza deve essere confrontabile alle risorse di cui dispone un potenziale attaccante. Un meccanismo di sicurezza deve avere un livello di sofisticazione, e pertanto un costo, che tenga conto del valore degli asset da proteggere e delle risorse a disposizione di potenziali attaccanti.
+
+\subsubsection{Monitoraggio (Compromise recording):} A volte può convenire effettuare un monitoraggio dettagliato piuttosto che investire in sofisticati meccanismi di sicurezza di tipo preventivo.
+
+\subsubsection{Penetrazione più semplice:} un attaccante utilizzerà qualsiasi mezzo di penetrazione disponibile: non necessariamente i mezzi più ovvi (prevedibili), non necessariamente i mezzi per i quali sono state installate le difese più solide. (e.g.: E' inutile avere un sistema informatico sicuro se il personale non viene formato e fornisce a chiunque credenziali di accesso). L’applicazione di tale principio presenta le seguenti difficoltà:
+\begin{itemize} 
+  \item saper anticipare l’avversario, cioè riuscire a prevederlo
+  \item gestire in modo equilibrato la sicurezza delle diverse parti di un sistema; rafforzare le difese di una parte può indurre gli avversari ad attaccare un'altra parte (più debole) del sistema.
+\end{itemize}
+
+\subsubsection{Temporalità:}  le risorse di un sistema informativo devono essere protette solo fino a quando possiedono un valore, e in modo proporzionale al loro valore. Generalmente tale principio si riferisce ai dati: il loro valore può subire brusche variazioni; si consideri ad esempio il valore dei dati sull’andamento dei mercati prima e dopo la loro divulgazione.
+
+\subsubsection{Anello più debole:}  la sicurezza di un sistema articolato NON può essere più forte del suo anello più debole. La gestione della sicurezza deve tener conto del sistema nel suo insieme. Un elevato grado di sicurezza delle singole parti non implica un elevato grado di sicurezza globale, ma è necessario prevedere anche una strategia oculata di coordinamento della varie parti che non introduca vulnerabilità  (l'insieme è più della somma delle parti).
 
 \section{Fondamenti di Crittografia}

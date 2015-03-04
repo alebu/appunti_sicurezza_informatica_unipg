@@ -165,7 +165,7 @@ Un’intercettazione potrebbe essere molto difficile da rilevare, poiché un int
 \subsubsection{Alterazione (Alteration)}
 Si ha una alterazione o modifica quando un’entità non autorizzata, oltre ad accedere a una risorsa, interferisce con essa modificandola. Rappresenta una violazione alla confidenzialità. Esempi:
 \begin{itemize} 
-  \item attacchi di tipo textbf{man-in-the-middle}: un flusso di dati viene intercettato, modificato e ritrasmesso (rappresenta anche una minaccia alla confidenzialità)
+  \item attacchi di tipo \textbf{man-in-the-middle}: un flusso di dati viene intercettato, modificato e ritrasmesso (rappresenta anche una minaccia alla confidenzialità)
   \item virus informatici che modificano file di sistema critici in modo da eseguire azioni maliziose
   \item cambiare i valori di un database o modificare un programma in modo che esegua dei calcoli diversi
 \end{itemize}
@@ -229,3 +229,134 @@ Per inferenza o attacco inferenziale si intendono un insieme di tecniche che uti
 \subsubsection{Anello più debole:}  la sicurezza di un sistema articolato NON può essere più forte del suo anello più debole. La gestione della sicurezza deve tener conto del sistema nel suo insieme. Un elevato grado di sicurezza delle singole parti non implica un elevato grado di sicurezza globale, ma è necessario prevedere anche una strategia oculata di coordinamento della varie parti che non introduca vulnerabilità  (l'insieme è più della somma delle parti).
 
 \section{Fondamenti di Crittografia}
+La parola Crittografia deriva dal greco, e significa "scrittura segreta". La crittografia è quindi l’arte e la scienza dello scrivere in modo segreto, ovvero l’arte di offuscare le informazioni in modo incomprensibile prevedendo una tecnica segreta per ricostruirle in modo esatto. L’applicazione storica della crittografia è la protezione della confidenzialità dei messaggi. Con \textbf{crittografia classica} si intende, infatti, l'insieme di tecniche che sopperiscono la necessità di nascondere il contenuto di una comunicazione a soggetti non autorizzati. Con l'avvento dei calcolatori e del digitale, si è passati alla crittografia moderna, che presenta molte applicazioni aggiuntive di non immediata comprensione, ma estremamente utili:
+\begin{itemize} 
+  \item firma digitale
+  \item controllo di integrità sicuro
+  \item autenticazione
+\end{itemize}
+
+\subsection{Terminologia e definizioni preliminari}
+\begin{itemize} 
+  \item \textbf{Testo in chiaro (plaintext o cleartext):} messaggio nella sua forma originale
+  \item \textbf{Testo cifrato (ciphertext):} messaggio cifrato (criptato o crittografato)
+  \item \textbf{Cifratura o crittazione o criptazione (encryption):} processo che produce il testo cifrato a partire dal testo in chiaro
+  \item \textbf{Decifratura o decrittazione o decriptazione (decryption):} processo inverso della cifratura
+  \item \textbf{Crittografo (cryptographer):} esperto di crittografia
+  \item \textbf{Crittoanalisi o crittanalisi (cryptanalysis):} l’arte o la scienza di violare testi cifrati; ricostruire il testo in chiaro senza disporre del segreto necessario alla fase di decifratura
+  \item \textbf{Crittoanalista:} esperto di crittoanalisi
+  \item \textbf{Crittologia (cryptology):} l’arte o la scienza delle scritture nascoste nella sua accezione pi`u generale; include la crittografia e la crittoanalisi
+  \item \textbf{Chiave segreta:} la segretezza dell'elaborazione nell'algoritmo è di solito concentrata nella segretezza di una chiave. E' stata introdotta perché è difficile concepire ogni volta nuovi algoritmi di cifratura ed è difficile spiegare rapidamente il funzionamento di un nuovo    algoritmo ad un soggetto con il quale si desidera comunicare in modo sicuro
+\end{itemize}
+\begin{figure}[htbp]
+	\centering%
+	\subfigure%
+	{\includegraphics[height=7cm, width=12cm, keepaspectratio]{Immagini/Capitolo1/schema_blocchi_crittografia.png}}
+	\caption{Schema a blocchi che illustra il processo cifratura-decifratura \label{fig:schema_blocchi_crittografia}} 	
+\end{figure}
+
+\subsection{Definizione formale di un sistema crittografico}: Formalmente, un sistema crittografico è costituito da sette componenti (a volte alcune di queste sono assenti o coincidono):
+\begin{itemize} 
+  \item l'insieme dei possibili input (plaintext)
+  \item l'insieme dei possibili output (ciphertex)
+  \item l'insieme delle possibili chiavi di cifratura
+  \item l'insieme delle possibili chiavi di decifratura
+  \item la corrispondenza tra chiavi di cifratura e di decifratura
+  \item l'algoritmo di cifratura da usare
+  \item l'algoritmo di decifratura da usare
+\end{itemize}
+
+\subsection{Complessità computazionale} 
+Uno schema crittografico anche assumendo che sia privo di vulnerabilità intrinseche, può essere (quasi) sempre sottoposto ad attacchi a forza bruta. Affinché ciò possa avvenire è necessario disporre di un test affidabile che permetta di dire se una chiave scelta a caso è quella corretta; cioè, essere in grado di riconoscere il testo in chiaro. Se tale precondizione è verificata si può perseguire un approccio esaustivo in cui si tentano tutte le chiavi. Uno schema crittografico è allora tanto più sicuro quanto è maggiore il costo computazionale necessario a violarlo. Contemporaneamente deve garantire l'efficienza di cifratura/decifratura. Formalizzando, possiamo definire un sistema \textbf{computazionalmente sicuro} se:
+\begin{itemize} 
+  \item il costo per rendere inefficace il cifrario supera il valore dell’informazione cifrata
+  \item il tempo richiesto per rendere inefficace il cifrario supera l’arco temporale in cui l’informazione ha una qualche utilità
+\end{itemize}
+Tuttavia, stimare lo sforzo computazionale richiesto per effettuare con successo la crittoanalisi del testo cifrato è molto difficile. Il tempo richiesto per un approccio a forza bruta fornisce soltanto un limite superiore: è realistico solo se l’algoritmo non presenta delle debolezze intrinseche di tipo matematico; in questo caso si possono effettuare stime ragionevoli su tempi e costi. In un approccio a forza bruta mediamente si devono provare metà di tutte le possibili chiavi. Ovviamente in questo processo prende parte, come variabile fondamentale, la lunghezza della chiave. Alcuni schemi crittografici prevedono una chiave avente lunghezza variabile: aumentandola aumenta la sicurezza, ma diminuisce l'efficienza. Altri schemi stabiliscono a priori la lunghezza della chiave, se si desidera aumentarla è necessario sviluppare algoritmi simili che utilizzano chiavi di lunghezza diversa, oppure è possibile combinare in modo opportuno tali schemi ottenendo uno schema risultante con una chiave globale più lunga (attenzione al modo in cui si combinano!).
+
+\subsection{Algoritmo pubblico o segreto?}
+Ottenere la sicurezza dalla segretezza cioè custodendo gelosamente e nascondendo la metodologia di cifratura/decifratura, \textbf{security by obscurity}, è assolutamente da evitare. Questo perché:
+\begin{itemize} 
+  \item mantenere la segretezza è difficile, poiché le tecniche di reverse engineering permettono di risalire al codice
+  \item è una strategia in chiara opposizione al fundamental tenet of cryptography
+\end{itemize}
+Oggigiorno, nelle applicazioni di uso civile/commerciale si usano schemi crittografici di dominio pubblico. La segretezza, laddove prevista, è conseguenza di altre cause (e.g. protezione del segreto industriale, contesti militari).
+
+\subsection{Attacchi a sistemi crittografici}
+Si possono distinguere cinque categorie di attacchi in base al tipo di informazioni in possesso dell’attaccante (di cui gli ultimi due meno frequenti):
+
+\subsubsection{Solo testo cifrato (ciphertext only)}
+L’attaccante conosce l’algoritmo di cifratura e dispone soltanto di una certa quantità di testo cifrato. Nell’ipotesi che non vi siano vulnerabilità intrinseche nello schema crittografico, l’attaccante può tentare un attacco forza bruta, a patto che disponga di un test affidabile per il riconoscimento del testo in chiaro e di potenza di calcolo sufficiente. Tale attacco è anche noto come \textbf{testo in chiaro riconoscibile (recognizable plaintext)}. Riguardo la riconoscibilità del testo in chiaro valgono le seguenti osservazioni:
+\begin{itemize} 
+  \item nel caso di messaggi testuali, è molto improbabile che una chiave di decifratura errata permetta di ottenere un messaggio verosimile
+  \item è essenziale avere una sufficiente quantit`a di testo in chiaro
+\end{itemize}
+\textbf{Esempio:} il messaggio $m$ è una frase di un qualche linguaggio naturale. Ipotizzando che i caratteri di $m$ siano codificati in ASCII a 8 bit e il testo cifrato $c$ abbia la stessa lunghezza di $m$ (quasi sempre è così). Siano:
+\begin{itemize} 
+  \item $t$: il numero di caratteri di $m$ e di $c$
+  \item $n$ = $8t$: il numero di bit di $m$ e di $c$
+  \item $2^{\alpha n}$: il numero totali di messaggi distinti, nel linguaggio naturale considerato, di lunghezza $n$ bit
+\end{itemize}
+Si osservi che nominalmente esistono $2^n$ stringhe binarie di $n$ bit, ma solo una piccolissima frazione di queste è la codifica di un messaggio nel linguaggio naturale, $0 < \alpha < 1$ è un fattore correttivo usato per modellare tale fenomeno, per la lingua inglese $\alpha = 0.16$.
+\begin{figure}[htbp]
+	\centering%
+	\subfigure%
+	{\includegraphics[height=12cm, width=12cm, keepaspectratio]{Immagini/Capitolo1/attacco_solo_tc.png}}
+\end{figure}
+\newline
+Il seguente rapporto:
+\begin{equation}
+\frac{2^{\alpha n}}{2^n} = \frac{1}{2^{(1 - \alpha)n}}
+\end{equation}
+rappresenta la probabilità che un stringa random di $n$ bit costituisca la codifica di un messaggio nel linguaggio naturale considerato. Se la chiave di decifratura ha una lunghezza di $k$ bit, effettuando un attacco a forza bruta ($2^k$ tentativi), il numero atteso di messaggi verosimili (nel linguaggio naturale dato) associabili al testo cifrato $c$ è pari a:
+\begin{equation}
+\frac{2^k}{2^{(1 - \alpha)n}}
+\end{equation}
+Essendo k fissato, al crescere di n tale numero tende rapidamente a zero, quindi il test di riconoscibilità diventa quasi infallibile se si dispone di una sufficiente quantità di testo cifrato. In alcuni casi, si potrebbe tentare un approccio a forza bruta computazionalmente meno costoso se:
+\begin{itemize} 
+  \item la chiave di decifratura coincide con quella di cifratura, spesso è così
+  \item la chiave di cifratura `e derivata da una password di utente segreta con una procedura nota (si può tentare un approccio a forza bruta sullo spazio delle password, sensibilmente più piccolo dello spazio delle chiavi)
+\end{itemize}
+IMPORTANTE: uno schema crittografico deve SEMPRE essere sicuro contro attacchi di tipo \textbf{ciphertext only}, poiché il testo cifrato è sempre facilmente intercettabile e ottenibile.
+
+\subsubsection{Testo in chiaro conosciuto (known plaintext)}
+In questo caso, il crittoanalista conosce:
+\begin{itemize} 
+  \item l’algoritmo di cifratura
+  \item un certo insieme di coppie $\langle plaintext, ciphertext \rangle$, ma non ha la facoltà di decidere lui il tipo specifico di plaintext
+  \item una certa quantità di testo cifrato
+\end{itemize}
+Alcuni schemi crittografici potrebbero essere molto resistenti ad attacchi di tipo \textbf{ciphertext only} ma rivelarsi vulnerabili ad attacchi di tipo \textbf{known plaintext}. In caso di impiego, è fondamentale prevenire che un attaccante ottenga coppie $\langle plaintext, ciphertext \rangle$.
+
+\subsubsection{Testo in chiaro selezionato (chosen plaintext)}
+In questo caso, il crittoanalista conosce:
+\begin{itemize} 
+  \item l’algoritmo di cifratura
+  \item una certa quantità di testo cifrato (con chiave segreta K)
+\end{itemize}
+e può scegliere a piacimento il testo in chiaro ed ottenere il relativo testo cifrato (sempre con la chiave K). In altre parole può scegliere quali coppie $\langle plaintext, ciphertext \rangle$ conoscere. E' possibile che un sistema crittografico sia sicuro contro attacchi di tipo \textbf{ciphertext only} e \textbf{known plaintext}, ma sia vulnerabile ad attacchi di tipo \textbf{chosen plaintext}.
+
+\subsubsection{Testo cifrato selezionato (chosen ciphertext)}
+L'attaccante dispone (oltre che dell'algoritmo di cifratura e del testo cifrato da decifrare) di testo cifrato, con significato, scelto da lui, e corrispondente testo in chiaro.
+\subsubsection{Testo selezionato (chosen text)}
+L'attaccante dispone sia di testo in chiaro scelto da lui (e corrispondente testo cifrato) sia di testo cifrato scelto da lui (e corrispondente testo in chiaro).
+\begin{figure}[htbp]
+	\centering%
+	\subfigure%
+	{\includegraphics[height=14cm, width=15cm, keepaspectratio]{Immagini/Capitolo1/tab_attacchi_cifrari.png}}
+	\caption{Tabella riassuntiva tipologie di attacchi \label{fig:tab_attacchi_cifrari}} 	
+\end{figure}
+\begin{figure}[htbp]
+	\centering%
+	\subfigure%
+	{\includegraphics[height=14cm, width=16cm, keepaspectratio]{Immagini/Capitolo1/tab_tempi.png}}
+	\caption{Tempo medio per una ricerca esaustiva \label{fig:tab_tempi}} 	
+\end{figure}
+
+\subsection{Tipi di funzioni crittografiche}
+\begin{itemize} 
+  \item funzioni a chiave pubblica (public key functions): richiedono l'uso di due chiavi, una pubblica e una privata
+  \item funzioni a chiave segreta (secret key functions): richiedono l'uso di una singola chiave
+  \item funzioni hash (hash functions): non usano alcuna chiave 
+\end{itemize}
+

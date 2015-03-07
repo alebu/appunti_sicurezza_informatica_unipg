@@ -355,8 +355,108 @@ L'attaccante dispone sia di testo in chiaro scelto da lui (e corrispondente test
 
 \subsection{Tipi di funzioni crittografiche}
 \begin{itemize} 
-  \item funzioni a chiave pubblica (public key functions): richiedono l'uso di due chiavi, una pubblica e una privata
+  \item funzioni a chiave pubblica (public key functions): richiedono l'uso di due chiavi, una pubblica e una privata (approfodire non ripudio su firma digitale)
   \item funzioni a chiave segreta (secret key functions): richiedono l'uso di una singola chiave
   \item funzioni hash (hash functions): non usano alcuna chiave 
 \end{itemize}
 
+\section{Modelli di controllo degli accessi (Access control models)}
+Il controllo degli accessi alla varie risorse di un sistema informativo costituisce un fondamentale meccanismo di sicurezza di tipo \textbf{preventivo}. Previene attacchi alla confidenzialità, all'integrità e all'anonimato. L'idea di base è restringere l’accesso solo a coloro che hanno la necessità di accedere e/o modificare specifiche risorse, in accordo al principio del \textbf{minimo privilegio}.
+
+\subsection{Matrice di controllo degli accessi} 
+Una matrice di controllo degli accessi (Access Control Matrix ACM) è una tabella che definisce i permessi di accesso dei vari \textbf{soggetti} di un sistema informativo ai suoi \textbf{oggetti}.
+\begin{itemize} 
+  \item un \textbf{soggetto} è un utente, un gruppo o una generica entità attiva che desidera effettuare una data azione su un data risorsa
+  \item un \textbf{oggetto} è un file, un documento, un dispositivo, una generica risorsa o più in generale un'entità passiva sulla quale si desidera compiere una data azione
+\end{itemize}
+
+Ogni riga della tabella è associata ad un soggetto, e ogni colonna è associata ad un oggetto. Ogni cella stabilisce quindi il tipo di azione consentita; il soggetto e l’oggetto sono implicitamente definiti dalla cella. Diverse modalità di accesso sono possibili: lettura, scrittura, copia,
+esecuzione, cancellazione, annotazione. Una cella vuota stabilisce che non viene assegnato alcun tipo di accesso.
+\begin{figure}[htbp]
+	\centering%
+	\subfigure%
+	{\includegraphics[height=13cm, width=13cm, keepaspectratio]{Immagini/Capitolo1/access_control_matrix_ex.png}}
+	\caption{Esempio access control matrix \label{fig:acm}} 	
+\end{figure}
+
+\subsubsection{Pro e Contro ACM}
+L’adozione di una ACM offre, in linea di principio, i seguenti vantaggi:
+\begin{itemize} 
+  \item immediatezza nel valutare e modificare i diritti di accesso per una data coppia soggetto-oggetto
+  \item facilità di visualizzazione e gestione: semplifica la vita all’amministratore
+\end{itemize}
+Purtroppo, il grande svantaggio delle ACM, che ne limita fortemente l'applicabilità, è la mancanza di scalabilità. E' del tutto ragionevole pensare che un computer server possa avere ordine di $10^3$ soggetti (per lo più utenti) e $10^6$ oggetti (files e directories), richiedendo una ACM di $10^9$ celle. In questi ordini di grandezza i precedenti vantaggi decadono (non scalabilità).
+
+\subsection{Liste di controllo degli accessi (Access Control List ACL)}
+Una lista di controllo degli accessi (access control list ACL) segue un approccio di tipo "object-centered" per garantire una buona scalabilità, in particolare:
+\begin{itemize} 
+  \item ad ogni oggetto \textbf{o} viene associata un lista \textbf{L}, detta la lista di accesso di \textbf{o}, che enumera tutti i soggetti che hanno un qualche diritto di accesso ad \textbf{o}, e
+  \item per ciascuno di tali soggetti, \textbf{s}, sono specificati i tipi di azioni che \textbf{s} può compiere su textbf{o}
+\end{itemize}
+\begin{figure}[htbp]
+	\centering%
+	\subfigure%
+	{\includegraphics[height=10cm, width=10cm, keepaspectratio]{Immagini/Capitolo1/access_control_list_ex.png}}
+	\caption{Esempio access control list \label{fig:acl}} 	
+\end{figure}
+Nella pratica, il modello ACL comporta un significativo risparmio di memoria rispetto al modello ACM: ogni lista del modello ACL è ottenibile scandendo la relativa colonna del modello ACM ignorando però le celle vuote.
+
+\subsubsection{Pro e Contro ACL}
+Il principale vantaggio del modello ACL rispetto al modello ACM è la minor occupazione di memoria che si registra nella pratica (in teoria, nel caso peggiore l’occupazione è la medesima). La memoria occupata complessivamente nel modello ACL, $\sum_{O} size(L_{O})$, è proporzionale a $C_{nv} (ACM)$ cioè al numero di celle non vuote della ACM. Nella pratica $C_{nv} (ACM)$ è molto minore di $C (ACM)$ (che denota il numero totale di celle della ACM); cioè nella pratica $C_{nv} (ACM)<<C (ACM)$. Un altro vantaggio è la facilità di gestione delle ACL da parte del sistema operativo:
+\begin{itemize} 
+  \item sono incorporate nei metadati associati all’oggetto in questione (i.e. filesystem)
+  \item per verificare i diritti di accesso ad un oggetto o non è necessario consultare una struttura dati centralizzata associata a tutti gli oggetti
+  \item ma basta manipolare una struttura dati molto più snella, distribuita ed associata soltanto all’oggetto \textbf{o}
+\end{itemize}
+
+Il principale svantaggio delle ACL è che non consente di enumerare in modo efficiente i diritti di accesso di un dato soggetto. Tale operazione deve essere espletata ogni qual volta un utente viene rimosso da un sistema. I diritti di accesso di un soggetto \textbf{s} possono ottenersi soltanto effettuando una scansione di tutte le liste di accesso (associate a tutti gli oggetti \textbf{o}), e selezionando i diritti di accesso di \textbf{s} nelle liste in cui tale soggetto compare. Nel modello ACM, invece, ciò poteva banalmente ottenersi esaminando la
+riga della matrice relativa al soggetto \textbf{s}.
+
+\subsection{Controllod egli accessi basato su liste di capacità (Capabilities Access Control CAC)}
+Il modello basato sulle liste di capacità segue un approccio “subject-centered”, complementare (ortogonale) a quello del modello ACL, per offrire una buona scalabilità. Ad ogni soggetto \textbf{s} viene associata una lista, detta \textbf{C-list} di \textbf{s}, contenente soltato gli oggetti per i quali \textbf{s} ha un qualche diritto di accesso. Per ciascun oggetto \textbf{o} della \textbf{C-list} di \textbf{s} viene specificato il tipo di azione che \textbf{s} può esercitare su \textbf{o}. Similmente al modello ACL, anche il modello CAC comporta un significativo risparmio di memoria rispetto al modello ACM nelle situazioni pratiche: ogni lista del modello CAC è ottenibile scandendo la relativa riga del modello ACM ignorando però le celle vuote. 
+\begin{figure}[htbp]
+	\centering%
+	\subfigure%
+	{\includegraphics[height=10cm, width=10cm, keepaspectratio]{Immagini/Capitolo1/CAC_ex.png}}
+	\caption{Esempio CAC \label{fig:CAC}} 	
+\end{figure}
+\subsubsection{Pro e Contro CAC}
+Rispetto al modello ACM, anche il modello CAC richiede una minor occupazione di memoria nella pratica. la memoria occupata complessivamente nel modello CAC,  $\sum_{s} size(L_{s})$, è proporzionale a $C_{nv} (ACM)$, cioè al numero di celle non vuote della ACM (vedi considerazioni su ACL). Facilita inoltre il compito dell'amministratore di sistema nell'analizzare e gestire i diritti di accesso di un dato soggetto. Inoltre, l'autorizzazione ad accedere ad un dato oggetto o da parte di un soggetto \textbf{s} richiede tempi ragionevolmente brevi qualora la \textbf{C-list} di \textbf{s} abbia una dimensione contenuta.\newline \newline
+Il principale svantaggio del modello CAC è che le \textbf{C-list} non sono direttamente associate agli oggetti. Ciò comporta che:
+\begin{itemize} 
+  \item non è possibile implementarle in modo distribuito incorporandole nei metadati degli oggetti
+  \item l'unico modo per determinare chi e come può accedere ad un dato oggetto o è effettuare una ricerca su tutte le C-list (di tutti i soggetti); nel modello ACM tale operazione richiede semplicemente di esaminare la colonna relativa ad o (problema ortogonale a quello delle ACL)
+\end{itemize}
+
+\subsection{Controllod egli accessi basato sui ruoli (Role-Based Access Control RBAC)}
+Per controllo degli accessi basato sui ruoli si intende che l'assegnazione dei diritti di accesso avviene in modo indiretto ed è funzione del ruolo attribuito ad un dato soggetto \textbf{s}. L’amministratore definisce i ruoli e specifica i diritti di accesso per tali ruoli, anziché quelli per i singoli soggetti (utenti). Ogni ruolo dovrebbe rappresentare una classe di soggetti (utenti) con la medesima mansione. I soggetti vanno assegnati ai vari ruoli coerentemente alle loro mansioni, e un soggetto può ricevere più ruoli dato che può ricoprire più mansioni. Definiti i ruoli, i diritti di accesso vanno assegnati secondo una logica ruolo-oggetto e NON soggetto-oggetto. I diritti di accesso di un dato soggetto sono l’unione dei diritti di accesso dei suoi ruoli. Pertanto:
+\begin{itemize} 
+  \item textbf{il modello RBAC non `e alternativo ai modelli ACM, ACL e CAC, ma si pone ad un livello di astrazione superiore}: RBAC deve necessariamente sfruttare un modello per il controllo degli accessi, basato su \textbf{ACM},\textbf{ACL} o \textbf{CAC}, ove i soggetti saranno però sostituiti dai ruoli.
+  \item RBAC deve inoltre mantenere/gestire l'elenco dei ruoli associati ai vari soggetti
+\end{itemize}
+
+\subsubsection{Architettura RBAC}
+Il modello RBAC `e realizzabile utilizzando un generico framework per la gestione del controllo degli accessi (ACM, ACL, CAC), ove i soggetti sono, come già detto, sostituiti con i ruoli, più un layer superiore che gestisce l'elenco dei ruoli associati ai vari soggetti e che traduce le richieste di accesso per un dato soggetto in quelle relative ai suoi ruoli.
+\begin{figure}[htbp]
+	\centering%
+	\subfigure%
+	{\includegraphics[height=10cm, width=10cm, keepaspectratio]{Immagini/Capitolo1/RBAC_arch.png}}
+	\caption{Architettura RBAC \label{fig:RBAC_arch}} 	
+\end{figure}
+
+\subsubsection{Gerarchia dei ruoli}
+Generalmente è conveniente organizzare i ruoli in una struttura gerarchica, così da riflettere l’organigramma (gerarchico) di una data organizzazione. I diritti di accesso vengono più agevolmente gestiti e assegnati ai vari ruoli sfruttando l’ereditarietà.
+\begin{figure}[htbp]
+	\centering%
+	\subfigure%
+	{\includegraphics[height=10cm, width=10cm, keepaspectratio]{Immagini/Capitolo1/RBAC_ger.png}}
+	\caption{Architettura RBAC \label{fig:RBAC_ger}} 	
+\end{figure}
+
+\subsubsection{Pro e Contro RBAC}
+Indipendentemente dal framework di basso di livello utilizzato per il controllo degli accessi, i vantaggi nell’uso del modello RBAC sono:
+\begin{itemize} 
+  \item la riduzione drastica del numero totale di regole di accesso da gestire; nella pratica il numero dei ruoli è significativamente inferiore a quello dei soggetti, inoltre la loro organizzazione gerarchica ne semplifica ulteriormente la gestione.
+  \item l'overhead per determinare se un dato soggetto ha un dato diritto è contenuto, è sufficiente consultare se almeno uno dei suoi ruoli ha tale diritto.
+\end{itemize}
+Lo svantaggio principale è che non viene implementato dagli attuali sistemi operativi!

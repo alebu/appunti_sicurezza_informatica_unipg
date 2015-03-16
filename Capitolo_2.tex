@@ -80,4 +80,44 @@ D'altra parte, avere blocchi esageratamente lunghi oltre a non essere necessario
   \item anche se fosse possibile, la sua memorizzazione richiederebbe una spazio enorme ($2^{64}$ record da 64 bit),
   \item come pure l’ordinamento per consentire ricerche efficienti
 \end{itemize}
+Il modo più generale per cifrare un blocco da 64 bit è definire una \textbf{biiezione} $\gamma :\{0,1\}^{64} \rightarrow \{0,1\}^{64}$. Tuttavia, memorizzare la definizione della \emph{biiezione} in una struttura dati è impraticabile: sarebbero richiesti $2^84 \times 64 = 2^{70}$ bit. Ad essere precisi ce ne vogliono un po' di meno, trattandosi di un \textbf{biiezione}, comunque almeno $2^{69}$ bit sono richiesti \textcolor{red}{(perché?!?!)}. Inoltre, così facendo la chiave è incorporata nella biiezione: per renderla parametrica rispetto alla chiave è necessario memorizzare una biiezione per ogni possibile chiave.\newline \newline
+I sistemi di crittografia a chiave segreta sono concepiti per usare una chiave ragionevolmente lunga (ad esempio 64 bit e generare una \textbf{biiezione} che appare, a chi non conosce la chiave, completamente \underline{random}. Se la biiezione fosse realmente random due input $i$ e $i'$ nei quali cambia un solo bit (uno qualunque) sarebbero \textbf{statisticamente indipendenti}: non può succedere, ad esempio, che il terzo bit dell'output cambia \textbf{sempre} quando il dodicesimo bit dell'input cambia. Gli algoritmi crittografici sono pensati per \textbf{diffondere/spargere} in tutti i bit dell'output il valore di ogni bit dell'input: si cerca di far si che ogni bit dell'output dipenda allo stesso modo da tutti i bit dell'input.
 
+\subsection{Sostituzione e Permutazione}
+Sostituzioni e permutazioni sono due trasformazioni base applicabili ad un blocco di dati.\newline \newline
+Si assuma di dover cifrare un blocco di $k$ bit. Una \textbf{sostituzione} specifica, per ciascuno dei $2^k$ possibili valori dell'input, i $k$ bit dell'output. Per specificare una sostituzione \textbf{"completamente random"} sono necessari circa $k2^k$ bit. E' quindi impraticabile implementare una sostituzione per blocchi di $64$ bit, mentre è fattibile per blocchi di lunghezza di $8$ bit. Esempio di crittografia per sostituzione è il \textbf{Cifrario di Cesare}.\newline \newline
+Una \textbf{permutazione} specifica, per ciascuna delle $k$ posizioni dei bit in input, la posizione del corrispondente bit nell'output. Per specificare una permutazione \textbf{"completamente random"} per un blocco di
+lunghezza $k$ bit sono necessari $k\log_2 k$ bit. Infatti per ciascuno dei k bit va specificata la sua posizione nell'output; ogni posizione richiede $k\log_2 k$. Ad esempio: essendo $2^6 = 64$, sono necessari $6 = \log_2 {64}$ bit per specificare la nuova posizione che l'i-esimo bit in input avrà in output. \newline \newline
+Si noti che una \textbf{permutazione} è un caso particolare di \textbf{sostituzione} in cui ogni bit dell'output ottiene il suo valore da esattamente un bit dell'input.
+
+\subsection{Cifrario a blocchi – schema generale}
+Un algoritmo di cifratura a chiave segreta può funzionare come segue:
+\begin{itemize}
+  \item scompone il blocco in input in pezzi più piccoli (e.g. blocchi da 8 bit)
+  \item applica una sostituzione a ciascun pezzo da 8 bit (la sostituzione dipenderà dal valore della chiave)
+  \item gli output delle sostituzioni vengono riuniti in un unico blocco (64 bit)
+  \item tale blocco viene permutato in un permutatore a 64 bit (che ha il compito di diffondere le modifiche eseguite nelle sostituzioni)
+  \item il processo viene ripetuto un certo numero di volte riportando l'output in ingresso
+\end{itemize}
+Ogni attraversamento del cifrario viene detto \textbf{round}. In riferimento alla \figurename ~\ref{fig:block_chipher} si fanno le seguenti considerazioni. Con un solo round, un bit $b_x$ di input può influenzare soltanto 8 bit $b_{x1}, b_{x2}, …, b_{x8}$ dell'output, poiché $b_x$ ha attraversato soltanto un blocco di sostituzione. In generale i bit $b_{x1}, b_{x2}, …, b_{x8}$ non sono consecutivi essendo stati mescolati nel permutatore. Alla fine del secondo round, assumendo che i bit $b_{x1}, b_{x2}, …, b_{x8}$ siano smistati in blocchi di sostituzione distinti, il bit $b_x$ iniziale influenza tutti i bit in output.
+\begin{figure}[htbp]
+	\centering%
+	\subfigure%
+	{\includegraphics[height=13cm, width=13cm, keepaspectratio]{Immagini/Capitolo2/block_cipher.png}}
+	\caption{Schema a blocchi crittografia a chiave segreta \label{fig:block_chipher}} 	
+\end{figure}
+
+\section{Data Encryption Standard - DES}
+DES fu pubblicato nel 1977 dal \textbf{National Bureau of Standards}, ora rinominato \textbf{N}ational \textbf{I}nstitute of \textbf{S}tandards and \textbf{T}echnology (\textbf{NIST}), per usi commerciali e "altre" applicazioni del governo statunitense. progettato da IBM, si basa sul precedente cifrario \textit{Lucifer} ed è frutto della collaborazione con consulenti della NSA. DES usa una chiave di 56 bit, e mappa un blocco di input da 64 bit in un blocco di output da 64 bit. La \textbf{chiave} è in realtà costituita da una sequenza di 64 bit, ma un bit in ogni ottetto (il blocco da 64 bit è formato da 8 sequenze di 8 bit dette ottetti) è usato come \textbf{odd parity} su ciascun ottetto. Di fatto, soltanto 7 bit in ogni ottetto sono quindi veramente significativi come chiave. \newline \newline
+
+DES è efficiente se realizzato in hardware, ma relativamente lento se implementato in software. Sebbene l'essere difficilmente implementabile come software non era un requisito specificato nel progetto molti sostengono che in realtà era un fatto voluto, forse per limitarne l'uso ad organizzazioni in grado di realizzare sistemi hardware, o forse perché rese più facile controllare l'accesso alla tecnologia. Ad ogni modo, l'aumento delle capacità di calcolo delle CPU rese possibile realizzare una versione software di DES. Una 500-MIPS (Million Instruction Per Second) CPU può infatti cifrare ad un tasso di circa 30 KB/s e forse più, dipende dai dettagli architetturali della CPU e dalla intelligenza dell'implementazione. Un processore Intel Core i7 Extreme Edition i980EE ha una capacità di calcolo di circa 150 MIPS, quindi può cifrare ad un tasso di circa 9 KB/s (per cifrare 1 MB impiega circa 110 secondi). L’implementazione software è pertanto attualmente adeguata a molte applicazioni.\newline \newline
+
+\subsection{Perché chiavi da 56 bit?}
+La scelta di una chiave da 56 bit causò molte controversie. Prima che DES fu adottato, le persone al di fuori
+della \textit{intelligence community} lamentavano che 56 bit non offrivano una sicurezza adeguata. Perché solo 56 dei 64 bit di una chiave DES sono effettivamente usati nell'algoritmo? Lo svantaggio di usare 8 bit della chiave per un controllo di parità è che ciò rende DES molto meno sicuro (256 volte meno sicuro contro una ricerca esaustiva). Ma qual è il vantaggio di usare 8 bit per un controllo di parità? Una possibile risposta è che permette di verificare che la chiave non sia corrotta. Tuttavia questa spiegazione non regge. Se si considerassero infatti 64 bit a caso invece della chiave, c'è una probabilità su 256 che il controllo di parità dia esito positivo. La probabilità che la chiave sia comunque errata (nonostante il controllo di parità dia esito positivo) è troppo alta. Inoltre avere una chiave corrotta non comporta un problema di sicurezza, semplicemente la cifratura/decifratura non viene eseguita correttamente. Chiaramente è anche ridicolo sostenere che la scelta di 56 bit sia stata fatta per risparmiare memoria. \newline La risposta ormai condivisa è che il governo statunitense abbia deliberatamente indebolito la sicurezza di DES di una quantità appena sufficiente da consentire alla NSA di violarlo.
+
+\subsection{Violabilità e sicurezza di DES}
+Gli avanzamenti tecnologici dell'industria dei semiconduttori hanno reso ancora più critico il problema della lunghezza della chiave di DES. la velocità dei chip e un po' di furbizia permettono di violare (individuare) le chiavi DES con approcci a forza bruta in tempi ragionevoli. Il rapporto prestazioni/prezzo dell'hardware cresce del
+$40\%$ per anno. La lunghezza delle chiavi dovrebbe aumentare di 1 bit ogni 2 anni. Assumendo che 56 bit erano appena sufficienti nel 1979 (quando DES fu standardizzato), 64 bit erano adeguati nel 1995, e 128 bit dovrebbero essere sufficienti fino al 2123. \newline \newline
+
+Ragioniamo ora sulla sicurezza di DES. Se si dispone di un singolo blocco $\langle plaintext,ciphertext \rangle$ quanto è difficile trovare la chiave? Un approccio a forza bruta dovrebbe provare ordine di $2^{56} \approx 10^{17}$ chiavi.

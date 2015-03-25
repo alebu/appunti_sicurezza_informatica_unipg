@@ -1,4 +1,6 @@
 \documentclass [4pt,a4paper,oneside,openany]{book} %Classe del documento, formato carta, singola facciata, apertura capitoli pag destra/sinista (ininfluente se impostato oneside). Formato libro
+\usepackage{lmodern}
+\usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage{cite}
 \usepackage[italian]{babel} %Lingua Documento (da impostare per la sillabazione)
@@ -29,7 +31,6 @@
 \addtolength{\textheight}{75pt} %Margini
 \oddsidemargin 30pt
 
-
 \begin{document} %Inizio Documento
 
 %%FRONTESPIZIO%%=========================================
@@ -46,7 +47,8 @@
  
  \vskip 2.5cm
   \begin{center}
-	\Large{\textit{Burani Alessio}}\\[0.4cm]
+	\Large{\textit{Alessio Burani}}\\
+	\Large{\textit{Silvia Cascianelli}}\\[0.4cm]
   \end{center}
 
 \vskip 2.5cm
@@ -76,6 +78,7 @@
 %%CAPITOLI===============================================
 \input{Capitolo_1} 
 \input{Capitolo_2} 
+\input{Capitolo_3} 
 
 
 %%BIBLIOGRAFIA============================================

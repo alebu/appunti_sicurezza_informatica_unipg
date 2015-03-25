@@ -94,11 +94,13 @@ Si noti che una \textbf{permutazione} è un caso particolare di \textbf{sostituz
 Un algoritmo di cifratura a chiave segreta può funzionare come segue:
 \begin{itemize}
   \item scompone il blocco in input in pezzi più piccoli (e.g. blocchi da 8 bit)
-  \item applica una sostituzione a ciascun pezzo da 8 bit (la sostituzione dipenderà dal valore della chiave)
+  \item applica una sostituzione (tramite una \textbf{rete combinatoria}) a ciascun pezzo da 8 bit (la sostituzione dipenderà dal valore della chiave)
   \item gli output delle sostituzioni vengono riuniti in un unico blocco (64 bit)
   \item tale blocco viene permutato in un permutatore a 64 bit (che ha il compito di diffondere le modifiche eseguite nelle sostituzioni)
   \item il processo viene ripetuto un certo numero di volte riportando l'output in ingresso
 \end{itemize}
+%%La scomposizione in blocchi e la ricomposizione vanno effettuate in maniera saggia, al fine di ottimizzare %%efficacia e efficienza del \textbf{cifrario}.
+\subsection{Cifrario a blocchi – esempio}
 Ogni attraversamento del cifrario viene detto \textbf{round}. In riferimento alla \figurename ~\ref{fig:block_chipher} si fanno le seguenti considerazioni. Con un solo round, un bit $b_x$ di input può influenzare soltanto 8 bit $b_{x1}, b_{x2}, …, b_{x8}$ dell'output, poiché $b_x$ ha attraversato soltanto un blocco di sostituzione. In generale i bit $b_{x1}, b_{x2}, …, b_{x8}$ non sono consecutivi essendo stati mescolati nel permutatore. Alla fine del secondo round, assumendo che i bit $b_{x1}, b_{x2}, …, b_{x8}$ siano smistati in blocchi di sostituzione distinti, il bit $b_x$ iniziale influenza tutti i bit in output.
 \begin{figure}[htbp]
 	\centering%
@@ -108,7 +110,7 @@ Ogni attraversamento del cifrario viene detto \textbf{round}. In riferimento all
 \end{figure}
 
 \section{Data Encryption Standard - DES}
-DES fu pubblicato nel 1977 dal \textbf{National Bureau of Standards}, ora rinominato \textbf{N}ational \textbf{I}nstitute of \textbf{S}tandards and \textbf{T}echnology (\textbf{NIST}), per usi commerciali e "altre" applicazioni del governo statunitense. progettato da IBM, si basa sul precedente cifrario \textit{Lucifer} ed è frutto della collaborazione con consulenti della NSA. DES usa una chiave di 56 bit, e mappa un blocco di input da 64 bit in un blocco di output da 64 bit. La \textbf{chiave} è in realtà costituita da una sequenza di 64 bit, ma un bit in ogni ottetto (il blocco da 64 bit è formato da 8 sequenze di 8 bit dette ottetti) è usato come \textbf{odd parity} su ciascun ottetto. Di fatto, soltanto 7 bit in ogni ottetto sono quindi veramente significativi come chiave. \newline \newline
+DES fu pubblicato nel 1977 dal \textbf{National Bureau of Standards}, ora rinominato \textbf{N}ational \textbf{I}nstitute of \textbf{S}tandards and \textbf{T}echnology (\textbf{NIST}), per usi commerciali e "altre" applicazioni del governo statunitense. progettato da IBM, si basa sul precedente cifrario \textit{Lucifer} ed è frutto della collaborazione con consulenti della NSA. DES usa una chiave di 56 bit, e mappa un blocco di input da 64 bit in un blocco di output da 64 bit (l'algoritmo è quindi abbastanza rigido, al contrario di altri cifrari a blocchi). La \textbf{chiave} è in realtà costituita da una sequenza di 64 bit, ma un bit in ogni ottetto (il blocco da 64 bit è formato da 8 sequenze di 8 bit dette ottetti) è usato come \textbf{odd parity} su ciascun ottetto. Di fatto, soltanto 7 bit in ogni ottetto sono quindi veramente significativi come chiave. \newline \newline
 
 DES è efficiente se realizzato in hardware, ma relativamente lento se implementato in software. Sebbene l'essere difficilmente implementabile come software non era un requisito specificato nel progetto molti sostengono che in realtà era un fatto voluto, forse per limitarne l'uso ad organizzazioni in grado di realizzare sistemi hardware, o forse perché rese più facile controllare l'accesso alla tecnologia. Ad ogni modo, l'aumento delle capacità di calcolo delle CPU rese possibile realizzare una versione software di DES. Una 500-MIPS (Million Instruction Per Second) CPU può infatti cifrare ad un tasso di circa 30 KB/s e forse più, dipende dai dettagli architetturali della CPU e dalla intelligenza dell'implementazione. Un processore Intel Core i7 Extreme Edition i980EE ha una capacità di calcolo di circa 150 MIPS, quindi può cifrare ad un tasso di circa 9 KB/s (per cifrare 1 MB impiega circa 110 secondi). L’implementazione software è pertanto attualmente adeguata a molte applicazioni.\newline \newline
 
@@ -118,6 +120,24 @@ della \textit{intelligence community} lamentavano che 56 bit non offrivano una s
 
 \subsection{Violabilità e sicurezza di DES}
 Gli avanzamenti tecnologici dell'industria dei semiconduttori hanno reso ancora più critico il problema della lunghezza della chiave di DES. la velocità dei chip e un po' di furbizia permettono di violare (individuare) le chiavi DES con approcci a forza bruta in tempi ragionevoli. Il rapporto prestazioni/prezzo dell'hardware cresce del
-$40\%$ per anno. La lunghezza delle chiavi dovrebbe aumentare di 1 bit ogni 2 anni. Assumendo che 56 bit erano appena sufficienti nel 1979 (quando DES fu standardizzato), 64 bit erano adeguati nel 1995, e 128 bit dovrebbero essere sufficienti fino al 2123. \newline \newline
+$40\%$ per anno. La lunghezza delle chiavi dovrebbe aumentare di 1 bit ogni 2 anni. Assumendo che 56 bit erano appena sufficienti nel 1979 (quando DES fu standardizzato), 64 bit erano adeguati nel 1995, e 128 bit dovrebbero essere sufficienti fino al 2123. \newline \newline Ragioniamo ora sulla sicurezza di DES. Se si dispone di un singolo blocco $\langle plaintext,ciphertext \rangle$ quanto è difficile trovare la chiave? Un approccio a forza bruta dovrebbe provare ordine di $2^{56} \approx 10^{17}$ chiavi. Se ogni tentativo richiede una singola istruzione sono necessarie ordine di 1000 MIPS-year istruzioni.
+\begin{itemize}
+  \item 1 MIPS = 1 Milione di Istruzioni Per Secondo
+  \item 1 MIPS-year = numero di istruzioni eseguite in un anno ad un tasso pari a 1 MIPS
+  \item 1 MIPS-year = 1 MIPS $\times(365 \times 86400)$ secondi in un anno = $3,1536 \times 10^{13}$ istruzioni
+  \item $2^{56} \approx 10^{17} \approx 10^{3}$ MIPS-year
+\end{itemize}
+Questo vale tuttavia \textbf{SOLO} per effettuare una ricerca esaustiva. Dopo di che entra in gioco il fatto che io sappia riconoscere o meno il testo in chiaro.
+\subsection{Violabilità DES - esempio}
+Anche nell'ipotesi più scomoda per l'avversario di disporre solo di testo cifrato (in ragionevole quantità), un attacco a forza bruta è ancora possibile. Se ad esempio l'avversario sa soltanto che il testo in chiaro è ASCII a 7 bit ogni volta che prova una chiave deve verificare se sono nulli tutti i bit nelle posizioni $8, 16, 24, ..., n \times 8, ...$. Per ogni blocco di 64 bit, vanno esaminati solo 8 bit; i bit in posizione 8, 16, 24, 32, 40, 48, 56, 64. Se almeno uno di questi bit vale 1 la chiave è sicuramente errata. in caso contrario nulla si può dire; \textbf{la probabilità di errore è pertanto 1 su 256 ossia la probabilità che tutti questi bit valgano 0}. Se l'avversario esamina diversi blocchi, ad esempio 10, e verifica che si tratta sempre di ASCII a 7 bit la probabilità che la chiave scelta sia errata si riduce a 1 su 2560. Si noti che gli attuali chip commerciali che implementano DES non si prestano a ricerche esaustive della chiave: sono pensati per cifrare molti dati con una stessa chiave. Infatti il caricamento di una chiave è un'operazione lenta se confrontata con la velocità con la quale viene eseguita la cifratura dei dati. Tuttavia è sempre possibile costruire un chip ottimizzato ad eseguire ricerche esaustive della chiave.
 
-Ragioniamo ora sulla sicurezza di DES. Se si dispone di un singolo blocco $\langle plaintext,ciphertext \rangle$ quanto è difficile trovare la chiave? Un approccio a forza bruta dovrebbe provare ordine di $2^{56} \approx 10^{17}$ chiavi.
+\subsection{Violabilità DES - cifratura multipla}
+Per ovviare a tali problemi di sicurezza è possibile cifrare più volte e con diverse chiavi lo stesso blocco di dati. Si parla di \textbf{cifratura multipla (multiple encryption)}. Si ritiene che una cifratura con un triplo DES sia
+$2^{56}$ volte più difficile da violare.
+
+\subsection{DES - Struttura base}
+L'operazione di permutazione è molto importante in quanto diffonde la dipendenza dei bit in/out. Nel caso di DES però le permutazioni finale e iniziale non hanno effetto. Supponiamo di non averle. Se assumiamo per assurdo che il cifrario cosi ottenuto sia facile da violare, vogliamo dimostrare che anche DES È FACILE DA VIOLARE. Chiamiamo il cifrario senza permutazione EDS. Se posso violare EDS, basta permutare ciò che ottengo e violo DES.
+
+Quelle che hanno veramente effetto sono quelle implementato all'interno di ogni round. 
+
+Come sono state definite quindi le permutazioni iniziale e finale? E' di fatto una permutazione regolare (vedi immagine).

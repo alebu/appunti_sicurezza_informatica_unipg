@@ -1,0 +1,53 @@
+\BOOKMARK [0][-]{chapter.1}{1 Introduzione alla sicurezza informatica}{}% 1
+\BOOKMARK [1][-]{section.1.1}{1.1 Premessa}{chapter.1}% 2
+\BOOKMARK [2][-]{subsection.1.1.1}{1.1.1 Definizione}{section.1.1}% 3
+\BOOKMARK [1][-]{section.1.2}{1.2 Concetti fondamentali}{chapter.1}% 4
+\BOOKMARK [2][-]{subsection.1.2.1}{1.2.1 Sistema informativo e informatico}{section.1.2}% 5
+\BOOKMARK [2][-]{subsection.1.2.2}{1.2.2 Vulnerabilit\340, Minacce, Attacchi, Difesa}{section.1.2}% 6
+\BOOKMARK [2][-]{subsection.1.2.3}{1.2.3 Sicurezza informatica: definizione classica e requisiti CIA}{section.1.2}% 7
+\BOOKMARK [2][-]{subsection.1.2.4}{1.2.4 Requisiti AAA}{section.1.2}% 8
+\BOOKMARK [2][-]{subsection.1.2.5}{1.2.5 Tipologie di Minacce e Attacchi}{section.1.2}% 9
+\BOOKMARK [2][-]{subsection.1.2.6}{1.2.6 Principi della Sicurezza Informatica}{section.1.2}% 10
+\BOOKMARK [1][-]{section.1.3}{1.3 Fondamenti di Crittografia}{chapter.1}% 11
+\BOOKMARK [2][-]{subsection.1.3.1}{1.3.1 Terminologia e definizioni preliminari}{section.1.3}% 12
+\BOOKMARK [2][-]{subsection.1.3.2}{1.3.2 Definizione formale di un sistema crittografico}{section.1.3}% 13
+\BOOKMARK [2][-]{subsection.1.3.3}{1.3.3 Complessit\340 computazionale}{section.1.3}% 14
+\BOOKMARK [2][-]{subsection.1.3.4}{1.3.4 Algoritmo pubblico o segreto?}{section.1.3}% 15
+\BOOKMARK [2][-]{subsection.1.3.5}{1.3.5 Attacchi a sistemi crittografici}{section.1.3}% 16
+\BOOKMARK [2][-]{subsection.1.3.6}{1.3.6 Tipi di funzioni crittografiche}{section.1.3}% 17
+\BOOKMARK [1][-]{section.1.4}{1.4 Modelli di controllo degli accessi \(Access control models\)}{chapter.1}% 18
+\BOOKMARK [2][-]{subsection.1.4.1}{1.4.1 Matrice di controllo degli accessi}{section.1.4}% 19
+\BOOKMARK [2][-]{subsection.1.4.2}{1.4.2 Liste di controllo degli accessi \(Access Control List ACL\)}{section.1.4}% 20
+\BOOKMARK [2][-]{subsection.1.4.3}{1.4.3 Controllod egli accessi basato su liste di capacit\340 \(Capabilities Access Control CAC\)}{section.1.4}% 21
+\BOOKMARK [2][-]{subsection.1.4.4}{1.4.4 Controllod egli accessi basato sui ruoli \(Role-Based Access Control RBAC\)}{section.1.4}% 22
+\BOOKMARK [0][-]{chapter.2}{2 Secret Key Cryptography}{}% 23
+\BOOKMARK [1][-]{section.2.1}{2.1 Introduzione}{chapter.2}% 24
+\BOOKMARK [2][-]{subsection.2.1.1}{2.1.1 Impieghi crittografia a chiave segreta}{section.2.1}% 25
+\BOOKMARK [2][-]{subsection.2.1.2}{2.1.2 Cifrari a blocchi e cifrari a flusso}{section.2.1}% 26
+\BOOKMARK [1][-]{section.2.2}{2.2 Cifratura a blocchi}{chapter.2}% 27
+\BOOKMARK [2][-]{subsection.2.2.1}{2.2.1 Introduzione e concetti generali}{section.2.2}% 28
+\BOOKMARK [2][-]{subsection.2.2.2}{2.2.2 Sostituzione e Permutazione}{section.2.2}% 29
+\BOOKMARK [2][-]{subsection.2.2.3}{2.2.3 Cifrario a blocchi \205 schema generale}{section.2.2}% 30
+\BOOKMARK [2][-]{subsection.2.2.4}{2.2.4 Cifrario a blocchi \205 esempio}{section.2.2}% 31
+\BOOKMARK [1][-]{section.2.3}{2.3 Data Encryption Standard - DES}{chapter.2}% 32
+\BOOKMARK [2][-]{subsection.2.3.1}{2.3.1 Perch\351 chiavi da 56 bit?}{section.2.3}% 33
+\BOOKMARK [2][-]{subsection.2.3.2}{2.3.2 Violabilit\340 e sicurezza di DES}{section.2.3}% 34
+\BOOKMARK [2][-]{subsection.2.3.3}{2.3.3 Violabilit\340 DES - esempio}{section.2.3}% 35
+\BOOKMARK [2][-]{subsection.2.3.4}{2.3.4 Violabilit\340 DES - cifratura multipla}{section.2.3}% 36
+\BOOKMARK [2][-]{subsection.2.3.5}{2.3.5 DES - Struttura base}{section.2.3}% 37
+\BOOKMARK [0][-]{chapter.3}{3 Modes of Operation}{}% 38
+\BOOKMARK [1][-]{section.3.1}{3.1 Introduzione}{chapter.3}% 39
+\BOOKMARK [1][-]{section.3.2}{3.2 Cifrare messaggi di grandi dimensioni}{chapter.3}% 40
+\BOOKMARK [2][-]{subsection.3.2.1}{3.2.1 Electronic Code Book \(ECB\)}{section.3.2}% 41
+\BOOKMARK [2][-]{subsection.3.2.2}{3.2.2 Cipher Block Chaining \(CBC\)}{section.3.2}% 42
+\BOOKMARK [2][-]{subsection.3.2.3}{3.2.3 Output FeedBack Mode \(OFB\)}{section.3.2}% 43
+\BOOKMARK [2][-]{subsection.3.2.4}{3.2.4 k-bit Output FeedBack Mode \(k-OFB\)}{section.3.2}% 44
+\BOOKMARK [2][-]{subsection.3.2.5}{3.2.5 Cipher FeedBack Mode \(CFB\)}{section.3.2}% 45
+\BOOKMARK [2][-]{subsection.3.2.6}{3.2.6 CounTeR Mode \(CTR\)}{section.3.2}% 46
+\BOOKMARK [2][-]{subsection.3.2.7}{3.2.7 Vantaggi e svantaggi di CTR}{section.3.2}% 47
+\BOOKMARK [1][-]{section.3.3}{3.3 Generare message authentication code\(MAC\)}{chapter.3}% 48
+\BOOKMARK [2][-]{subsection.3.3.1}{3.3.1 Residuo CBC}{section.3.3}% 49
+\BOOKMARK [2][-]{subsection.3.3.2}{3.3.2 Assicurare confidenzialit\340 e autenticit\340}{section.3.3}% 50
+\BOOKMARK [1][-]{section.3.4}{3.4 Cifratura multipla DES}{chapter.3}% 51
+\BOOKMARK [2][-]{subsection.3.4.1}{3.4.1 Cifratura multipla EDE o 3DES}{section.3.4}% 52
+\BOOKMARK [2][-]{subsection.3.4.2}{3.4.2 EDE con CBC Outside/Inside}{section.3.4}% 53

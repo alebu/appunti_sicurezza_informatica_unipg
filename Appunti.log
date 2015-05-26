@@ -1,24 +1,15 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2015.2.26)  1 APR 2015 01:15
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2015/dev/Debian) (preloaded format=pdflatex 2015.5.24)  26 MAY 2015 14:08
 entering extended mode
+ restricted \write18 enabled.
+ %&-line parsing enabled.
 **Appunti.tex
-
-(C:\Users\SilviaC\Documents\ing_inf_aut\sicurezza_informatica\appunti_sicurezza
-_informatica_unipg\Appunti.tex
-LaTeX2e <2011/06/27>
-Babel <v3.8m> and hyphenation patterns for english, afrikaans, ancientgreek, ar
-abic, armenian, assamese, basque, bengali, bokmal, bulgarian, catalan, coptic, 
-croatian, czech, danish, dutch, esperanto, estonian, farsi, finnish, french, ga
-lician, german, german-x-2012-05-30, greek, gujarati, hindi, hungarian, iceland
-ic, indonesian, interlingua, irish, italian, kannada, kurmanji, latin, latvian,
- lithuanian, malayalam, marathi, mongolian, mongolianlmc, monogreek, ngerman, n
-german-x-2012-05-30, nynorsk, oriya, panjabi, pinyin, polish, portuguese, roman
-ian, russian, sanskrit, serbian, slovak, slovenian, spanish, swedish, swissgerm
-an, tamil, telugu, turkish, turkmen, ukenglish, ukrainian, uppersorbian, usengl
-ishmax, welsh, loaded.
-("C:\Program Files\MiKTeX 2.9\tex\latex\base\book.cls"
-Document Class: book 2007/10/19 v1.4h Standard LaTeX document class
-("C:\Program Files\MiKTeX 2.9\tex\latex\base\bk10.clo"
-File: bk10.clo 2007/10/19 v1.4h Standard LaTeX file (size option)
+(./Appunti.tex
+LaTeX2e <2014/05/01>
+Babel <3.9l> and hyphenation patterns for 79 languages loaded.
+(/usr/share/texlive/texmf-dist/tex/latex/base/book.cls
+Document Class: book 2014/09/29 v1.4h Standard LaTeX document class
+(/usr/share/texlive/texmf-dist/tex/latex/base/bk10.clo
+File: bk10.clo 2014/09/29 v1.4h Standard LaTeX file (size option)
 )
 \c@part=\count79
 \c@chapter=\count80
@@ -33,7 +24,7 @@ File: bk10.clo 2007/10/19 v1.4h Standard LaTeX file (size option)
 \belowcaptionskip=\skip42
 \bibindent=\dimen102
 )
-("C:\Program Files\MiKTeX 2.9\tex\latex\lm\lmodern.sty"
+(/usr/share/texmf/tex/latex/lm/lmodern.sty
 Package: lmodern 2009/10/30 v1.6 Latin Modern Fonts
 LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
 (Font)                  OT1/cmr/m/n --> OT1/lmr/m/n on input line 22.
@@ -68,27 +59,27 @@ LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `bold'
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
 (Font)                  OT1/cmtt/m/n --> OT1/lmtt/m/n on input line 38.
 )
-("C:\Program Files\MiKTeX 2.9\tex\latex\base\fontenc.sty"
+(/usr/share/texlive/texmf-dist/tex/latex/base/fontenc.sty
 Package: fontenc 2005/09/27 v1.99g Standard LaTeX package
 
-("C:\Program Files\MiKTeX 2.9\tex\latex\base\t1enc.def"
+(/usr/share/texlive/texmf-dist/tex/latex/base/t1enc.def
 File: t1enc.def 2005/09/27 v1.99g Standard LaTeX file
 LaTeX Font Info:    Redeclaring font encoding T1 on input line 43.
 ))
-("C:\Program Files\MiKTeX 2.9\tex\latex\base\inputenc.sty"
-Package: inputenc 2008/03/30 v1.1d Input encoding file
+(/usr/share/texlive/texmf-dist/tex/latex/base/inputenc.sty
+Package: inputenc 2014/04/30 v1.2b Input encoding file
 \inpenc@prehook=\toks14
 \inpenc@posthook=\toks15
 
-("C:\Program Files\MiKTeX 2.9\tex\latex\base\utf8.def"
-File: utf8.def 2008/04/05 v1.1m UTF-8 support for inputenc
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def
+File: utf8.def 2014/09/29 v1.1m UTF-8 support for inputenc
 Now handling font encoding OML ...
 ... no UTF-8 mapping file for font encoding OML
 Now handling font encoding T1 ...
 ... processing UTF-8 mapping file for font encoding T1
 
-("C:\Program Files\MiKTeX 2.9\tex\latex\base\t1enc.dfu"
-File: t1enc.dfu 2008/04/05 v1.1m UTF-8 support for inputenc
+(/usr/share/texlive/texmf-dist/tex/latex/base/t1enc.dfu
+File: t1enc.dfu 2014/09/29 v1.1m UTF-8 support for inputenc
    defining Unicode char U+00A1 (decimal 161)
    defining Unicode char U+00A3 (decimal 163)
    defining Unicode char U+00AB (decimal 171)
@@ -237,8 +228,8 @@ File: t1enc.dfu 2008/04/05 v1.1m UTF-8 support for inputenc
 Now handling font encoding OT1 ...
 ... processing UTF-8 mapping file for font encoding OT1
 
-("C:\Program Files\MiKTeX 2.9\tex\latex\base\ot1enc.dfu"
-File: ot1enc.dfu 2008/04/05 v1.1m UTF-8 support for inputenc
+(/usr/share/texlive/texmf-dist/tex/latex/base/ot1enc.dfu
+File: ot1enc.dfu 2014/09/29 v1.1m UTF-8 support for inputenc
    defining Unicode char U+00A1 (decimal 161)
    defining Unicode char U+00A3 (decimal 163)
    defining Unicode char U+00B8 (decimal 184)
@@ -268,8 +259,8 @@ File: ot1enc.dfu 2008/04/05 v1.1m UTF-8 support for inputenc
 Now handling font encoding OMS ...
 ... processing UTF-8 mapping file for font encoding OMS
 
-("C:\Program Files\MiKTeX 2.9\tex\latex\base\omsenc.dfu"
-File: omsenc.dfu 2008/04/05 v1.1m UTF-8 support for inputenc
+(/usr/share/texlive/texmf-dist/tex/latex/base/omsenc.dfu
+File: omsenc.dfu 2014/09/29 v1.1m UTF-8 support for inputenc
    defining Unicode char U+00A7 (decimal 167)
    defining Unicode char U+00B6 (decimal 182)
    defining Unicode char U+00B7 (decimal 183)
@@ -292,188 +283,191 @@ Now handling font encoding U ...
    defining Unicode char U+2122 (decimal 8482)
    defining Unicode char U+2423 (decimal 9251)
 ))
-("C:\Program Files\MiKTeX 2.9\tex\latex\cite\cite.sty"
+(/usr/share/texlive/texmf-dist/tex/latex/cite/cite.sty
 LaTeX Info: Redefining \cite on input line 302.
-LaTeX Info: Redefining \nocite on input line 332.
-Package: cite 2015/02/27  v 5.5
+LaTeX Info: Redefining \nocite on input line 373.
+Package: cite 2010/09/10  v 5.3
 )
-("C:\Program Files\MiKTeX 2.9\tex\generic\babel\babel.sty"
-Package: babel 2008/07/08 v3.8m The Babel package
+(/usr/share/texlive/texmf-dist/tex/generic/babel/babel.sty
+Package: babel 2014/09/25 3.9l The Babel package
 
-*************************************
-* Local config file bblopts.cfg used
-*
-("C:\Program Files\MiKTeX 2.9\tex\latex\00miktex\bblopts.cfg"
-File: bblopts.cfg 2006/07/31 v1.0 MiKTeX 'babel' configuration
-)
-("C:\Program Files\MiKTeX 2.9\tex\generic\babel\italian.ldf"
-Language: italian 2008/03/14 v1.2t Italian support from the babel system
+(/usr/share/texlive/texmf-dist/tex/generic/babel-italian/italian.ldf
+Language: italian 2014/03/29 v1.3k Italian support from the babel system
 
-("C:\Program Files\MiKTeX 2.9\tex\generic\babel\babel.def"
-File: babel.def 2008/07/08 v3.8m Babel common definitions
+(/usr/share/texlive/texmf-dist/tex/generic/babel/babel.def
+File: babel.def 2014/09/25 3.9l Babel common definitions
 \babel@savecnt=\count88
 \U@D=\dimen103
 )
-Package babel Info: Making " an active character on input line 94.
+\it@lettering=\count89
+\it@doublequoteactive=\count90
+\it@ISOcompliance=\count91
+\Virgola=\count92
 ))
-("C:\Program Files\MiKTeX 2.9\tex\latex\graphics\graphicx.sty"
-Package: graphicx 1999/02/16 v1.0f Enhanced LaTeX Graphics (DPC,SPQR)
+(/usr/share/texlive/texmf-dist/tex/latex/etoolbox/etoolbox.sty
+Package: etoolbox 2011/01/03 v2.1 e-TeX tools for LaTeX
 
-("C:\Program Files\MiKTeX 2.9\tex\latex\graphics\keyval.sty"
-Package: keyval 1999/03/16 v1.13 key=value parser (DPC)
+(/usr/share/texlive/texmf-dist/tex/latex/etex-pkg/etex.sty
+Package: etex 1998/03/26 v2.0 eTeX basic definition package (PEB)
+\et@xins=\count93
+)
+\etb@tempcnta=\count94
+)
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/graphicx.sty
+Package: graphicx 2014/04/25 v1.0g Enhanced LaTeX Graphics (DPC,SPQR)
+
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/keyval.sty
+Package: keyval 2014/05/08 v1.15 key=value parser (DPC)
 \KV@toks@=\toks16
 )
-("C:\Program Files\MiKTeX 2.9\tex\latex\graphics\graphics.sty"
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/graphics.sty
 Package: graphics 2009/02/05 v1.0o Standard LaTeX Graphics (DPC,SPQR)
 
-("C:\Program Files\MiKTeX 2.9\tex\latex\graphics\trig.sty"
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/trig.sty
 Package: trig 1999/03/16 v1.09 sin cos tan (DPC)
 )
-("C:\Program Files\MiKTeX 2.9\tex\latex\00miktex\graphics.cfg"
-File: graphics.cfg 2007/01/18 v1.5 graphics configuration of teTeX/TeXLive
+(/usr/share/texlive/texmf-dist/tex/latex/latexconfig/graphics.cfg
+File: graphics.cfg 2010/04/23 v1.9 graphics configuration of TeX Live
 )
 Package graphics Info: Driver file: pdftex.def on input line 91.
 
-("C:\Program Files\MiKTeX 2.9\tex\latex\pdftex-def\pdftex.def"
+(/usr/share/texlive/texmf-dist/tex/latex/pdftex-def/pdftex.def
 File: pdftex.def 2011/05/27 v0.06d Graphics/color for pdfTeX
 
-("C:\Program Files\MiKTeX 2.9\tex\generic\oberdiek\infwarerr.sty"
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/infwarerr.sty
 Package: infwarerr 2010/04/08 v1.3 Providing info/warning/error messages (HO)
 )
-("C:\Program Files\MiKTeX 2.9\tex\generic\oberdiek\ltxcmds.sty"
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/ltxcmds.sty
 Package: ltxcmds 2011/11/09 v1.22 LaTeX kernel commands for general use (HO)
 )
-\Gread@gobject=\count89
+\Gread@gobject=\count95
 ))
 \Gin@req@height=\dimen104
 \Gin@req@width=\dimen105
 )
-("C:\Program Files\MiKTeX 2.9\tex\latex\listings\listings.sty"
-\lst@mode=\count90
+(/usr/share/texlive/texmf-dist/tex/latex/listings/listings.sty
+\lst@mode=\count96
 \lst@gtempboxa=\box26
 \lst@token=\toks17
-\lst@length=\count91
+\lst@length=\count97
 \lst@currlwidth=\dimen106
-\lst@column=\count92
-\lst@pos=\count93
+\lst@column=\count98
+\lst@pos=\count99
 \lst@lostspace=\dimen107
 \lst@width=\dimen108
-\lst@newlines=\count94
-\lst@lineno=\count95
+\lst@newlines=\count100
+\lst@lineno=\count101
 \lst@maxwidth=\dimen109
 
-("C:\Program Files\MiKTeX 2.9\tex\latex\listings\lstmisc.sty"
+(/usr/share/texlive/texmf-dist/tex/latex/listings/lstmisc.sty
 File: lstmisc.sty 2014/09/06 1.5e (Carsten Heinz)
-\c@lstnumber=\count96
-\lst@skipnumbers=\count97
+\c@lstnumber=\count102
+\lst@skipnumbers=\count103
 \lst@framebox=\box27
 )
-("C:\Program Files\MiKTeX 2.9\tex\latex\listings\listings.cfg"
+(/usr/share/texlive/texmf-dist/tex/latex/listings/listings.cfg
 File: listings.cfg 2014/09/06 1.5e listings configuration
 ))
 Package: listings 2014/09/06 1.5e (Carsten Heinz)
 
-("C:\Program Files\MiKTeX 2.9\tex\latex\graphics\color.sty"
-Package: color 2005/11/14 v1.0j Standard LaTeX Color (DPC)
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/color.sty
+Package: color 2014/04/23 v1.1a Standard LaTeX Color (DPC)
 
-("C:\Program Files\MiKTeX 2.9\tex\latex\00miktex\color.cfg"
+(/usr/share/texlive/texmf-dist/tex/latex/latexconfig/color.cfg
 File: color.cfg 2007/01/18 v1.5 color configuration of teTeX/TeXLive
 )
-Package color Info: Driver file: pdftex.def on input line 130.
+Package color Info: Driver file: pdftex.def on input line 137.
 )
-("C:\Program Files\MiKTeX 2.9\tex\latex\subfigure\subfigure.sty"
-Package: subfigure 2002/07/30 v2.1.4 subfigure package
+(/usr/share/texlive/texmf-dist/tex/latex/subfigure/subfigure.sty
+Package: subfigure 2002/03/15 v2.1.5 subfigure package
 \subfigtopskip=\skip43
 \subfigcapskip=\skip44
 \subfigcaptopadj=\dimen110
 \subfigbottomskip=\skip45
 \subfigcapmargin=\dimen111
 \subfiglabelskip=\skip46
-\c@subfigure=\count98
-\c@lofdepth=\count99
-\c@subtable=\count100
-\c@lotdepth=\count101
+\c@subfigure=\count104
+\c@lofdepth=\count105
+\c@subtable=\count106
+\c@lotdepth=\count107
 
 ****************************************
 * Local config file subfigure.cfg used *
 ****************************************
-("C:\Program Files\MiKTeX 2.9\tex\latex\subfigure\subfigure.cfg")
+(/usr/share/texlive/texmf-dist/tex/latex/subfigure/subfigure.cfg)
 \subfig@top=\skip47
 \subfig@bottom=\skip48
 )
-(C:\Users\SilviaC\Documents\ing_inf_aut\sicurezza_informatica\appunti_sicurezza
-_informatica_unipg\Pacchetti/algpseudocode.sty
+(./Pacchetti/algpseudocode.sty
 
 LaTeX Warning: You have requested package `Pacchetti/algpseudocode',
                but the package provides `algpseudocode'.
 
 Package: algpseudocode 
-("C:\Program Files\MiKTeX 2.9\tex\latex\base\ifthen.sty"
-Package: ifthen 2001/05/26 v1.1c Standard LaTeX ifthen package (DPC)
+(/usr/share/texlive/texmf-dist/tex/latex/base/ifthen.sty
+Package: ifthen 2014/09/29 v1.1c Standard LaTeX ifthen package (DPC)
 )
-("C:\Program Files\MiKTeX 2.9\tex\latex\algorithmicx\algorithmicx.sty"
+(/usr/share/texlive/texmf-dist/tex/latex/algorithmicx/algorithmicx.sty
 Package: algorithmicx 2005/04/27 v1.2 Algorithmicx
 
 Document Style algorithmicx 1.2 - a greatly improved `algorithmic' style
-\c@ALG@line=\count102
-\c@ALG@rem=\count103
-\c@ALG@nested=\count104
+\c@ALG@line=\count108
+\c@ALG@rem=\count109
+\c@ALG@nested=\count110
 \ALG@tlm=\skip49
 \ALG@thistlm=\skip50
-\c@ALG@Lnr=\count105
-\c@ALG@blocknr=\count106
-\c@ALG@storecount=\count107
-\c@ALG@tmpcounter=\count108
+\c@ALG@Lnr=\count111
+\c@ALG@blocknr=\count112
+\c@ALG@storecount=\count113
+\c@ALG@tmpcounter=\count114
 \ALG@tmplength=\skip51
 )
 Document Style - pseudocode environments for use with the `algorithmicx' style
-)
-(C:\Users\SilviaC\Documents\ing_inf_aut\sicurezza_informatica\appunti_sicurezza
-_informatica_unipg\Pacchetti/algorithm.sty
+) (./Pacchetti/algorithm.sty
 
 LaTeX Warning: You have requested package `Pacchetti/algorithm',
                but the package provides `algorithm'.
 
 Package: algorithm 2009/08/24 v0.1 Document Style `algorithm' - floating enviro
 nment
-("C:\Program Files\MiKTeX 2.9\tex\latex\float\float.sty"
+(/usr/share/texlive/texmf-dist/tex/latex/float/float.sty
 Package: float 2001/11/08 v1.3d Float enhancements (AL)
-\c@float@type=\count109
+\c@float@type=\count115
 \float@exts=\toks18
 \float@box=\box28
 \@float@everytoks=\toks19
 \@floatcapt=\box29
 )
 \@float@every@algorithm=\toks20
-\c@algorithm=\count110
+\c@algorithm=\count116
 )
-("C:\Program Files\MiKTeX 2.9\tex\latex\amsmath\amsmath.sty"
+(/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsmath.sty
 Package: amsmath 2013/01/14 v2.14 AMS math features
 \@mathmargin=\skip52
 
 For additional information on amsmath, use the `?' option.
-("C:\Program Files\MiKTeX 2.9\tex\latex\amsmath\amstext.sty"
+(/usr/share/texlive/texmf-dist/tex/latex/amsmath/amstext.sty
 Package: amstext 2000/06/29 v2.01
 
-("C:\Program Files\MiKTeX 2.9\tex\latex\amsmath\amsgen.sty"
+(/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsgen.sty
 File: amsgen.sty 1999/11/30 v2.0
 \@emptytoks=\toks21
 \ex@=\dimen112
 ))
-("C:\Program Files\MiKTeX 2.9\tex\latex\amsmath\amsbsy.sty"
+(/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsbsy.sty
 Package: amsbsy 1999/11/29 v1.2d
 \pmbraise@=\dimen113
 )
-("C:\Program Files\MiKTeX 2.9\tex\latex\amsmath\amsopn.sty"
+(/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsopn.sty
 Package: amsopn 1999/12/14 v2.01 operator names
 )
-\inf@bad=\count111
+\inf@bad=\count117
 LaTeX Info: Redefining \frac on input line 210.
-\uproot@=\count112
-\leftroot@=\count113
+\uproot@=\count118
+\leftroot@=\count119
 LaTeX Info: Redefining \overline on input line 306.
-\classnum@=\count114
-\DOTSCASE@=\count115
+\classnum@=\count120
+\DOTSCASE@=\count121
 LaTeX Info: Redefining \ldots on input line 378.
 LaTeX Info: Redefining \dots on input line 381.
 LaTeX Info: Redefining \cdots on input line 466.
@@ -482,15 +476,15 @@ LaTeX Info: Redefining \cdots on input line 466.
 \big@size=\dimen114
 LaTeX Font Info:    Redeclaring font encoding OML on input line 566.
 LaTeX Font Info:    Redeclaring font encoding OMS on input line 567.
-\macc@depth=\count116
-\c@MaxMatrixCols=\count117
+\macc@depth=\count122
+\c@MaxMatrixCols=\count123
 \dotsspace@=\muskip10
-\c@parentequation=\count118
-\dspbrk@lvl=\count119
+\c@parentequation=\count124
+\dspbrk@lvl=\count125
 \tag@help=\toks22
-\row@=\count120
-\column@=\count121
-\maxfields@=\count122
+\row@=\count126
+\column@=\count127
+\maxfields@=\count128
 \andhelp@=\toks23
 \eqnshift@=\dimen115
 \alignsep@=\dimen116
@@ -505,18 +499,17 @@ LaTeX Font Info:    Redeclaring font encoding OMS on input line 567.
 LaTeX Info: Redefining \[ on input line 2665.
 LaTeX Info: Redefining \] on input line 2666.
 )
-("C:\Program Files\MiKTeX 2.9\tex\latex\amsfonts\amsfonts.sty"
+(/usr/share/texlive/texmf-dist/tex/latex/amsfonts/amsfonts.sty
 Package: amsfonts 2013/01/14 v3.01 Basic AMSFonts support
 \symAMSa=\mathgroup4
 \symAMSb=\mathgroup5
 LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
 (Font)                  U/euf/m/n --> U/euf/b/n on input line 106.
 )
-("C:\Program Files\MiKTeX 2.9\tex\latex\amsfonts\amssymb.sty"
+(/usr/share/texlive/texmf-dist/tex/latex/amsfonts/amssymb.sty
 Package: amssymb 2013/01/14 v3.01 AMS font symbols
 )
-(C:\Users\SilviaC\Documents\ing_inf_aut\sicurezza_informatica\appunti_sicurezza
-_informatica_unipg\Pacchetti/mcode.sty
+(./Pacchetti/mcode.sty
 -- Package: `mcode' 2.3 <2012/08/31> --
 
 LaTeX Warning: You have requested package `Pacchetti/mcode',
@@ -524,7 +517,7 @@ LaTeX Warning: You have requested package `Pacchetti/mcode',
 
 Package: mcode 2012/08/31 2.3
  - settings optimized for display (colour formating)
-("C:\Program Files\MiKTeX 2.9\tex\latex\base\textcomp.sty"
+(/usr/share/texlive/texmf-dist/tex/latex/base/textcomp.sty
 Package: textcomp 2005/09/27 v1.99g Standard LaTeX package
 Package textcomp Info: Sub-encoding information:
 (textcomp)               5 = only ISO-Adobe without \textcurrency
@@ -539,13 +532,13 @@ Package textcomp Info: Sub-encoding information:
 (textcomp)             See the documentation for details.
 Package textcomp Info: Setting ? sub-encoding to TS1/1 on input line 71.
 
-("C:\Program Files\MiKTeX 2.9\tex\latex\base\ts1enc.def"
+(/usr/share/texlive/texmf-dist/tex/latex/base/ts1enc.def
 File: ts1enc.def 2001/06/05 v3.0e (jk/car/fm) Standard LaTeX file
 Now handling font encoding TS1 ...
 ... processing UTF-8 mapping file for font encoding TS1
 
-("C:\Program Files\MiKTeX 2.9\tex\latex\base\ts1enc.dfu"
-File: ts1enc.dfu 2008/04/05 v1.1m UTF-8 support for inputenc
+(/usr/share/texlive/texmf-dist/tex/latex/base/ts1enc.dfu
+File: ts1enc.dfu 2014/09/29 v1.1m UTF-8 support for inputenc
    defining Unicode char U+00A2 (decimal 162)
    defining Unicode char U+00A3 (decimal 163)
    defining Unicode char U+00A4 (decimal 164)
@@ -679,10 +672,10 @@ Package textcomp Info: Setting pplj sub-encoding to TS1/3 on input line 338.
 Package textcomp Info: Setting ptmx sub-encoding to TS1/4 on input line 339.
 Package textcomp Info: Setting ptmj sub-encoding to TS1/4 on input line 340.
 ))
-("C:\Program Files\MiKTeX 2.9\tex\latex\listings\lstlang1.sty"
+(/usr/share/texlive/texmf-dist/tex/latex/listings/lstlang1.sty
 File: lstlang1.sty 2014/09/06 1.5e listings language file
 )
-("C:\Program Files\MiKTeX 2.9\tex\latex\fancyhdr\fancyhdr.sty"
+(/usr/share/texlive/texmf-dist/tex/latex/fancyhdr/fancyhdr.sty
 \fancy@headwidth=\skip55
 \f@ncyO@elh=\skip56
 \f@ncyO@erh=\skip57
@@ -693,37 +686,37 @@ File: lstlang1.sty 2014/09/06 1.5e listings language file
 \f@ncyO@olf=\skip62
 \f@ncyO@orf=\skip63
 )
-("C:\Program Files\MiKTeX 2.9\tex\latex\setspace\setspace.sty"
+(/usr/share/texlive/texmf-dist/tex/latex/setspace/setspace.sty
 Package: setspace 2011/12/19 v6.7a set line spacing
 )
-("C:\Program Files\MiKTeX 2.9\tex\latex\tools\longtable.sty"
-Package: longtable 2004/02/01 v4.11 Multi-page Table package (DPC)
+(/usr/share/texlive/texmf-dist/tex/latex/tools/longtable.sty
+Package: longtable 2014/10/28 v4.11 Multi-page Table package (DPC)
 \LTleft=\skip64
 \LTright=\skip65
 \LTpre=\skip66
 \LTpost=\skip67
-\LTchunksize=\count123
+\LTchunksize=\count129
 \LTcapwidth=\dimen121
 \LT@head=\box32
 \LT@firsthead=\box33
 \LT@foot=\box34
 \LT@lastfoot=\box35
-\LT@cols=\count124
-\LT@rows=\count125
-\c@LT@tables=\count126
-\c@LT@chunks=\count127
+\LT@cols=\count130
+\LT@rows=\count131
+\c@LT@tables=\count132
+\c@LT@chunks=\count133
 \LT@p@ftn=\toks26
 )
-("C:\Program Files\MiKTeX 2.9\tex\latex\hyperref\hyperref.sty"
+(/usr/share/texlive/texmf-dist/tex/latex/hyperref/hyperref.sty
 Package: hyperref 2012/11/06 v6.83m Hypertext links for LaTeX
 
-("C:\Program Files\MiKTeX 2.9\tex\generic\oberdiek\hobsub-hyperref.sty"
-Package: hobsub-hyperref 2012/04/25 v1.12 Bundle oberdiek, subset hyperref (HO)
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/hobsub-hyperref.sty
+Package: hobsub-hyperref 2012/05/28 v1.13 Bundle oberdiek, subset hyperref (HO)
 
 
-("C:\Program Files\MiKTeX 2.9\tex\generic\oberdiek\hobsub-generic.sty"
-Package: hobsub-generic 2012/04/25 v1.12 Bundle oberdiek, subset generic (HO)
-Package: hobsub 2012/04/25 v1.12 Construct package bundles (HO)
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/hobsub-generic.sty
+Package: hobsub-generic 2012/05/28 v1.13 Bundle oberdiek, subset generic (HO)
+Package: hobsub 2012/05/28 v1.13 Construct package bundles (HO)
 Package hobsub Info: Skipping package `infwarerr' (already loaded).
 Package hobsub Info: Skipping package `ltxcmds' (already loaded).
 Package: ifluatex 2010/03/01 v1.3 Provides the ifluatex switch (HO)
@@ -754,35 +747,34 @@ Package: uniquecounter 2011/01/30 v1.2 Provide unlimited unique counter (HO)
 )
 Package hobsub Info: Skipping package `hobsub' (already loaded).
 Package: letltxmacro 2010/09/02 v1.4 Let assignment for LaTeX macros (HO)
-Package: hopatch 2011/06/24 v1.1 Wrapper for package hooks (HO)
+Package: hopatch 2012/05/28 v1.2 Wrapper for package hooks (HO)
 Package: xcolor-patch 2011/01/30 xcolor patch
 Package: atveryend 2011/06/30 v1.8 Hooks at the very end of document (HO)
-Package atveryend Info: \enddocument detected (standard20110627).
 Package: atbegshi 2011/10/05 v1.16 At begin shipout hook (HO)
 Package: refcount 2011/10/16 v3.4 Data extraction from label references (HO)
 Package: hycolor 2011/01/30 v1.7 Color options for hyperref/bookmark (HO)
 )
-("C:\Program Files\MiKTeX 2.9\tex\generic\ifxetex\ifxetex.sty"
+(/usr/share/texlive/texmf-dist/tex/generic/ifxetex/ifxetex.sty
 Package: ifxetex 2010/09/12 v0.6 Provides ifxetex conditional
 )
-("C:\Program Files\MiKTeX 2.9\tex\latex\oberdiek\auxhook.sty"
+(/usr/share/texlive/texmf-dist/tex/latex/oberdiek/auxhook.sty
 Package: auxhook 2011/03/04 v1.3 Hooks for auxiliary files (HO)
 )
-("C:\Program Files\MiKTeX 2.9\tex\latex\oberdiek\kvoptions.sty"
+(/usr/share/texlive/texmf-dist/tex/latex/oberdiek/kvoptions.sty
 Package: kvoptions 2011/06/30 v3.11 Key value format for package options (HO)
 )
 \@linkdim=\dimen122
-\Hy@linkcounter=\count128
-\Hy@pagecounter=\count129
+\Hy@linkcounter=\count134
+\Hy@pagecounter=\count135
 
-("C:\Program Files\MiKTeX 2.9\tex\latex\hyperref\pd1enc.def"
+(/usr/share/texlive/texmf-dist/tex/latex/hyperref/pd1enc.def
 File: pd1enc.def 2012/11/06 v6.83m Hyperref: PDFDocEncoding definition (HO)
 Now handling font encoding PD1 ...
 ... no UTF-8 mapping file for font encoding PD1
 )
-\Hy@SavedSpaceFactor=\count130
+\Hy@SavedSpaceFactor=\count136
 
-("C:\Program Files\MiKTeX 2.9\tex\latex\00miktex\hyperref.cfg"
+(/usr/share/texlive/texmf-dist/tex/latex/latexconfig/hyperref.cfg
 File: hyperref.cfg 2002/06/06 v1.2 hyperref configuration of TeXLive
 )
 Package hyperref Info: Option `colorlinks' set `true' on input line 4319.
@@ -793,15 +785,15 @@ Package hyperref Info: Plain pages OFF on input line 4458.
 Package hyperref Info: Backreferencing OFF on input line 4463.
 Package hyperref Info: Implicit mode ON; LaTeX internals redefined.
 Package hyperref Info: Bookmarks ON on input line 4688.
-\c@Hy@tempcnt=\count131
+\c@Hy@tempcnt=\count137
 
-("C:\Program Files\MiKTeX 2.9\tex\latex\ltxmisc\url.sty"
+(/usr/share/texlive/texmf-dist/tex/latex/url/url.sty
 \Urlmuskip=\muskip11
-Package: url 2006/04/12  ver 3.3  Verb mode for urls, etc.
+Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
 )
 LaTeX Info: Redefining \url on input line 5041.
 \XeTeXLinkMargin=\dimen123
-\Fld@menulength=\count132
+\Fld@menulength=\count138
 \Field@Width=\dimen124
 \Fld@charsize=\dimen125
 Package hyperref Info: Hyper figures OFF on input line 6295.
@@ -813,19 +805,19 @@ Package hyperref Info: Link coloring with OCG OFF on input line 6320.
 Package hyperref Info: PDF/A mode OFF on input line 6325.
 LaTeX Info: Redefining \ref on input line 6365.
 LaTeX Info: Redefining \pageref on input line 6369.
-\Hy@abspage=\count133
-\c@Item=\count134
-\c@Hfootnote=\count135
+\Hy@abspage=\count139
+\c@Item=\count140
+\c@Hfootnote=\count141
 )
 
 Package hyperref Message: Driver (autodetected): hpdftex.
 
-("C:\Program Files\MiKTeX 2.9\tex\latex\hyperref\hpdftex.def"
+(/usr/share/texlive/texmf-dist/tex/latex/hyperref/hpdftex.def
 File: hpdftex.def 2012/11/06 v6.83m Hyperref driver for pdfTeX
-\Fld@listcount=\count136
-\c@bookmark@seq@number=\count137
+\Fld@listcount=\count142
+\c@bookmark@seq@number=\count143
 
-("C:\Program Files\MiKTeX 2.9\tex\latex\oberdiek\rerunfilecheck.sty"
+(/usr/share/texlive/texmf-dist/tex/latex/oberdiek/rerunfilecheck.sty
 Package: rerunfilecheck 2011/04/15 v1.7 Rerun checks for auxiliary files (HO)
 Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
 82.
@@ -834,11 +826,11 @@ Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
 )
 Package hyperref Info: Option `bookmarksnumbered' set `true' on input line 27.
 
-("C:\Program Files\MiKTeX 2.9\tex\latex\geometry\geometry.sty"
+(/usr/share/texlive/texmf-dist/tex/latex/geometry/geometry.sty
 Package: geometry 2010/09/12 v5.6 Page Geometry
-\Gm@cnth=\count138
-\Gm@cntv=\count139
-\c@Gm@tempcnt=\count140
+\Gm@cnth=\count144
+\Gm@cntv=\count145
+\c@Gm@tempcnt=\count146
 \Gm@bindingoffset=\dimen126
 \Gm@wd@mp=\dimen127
 \Gm@odd@mp=\dimen128
@@ -848,15 +840,14 @@ Package: geometry 2010/09/12 v5.6 Page Geometry
 \Gm@layouthoffset=\dimen132
 \Gm@layoutvoffset=\dimen133
 \Gm@dimlist=\toks27
-
-("C:\Program Files\MiKTeX 2.9\tex\latex\geometry\geometry.cfg"))
+)
 
 LaTeX Warning: Unused global option(s):
     [4pt].
 
+(./Appunti.aux)
+\openout1 = `Appunti.aux'.
 
-(C:\Users\SilviaC\Documents\ing_inf_aut\sicurezza_informatica\appunti_sicurezza
-_informatica_unipg\Appunti.aux)
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 34.
 LaTeX Font Info:    ... okay on input line 34.
 LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 34.
@@ -871,52 +862,68 @@ LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 34.
 LaTeX Font Info:    ... okay on input line 34.
 LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 34.
 LaTeX Font Info:    Try loading font information for TS1+cmr on input line 34.
-
-("C:\Program Files\MiKTeX 2.9\tex\latex\base\ts1cmr.fd"
-File: ts1cmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
+ (/usr/share/texlive/texmf-dist/tex/latex/base/ts1cmr.fd
+File: ts1cmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    ... okay on input line 34.
 LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 34.
 LaTeX Font Info:    ... okay on input line 34.
 LaTeX Font Info:    Try loading font information for T1+lmr on input line 34.
 
-("C:\Program Files\MiKTeX 2.9\tex\latex\lm\t1lmr.fd"
+(/usr/share/texmf/tex/latex/lm/t1lmr.fd
 File: t1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-("C:\Program Files\MiKTeX 2.9\tex\context\base\supp-pdf.mkii"
+LaTeX Info: Redefining \it@ocap on input line 34.
+LaTeX Info: Redefining \it@ccap on input line 34.
+
+(/usr/share/texlive/texmf-dist/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count141
+\scratchcounter=\count147
 \scratchdimen=\dimen134
 \scratchbox=\box36
-\nofMPsegments=\count142
-\nofMParguments=\count143
+\nofMPsegments=\count148
+\nofMParguments=\count149
 \everyMPshowfont=\toks28
-\MPscratchCnt=\count144
+\MPscratchCnt=\count150
 \MPscratchDim=\dimen135
-\MPnumerator=\count145
-\makeMPintoPDFobject=\count146
+\MPnumerator=\count151
+\makeMPintoPDFobject=\count152
 \everyMPtoPDFconversion=\toks29
+) (/usr/share/texlive/texmf-dist/tex/latex/oberdiek/epstopdf-base.sty
+Package: epstopdf-base 2010/02/09 v2.5 Base part for package epstopdf
+
+(/usr/share/texlive/texmf-dist/tex/latex/oberdiek/grfext.sty
+Package: grfext 2010/08/19 v1.1 Manage graphics extensions (HO)
 )
-\c@lstlisting=\count147
+Package grfext Info: Graphics extension search list:
+(grfext)             [.png,.pdf,.jpg,.mps,.jpeg,.jbig2,.jb2,.PNG,.PDF,.JPG,.JPE
+G,.JBIG2,.JB2,.eps]
+(grfext)             \AppendGraphicsExtensions on input line 452.
+
+(/usr/share/texlive/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
+File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
+e
+))
+\c@lstlisting=\count153
 \AtBeginShipoutBox=\box37
 Package hyperref Info: Link coloring ON on input line 34.
- ("C:\Program Files\MiKTeX 2.9\tex\latex\hyperref\nameref.sty"
+
+(/usr/share/texlive/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2012/10/27 v2.43 Cross-referencing by name of section
 
-("C:\Program Files\MiKTeX 2.9\tex\generic\oberdiek\gettitlestring.sty"
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/gettitlestring.sty
 Package: gettitlestring 2010/12/03 v1.4 Cleanup title references (HO)
 )
-\c@section@level=\count148
+\c@section@level=\count154
 )
 LaTeX Info: Redefining \ref on input line 34.
 LaTeX Info: Redefining \pageref on input line 34.
 LaTeX Info: Redefining \nameref on input line 34.
 
-(C:\Users\SilviaC\Documents\ing_inf_aut\sicurezza_informatica\appunti_sicurezza
-_informatica_unipg\Appunti.out)
-(C:\Users\SilviaC\Documents\ing_inf_aut\sicurezza_informatica\appunti_sicurezza
-_informatica_unipg\Appunti.out)
+(./Appunti.out) (./Appunti.out)
 \@outlinefile=\write3
+\openout3 = `Appunti.out'.
+
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -952,7 +959,7 @@ _informatica_unipg\Appunti.out)
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-<Immagini/logo.png, id=215, 269.3262pt x 269.3262pt>
+<Immagini/logo.png, id=273, 269.3262pt x 269.3262pt>
 File: Immagini/logo.png Graphic file (type png)
  <use Immagini/logo.png>
 Package pdftex.def Info: Immagini/logo.png used on input line 39.
@@ -961,9 +968,7 @@ Package pdftex.def Info: Immagini/logo.png used on input line 39.
 [1
 
 
-{C:/ProgramData/MiKTeX/2.9/pdftex/config/pdftex.map} <C:/Users/SilviaC/Document
-s/ing_inf_aut/sicurezza_informatica/appunti_sicurezza_informatica_unipg/Immagin
-i/logo.png>]
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map} <./Immagini/logo.png>]
 
 Package Fancyhdr Warning: \fancyhead's `E' option without twoside option is use
 less on input line 67.
@@ -972,59 +977,57 @@ less on input line 67.
 Package Fancyhdr Warning: \fancyhead's `E' option without twoside option is use
 less on input line 68.
 
-
-(C:\Users\SilviaC\Documents\ing_inf_aut\sicurezza_informatica\appunti_sicurezza
-_informatica_unipg\Appunti.toc
-LaTeX Font Info:    Try loading font information for OT1+lmr on input line 3.
-
-("C:\Program Files\MiKTeX 2.9\tex\latex\lm\ot1lmr.fd"
+(./Appunti.toc
+LaTeX Font Info:    Try loading font information for OT1+lmr on input line 4.
+ (/usr/share/texmf/tex/latex/lm/ot1lmr.fd
 File: ot1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-LaTeX Font Info:    Try loading font information for OML+lmm on input line 3.
+LaTeX Font Info:    Try loading font information for OML+lmm on input line 4.
 
-("C:\Program Files\MiKTeX 2.9\tex\latex\lm\omllmm.fd"
+(/usr/share/texmf/tex/latex/lm/omllmm.fd
 File: omllmm.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-LaTeX Font Info:    Try loading font information for OMS+lmsy on input line 3.
+LaTeX Font Info:    Try loading font information for OMS+lmsy on input line 4.
 
-("C:\Program Files\MiKTeX 2.9\tex\latex\lm\omslmsy.fd"
+(/usr/share/texmf/tex/latex/lm/omslmsy.fd
 File: omslmsy.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-LaTeX Font Info:    Try loading font information for OMX+lmex on input line 3.
+LaTeX Font Info:    Try loading font information for OMX+lmex on input line 4.
 
-("C:\Program Files\MiKTeX 2.9\tex\latex\lm\omxlmex.fd"
+(/usr/share/texmf/tex/latex/lm/omxlmex.fd
 File: omxlmex.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10> on input line 3.
+(Font)              <10> on input line 4.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <7> on input line 3.
+(Font)              <7> on input line 4.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <5> on input line 3.
-LaTeX Font Info:    Try loading font information for U+msa on input line 3.
+(Font)              <5> on input line 4.
+LaTeX Font Info:    Try loading font information for U+msa on input line 4.
 
-("C:\Program Files\MiKTeX 2.9\tex\latex\amsfonts\umsa.fd"
+(/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 3.
+LaTeX Font Info:    Try loading font information for U+msb on input line 4.
 
-("C:\Program Files\MiKTeX 2.9\tex\latex\amsfonts\umsb.fd"
+(/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has
  been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.94 ...FeedBack Mode (OFB)}{33}{subsection.3.2.3}
+l.91 ...line {3}Modes of Operation}{33}{chapter.3}
                                                    [1
 
 ])
 \tf@toc=\write4
+\openout4 = `Appunti.toc'.
 
-(C:\Users\SilviaC\Documents\ing_inf_aut\sicurezza_informatica\appunti_sicurezza
-_informatica_unipg\Capitolo_1.tex [2]
+ (./Capitolo_1.tex
+[2]
 Capitolo 1.
 LaTeX Font Info:    Try loading font information for TS1+lmr on input line 9.
-("C:\Program Files\MiKTeX 2.9\tex\latex\lm\ts1lmr.fd"
+(/usr/share/texmf/tex/latex/lm/ts1lmr.fd
 File: ts1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 
@@ -1036,7 +1039,7 @@ LaTeX Warning: Citation `isecomSecurity' on page 3 undefined on input line 10.
 [3
 
 ] [4]
-<Immagini/Capitolo1/venn_security.png, id=303, 519.44063pt x 479.54156pt>
+<Immagini/Capitolo1/venn_security.png, id=376, 519.44063pt x 479.54156pt>
 File: Immagini/Capitolo1/venn_security.png Graphic file (type png)
 
 <use Immagini/Capitolo1/venn_security.png>
@@ -1048,8 +1051,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 94--95
 
  []
 
-[5 <C:/Users/SilviaC/Documents/ing_inf_aut/sicurezza_informatica/appunti_sicure
-zza_informatica_unipg/Immagini/Capitolo1/venn_security.png>]
+[5 <./Immagini/Capitolo1/venn_security.png>]
 Underfull \hbox (badness 10000) in paragraph at lines 104--106
 
  []
@@ -1070,7 +1072,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 194--196
  []
 
 [9] [10]
-<Immagini/Capitolo1/schema_blocchi_crittografia.png, id=357, 405.76593pt x 63.9
+<Immagini/Capitolo1/schema_blocchi_crittografia.png, id=430, 405.76593pt x 63.9
 8906pt>
 File: Immagini/Capitolo1/schema_blocchi_crittografia.png Graphic file (type png
 )
@@ -1078,19 +1080,16 @@ File: Immagini/Capitolo1/schema_blocchi_crittografia.png Graphic file (type png
 Package pdftex.def Info: Immagini/Capitolo1/schema_blocchi_crittografia.png use
 d on input line 254.
 (pdftex.def)             Requested size: 341.44164pt x 53.84514pt.
- [11 <C:/Users/SilviaC/Documents/ing_inf_aut/sicurezza_informatica/appunti_sicu
-rezza_informatica_unipg/Immagini/Capitolo1/schema_blocchi_crittografia.png>] [1
-2]
-<Immagini/Capitolo1/attacco_solo_tc.png, id=369, 353.06906pt x 225.09094pt>
+ [11 <./Immagini/Capitolo1/schema_blocchi_crittografia.png>] [12]
+<Immagini/Capitolo1/attacco_solo_tc.png, id=442, 353.06906pt x 225.09094pt>
 File: Immagini/Capitolo1/attacco_solo_tc.png Graphic file (type png)
 
 <use Immagini/Capitolo1/attacco_solo_tc.png>
 Package pdftex.def Info: Immagini/Capitolo1/attacco_solo_tc.png used on input l
 ine 304.
 (pdftex.def)             Requested size: 341.4368pt x 217.67505pt.
- [13 <C:/Users/SilviaC/Documents/ing_inf_aut/sicurezza_informatica/appunti_sicu
-rezza_informatica_unipg/Immagini/Capitolo1/attacco_solo_tc.png>]
-<Immagini/Capitolo1/tab_attacchi_cifrari.png, id=383, 554.82281pt x 290.58563pt
+ [13 <./Immagini/Capitolo1/attacco_solo_tc.png>]
+<Immagini/Capitolo1/tab_attacchi_cifrari.png, id=456, 554.82281pt x 290.58563pt
 >
 File: Immagini/Capitolo1/tab_attacchi_cifrari.png Graphic file (type png)
  <use Immagini/Capitolo1/tab_attacchi_cifrari.png>
@@ -1102,7 +1101,7 @@ Overfull \hbox (8.53792pt too wide) in paragraph at lines 346--347
  [][] 
  []
 
-<Immagini/Capitolo1/tab_tempi.png, id=384, 539.76656pt x 201.00093pt>
+<Immagini/Capitolo1/tab_tempi.png, id=457, 539.76656pt x 201.00093pt>
 File: Immagini/Capitolo1/tab_tempi.png Graphic file (type png)
 
 <use Immagini/Capitolo1/tab_tempi.png>
@@ -1114,11 +1113,9 @@ Overfull \hbox (37.00027pt too wide) in paragraph at lines 352--353
  [][] 
  []
 
-[14] [15 <C:/Users/SilviaC/Documents/ing_inf_aut/sicurezza_informatica/appunti_
-sicurezza_informatica_unipg/Immagini/Capitolo1/tab_attacchi_cifrari.png> <C:/Us
-ers/SilviaC/Documents/ing_inf_aut/sicurezza_informatica/appunti_sicurezza_infor
-matica_unipg/Immagini/Capitolo1/tab_tempi.png>]
-<Immagini/Capitolo1/access_control_matrix_ex.png, id=402, 522.45187pt x 152.820
+[14] [15 <./Immagini/Capitolo1/tab_attacchi_cifrari.png> <./Immagini/Capitolo1/
+tab_tempi.png>]
+<Immagini/Capitolo1/access_control_matrix_ex.png, id=476, 522.45187pt x 152.820
 94pt>
 File: Immagini/Capitolo1/access_control_matrix_ex.png Graphic file (type png)
  <use Immagini/Capitolo1/access_control_matrix_ex.png>
@@ -1126,16 +1123,15 @@ Package pdftex.def Info: Immagini/Capitolo1/access_control_matrix_ex.png used o
 n input line 378.
 (pdftex.def)             Requested size: 369.89113pt x 108.1958pt.
 
-<Immagini/Capitolo1/access_control_list_ex.png, id=403, 288.3272pt x 140.02313p
+<Immagini/Capitolo1/access_control_list_ex.png, id=477, 288.3272pt x 140.02313p
 t>
 File: Immagini/Capitolo1/access_control_list_ex.png Graphic file (type png)
  <use Immagini/Capitolo1/access_control_list_ex.png>
 Package pdftex.def Info: Immagini/Capitolo1/access_control_list_ex.png used on 
 input line 399.
 (pdftex.def)             Requested size: 284.53848pt x 138.18318pt.
- [16 <C:/Users/SilviaC/Documents/ing_inf_aut/sicurezza_informatica/appunti_sicu
-rezza_informatica_unipg/Immagini/Capitolo1/access_control_matrix_ex.png>]
-<Immagini/Capitolo1/CAC_ex.png, id=411, 553.31718pt x 191.9672pt>
+ [16 <./Immagini/Capitolo1/access_control_matrix_ex.png>]
+<Immagini/Capitolo1/CAC_ex.png, id=485, 553.31718pt x 191.9672pt>
 File: Immagini/Capitolo1/CAC_ex.png Graphic file (type png)
 
 <use Immagini/Capitolo1/CAC_ex.png>
@@ -1146,9 +1142,8 @@ Underfull \hbox (badness 10000) in paragraph at lines 424--426
 
  []
 
-[17 <C:/Users/SilviaC/Documents/ing_inf_aut/sicurezza_informatica/appunti_sicur
-ezza_informatica_unipg/Immagini/Capitolo1/access_control_list_ex.png>]
-<Immagini/Capitolo1/RBAC_arch.png, id=420, 463.7325pt x 258.9675pt>
+[17 <./Immagini/Capitolo1/access_control_list_ex.png>]
+<Immagini/Capitolo1/RBAC_arch.png, id=494, 463.7325pt x 258.9675pt>
 File: Immagini/Capitolo1/RBAC_arch.png Graphic file (type png)
 
 <use Immagini/Capitolo1/RBAC_arch.png>
@@ -1156,23 +1151,19 @@ Package pdftex.def Info: Immagini/Capitolo1/RBAC_arch.png used on input line 44
 3.
 (pdftex.def)             Requested size: 284.53218pt x 158.89458pt.
 
-<Immagini/Capitolo1/RBAC_ger.png, id=421, 499.8675pt x 311.66437pt>
+<Immagini/Capitolo1/RBAC_ger.png, id=495, 499.8675pt x 311.66437pt>
 File: Immagini/Capitolo1/RBAC_ger.png Graphic file (type png)
 
 <use Immagini/Capitolo1/RBAC_ger.png>
 Package pdftex.def Info: Immagini/Capitolo1/RBAC_ger.png used on input line 452
 .
 (pdftex.def)             Requested size: 284.53844pt x 177.40799pt.
- [18 <C:/Users/SilviaC/Documents/ing_inf_aut/sicurezza_informatica/appunti_sicu
-rezza_informatica_unipg/Immagini/Capitolo1/CAC_ex.png>])
-(C:\Users\SilviaC\Documents\ing_inf_aut\sicurezza_informatica\appunti_sicurezza
-_informatica_unipg\Capitolo_2.tex [19 <C:/Users/SilviaC/Documents/ing_inf_aut/s
-icurezza_informatica/appunti_sicurezza_informatica_unipg/Immagini/Capitolo1/RBA
-C_arch.png> <C:/Users/SilviaC/Documents/ing_inf_aut/sicurezza_informatica/appun
-ti_sicurezza_informatica_unipg/Immagini/Capitolo1/RBAC_ger.png>]
+ [18 <./Immagini/Capitolo1/CAC_ex.png>])
+(./Capitolo_2.tex [19 <./Immagini/Capitolo1/RBAC_arch.png> <./Immagini/Capitolo
+1/RBAC_ger.png>]
 Capitolo 2.
 
-<Immagini/Capitolo2/segreta_schema_blocchi.png, id=441, 515.67656pt x 141.52875
+<Immagini/Capitolo2/segreta_schema_blocchi.png, id=515, 515.67656pt x 141.52875
 pt>
 File: Immagini/Capitolo2/segreta_schema_blocchi.png Graphic file (type png)
  <use Immagini/Capitolo2/segreta_schema_blocchi.png>
@@ -1181,9 +1172,8 @@ input line 9.
 (pdftex.def)             Requested size: 369.89409pt x 101.51837pt.
  [20
 
- <C:/Users/SilviaC/Documents/ing_inf_aut/sicurezza_informatica/appunti_sicurezz
-a_informatica_unipg/Immagini/Capitolo2/segreta_schema_blocchi.png>]
-<Immagini/Capitolo2/strong_auth_secret.png, id=450, 602.25pt x 312.41719pt>
+ <./Immagini/Capitolo2/segreta_schema_blocchi.png>]
+<Immagini/Capitolo2/strong_auth_secret.png, id=524, 602.25pt x 312.41719pt>
 File: Immagini/Capitolo2/strong_auth_secret.png Graphic file (type png)
 
 <use Immagini/Capitolo2/strong_auth_secret.png>
@@ -1205,8 +1195,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 55--59
 
  []
 
-[22 <C:/Users/SilviaC/Documents/ing_inf_aut/sicurezza_informatica/appunti_sicur
-ezza_informatica_unipg/Immagini/Capitolo2/strong_auth_secret.png>]
+[22 <./Immagini/Capitolo2/strong_auth_secret.png>]
 Underfull \hbox (badness 10000) in paragraph at lines 83--85
 
  []
@@ -1236,7 +1225,7 @@ LaTeX Warning: Command \textellipsis invalid in math mode on input line 104.
 
 LaTeX Warning: Command \textellipsis invalid in math mode on input line 104.
 
-<Immagini/Capitolo2/block_cipher.png, id=472, 562.35094pt x 434.37282pt>
+<Immagini/Capitolo2/block_cipher.png, id=546, 562.35094pt x 434.37282pt>
 File: Immagini/Capitolo2/block_cipher.png Graphic file (type png)
 
 <use Immagini/Capitolo2/block_cipher.png>
@@ -1263,15 +1252,111 @@ Underfull \hbox (badness 10000) in paragraph at lines 115--116
 
  []
 
-[24] [25 <C:/Users/SilviaC/Documents/ing_inf_aut/sicurezza_informatica/appunti_
-sicurezza_informatica_unipg/Immagini/Capitolo2/block_cipher.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 122--124
+[24] [25 <./Immagini/Capitolo2/block_cipher.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 121--123
 
  []
 
-)
-(C:\Users\SilviaC\Documents\ing_inf_aut\sicurezza_informatica\appunti_sicurezza
-_informatica_unipg\Capitolo_3.tex [26] [27]
+<Immagini/Capitolo2/des_structure.png, id=558, 451.6875pt x 423.5825pt>
+File: Immagini/Capitolo2/des_structure.png Graphic file (type png)
+
+<use Immagini/Capitolo2/des_structure.png>
+Package pdftex.def Info: Immagini/Capitolo2/des_structure.png used on input lin
+e 141.
+(pdftex.def)             Requested size: 303.41475pt x 284.53561pt.
+ [26]
+<Immagini/Capitolo2/des_perm_3.png, id=565, 516.42938pt x 225.84375pt>
+File: Immagini/Capitolo2/des_perm_3.png Graphic file (type png)
+
+<use Immagini/Capitolo2/des_perm_3.png>
+Package pdftex.def Info: Immagini/Capitolo2/des_perm_3.png used on input line 1
+62.
+(pdftex.def)             Requested size: 227.62363pt x 99.54385pt.
+
+<Immagini/Capitolo2/des_perm.png, id=567, 826.58812pt x 355.3275pt>
+File: Immagini/Capitolo2/des_perm.png Graphic file (type png)
+
+<use Immagini/Capitolo2/des_perm.png>
+Package pdftex.def Info: Immagini/Capitolo2/des_perm.png used on input line 171
+.
+(pdftex.def)             Requested size: 369.89273pt x 159.0067pt.
+
+<Immagini/Capitolo2/des_perm_2.png, id=570, 835.62187pt x 342.5297pt>
+File: Immagini/Capitolo2/des_perm_2.png Graphic file (type png)
+
+<use Immagini/Capitolo2/des_perm_2.png>
+Package pdftex.def Info: Immagini/Capitolo2/des_perm_2.png used on input line 1
+78.
+(pdftex.def)             Requested size: 284.52844pt x 116.63103pt.
+ [27 <./Immagini/Capitolo2/des_structure.png>] [28 <./Immagini/Capitolo2/des_pe
+rm_3.png> <./Immagini/Capitolo2/des_perm.png> <./Immagini/Capitolo2/des_perm_2.
+png>]
+<Immagini/Capitolo2/des_perm_keys.png, id=591, 648.17157pt x 162.6075pt>
+File: Immagini/Capitolo2/des_perm_keys.png Graphic file (type png)
+
+<use Immagini/Capitolo2/des_perm_keys.png>
+Package pdftex.def Info: Immagini/Capitolo2/des_perm_keys.png used on input lin
+e 192.
+(pdftex.def)             Requested size: 284.52383pt x 71.3788pt.
+
+<Immagini/Capitolo2/des_perm_keys_2.png, id=592, 648.17157pt x 311.66437pt>
+File: Immagini/Capitolo2/des_perm_keys_2.png Graphic file (type png)
+
+<use Immagini/Capitolo2/des_perm_keys_2.png>
+Package pdftex.def Info: Immagini/Capitolo2/des_perm_keys_2.png used on input l
+ine 198.
+(pdftex.def)             Requested size: 284.52383pt x 136.80936pt.
+ [29 <./Immagini/Capitolo2/des_perm_keys.png> <./Immagini/Capitolo2/des_perm_ke
+ys_2.png>]
+<Immagini/Capitolo2/round_i.png, id=606, 501.875pt x 165.61874pt>
+File: Immagini/Capitolo2/round_i.png Graphic file (type png)
+
+<use Immagini/Capitolo2/round_i.png>
+Package pdftex.def Info: Immagini/Capitolo2/round_i.png used on input line 207.
+
+(pdftex.def)             Requested size: 284.54012pt x 93.89822pt.
+
+<Immagini/Capitolo2/round_des.png, id=608, 501.875pt x 276.03125pt>
+File: Immagini/Capitolo2/round_des.png Graphic file (type png)
+
+<use Immagini/Capitolo2/round_des.png>
+Package pdftex.def Info: Immagini/Capitolo2/round_des.png used on input line 23
+8.
+(pdftex.def)             Requested size: 256.08304pt x 140.84567pt.
+ [30 <./Immagini/Capitolo2/round_i.png>]
+<Immagini/Capitolo2/mangler.png, id=621, 831.105pt x 527.72156pt>
+File: Immagini/Capitolo2/mangler.png Graphic file (type png)
+
+<use Immagini/Capitolo2/mangler.png>
+Package pdftex.def Info: Immagini/Capitolo2/mangler.png used on input line 254.
+
+(pdftex.def)             Requested size: 312.9825pt x 198.73254pt.
+
+<Immagini/Capitolo2/mangler_exp.png, id=623, 843.15pt x 462.97969pt>
+File: Immagini/Capitolo2/mangler_exp.png Graphic file (type png)
+
+<use Immagini/Capitolo2/mangler_exp.png>
+Package pdftex.def Info: Immagini/Capitolo2/mangler_exp.png used on input line 
+262.
+(pdftex.def)             Requested size: 312.97697pt x 171.8579pt.
+
+<Immagini/Capitolo2/sbox.png, id=624, 301.125pt x 219.82124pt>
+File: Immagini/Capitolo2/sbox.png Graphic file (type png)
+
+<use Immagini/Capitolo2/sbox.png>
+Package pdftex.def Info: Immagini/Capitolo2/sbox.png used on input line 271.
+(pdftex.def)             Requested size: 199.17502pt x 145.39775pt.
+
+<Immagini/Capitolo2/sbox_perm.png, id=626, 501.875pt x 19.07124pt>
+File: Immagini/Capitolo2/sbox_perm.png Graphic file (type png)
+
+<use Immagini/Capitolo2/sbox_perm.png>
+Package pdftex.def Info: Immagini/Capitolo2/sbox_perm.png used on input line 27
+8.
+(pdftex.def)             Requested size: 284.54012pt x 10.8125pt.
+) (./Capitolo_3.tex [31 <./Immagini/Capitolo2/round_des.png> <./Immagini/Capito
+lo2/mangler.png>] [32 <./Immagini/Capitolo2/mangler_exp.png> <./Immagini/Capito
+lo2/sbox.png> <./Immagini/Capitolo2/sbox_perm.png>]
 Capitolo 3.
 
 Underfull \hbox (badness 10000) in paragraph at lines 4--6
@@ -1283,23 +1368,23 @@ Underfull \hbox (badness 10000) in paragraph at lines 8--11
 
  []
 
-<Immagini/Capitolo3/ECB_enc.png, id=494, 379.4175pt x 125.71968pt>
+<Immagini/Capitolo3/ECB_enc.png, id=651, 379.4175pt x 125.71968pt>
 File: Immagini/Capitolo3/ECB_enc.png Graphic file (type png)
 
 <use Immagini/Capitolo3/ECB_enc.png>
 Package pdftex.def Info: Immagini/Capitolo3/ECB_enc.png used on input line 31.
 (pdftex.def)             Requested size: 341.43785pt x 113.13513pt.
 
-<Immagini/Capitolo3/ECB_dec.png, id=495, 379.4175pt x 125.71968pt>
+<Immagini/Capitolo3/ECB_dec.png, id=652, 379.4175pt x 125.71968pt>
 File: Immagini/Capitolo3/ECB_dec.png Graphic file (type png)
 
 <use Immagini/Capitolo3/ECB_dec.png>
 Package pdftex.def Info: Immagini/Capitolo3/ECB_dec.png used on input line 34.
 (pdftex.def)             Requested size: 341.43785pt x 113.13513pt.
- [28
+ [33
 
 ]
-<Immagini/Capitolo3/File_salari.png, id=500, 934.99312pt x 460.72125pt>
+<Immagini/Capitolo3/File_salari.png, id=657, 934.99312pt x 460.72125pt>
 File: Immagini/Capitolo3/File_salari.png Graphic file (type png)
 
 <use Immagini/Capitolo3/File_salari.png>
@@ -1311,29 +1396,24 @@ Underfull \hbox (badness 10000) in paragraph at lines 38--48
 
  []
 
-[29 <C:/Users/SilviaC/Documents/ing_inf_aut/sicurezza_informatica/appunti_sicur
-ezza_informatica_unipg/Immagini/Capitolo3/ECB_enc.png> <C:/Users/SilviaC/Docume
-nts/ing_inf_aut/sicurezza_informatica/appunti_sicurezza_informatica_unipg/Immag
-ini/Capitolo3/ECB_dec.png> <C:/Users/SilviaC/Documents/ing_inf_aut/sicurezza_in
-formatica/appunti_sicurezza_informatica_unipg/Immagini/Capitolo3/File_salari.pn
-g>]
-<Immagini/Capitolo3/rand_ele_cb_enc.png, id=517, 378.66469pt x 106.89937pt>
+[34 <./Immagini/Capitolo3/ECB_enc.png> <./Immagini/Capitolo3/ECB_dec.png> <./Im
+magini/Capitolo3/File_salari.png>]
+<Immagini/Capitolo3/rand_ele_cb_enc.png, id=674, 378.66469pt x 106.89937pt>
 File: Immagini/Capitolo3/rand_ele_cb_enc.png Graphic file (type png)
 
 <use Immagini/Capitolo3/rand_ele_cb_enc.png>
 Package pdftex.def Info: Immagini/Capitolo3/rand_ele_cb_enc.png used on input l
 ine 72.
 (pdftex.def)             Requested size: 284.52939pt x 80.32437pt.
- [30 <C:/Users/SilviaC/Documents/ing_inf_aut/sicurezza_informatica/appunti_sicu
-rezza_informatica_unipg/Immagini/Capitolo3/rand_ele_cb_enc.png>]
-<Immagini/Capitolo3/CBC_enc.png, id=529, 379.4175pt x 106.89937pt>
+ [35 <./Immagini/Capitolo3/rand_ele_cb_enc.png>]
+<Immagini/Capitolo3/CBC_enc.png, id=685, 379.4175pt x 106.89937pt>
 File: Immagini/Capitolo3/CBC_enc.png Graphic file (type png)
 
 <use Immagini/Capitolo3/CBC_enc.png>
 Package pdftex.def Info: Immagini/Capitolo3/CBC_enc.png used on input line 95.
 (pdftex.def)             Requested size: 341.43785pt x 96.19873pt.
 
-<Immagini/Capitolo3/CBC_dec.png, id=530, 380.92313pt x 107.65219pt>
+<Immagini/Capitolo3/CBC_dec.png, id=686, 380.92313pt x 107.65219pt>
 File: Immagini/Capitolo3/CBC_dec.png Graphic file (type png)
 
 <use Immagini/Capitolo3/CBC_dec.png>
@@ -1344,11 +1424,8 @@ Underfull \hbox (badness 10000) in paragraph at lines 101--106
 
  []
 
-[31 <C:/Users/SilviaC/Documents/ing_inf_aut/sicurezza_informatica/appunti_sicur
-ezza_informatica_unipg/Immagini/Capitolo3/CBC_enc.png> <C:/Users/SilviaC/Docume
-nts/ing_inf_aut/sicurezza_informatica/appunti_sicurezza_informatica_unipg/Immag
-ini/Capitolo3/CBC_dec.png>]
-<Immagini/Capitolo3/modifica_blk_cifrati.png, id=543, 619.56468pt x 244.66406pt
+[36 <./Immagini/Capitolo3/CBC_enc.png> <./Immagini/Capitolo3/CBC_dec.png>]
+<Immagini/Capitolo3/modifica_blk_cifrati.png, id=700, 619.56468pt x 244.66406pt
 >
 File: Immagini/Capitolo3/modifica_blk_cifrati.png Graphic file (type png)
  <use Immagini/Capitolo3/modifica_blk_cifrati.png>
@@ -1361,7 +1438,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 107--122
  []
 
 
-<Immagini/Capitolo3/riarrangiamento_blk_cifrati.png, id=545, 380.92313pt x 107.
+<Immagini/Capitolo3/riarrangiamento_blk_cifrati.png, id=702, 380.92313pt x 107.
 65219pt>
 File: Immagini/Capitolo3/riarrangiamento_blk_cifrati.png Graphic file (type png
 )
@@ -1379,15 +1456,14 @@ Underfull \hbox (badness 10000) in paragraph at lines 123--138
 
  []
 
-[32 <C:/Users/SilviaC/Documents/ing_inf_aut/sicurezza_informatica/appunti_sicur
-ezza_informatica_unipg/Immagini/Capitolo3/modifica_blk_cifrati.png>]
+[37 <./Immagini/Capitolo3/modifica_blk_cifrati.png>]
 
 LaTeX Warning: Command \textellipsis invalid in math mode on input line 145.
 
 
 LaTeX Warning: Command \textellipsis invalid in math mode on input line 145.
 
-<Immagini/Capitolo3/OFB_enc.png, id=556, 545.78906pt x 155.83218pt>
+<Immagini/Capitolo3/OFB_enc.png, id=714, 545.78906pt x 155.83218pt>
 File: Immagini/Capitolo3/OFB_enc.png Graphic file (type png)
 
 <use Immagini/Capitolo3/OFB_enc.png>
@@ -1395,7 +1471,7 @@ Package pdftex.def Info: Immagini/Capitolo3/OFB_enc.png used on input line 150.
 
 (pdftex.def)             Requested size: 341.43378pt x 97.48523pt.
 
-<Immagini/Capitolo3/OFB_dec.png, id=558, 559.33969pt x 164.86594pt>
+<Immagini/Capitolo3/OFB_dec.png, id=716, 559.33969pt x 164.86594pt>
 File: Immagini/Capitolo3/OFB_dec.png Graphic file (type png)
 
 <use Immagini/Capitolo3/OFB_dec.png>
@@ -1412,20 +1488,16 @@ j\OML/lmm/m/it/10 :::\OMS/lmsy/m/n/10 j\OML/lmm/m/it/10 b[]\OMS/lmsy/m/n/10 j\O
 ML/lmm/m/it/10 b[]\OMS/lmsy/m/n/10 j\OML/lmm/m/it/10 :::$\T1/lmr/m/n/10 .
  []
 
-[33 <C:/Users/SilviaC/Documents/ing_inf_aut/sicurezza_informatica/appunti_sicur
-ezza_informatica_unipg/Immagini/Capitolo3/riarrangiamento_blk_cifrati.png>]
-<Immagini/Capitolo3/k-bit_OFB.png, id=568, 379.4175pt x 182.18062pt>
+[38 <./Immagini/Capitolo3/riarrangiamento_blk_cifrati.png>]
+<Immagini/Capitolo3/k-bit_OFB.png, id=726, 379.4175pt x 182.18062pt>
 File: Immagini/Capitolo3/k-bit_OFB.png Graphic file (type png)
 
 <use Immagini/Capitolo3/k-bit_OFB.png>
 Package pdftex.def Info: Immagini/Capitolo3/k-bit_OFB.png used on input line 17
 9.
 (pdftex.def)             Requested size: 237.02534pt x 113.80977pt.
- [34 <C:/Users/SilviaC/Documents/ing_inf_aut/sicurezza_informatica/appunti_sicu
-rezza_informatica_unipg/Immagini/Capitolo3/OFB_enc.png> <C:/Users/SilviaC/Docum
-ents/ing_inf_aut/sicurezza_informatica/appunti_sicurezza_informatica_unipg/Imma
-gini/Capitolo3/OFB_dec.png>]
-<Immagini/Capitolo3/k-bit_CFB.png, id=578, 379.4175pt x 182.18062pt>
+ [39 <./Immagini/Capitolo3/OFB_enc.png> <./Immagini/Capitolo3/OFB_dec.png>]
+<Immagini/Capitolo3/k-bit_CFB.png, id=736, 379.4175pt x 182.18062pt>
 File: Immagini/Capitolo3/k-bit_CFB.png Graphic file (type png)
 
 <use Immagini/Capitolo3/k-bit_CFB.png>
@@ -1442,11 +1514,8 @@ LaTeX Warning: Command \textquoteright invalid in math mode on input line 203.
 
 LaTeX Warning: Command \textellipsis invalid in math mode on input line 203.
 
-[35 <C:/Users/SilviaC/Documents/ing_inf_aut/sicurezza_informatica/appunti_sicur
-ezza_informatica_unipg/Immagini/Capitolo3/k-bit_OFB.png> <C:/Users/SilviaC/Docu
-ments/ing_inf_aut/sicurezza_informatica/appunti_sicurezza_informatica_unipg/Imm
-agini/Capitolo3/k-bit_CFB.png>]
-<Immagini/Capitolo3/CTR.png, id=589, 188.95593pt x 128.73094pt>
+[40 <./Immagini/Capitolo3/k-bit_OFB.png> <./Immagini/Capitolo3/k-bit_CFB.png>]
+<Immagini/Capitolo3/CTR.png, id=747, 188.95593pt x 128.73094pt>
 File: Immagini/Capitolo3/CTR.png Graphic file (type png)
 
 <use Immagini/Capitolo3/CTR.png>
@@ -1457,13 +1526,12 @@ Underfull \hbox (badness 10000) in paragraph at lines 221--223
 
  []
 
-[36 <C:/Users/SilviaC/Documents/ing_inf_aut/sicurezza_informatica/appunti_sicur
-ezza_informatica_unipg/Immagini/Capitolo3/CTR.png>]
+[41 <./Immagini/Capitolo3/CTR.png>]
 Underfull \hbox (badness 10000) in paragraph at lines 225--230
 
  []
 
-<Immagini/Capitolo3/residuo_CBC.png, id=598, 376.40625pt x 114.4275pt>
+<Immagini/Capitolo3/residuo_CBC.png, id=755, 376.40625pt x 114.4275pt>
 File: Immagini/Capitolo3/residuo_CBC.png Graphic file (type png)
 
 <use Immagini/Capitolo3/residuo_CBC.png>
@@ -1485,9 +1553,8 @@ Underfull \hbox (badness 10000) in paragraph at lines 242--248
 
  []
 
-[37 <C:/Users/SilviaC/Documents/ing_inf_aut/sicurezza_informatica/appunti_sicur
-ezza_informatica_unipg/Immagini/Capitolo3/residuo_CBC.png>]
-<Immagini/Capitolo3/residuo_CBC_1.png, id=606, 376.40625pt x 106.14656pt>
+[42 <./Immagini/Capitolo3/residuo_CBC.png>]
+<Immagini/Capitolo3/residuo_CBC_1.png, id=764, 376.40625pt x 106.14656pt>
 File: Immagini/Capitolo3/residuo_CBC_1.png Graphic file (type png)
 
 <use Immagini/Capitolo3/residuo_CBC_1.png>
@@ -1495,7 +1562,7 @@ Package pdftex.def Info: Immagini/Capitolo3/residuo_CBC_1.png used on input lin
 e 258.
 (pdftex.def)             Requested size: 341.45618pt x 96.29063pt.
 
-<Immagini/Capitolo3/residuo_CBC_2.png, id=608, 376.40625pt x 115.18031pt>
+<Immagini/Capitolo3/residuo_CBC_2.png, id=766, 376.40625pt x 115.18031pt>
 File: Immagini/Capitolo3/residuo_CBC_2.png Graphic file (type png)
 
 <use Immagini/Capitolo3/residuo_CBC_2.png>
@@ -1506,7 +1573,7 @@ e 271.
 
 LaTeX Warning: Command \textellipsis invalid in math mode on input line 274.
 
-<Immagini/Capitolo3/residuo_CBC_3.png, id=610, 376.40625pt x 115.18031pt>
+<Immagini/Capitolo3/residuo_CBC_3.png, id=768, 376.40625pt x 115.18031pt>
 File: Immagini/Capitolo3/residuo_CBC_3.png Graphic file (type png)
 
 <use Immagini/Capitolo3/residuo_CBC_3.png>
@@ -1528,20 +1595,16 @@ Underfull \hbox (badness 10000) in paragraph at lines 254--283
 
  []
 
-[38 <C:/Users/SilviaC/Documents/ing_inf_aut/sicurezza_informatica/appunti_sicur
-ezza_informatica_unipg/Immagini/Capitolo3/residuo_CBC_1.png> <C:/Users/SilviaC/
-Documents/ing_inf_aut/sicurezza_informatica/appunti_sicurezza_informatica_unipg
-/Immagini/Capitolo3/residuo_CBC_2.png>] [39 <C:/Users/SilviaC/Documents/ing_inf
-_aut/sicurezza_informatica/appunti_sicurezza_informatica_unipg/Immagini/Capitol
-o3/residuo_CBC_3.png>]
-<Immagini/Capitolo3/EDE.png, id=627, 368.87813pt x 105.39375pt>
+[43 <./Immagini/Capitolo3/residuo_CBC_1.png> <./Immagini/Capitolo3/residuo_CBC_
+2.png>] [44 <./Immagini/Capitolo3/residuo_CBC_3.png>]
+<Immagini/Capitolo3/EDE.png, id=785, 368.87813pt x 105.39375pt>
 File: Immagini/Capitolo3/EDE.png Graphic file (type png)
 
 <use Immagini/Capitolo3/EDE.png>
 Package pdftex.def Info: Immagini/Capitolo3/EDE.png used on input line 322.
 (pdftex.def)             Requested size: 199.17433pt x 56.90694pt.
 
-<Immagini/Capitolo3/DED.png, id=629, 377.91188pt x 107.65219pt>
+<Immagini/Capitolo3/DED.png, id=787, 377.91188pt x 107.65219pt>
 File: Immagini/Capitolo3/DED.png Graphic file (type png)
 
 <use Immagini/Capitolo3/DED.png>
@@ -1557,90 +1620,258 @@ Underfull \hbox (badness 10000) in paragraph at lines 312--332
 
  []
 
-<Immagini/Capitolo3/EDE_CBC_Out.png, id=631, 376.40625pt x 165.61874pt>
+<Immagini/Capitolo3/EDE_CBC_Out.png, id=789, 376.40625pt x 165.61874pt>
 File: Immagini/Capitolo3/EDE_CBC_Out.png Graphic file (type png)
 
 <use Immagini/Capitolo3/EDE_CBC_Out.png>
 Package pdftex.def Info: Immagini/Capitolo3/EDE_CBC_Out.png used on input line 
 337.
-(pdftex.def)             Requested size: 193.9921pt x 85.3565pt.
+(pdftex.def)             Requested size: 258.65804pt x 113.80952pt.
 
-<Immagini/Capitolo3/EDE_CBC_In.png, id=633, 376.40625pt x 195.73125pt>
+<Immagini/Capitolo3/EDE_CBC_In.png, id=791, 376.40625pt x 195.73125pt>
 File: Immagini/Capitolo3/EDE_CBC_In.png Graphic file (type png)
 
 <use Immagini/Capitolo3/EDE_CBC_In.png>
 Package pdftex.def Info: Immagini/Capitolo3/EDE_CBC_In.png used on input line 3
 44.
-(pdftex.def)             Requested size: 164.14893pt x 85.35744pt.
- [40])
-Underfull \hbox (badness 10000) in paragraph at lines 348--82
+(pdftex.def)             Requested size: 218.86714pt x 113.81091pt.
+ [45]) (./Capitolo_4.tex
+Underfull \hbox (badness 10000) in paragraph at lines 348--1
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 348--82
+Underfull \hbox (badness 10000) in paragraph at lines 348--1
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 348--82
+Underfull \hbox (badness 10000) in paragraph at lines 348--1
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 348--82
+Underfull \hbox (badness 10000) in paragraph at lines 348--1
 
  []
 
-[41 <C:/Users/SilviaC/Documents/ing_inf_aut/sicurezza_informatica/appunti_sicur
-ezza_informatica_unipg/Immagini/Capitolo3/EDE.png> <C:/Users/SilviaC/Documents/
-ing_inf_aut/sicurezza_informatica/appunti_sicurezza_informatica_unipg/Immagini/
-Capitolo3/DED.png> <C:/Users/SilviaC/Documents/ing_inf_aut/sicurezza_informatic
-a/appunti_sicurezza_informatica_unipg/Immagini/Capitolo3/EDE_CBC_Out.png>]
-[42 <C:/Users/SilviaC/Documents/ing_inf_aut/sicurezza_informatica/appunti_sicur
-ezza_informatica_unipg/Immagini/Capitolo3/EDE_CBC_In.png>]
+[46 <./Immagini/Capitolo3/EDE.png> <./Immagini/Capitolo3/DED.png> <./Immagini/C
+apitolo3/EDE_CBC_Out.png>] [47 <./Immagini/Capitolo3/EDE_CBC_In.png>]
+Capitolo 4.
+
+LaTeX Warning: Command \textquoteright invalid in math mode on input line 23.
+
+[48
+
+]
+
+LaTeX Warning: Command \textrightarrow invalid in math mode on input line 48.
+
+
+LaTeX Warning: Command \textrightarrow invalid in math mode on input line 48.
+
+
+LaTeX Warning: Command \textellipsis invalid in math mode on input line 48.
+
+
+LaTeX Warning: Command \textdiscount invalid in math mode on input line 50.
+
+
+LaTeX Warning: Command \textdiscount invalid in math mode on input line 50.
+
+
+LaTeX Warning: Command \textendash invalid in math mode on input line 62.
+
+
+LaTeX Warning: Command \textdiscount invalid in math mode on input line 63.
+
+
+LaTeX Warning: Command \textdiscount invalid in math mode on input line 63.
+
+
+LaTeX Warning: Command \textendash invalid in math mode on input line 63.
+
+
+LaTeX Warning: Command \textendash invalid in math mode on input line 76.
+
+
+LaTeX Warning: Command \textendash invalid in math mode on input line 76.
+
+
+LaTeX Warning: Command \textendash invalid in math mode on input line 76.
+
+
+LaTeX Warning: Command \textendash invalid in math mode on input line 76.
+
+
+LaTeX Warning: Command \textendash invalid in math mode on input line 76.
+
+
+LaTeX Warning: Command \textendash invalid in math mode on input line 76.
+
+
+LaTeX Warning: Command \textendash invalid in math mode on input line 76.
+
+
+LaTeX Warning: Command \textendash invalid in math mode on input line 76.
+
+
+LaTeX Warning: Command \textendash invalid in math mode on input line 76.
+
+
+LaTeX Warning: Command \textendash invalid in math mode on input line 76.
+
+
+LaTeX Warning: Command \textendash invalid in math mode on input line 76.
+
+[49]
+
+LaTeX Warning: Command \textendash invalid in math mode on input line 94.
+
+
+LaTeX Warning: Command \textendash invalid in math mode on input line 94.
+
+
+LaTeX Warning: Command \textendash invalid in math mode on input line 94.
+
+
+LaTeX Warning: Command \textendash invalid in math mode on input line 94.
+
+
+LaTeX Warning: Command \textendash invalid in math mode on input line 94.
+
+
+LaTeX Warning: Command \textendash invalid in math mode on input line 95.
+
+
+LaTeX Warning: Command \textendash invalid in math mode on input line 95.
+
+
+LaTeX Warning: Command \textendash invalid in math mode on input line 95.
+
+
+<Immagini/Capitolo4/schema_hash_collisioni.JPG, id=826, 617.30624pt x 303.38344
+pt>
+File: Immagini/Capitolo4/schema_hash_collisioni.JPG Graphic file (type jpg)
+ <use Immagini/Capitolo4/schema_hash_collisioni.JPG>
+Package pdftex.def Info: Immagini/Capitolo4/schema_hash_collisioni.JPG used on 
+input line 108.
+(pdftex.def)             Requested size: 369.89679pt x 181.79074pt.
+
+<Immagini/Capitolo4/schema_hash_collisioni_1.JPG, id=827, 623.32875pt x 366.619
+69pt>
+File: Immagini/Capitolo4/schema_hash_collisioni_1.JPG Graphic file (type jpg)
+ <use Immagini/Capitolo4/schema_hash_collisioni_1.JPG>
+Package pdftex.def Info: Immagini/Capitolo4/schema_hash_collisioni_1.JPG used o
+n input line 115.
+(pdftex.def)             Requested size: 369.89128pt x 217.55682pt.
+ [50 <./Immagini/Capitolo4/schema_hash_collisioni.JPG>]
+<Immagini/Capitolo4/schema_autenticazione.JPG, id=833, 603.0028pt x 211.54031pt
+>
+File: Immagini/Capitolo4/schema_autenticazione.JPG Graphic file (type jpg)
+ <use Immagini/Capitolo4/schema_autenticazione.JPG>
+Package pdftex.def Info: Immagini/Capitolo4/schema_autenticazione.JPG used on i
+nput line 133.
+(pdftex.def)             Requested size: 369.88301pt x 129.7592pt.
+
+<Immagini/Capitolo4/schema_autenticazione_md.JPG, id=834, 601.4972pt x 206.2706
+3pt>
+File: Immagini/Capitolo4/schema_autenticazione_md.JPG Graphic file (type jpg)
+ <use Immagini/Capitolo4/schema_autenticazione_md.JPG>
+Package pdftex.def Info: Immagini/Capitolo4/schema_autenticazione_md.JPG used o
+n input line 139.
+(pdftex.def)             Requested size: 369.89563pt x 126.84781pt.
+ [51 <./Immagini/Capitolo4/schema_hash_collisioni_1.JPG> <./Immagini/Capitolo4/
+schema_autenticazione.JPG>]
+<Immagini/Capitolo4/schema_cifratura_flusso.JPG, id=839, 575.90157pt x 313.17pt
+>
+File: Immagini/Capitolo4/schema_cifratura_flusso.JPG Graphic file (type jpg)
+ <use Immagini/Capitolo4/schema_cifratura_flusso.JPG>
+Package pdftex.def Info: Immagini/Capitolo4/schema_cifratura_flusso.JPG used on
+ input line 155.
+(pdftex.def)             Requested size: 369.89388pt x 201.14488pt.
+
+<Immagini/Capitolo4/schema_des_come_hash.JPG, id=840, 487.8225pt x 215.30438pt>
+File: Immagini/Capitolo4/schema_des_come_hash.JPG Graphic file (type jpg)
+<use Immagini/Capitolo4/schema_des_come_hash.JPG>
+Package pdftex.def Info: Immagini/Capitolo4/schema_des_come_hash.JPG used on in
+put line 166.
+(pdftex.def)             Requested size: 369.8855pt x 163.25192pt.
+ [52 <./Immagini/Capitolo4/schema_autenticazione_md.JPG> <./Immagini/Capitolo4/
+schema_cifratura_flusso.JPG>]
+<Immagini/Capitolo4/schema_des_come_hash_1.JPG, id=845, 238.64156pt x 350.81062
+pt>
+File: Immagini/Capitolo4/schema_des_come_hash_1.JPG Graphic file (type jpg)
+ <use Immagini/Capitolo4/schema_des_come_hash_1.JPG>
+Package pdftex.def Info: Immagini/Capitolo4/schema_des_come_hash_1.JPG used on 
+input line 178.
+(pdftex.def)             Requested size: 193.5644pt x 284.5458pt.
+
+<Immagini/Capitolo4/schema_des_come_hash_2.JPG, id=846, 254.45062pt x 349.305pt
+>
+File: Immagini/Capitolo4/schema_des_come_hash_2.JPG Graphic file (type jpg)
+ <use Immagini/Capitolo4/schema_des_come_hash_2.JPG>
+Package pdftex.def Info: Immagini/Capitolo4/schema_des_come_hash_2.JPG used on 
+input line 184.
+(pdftex.def)             Requested size: 207.27641pt x 284.54514pt.
+
+<Immagini/Capitolo4/riduzione.JPG, id=847, 534.49687pt x 140.02313pt>
+File: Immagini/Capitolo4/riduzione.JPG Graphic file (type jpg)
+
+<use Immagini/Capitolo4/riduzione.JPG>
+Package pdftex.def Info: Immagini/Capitolo4/riduzione.JPG used on input line 19
+3.
+(pdftex.def)             Requested size: 284.53798pt x 74.54092pt.
+File: Immagini/Capitolo4/riduzione.JPG Graphic file (type jpg)
+ <use Immagini/Capitolo4/riduzione.JPG>
+Package pdftex.def Info: Immagini/Capitolo4/riduzione.JPG used on input line 20
+1.
+(pdftex.def)             Requested size: 284.53798pt x 74.54092pt.
+)
+[53 <./Immagini/Capitolo4/schema_des_come_hash.JPG>] [54 <./Immagini/Capitolo4/
+schema_des_come_hash_1.JPG> <./Immagini/Capitolo4/schema_des_come_hash_2.JPG>]
 No file Appunti.bbl.
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 90.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 90.
-
-(C:\Users\SilviaC\Documents\ing_inf_aut\sicurezza_informatica\appunti_sicurezza
-_informatica_unipg\Appunti.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 90.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 90.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 91.
+[55 <./Immagini/Capitolo4/riduzione.JPG>]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 91.
+ (./Appunti.aux)
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 91.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 91.
 Package rerunfilecheck Info: File `Appunti.out' has not changed.
-(rerunfilecheck)             Checksum: A5678569046A9C92691429F1C3413EAB;4778.
+(rerunfilecheck)             Checksum: E220BFBF8ABEA6F796E66F24B7EC5F7E;5907.
 
 
 LaTeX Warning: There were undefined references.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 90.
  ) 
 Here is how much of TeX's memory you used:
- 10664 strings out of 493921
- 155294 string characters out of 3147276
- 242877 words of memory out of 3000000
- 13498 multiletter control sequences out of 15000+200000
- 76313 words of font info for 51 fonts, out of 3000000 for 9000
- 841 hyphenation exceptions out of 8191
- 32i,12n,48p,1414b,480s stack positions out of 5000i,500n,10000p,200000b,50000s
-{C:/Program Files/MiKTeX 2.9/fonts/enc/dvips/lm/lm-mathsy.enc}{C:/Program Fil
-es/MiKTeX 2.9/fonts/enc/dvips/lm/lm-mathex.enc}{C:/Program Files/MiKTeX 2.9/fon
-ts/enc/dvips/lm/lm-rm.enc}{C:/Program Files/MiKTeX 2.9/fonts/enc/dvips/lm/lm-ma
-thit.enc}{C:/Program Files/MiKTeX 2.9/fonts/enc/dvips/lm/lm-ec.enc}{C:/Program 
-Files/MiKTeX 2.9/fonts/enc/dvips/lm/lm-ts1.enc}<C:/Program Files/MiKTeX 2.9/fon
-ts/type1/public/lm/lmbx10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/l
-m/lmbx12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/lm/lmcsc10.pfb><C:
-/Program Files/MiKTeX 2.9/fonts/type1/public/lm/lmex10.pfb><C:/Program Files/Mi
-KTeX 2.9/fonts/type1/public/lm/lmmi10.pfb><C:/Program Files/MiKTeX 2.9/fonts/ty
-pe1/public/lm/lmmi7.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/lm/lmr1
-0.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/lm/lmr7.pfb><C:/Program F
-iles/MiKTeX 2.9/fonts/type1/public/lm/lmri10.pfb><C:/Program Files/MiKTeX 2.9/f
-onts/type1/public/lm/lmri12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public
-/lm/lmsy10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/lm/lmsy5.pfb><C:
-/Program Files/MiKTeX 2.9/fonts/type1/public/lm/lmsy7.pfb>
-Output written on Appunti.pdf (43 pages, 1613621 bytes).
+ 11420 strings out of 493105
+ 165575 string characters out of 6137072
+ 264051 words of memory out of 5000000
+ 14331 multiletter control sequences out of 15000+600000
+ 84849 words of font info for 53 fonts, out of 8000000 for 9000
+ 1141 hyphenation exceptions out of 8191
+ 32i,11n,45p,1414b,492s stack positions out of 5000i,500n,10000p,200000b,80000s
+{/usr/share/texmf/fonts/enc/dvips/lm/lm-rm.enc}{/usr/share/texmf/fonts/enc/dv
+ips/lm/lm-mathit.enc}{/usr/share/texmf/fonts/enc/dvips/lm/lm-mathsy.enc}{/usr/s
+hare/texmf/fonts/enc/dvips/lm/lm-mathex.enc}{/usr/share/texmf/fonts/enc/dvips/l
+m/lm-ec.enc}{/usr/share/texmf/fonts/enc/dvips/lm/lm-ts1.enc}</usr/share/texmf/f
+onts/type1/public/lm/lmbx10.pfb></usr/share/texmf/fonts/type1/public/lm/lmbx12.
+pfb></usr/share/texmf/fonts/type1/public/lm/lmcsc10.pfb></usr/share/texmf/fonts
+/type1/public/lm/lmex10.pfb></usr/share/texmf/fonts/type1/public/lm/lmmi10.pfb>
+</usr/share/texmf/fonts/type1/public/lm/lmmi5.pfb></usr/share/texmf/fonts/type1
+/public/lm/lmmi7.pfb></usr/share/texmf/fonts/type1/public/lm/lmr10.pfb></usr/sh
+are/texmf/fonts/type1/public/lm/lmr5.pfb></usr/share/texmf/fonts/type1/public/l
+m/lmr7.pfb></usr/share/texmf/fonts/type1/public/lm/lmri10.pfb></usr/share/texmf
+/fonts/type1/public/lm/lmri12.pfb></usr/share/texmf/fonts/type1/public/lm/lmsy1
+0.pfb></usr/share/texmf/fonts/type1/public/lm/lmsy5.pfb></usr/share/texmf/fonts
+/type1/public/lm/lmsy7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/am
+sfonts/symbols/msam10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/ams
+fonts/symbols/msbm10.pfb>
+Output written on Appunti.pdf (56 pages, 2445735 bytes).
 PDF statistics:
- 756 PDF objects out of 1000 (max. 8388607)
- 220 named destinations out of 1000 (max. 500000)
- 600 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 986 PDF objects out of 1000 (max. 8388607)
+ 826 compressed objects within 9 object streams
+ 273 named destinations out of 1000 (max. 500000)
+ 817 words of extra memory for PDF output out of 10000 (max. 10000000)
 

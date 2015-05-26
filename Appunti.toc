@@ -1,4 +1,5 @@
 \select@language {italian}
+\select@language {italian}
 \contentsline {chapter}{\numberline {1}Introduzione alla sicurezza informatica}{3}{chapter.1}
 \contentsline {section}{\numberline {1.1}Premessa}{3}{section.1.1}
 \contentsline {subsection}{\numberline {1.1.1}Definizione}{3}{subsection.1.1.1}
@@ -81,28 +82,44 @@
 \contentsline {subsection}{\numberline {2.3.3}Violabilit\IeC {\`a} DES - esempio}{26}{subsection.2.3.3}
 \contentsline {subsection}{\numberline {2.3.4}Violabilit\IeC {\`a} DES - cifratura multipla}{26}{subsection.2.3.4}
 \contentsline {subsection}{\numberline {2.3.5}DES - Struttura base}{26}{subsection.2.3.5}
-\contentsline {chapter}{\numberline {3}Modes of Operation}{28}{chapter.3}
-\contentsline {section}{\numberline {3.1}Introduzione}{28}{section.3.1}
-\contentsline {section}{\numberline {3.2}Cifrare messaggi di grandi dimensioni}{28}{section.3.2}
-\contentsline {subsection}{\numberline {3.2.1}Electronic Code Book (ECB)}{28}{subsection.3.2.1}
-\contentsline {subsubsection}{Problemi di sicurezza in ECB}{29}{section*.47}
-\contentsline {subsection}{\numberline {3.2.2}Cipher Block Chaining (CBC)}{30}{subsection.3.2.2}
-\contentsline {subsubsection}{Idea base}{30}{section*.48}
-\contentsline {subsubsection}{Funzionamento}{31}{section*.49}
-\contentsline {subsubsection}{CBC minaccia 1 \IeC {\textendash } Modifica dei blocchi cifrati}{32}{section*.50}
-\contentsline {subsubsection}{CBC minaccia 2 \IeC {\textendash } Riarrangiamento blocchi cifrati}{32}{section*.51}
-\contentsline {subsection}{\numberline {3.2.3}Output FeedBack Mode (OFB)}{33}{subsection.3.2.3}
-\contentsline {subsubsection}{Vantaggi e svantaggi di OFB}{34}{section*.52}
-\contentsline {subsection}{\numberline {3.2.4}k-bit Output FeedBack Mode (k-OFB)}{34}{subsection.3.2.4}
-\contentsline {subsection}{\numberline {3.2.5}Cipher FeedBack Mode (CFB)}{35}{subsection.3.2.5}
-\contentsline {subsubsection}{Vantaggi e svantaggi di CFB}{35}{section*.53}
-\contentsline {subsection}{\numberline {3.2.6}CounTeR Mode (CTR)}{36}{subsection.3.2.6}
-\contentsline {subsection}{\numberline {3.2.7}Vantaggi e svantaggi di CTR}{36}{subsection.3.2.7}
-\contentsline {section}{\numberline {3.3}Generare message authentication code(MAC)}{37}{section.3.3}
-\contentsline {subsection}{\numberline {3.3.1}Residuo CBC}{37}{subsection.3.3.1}
-\contentsline {subsection}{\numberline {3.3.2}Assicurare confidenzialit\IeC {\`a} e autenticit\IeC {\`a}}{38}{subsection.3.3.2}
-\contentsline {subsubsection}{Soluzione sicura}{39}{section*.54}
-\contentsline {section}{\numberline {3.4}Cifratura multipla DES}{40}{section.3.4}
-\contentsline {subsection}{\numberline {3.4.1}Cifratura multipla EDE o 3DES}{40}{subsection.3.4.1}
-\contentsline {subsection}{\numberline {3.4.2}EDE con CBC Outside/Inside}{41}{subsection.3.4.2}
-\contentsline {subsubsection}{CBC Outside vs Inside}{41}{section*.55}
+\contentsline {subsection}{\numberline {2.3.6}DES - Permutazioni dei dati}{27}{subsection.2.3.6}
+\contentsline {subsection}{\numberline {2.3.7}DES - Generazione chiavi di round}{29}{subsection.2.3.7}
+\contentsline {subsubsection}{Permutazione iniziale}{29}{section*.47}
+\contentsline {subsubsection}{Generazione $K_{i}$ nell'i-esimo round}{30}{section*.48}
+\contentsline {subsection}{\numberline {2.3.8}Un round di DES}{30}{subsection.2.3.8}
+\contentsline {subsection}{\numberline {2.3.9}Mangler Function}{31}{subsection.2.3.9}
+\contentsline {chapter}{\numberline {3}Modes of Operation}{33}{chapter.3}
+\contentsline {section}{\numberline {3.1}Introduzione}{33}{section.3.1}
+\contentsline {section}{\numberline {3.2}Cifrare messaggi di grandi dimensioni}{33}{section.3.2}
+\contentsline {subsection}{\numberline {3.2.1}Electronic Code Book (ECB)}{33}{subsection.3.2.1}
+\contentsline {subsubsection}{Problemi di sicurezza in ECB}{34}{section*.49}
+\contentsline {subsection}{\numberline {3.2.2}Cipher Block Chaining (CBC)}{35}{subsection.3.2.2}
+\contentsline {subsubsection}{Idea base}{35}{section*.50}
+\contentsline {subsubsection}{Funzionamento}{36}{section*.51}
+\contentsline {subsubsection}{CBC minaccia 1 \IeC {\textendash } Modifica dei blocchi cifrati}{37}{section*.52}
+\contentsline {subsubsection}{CBC minaccia 2 \IeC {\textendash } Riarrangiamento blocchi cifrati}{37}{section*.53}
+\contentsline {subsection}{\numberline {3.2.3}Output FeedBack Mode (OFB)}{38}{subsection.3.2.3}
+\contentsline {subsubsection}{Vantaggi e svantaggi di OFB}{39}{section*.54}
+\contentsline {subsection}{\numberline {3.2.4}k-bit Output FeedBack Mode (k-OFB)}{39}{subsection.3.2.4}
+\contentsline {subsection}{\numberline {3.2.5}Cipher FeedBack Mode (CFB)}{40}{subsection.3.2.5}
+\contentsline {subsubsection}{Vantaggi e svantaggi di CFB}{40}{section*.55}
+\contentsline {subsection}{\numberline {3.2.6}CounTeR Mode (CTR)}{41}{subsection.3.2.6}
+\contentsline {subsection}{\numberline {3.2.7}Vantaggi e svantaggi di CTR}{41}{subsection.3.2.7}
+\contentsline {section}{\numberline {3.3}Generare message authentication code(MAC)}{42}{section.3.3}
+\contentsline {subsection}{\numberline {3.3.1}Residuo CBC}{42}{subsection.3.3.1}
+\contentsline {subsection}{\numberline {3.3.2}Assicurare confidenzialit\IeC {\`a} e autenticit\IeC {\`a}}{43}{subsection.3.3.2}
+\contentsline {subsubsection}{Soluzione sicura}{44}{section*.56}
+\contentsline {section}{\numberline {3.4}Cifratura multipla DES}{45}{section.3.4}
+\contentsline {subsection}{\numberline {3.4.1}Cifratura multipla EDE o 3DES}{45}{subsection.3.4.1}
+\contentsline {subsection}{\numberline {3.4.2}EDE con CBC Outside/Inside}{46}{subsection.3.4.2}
+\contentsline {subsubsection}{CBC Outside vs Inside}{46}{section*.57}
+\contentsline {chapter}{\numberline {4}Funzioni Crittografiche di Hash}{48}{chapter.4}
+\contentsline {section}{\numberline {4.1}Introduzione}{48}{section.4.1}
+\contentsline {section}{\numberline {4.2}Esempio di Applicazioni}{49}{section.4.2}
+\contentsline {section}{\numberline {4.3}Lunghezza di un messaggio di Digest}{50}{section.4.3}
+\contentsline {section}{\numberline {4.4}Impieghi degli Algoritmi di Hash}{51}{section.4.4}
+\contentsline {subsection}{\numberline {4.4.1}Message Digest per MAC}{51}{subsection.4.4.1}
+\contentsline {subsection}{\numberline {4.4.2}Cifratura/Decifratura}{52}{subsection.4.4.2}
+\contentsline {subsection}{\numberline {4.4.3}Algoritmi di cifratura come algoritmi di hash}{52}{subsection.4.4.3}
+\contentsline {subsection}{\numberline {4.4.4}Hash di grandi messaggi con algoritmi di cifratura come hash}{53}{subsection.4.4.4}
+\contentsline {subsection}{\numberline {4.4.5}Rainbow Tables (Opzionale)}{53}{subsection.4.4.5}

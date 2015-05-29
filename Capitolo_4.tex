@@ -45,11 +45,11 @@ un programma o di un documento di cui si desiderano monitorare eventuali modific
 se il message digest h(p) del programma p è noto e se h(p) è memorizzato in modo sicuro (cioè non può essere
 modificato da utenti non autorizzati) allora nessun utente non autorizzato può modificare p
 senza essere scoperto perché non sarà in grado di trovare un diverso programma p’ tale che h(p’) = h(p).
-Quindi sia h:$\{0, 1\}^{*} → \{0, 1\}^{b}$ una funzione di hash siano $m_{1}, m_{2}, …, m_{N}$ N messaggi arbitrariamente
+Quindi sia h:$\{0, 1\}^{*} \rightarrow \{0, 1\}^{b}$ una funzione di hash siano $m_{1}, m_{2}, ..., m_{N}$ N messaggi arbitrariamente
 scelti in ${0, 1}^{*}$. \\
-\textbf{DOMANDA}: quanto deve valere N per avere una probabilità del $50\textdiscount$ che due messaggi $m_{i}, m_{j}$ abbiano lo stesso hash?
+\textbf{DOMANDA}: quanto deve valere N per avere una probabilità di 0.5 che due messaggi $m_{i}, m_{j}$ abbiano lo stesso hash?
 
-Una prima stima di N (affinché ci sia il 50\textdiscount di possibilità di collisione), per difetto, è la seguente :
+Una prima stima di N (affinché ci sia 0.5 di possibilità di collisione), per difetto, è la seguente :
 \begin{itemize}
 \item $k = 2^{b}$: numero totale di possibili hash
 \item $\frac{1}{k}$ : probabilità che una coppia di messaggi collida
@@ -60,7 +60,7 @@ Una prima stima di N (affinché ci sia il 50\textdiscount di possibilità di col
 \end{itemize}
  
 A rigore tale ipotesi non è soddisfatta, molti eventi hanno intersezione non nulla, perciò la stima ottenuta della probabilità è per eccesso e ciò si traduce in una stima per difetto di N $(\Pr\{E1 OR E2\} = \Pr\{E1\} + \Pr\{E2\} – \Pr\{E1 \bigcap E2\})$.
-Si ha una probabilità del $50\textdiscount$ se si considerano $k/2$ coppie, perciò $N(N – 1)/2 = k/2$ e ipotizzando $N >> 1$ si ha $N = k^{1/2} = 2^{b/2}$.
+Si ha una probabilità di 0.5 se si considerano $k/2$ coppie, perciò $N(N – 1)/2 = k/2$ e ipotizzando $N >> 1$ si ha $N = k^{1/2} = 2^{b/2}$.
 
 Una seconda stima, più accurata di N è la seguente:
 \begin{itemize}

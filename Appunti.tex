@@ -13,8 +13,8 @@
 \usepackage{amsmath} %Simboli matematici
 \usepackage{amsfonts} %Simboli matematici
 \usepackage{amssymb} %Simboli matematici
-\usepackage{Pacchetti/mcode}  %Pacchetto per l'immissione di codice matlab
-\lstloadlanguages{MATLAB}
+%%\usepackage{Pacchetti/mcode}  %Pacchetto per l'immissione di codice matlab
+%%\lstloadlanguages{C}
 \usepackage {fancyhdr} %Pacchetto per la gestione accurata della pagina
 \usepackage {setspace} %Pacchetto necessario per i comandi successivi onehalfspacing, singlespacing....
 \usepackage{longtable} %Pacchetto per la gestione delle tabelle grandi
@@ -25,7 +25,14 @@
 	citecolor=black,
 	urlcolor=black,
 }
-
+\lstset{
+	language=C,
+	basicstyle=\small\ttfamily,
+	keywordstyle=\color{green}\bfseries,
+	commentstyle=\color{red},
+	stringstyle=\color{blue},
+	showstringspaces=false
+}
 \usepackage{geometry} % Dimensione pagina
 \geometry{a4paper} % Formato carta
 \addtolength{\textheight}{75pt} %Margini

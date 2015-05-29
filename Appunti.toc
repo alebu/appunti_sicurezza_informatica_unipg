@@ -129,3 +129,32 @@
 \contentsline {subsection}{\numberline {5.1.1}Possibili attacchi}{58}{subsection.5.1.1}
 \contentsline {subsection}{\numberline {5.1.2}Password Robuste}{58}{subsection.5.1.2}
 \contentsline {subsection}{\numberline {5.1.3}Password Salt}{58}{subsection.5.1.3}
+\contentsline {section}{\numberline {5.2}Sicurezza dei processi}{59}{section.5.2}
+\contentsline {subsection}{\numberline {5.2.1}Istruzione Fork}{60}{subsection.5.2.1}
+\contentsline {subsection}{\numberline {5.2.2}Ulteriori nozioni sui processi - facoltativo}{60}{subsection.5.2.2}
+\contentsline {subsubsection}{Comunicazione tra processi}{60}{section*.58}
+\contentsline {subsubsection}{Demoni e Servizi}{60}{section*.59}
+\contentsline {subsubsection}{System Call}{60}{section*.60}
+\contentsline {subsection}{\numberline {5.2.3}Processi e Utenti}{61}{subsection.5.2.3}
+\contentsline {subsubsection}{Processi e Utenti - Linux}{61}{section*.61}
+\contentsline {section}{\numberline {5.3}Sicurezza del filesystem}{62}{section.5.3}
+\contentsline {subsection}{\numberline {5.3.1}Access Control Entities}{62}{subsection.5.3.1}
+\contentsline {subsection}{\numberline {5.3.2}Discretionary Access Control}{62}{subsection.5.3.2}
+\contentsline {section}{\numberline {5.4}Sicurezza della memoria}{62}{section.5.4}
+\contentsline {section}{\numberline {5.5}Exploit}{63}{section.5.5}
+\contentsline {subsection}{\numberline {5.5.1}Buffer Overflow}{64}{subsection.5.5.1}
+\contentsline {subsubsection}{Scenario}{64}{section*.62}
+\contentsline {subsubsection}{Attacco}{64}{section*.63}
+\contentsline {subsection}{\numberline {5.5.2}Stack-Based Buffer Overflow}{64}{subsection.5.5.2}
+\contentsline {subsection}{\numberline {5.5.3}Esempio codice C}{65}{subsection.5.5.3}
+\contentsline {subsection}{\numberline {5.5.4}Stack Smashing Attack}{67}{subsection.5.5.4}
+\contentsline {subsection}{\numberline {5.5.5}NOP Sledding}{67}{subsection.5.5.5}
+\contentsline {subsection}{\numberline {5.5.6}Trampolining}{69}{subsection.5.5.6}
+\contentsline {subsection}{\numberline {5.5.7}Return to libc}{69}{subsection.5.5.7}
+\contentsline {subsection}{\numberline {5.5.8}Contromisure Stack-Based BO}{70}{subsection.5.5.8}
+\contentsline {subsubsection}{No eXecute bit - NX bit}{70}{section*.64}
+\contentsline {subsubsection}{Address Space Layout Randomization - ASLR}{70}{section*.65}
+\contentsline {subsubsection}{Stack-Smashing protection}{70}{section*.66}
+\contentsline {subsubsection}{Canary}{70}{section*.67}
+\contentsline {subsection}{\numberline {5.5.9}Race Conditions}{70}{subsection.5.5.9}
+\contentsline {subsubsection}{Time of Check/Time of Use Problem}{71}{section*.68}

@@ -138,17 +138,111 @@ Il filesystem è un altro componente fondamentale di un OS, in quanto fornisce u
   \item \textbf{Permission}: azione possibile (e.g.: read, write, execute, list)
 \end{itemize}
 
-\subsection{Access Control Entities}
+\subsubsection{Access Control Entities}
 Una \textbf{Access Control Entry, ACE,} è una terna $\langle principal, type, permission \rangle$, che serve a descrivere i permessi che gli utenti hanno sui file. Per una data risorsa ed un dato principal specifico chi può fare cosa attraverso entries di questo tipo, in cui il valore \textbf{type} può assumere \textbf{allow} o \textbf{deny}. \newline \newline
 
 Una \textbf{Accesso Control List} è invece una lista ordinata di terne \textbf{ACE}. Una possibile gestione per la sicurezza del filesystem prevede l'associazione tra ogni file e directory e un ACL
 che definisce la politica di accesso alla risorsa.
-\subsection{Discretionary Access Control}
+
+\subsubsection{Discretionary Access Control}
 Il \textbf{DAC (Discretionary Access Control)} è un modello di assegnazione dei permissi in cui il creatore (owner) di un file o directory ha il potere di modificare i permessi ad esso associati (ACE). Sono disponibili due tipi di politiche di assegnazione dei permessi:
 \begin{itemize}
   \item \textbf{Closed policy o default sicuro}: solo ACE di tipo allow, tutti i permessi non esplicitamente concessi sono automaticamente negati
   \item \textbf{Open policy}: ACE tipo sia ALLOW che DENY
 \end{itemize}
+
+\subsection{Sicurezza del filesystem Linux}
+Per la gestione dei permessi Linux utilizza una politica \textbf{DAC} con \textbf{default sicuro}. Inoltre l'accesso a un file dipende dall'ACL del file e di tutte le directory antenate: partendo dalla directory root, tutte le directory antenate devono avere il permesso \textbf{execute} (che per una directory significa il permesso di accedere alla stessa) per l'utente specificato. \newline \newline
+
+Linux utilizza una versione semplificata delle ACL: la \textbf{File permission matrix}, una matrice di permessi associata ad ogni file e directory (tale metodologia rappresenta uno standard per tutti i sistemi Unix-like). La matrice rappresenta tre principal: \textbf{owner}, \textbf{group} (utenti del gruppo a cui afferisce l'owner) e \textbf{others}. I permessi di ognuna delle 3 classi sono definiti da 3 bit:
+\begin{itemize}
+  \item \textbf{read bit}: per i file rappresenta il permesso di lettura, mentre per le directory il permesso di lettura della lista dei file contenuti
+  \item \textbf{write bit}: per i file rappresenta il permesso di scrittura, mentre per una directory il permesso di creazione e eliminazione dei file in essa contenuti
+  \item \textbf{execute bit}: per i file rappresenta il permesso di esecuzione, mentre per le directory il permesso accesso (l'utente può cambiare la sua cartella corrente con quella in questione)
+\end{itemize}
+
+\begin{figure}[htbp]
+	\centering%
+	\subfigure%
+	{\includegraphics[height=10cm, width=10cm, keepaspectratio]{Immagini/Capitolo9/perm_linux.png}}
+	\caption{Esempi di permission matrix \label{fig:perm_linux}} 	
+\end{figure}
+
+Per visualizzare le permission matrix delle directory e dei file contenuti in una directory, basta accedere a tale cartella e utilizzare il comando \textbf{ls -l}. \newline \newline
+
+Oltre i tipi di permessi esaminati finora, esistono altri tipi di permessi cosidetti \textbf{speciali}, i quali consentono di impostare determinate funzioni avanzate sui file.
+
+\begin{itemize}
+  \item \textbf{Set-user-ID (suid o setuid) bit}: su file eseguibili, causa l’esecuzione del processo con i diritti dell’utente owner
+  \item \textbf{Set-group-ID (sgid o setgid) bit}: su file eseguibili, causa l’esecuzione del processo con i diritti del gruppo del file
+  \item \textbf{Sticky bit}: sulle directory, vieta a tutti gli utenti di eliminare o rinominare file di cui non sono i creatori
+\end{itemize}
+
+Il bit \textbf{setuid} risolve il problema dell'accesso senza privilegio. Ad esempio, se un utente volesse modificare la propria password attraverso il programma di sistema \textbf{passwd} non potrebbe farlo in quanto non avrebbe i permessi per accedere al file \textbf{etc/passwd}. In realtà \textbf{passwd} viene eseguito con i privilegi dell'utente root grazie al bit setuid.
+
+\subsubsection{Scalata dei privilegi}
+Se un attaccante riesce a forzare un \textbf{programma setuid} a eseguire codice arbitrario (ad esempio tramite un attacco di tipo buffer overflow) può compromettere il sistema, realizzando uno scenario di attacco chiamato \textbf{scalata dei privilegi (o privileges escalation)}. Questo meccanismo va gestito attraverso tecniche di programmazione sicura.
+
+\subsubsection{Notazione Ottale}
+Nei sistemi Linux i bit di permessi sono espressi in notazione ottale (con 3 o 4 cifre). Le cifre sono organizzate nel seguente modo: \newline
+\textbf{[special bits][user bits][group bits][others bits]}. Ogni sezione deve prevedere ovviamente tre bit: uno per la scrittura, uno per la lettura ed uno per l'esecuzione. 
+
+\begin{figure}[htbp]
+	\centering%
+	\subfigure%
+	{\includegraphics[height=10cm, width=10cm, keepaspectratio]{Immagini/Capitolo9/notazione_ottale.png}}
+	\caption{Esempi di permission matrix in notazione ottale\label{fig:notazione_ottale}} 	
+\end{figure}
+\begin{itemize}
+  \item per i bit user/group/others, i bit sono nell'ordine r-w-x. Una terna $(100)_{2} = (4)_{8}$, ad esempio, significa permesso consentito in lettura, mentre una terna $(101)_{5} = (5)_{8}$, invece, permesso consentito in lettura ed esecuzione, ma non in scrittura.
+  \item per i speciali, i bit sono nell'ordine setuid - setgid - sticky. Quindi avrò $(100)_{2} = (4)_{8}$ se setuid, $(010)_{2} = (2)_{8}$ se setgid e $(001)_{2} = (1)_{8}$ se sticky (e ovviamente le varie combinazioni possibili)
+\end{itemize}
+
+\subsection{Sicurezza del filesystem Windows}
+Per la gestione dei permessi Windows utilizza una politica \textbf{DAC} con \textbf{open policy}. Se non c'è una regola per un particolare principal o permesso allora l'accesso è negato di default.A differenza di Linux, al fine di accedere ad un file o ad una directory, è sufficiente avere i permessi per l’azione richiesta sul dato file o directory. In questo modo è possibile negare l'accesso ad una data directory pur consentendo l'accesso alle directory figlie (assurdo).\newline \newline
+
+Vi sono due tipi di permessi: espliciti ed ereditati. Il concetto di permessi ereditati deriva dalla possibilità di estendere ogni permesso applicato ad una directory alle directory figlie. \newline
+I permessi espliciti standard sono: \textbf{modify, read and execute, read, write full control}. E' possibile comporre più \textbf{permessi standard} creando \textbf{permessi avanzati}. \newline \newline
+
+Per quanto riguarda il controllo dei permessi va notato che:
+\begin{itemize}
+  \item Il permesso DENY ha precedenza sul permesso ALLOW
+  \item I permessi espliciti hanno precedenza sui permessi ereditati
+  \item I permessi ereditati hanno precedenza tra di loro in base alla distanza dalla risorsa
+\end{itemize}
+  
+\subsubsection{File Descriptors}
+L'assegnazione dei permessi a file o cartelle, in Windows, viene gestita tramite il meccanismo dei file descriptors. Un \textbf{file descriptor} o \textbf{file handle} è un identificatore per un file o per una cartella. I file descriptor sono memorizzati in una tabella che li mappa con il percorso del file a cui si riferiscono, chiamata \textbf{file descriptor table}. L'accesso ai file e cartelle tramite System Calls passa quindi per questi costrutti. Le operazioni possibili sono:
+\begin{itemize}
+  \item \textbf{open}: ritorna un file handle
+  \item \textbf{read/write/execute} file
+  \item \textbf{close} file: invalida il file handle
+\end{itemize}
+Quando un processo (programma) necessita di accedere ad un file in lettura o scrittura: viene richiamata una \textbf{open system call}. Il kernel verifica se il processo possiede i permessi necessari per accedere al file con l'azione richiesta e, se la verifica è positiva, crea un nuovo file descriptor e una nuova entry nella file descriptor table, quindi ritorna il file descriptor al processo. Il processo può leggere/scrivere sul file richiamando le relative
+read/write system call, e il kernel (attraverso la file descriptor table) effettua le letture/scritture direttamente sul file originale. Al termine dell'elaborazione del file il processo dovrebbe richiamare una close system call
+per rimuovere il file descriptor.
+
+\subsubsection{File Descriptors Leaks}
+Quando un processo crea un processo figlio (forking), quest'ultimo eredita una copia di tutti i file descriptors aperti dal processo padre. L'OS verifica i permessi soltanto al momento della creazione del file descriptor: al momento della lettura/scrittura sul file, i controlli effettuati si basano sui permessi associati al file descriptor (ad esempio un processo può sfruttare un file descriptor in lettura solo per leggere il file e non per scrivere). Un possibile scenario pericoloso potrebbe presentarsi nel caso che un processo con alti privilegi apra un file descriptor per un file protetto, prima di chiudere il file descriptor crei un nuovo processo con privilegi minori, il quale tuttavia erediterebbe comunque il file descriptor (in quanto ancora aperto). In tal caso, infatti, il processo figlio potrebbe usare il file descriptor pur non avendo i permessi necessari per operare sul file protetto.
+
+\begin{algorithm}
+\begin{lstlisting}
+[caption={Esempio codice vulnerabile al File Descriptors Leaks]
+#include <stdio.h>
+#include <unistd.h>
+int main(int argc, char * argv[ ])
+{
+	/* Open the password file for reading */
+	FILE *passwords;
+	passwords = fopen("/home/admin/passwords", "r");
+	/* Read the passwords and do something useful */
+	/* . . . */
+	/* Fork and execute Joe's shell without closing the file */
+	execl("/home/joe/shell", "shell", NULL);
+}
+\end{lstlisting}
+\end{algorithm}
+Per rimuovere questa vulnerabilità la funzione \textbf{fclose()} va richiamata prima del comando .
 
 \section{Sicurezza della memoria}
 Un ulteriore servizio offerto dagli OS è l'organizzazione e l’allocazione della memoria primaria. Quando un processo viene lanciato l'OS alloca una regione di memoria detta \textbf{address space} del processo. La gestione della memoria è trasparente per il processo: il processo “vede” a sua disposizione l’intera memoria. Generalmente un processo non può avere accesso all'address space di un altro processo, se non per risorse esplicitamente condivise. \newline \newline
@@ -163,8 +257,8 @@ Nei sistemi Unix-like il modello address space è diviso in 5 settori:
 \end{itemize}
 In \figurename ~\ref{fig:addr_space_unix} è mostrato il modello. Si noti che lo Stack cresce verso il basso. In tale modello ogni settore ha i suoi permessi: il settore text è read-only in quanto il codice macchina del programma in esecuzione non deve poter essere modificato, mentre gli altri settori necessitano di essere writable in quanto i loro dati devono poter essere modificati durante l’esecuzione.
 \begin{figure}[htbp]
-	\centering%
-	\subfigure%
+	\centering
+	\subfigure
 	{\includegraphics[height=10cm, width=13cm, keepaspectratio]{Immagini/Capitolo9/addr_space_unix.png}}
 	\caption{Modello Address Space Unix \label{fig:salt}} 	
 \end{figure}
@@ -179,7 +273,7 @@ Un \textbf{exploit} è un input che sfrutta una vulnerabilità, un bug o un guas
 
 \subsection{Buffer Overflow}
 Generalmente, con \textbf{buffer}, si intende una porzione di memoria contenente più istanze dello stesso tipo. In C e in molti altri programmi i buffer sono chiamati array. I buffer più comuni sono gli array di caratteri (stringhe).
-In C i buffer, come tutte le variabili, possono essere dichiarati statici o dinamici. Le variabili statiche sono allocate al momento del caricamento del programma sul segmento \textbf{data}, mentre le variabili dinamiche sono allocate in fase di esecuzione sullo \textbf{stack}. \newline \newline
+In C i buffer, come tutte le variabili, possono essere dichiarati statici o dinamici. Le variabili statiche sono allocate al momento del caricamento del programma sul segmento \textbf{data}, mentre le variabili dinamiche sono allocate in fase di esecuzione sullo \textbf{stack}. \newline 
 
 \subsubsection{Scenario}
 Un programma alloca in memoria un buffer (array) di dimensione fissata. Nel buffer viene poi copiato un input proveniente dall'utente, e la dimensione di tale input \textbf{non viene controllata} prima dell'operazione di copia.

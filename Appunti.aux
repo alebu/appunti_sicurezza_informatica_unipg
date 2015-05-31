@@ -271,46 +271,56 @@
 \@writefile{toc}{\contentsline {subsubsection}{Processi e Utenti - Linux}{61}{section*.61}}
 \@writefile{lol}{\contentsline {lstlisting}{\numberline {5.2}Esempio forking in C}{61}{lstlisting.5.2}}
 \@writefile{toc}{\contentsline {section}{\numberline {5.3}Sicurezza del filesystem}{62}{section.5.3}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.3.1}Access Control Entities}{62}{subsection.5.3.1}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.3.2}Discretionary Access Control}{62}{subsection.5.3.2}}
-\@writefile{toc}{\contentsline {section}{\numberline {5.4}Sicurezza della memoria}{62}{section.5.4}}
-\@writefile{lof}{\contentsline {figure}{\numberline {5.3}{\ignorespaces Modello Address Space Unix }}{63}{figure.5.3}}
-\newlabel{fig:salt}{{5.3}{63}{Modello Address Space Unix}{figure.5.3}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {5.5}Exploit}{63}{section.5.5}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.5.1}Buffer Overflow}{64}{subsection.5.5.1}}
-\@writefile{toc}{\contentsline {subsubsection}{Scenario}{64}{section*.62}}
-\@writefile{toc}{\contentsline {subsubsection}{Attacco}{64}{section*.63}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.5.2}Stack-Based Buffer Overflow}{64}{subsection.5.5.2}}
-\@writefile{lof}{\contentsline {figure}{\numberline {5.4}{\ignorespaces Stack Structure }}{65}{figure.5.4}}
-\newlabel{fig:salt}{{5.4}{65}{Stack Structure}{figure.5.4}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {5.5}{\ignorespaces Esempio Stack di un programma in C}}{65}{figure.5.5}}
-\newlabel{fig:esempio_stack}{{5.5}{65}{Esempio Stack di un programma in C}{figure.5.5}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.5.3}Esempio codice C}{65}{subsection.5.5.3}}
-\@writefile{lol}{\contentsline {lstlisting}{\numberline {5.3}Esempio codice vulnerabile al buffer overflow in C}{66}{lstlisting.5.3}}
-\@writefile{lof}{\contentsline {figure}{\numberline {5.6}{\ignorespaces Esempio Stack-Based buffer overflow}}{66}{figure.5.6}}
-\newlabel{fig:esempio_stack}{{5.6}{66}{Esempio Stack-Based buffer overflow}{figure.5.6}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.5.4}Stack Smashing Attack}{67}{subsection.5.5.4}}
-\@writefile{lof}{\contentsline {figure}{\numberline {5.7}{\ignorespaces Esempio Stack-Smashing}}{67}{figure.5.7}}
-\newlabel{fig:stack_smash}{{5.7}{67}{Esempio Stack-Smashing}{figure.5.7}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.5.5}NOP Sledding}{67}{subsection.5.5.5}}
-\@writefile{lof}{\contentsline {figure}{\numberline {5.8}{\ignorespaces NOP Sledding}}{68}{figure.5.8}}
-\newlabel{fig:nop_sledding}{{5.8}{68}{NOP Sledding}{figure.5.8}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.5.6}Trampolining}{69}{subsection.5.5.6}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.5.7}Return to libc}{69}{subsection.5.5.7}}
-\@writefile{lof}{\contentsline {figure}{\numberline {5.9}{\ignorespaces Esempio return to libc}}{69}{figure.5.9}}
-\newlabel{fig:return_libc}{{5.9}{69}{Esempio return to libc}{figure.5.9}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.5.8}Contromisure Stack-Based BO}{70}{subsection.5.5.8}}
-\@writefile{toc}{\contentsline {subsubsection}{No eXecute bit - NX bit}{70}{section*.64}}
-\@writefile{toc}{\contentsline {subsubsection}{Address Space Layout Randomization - ASLR}{70}{section*.65}}
-\@writefile{lof}{\contentsline {figure}{\numberline {5.10}{\ignorespaces Effetto ASLR sull'indirizzo di librerie Windows}}{70}{figure.5.10}}
-\newlabel{fig:aslr}{{5.10}{70}{Effetto ASLR sull'indirizzo di librerie Windows}{figure.5.10}{}}
-\@writefile{toc}{\contentsline {subsubsection}{Stack-Smashing protection}{70}{section*.66}}
-\@writefile{toc}{\contentsline {subsubsection}{Canary}{70}{section*.67}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.5.9}Race Conditions}{70}{subsection.5.5.9}}
-\@writefile{lof}{\contentsline {figure}{\numberline {5.11}{\ignorespaces Canary}}{71}{figure.5.11}}
-\newlabel{fig:canary}{{5.11}{71}{Canary}{figure.5.11}{}}
-\@writefile{toc}{\contentsline {subsubsection}{Time of Check/Time of Use Problem}{71}{section*.68}}
-\@writefile{lol}{\contentsline {lstlisting}{\numberline {5.4}Esempio codice vulnerabile a race conditions}{72}{lstlisting.5.4}}
-\@writefile{lol}{\contentsline {lstlisting}{\numberline {5.5}Esempio codice sicuro}{73}{lstlisting.5.5}}
+\@writefile{toc}{\contentsline {subsubsection}{Access Control Entities}{62}{section*.62}}
+\@writefile{toc}{\contentsline {subsubsection}{Discretionary Access Control}{62}{section*.63}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.3.1}Sicurezza del filesystem Linux}{62}{subsection.5.3.1}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.3}{\ignorespaces Esempi di permission matrix }}{63}{figure.5.3}}
+\newlabel{fig:perm_linux}{{5.3}{63}{Esempi di permission matrix}{figure.5.3}{}}
+\@writefile{toc}{\contentsline {subsubsection}{Scalata dei privilegi}{63}{section*.64}}
+\@writefile{toc}{\contentsline {subsubsection}{Notazione Ottale}{64}{section*.65}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.4}{\ignorespaces Esempi di permission matrix in notazione ottale}}{64}{figure.5.4}}
+\newlabel{fig:notazione_ottale}{{5.4}{64}{Esempi di permission matrix in notazione ottale}{figure.5.4}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.3.2}Sicurezza del filesystem Windows}{64}{subsection.5.3.2}}
+\@writefile{toc}{\contentsline {subsubsection}{File Descriptors}{65}{section*.66}}
+\@writefile{toc}{\contentsline {subsubsection}{File Descriptors Leaks}{65}{section*.67}}
+\@writefile{toc}{\contentsline {section}{\numberline {5.4}Sicurezza della memoria}{65}{section.5.4}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.5}{\ignorespaces Modello Address Space Unix }}{66}{figure.5.5}}
+\newlabel{fig:salt}{{5.5}{66}{Modello Address Space Unix}{figure.5.5}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {5.5}Exploit}{66}{section.5.5}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.5.1}Buffer Overflow}{67}{subsection.5.5.1}}
+\@writefile{toc}{\contentsline {subsubsection}{Scenario}{67}{section*.68}}
+\@writefile{toc}{\contentsline {subsubsection}{Attacco}{67}{section*.69}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.5.2}Stack-Based Buffer Overflow}{67}{subsection.5.5.2}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.6}{\ignorespaces Stack Structure }}{68}{figure.5.6}}
+\newlabel{fig:salt}{{5.6}{68}{Stack Structure}{figure.5.6}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.7}{\ignorespaces Esempio Stack di un programma in C}}{68}{figure.5.7}}
+\newlabel{fig:esempio_stack}{{5.7}{68}{Esempio Stack di un programma in C}{figure.5.7}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.5.3}Esempio codice C}{68}{subsection.5.5.3}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {5.3}Esempio codice vulnerabile al buffer overflow in C}{69}{lstlisting.5.3}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.8}{\ignorespaces Esempio Stack-Based buffer overflow}}{69}{figure.5.8}}
+\newlabel{fig:esempio_stack}{{5.8}{69}{Esempio Stack-Based buffer overflow}{figure.5.8}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.5.4}Stack Smashing Attack}{70}{subsection.5.5.4}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.9}{\ignorespaces Esempio Stack-Smashing}}{70}{figure.5.9}}
+\newlabel{fig:stack_smash}{{5.9}{70}{Esempio Stack-Smashing}{figure.5.9}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.5.5}NOP Sledding}{70}{subsection.5.5.5}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.10}{\ignorespaces NOP Sledding}}{71}{figure.5.10}}
+\newlabel{fig:nop_sledding}{{5.10}{71}{NOP Sledding}{figure.5.10}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.5.6}Trampolining}{72}{subsection.5.5.6}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.5.7}Return to libc}{72}{subsection.5.5.7}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.11}{\ignorespaces Esempio return to libc}}{72}{figure.5.11}}
+\newlabel{fig:return_libc}{{5.11}{72}{Esempio return to libc}{figure.5.11}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.5.8}Contromisure Stack-Based BO}{73}{subsection.5.5.8}}
+\@writefile{toc}{\contentsline {subsubsection}{No eXecute bit - NX bit}{73}{section*.70}}
+\@writefile{toc}{\contentsline {subsubsection}{Address Space Layout Randomization - ASLR}{73}{section*.71}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.12}{\ignorespaces Effetto ASLR sull'indirizzo di librerie Windows}}{73}{figure.5.12}}
+\newlabel{fig:aslr}{{5.12}{73}{Effetto ASLR sull'indirizzo di librerie Windows}{figure.5.12}{}}
+\@writefile{toc}{\contentsline {subsubsection}{Stack-Smashing protection}{73}{section*.72}}
+\@writefile{toc}{\contentsline {subsubsection}{Canary}{73}{section*.73}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.5.9}Race Conditions}{73}{subsection.5.5.9}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.13}{\ignorespaces Canary}}{74}{figure.5.13}}
+\newlabel{fig:canary}{{5.13}{74}{Canary}{figure.5.13}{}}
+\@writefile{toc}{\contentsline {subsubsection}{Time of Check/Time of Use Problem}{74}{section*.74}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {5.4}Esempio codice vulnerabile a race conditions}{75}{lstlisting.5.4}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {5.5}Esempio codice sicuro}{76}{lstlisting.5.5}}
 \bibdata{bibliografia}
 \bibstyle{plain}

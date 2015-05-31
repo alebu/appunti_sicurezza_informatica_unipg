@@ -76,8 +76,8 @@
 \BOOKMARK [2][-]{subsection.5.2.2}{5.2.2 Ulteriori nozioni sui processi - facoltativo}{section.5.2}% 76
 \BOOKMARK [2][-]{subsection.5.2.3}{5.2.3 Processi e Utenti}{section.5.2}% 77
 \BOOKMARK [1][-]{section.5.3}{5.3 Sicurezza del filesystem}{chapter.5}% 78
-\BOOKMARK [2][-]{subsection.5.3.1}{5.3.1 Access Control Entities}{section.5.3}% 79
-\BOOKMARK [2][-]{subsection.5.3.2}{5.3.2 Discretionary Access Control}{section.5.3}% 80
+\BOOKMARK [2][-]{subsection.5.3.1}{5.3.1 Sicurezza del filesystem Linux}{section.5.3}% 79
+\BOOKMARK [2][-]{subsection.5.3.2}{5.3.2 Sicurezza del filesystem Windows}{section.5.3}% 80
 \BOOKMARK [1][-]{section.5.4}{5.4 Sicurezza della memoria}{chapter.5}% 81
 \BOOKMARK [1][-]{section.5.5}{5.5 Exploit}{chapter.5}% 82
 \BOOKMARK [2][-]{subsection.5.5.1}{5.5.1 Buffer Overflow}{section.5.5}% 83

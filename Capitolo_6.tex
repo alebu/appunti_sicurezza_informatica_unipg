@@ -1,48 +1,17 @@
 \chapter{Crittografia a chiave pubblica}
-<<<<<<< HEAD
-
 La crittografia a chiave pubblica si basa su alcuni risultati nell'ambito della teoria dei numeri. Si esamineranno i seguenti schemi di cifratura a chiave pubblica: \begin{itemize}
-||||||| merged common ancestors
-
-%%Scrivere normalmente, SENZA inserire begin e end document, che sono gi� compresi nel file principale da compilare
-La crittografia a chiave pubblica si basa su alcuni risultati nell'ambito della teoria dei numeri. Si esamineranno i seguenti schemi di cifratura a chiave pubblica: \begin{itemize}
-=======
-La crittografia a chiave pubblica si basa su alcuni risultati nell'ambito della teoria dei numeri. Si esamineranno i seguenti schemi di cifratura a chiave pubblica: 
-\begin{itemize}
->>>>>>> 97170125928e81d41229ce7a4b1ea69a00151de4
 \item RSA usata per cifrare e per calcolare la firma digitale
 \item ElGamal e DSS, usati per la firma digitale
 \item Diffie-Hellman, permette di stabilire un segreto condiviso, ma non fornisce alcun algoritmo che usa effettivamente tale segreto
 \end{itemize}
-<<<<<<< HEAD
 L'unico aspetto comune a tutti gli algoritmi di crittografia a chiave pubblica è la presenza di due quantità correlate: una chiave segreta e una chiave pubblica.
-||||||| merged common ancestors
-L'unico aspetto comune a tutti gli algoritmi di crittografia a chiave pubblica � la presenza di due quantit� correlate: una chiave segreta e una chiave pubblica.
-=======
-
-L'unico aspetto comune a tutti gli algoritmi di crittografia a chiave pubblica è la presenza di due quantità correlate: una chiave segreta e una chiave pubblica.
->>>>>>> 97170125928e81d41229ce7a4b1ea69a00151de4
 \section{Aritmetica modulare}
 La maggior parte degli algoritmi a chiave pubblica si basano sull'aritmetica modulare: fissato un intero $ n>1 $, l'aritmetica modulare considera l'insieme degli interi non negativi minori di
 $n: $\{$0, 1, 2,..., n-1$\}, effettua operazioni ordinarie come l'addizione e la moltiplicazione, e sostituisce il risultato $x$ con il resto $r$ della divisione intera di $x$ per $n$. Il risultato finale viene detto modulo n o $mod \, n$. \\
-<<<<<<< HEAD
 Definiamo l'inverso moltiplicativo di $k$, indicato con $k^{-1}$, come quel numero che moltiplicato per $k$ dà 1, cioè $kk^{-1} \, mod \, n = 1 \, mod \, n$. Fissato n, non tutti i numeri hanno un inverso moltiplicativo $mod \, n$. Si osservi inoltre che, se $k$ ammette un inverso moltiplicativo $mod \, n $, esiste un unico inverso moltiplicativo $k^{-1} < n$. La moltiplicazione $mod \, n$ di per sé non costituisce un cifrario sicuro,ma funziona, nel senso che la moltiplicazione per $k$ produce un mescolamento dell'input; la decifratura può ottenersi moltiplicando per $k^{-1}$.\\ Trovare un inverso moltiplicativo $k^{-1}$ nella aritmetica $mod \, n$, non è affatto banale se $n$ è molto grande. Esiste un modo efficiente per risolvere tale problema, noto come algoritmo di Euclide: \begin{itemize}
 \item dati $x$ ed $n$, con $x<n$, l'algoritmo di Euclide trova il
 numero $y<n$ tale che $xy \, mod \, n = 1$, ammesso che un siffatto $y$ esista.\end{itemize} 
 Quali sono dunque gli inversi moltiplicativi $mod \, n$? E' sufficiente trovare i numeri \textit{relativamente primi} con $n$, cioè tali che se $x$ è uno di questi numeri, si ha che $MCD(x,n) = 1$. Se $n$ è un numero primo, tutti gli interi positivi $x<n$ ammettono un inverso moltiplicativo $mod \, n$, che indichiamo con $x^{-1}$.\\ \\
-||||||| merged common ancestors
-Definiamo l'inverso moltiplicativo di $k$, indicato con $k^{-1}$, come quel numero che moltiplicato per $k$ d� 1, cio� $kk^{-1} \, mod \, n = 1 \, mod \, n$. Fissato n, non tutti i numeri hanno un inverso moltiplicativo $mod \, n$. Si osservi inoltre che, se $k$ ammette un inverso moltiplicativo $mod \, n $, esiste un unico inverso moltiplicativo $k^{-1} < n$. La moltiplicazione $mod \, n$ di per s� non costituisce un cifrario sicuro,ma funziona, nel senso che la moltiplicazione per $k$ produce un mescolamento dell'input; la decifratura pu� ottenersi moltiplicando per $k^{-1}$.\\ Trovare un inverso moltiplicativo $k^{-1}$ nella aritmetica $mod \, n$, non � affatto banale se $n$ � molto grande. Esiste un modo efficiente per risolvere tale problema, noto come algoritmo di Euclide: \begin{itemize}
-\item dati $x$ ed $n$, con $x<n$, l'algoritmo di Euclide trova il
-numero $y<n$ tale che $xy \, mod \, n = 1$, ammesso che un siffatto $y$ esista.\end{itemize} 
-Quali sono dunque gli inversi moltiplicativi $mod \, n$? E' sufficiente trovare i numeri \textit{relativamente primi} con $n$, cio� tali che se $x$ � uno di questi numeri, si ha che $MCD(x,n) = 1$. Se $n$ � un numero primo, tutti gli interi positivi $x<n$ ammettono un inverso moltiplicativo $mod \, n$, che indichiamo con $x^{-1}$.\\ \\
-=======
-Definiamo l'inverso moltiplicativo di $k$, indicato con $k^{-1}$, come quel numero che moltiplicato per $k$ dà 1, cioè $kk^{-1} \, mod \, n = 1 \, mod \, n$. Fissato n, non tutti i numeri hanno un inverso moltiplicativo $mod \, n$. Si osservi inoltre che, se $k$ ammette un inverso moltiplicativo $mod \, n $, esiste un unico inverso moltiplicativo $k^{-1} < n$. La moltiplicazione $mod \, n$ di per sé non costituisce un cifrario sicuro,ma funziona, nel senso che la moltiplicazione per $k$ produce un mescolamento dell'input; la decifratura può ottenersi moltiplicando per $k^{-1}$.\\ Trovare un inverso moltiplicativo $k^{-1}$ nella aritmetica $mod \, n$, non è affatto banale se $n$ è molto grande. Esiste un modo efficiente per risolvere tale problema, noto come algoritmo di Euclide: 
-
-\begin{itemize}
-\item dati $x$ ed $n$, con $x<n$, l'algoritmo di Euclide trova il numero $y<n$ tale che $xy \, mod \, n = 1$, ammesso che un siffatto $y$ esista.
-\end{itemize} 
-Quali sono dunque gli inversi moltiplicativi $mod \, n$? E' sufficiente trovare i numeri \textit{relativamente primi} con $n$, cioè tali che se $x$ è uno di questi numeri, si ha che $MCD(x,n) = 1$. Se $n$ è un numero primo, tutti gli interi positivi $x<n$ ammettono un inverso moltiplicativo $mod \, n$, che indichiamo con $x^{-1}$.\\ \\
->>>>>>> 97170125928e81d41229ce7a4b1ea69a00151de4
 \textbf{Funzione di Eulero o totiente:} \{$i \in Z, 0 < i < n: MCD(i,n) = 1$\} \\
 
 Se $n$ è primo, tutti gli interi da 1 a $n-1$ sono relativamente primi con $n$, per cui $\phi(x) = n - 1$. Se $n = pq$, dove p e q sono numeri primi maggiori di 1, allora $\phi(n) = (p-1)(q-1)$. \\
@@ -166,16 +135,8 @@ diciamo Alice, e trasmessi a Bob nel messaggio che gli invierà;
 La fase 0, viene eseguita dall'iniziatore della comunicazione qualora i numeri $p$ e $g$ non siano pubblici: Alice genera (o estrae da un suo archivio) una coppia di numeri $p$ e $g$ tali da soddisfare le proprietà sopra elencate; $p$ e $g$ possono essere subito inviati a Bob oppure possono essere trasmessi nella fase 3a.
 \begin{enumerate}
 \item \begin{enumerate}
-<<<<<<< HEAD
 \item [a.] Generazione del segreto privato $s_{A}$: Alice(iniziatore comunicazione) genera un numero random $s_{A}<p$ di 512 bit, che non verrà mai inviato a Bob, quindi calcola $T_{A}=g^{s_{A}} \, mod \,p$ e lo invia(su una rete insicura) a Bob;
 \item [b.] Generazione del segreto privato $s_{B}$: Bob genera $s_{B}<p$ di 512 bit, che non verrà mai inviato ad Alice, quindi calcola $T_{B}=g^{s_{B}} \, mod \, p$ e lo invia in rete ad Alice;
-||||||| merged common ancestors
-\item [a.] Generazione del segreto privato $s_{A}$: Alice(iniziatore comunicazione) genera un numero random $s_{A}<p$ di 512 bit, che non verr� mai inviato a Bob, quindi calcola $T_{A}=g^(s_{A}) \, mod \,p$ e lo invia(su una rete insicura) a Bob;
-\item [b.] Generazione del segreto privato $s_{B}$: Bob genera $s_{B}<p$ di 512 bit, che non verr� mai inviato ad Alice, quindi calcola $T_{B}=g^{s_{B}} \, mod \, p$ e lo invia in rete ad Alice;
-=======
-\item [a.] Generazione del segreto privato $s_{A}$: Alice(iniziatore comunicazione) genera un numero random $s_{A}<p$ di 512 bit, che non verrà mai inviato a Bob, quindi calcola $T_{A}=g^(s_{A}) \, mod \,p$ e lo invia(su una rete insicura) a Bob;
-\item [b.] Generazione del segreto privato $s_{B}$: Bob genera $s_{B}<p$ di 512 bit, che non verrà mai inviato ad Alice, quindi calcola $T_{B}=g^{s_{B}} \, mod \, p$ e lo invia in rete ad Alice;
->>>>>>> 97170125928e81d41229ce7a4b1ea69a00151de4
 \end{enumerate}
 \item \begin{enumerate}
 \item [a.] Alice calcola $K_{AB}=T_{B}^{s_{A}} \, mod \,p$;
@@ -184,13 +145,7 @@ La fase 0, viene eseguita dall'iniziatore della comunicazione qualora i numeri $
 \item L'aritmetica modulare garantisce che $K_{AB}=K_{BA}$. Infatti si ha $ K_{AB} = T_{B}^{s_{A}} \, mod \,p = ({g^{s_{B}} \, mod \, p})^{s_{A}} \, mod \,p = g^{s_{B}s_{A}} \, mod \, p = g^{s_{A}s_{B}} \, mod \, p = ({g^{s_{A}} \, mod \, p})^{s_{B}} \, mod \,p = T_{A}^{s_{B}} \, mod \, p = K_{BA}$.
 \end{enumerate}
 
-<<<<<<< HEAD
 Tuttavia, dati $p$, $g$, $T_{A}$ e $T_{B}$, è possibile calcolare $s_{A}$, $s_{B}$ oppure $g^{s_{A}s_{B}}$? Si può ottenere $s_{A}$ da $g^{s_{A}}$ tramite logaritmo discreto $dlog_{g} \, g^{s_{A}}$, ma al momento non sono note tecniche per calcolare tale quantità in un tempo ragionevole, anche conoscendo $g^{s_{A}}$ e $g^{s_{B}}$.
-||||||| merged common ancestors
-Tuttavia, dati $p$, $g$, $T_{A}$ e $T_{B}$, � possibile calcolare $s_{A}$, $s_{B}$ oppure $g^{s_{A}s_{B}}$? Si pu� ottenere $s_{A}$ da $g^(s_{A})$ tramite logaritmo discreto $dlog_{g} \, g^{s_{A}}$, ma al momento non sono note tecniche per calcolare tale quantit� in un tempo ragionevole, anche conoscendo $g^{s_{A}}$ e $g^{s_{B}}$.
-=======
-Tuttavia, dati $p$, $g$, $T_{A}$ e $T_{B}$, è possibile calcolare $s_{A}$, $s_{B}$ oppure $g^{s_{A}s_{B}}$? Si può ottenere $s_{A}$ da $g^(s_{A})$ tramite logaritmo discreto $dlog_{g} \, g^{s_{A}}$, ma al momento non sono note tecniche per calcolare tale quantità in un tempo ragionevole, anche conoscendo $g^{s_{A}}$ e $g^{s_{B}}$.
->>>>>>> 97170125928e81d41229ce7a4b1ea69a00151de4
 \\
 La vulnerabilità di Diffie-Hellman è che tale algoritmo non fornisce alcuna prova di autenticazione: Alice non può essere certa che $T_{B}$ sia stato inviato da Bob e non da un impostore; allo stesso modo, Bob non può essere certa che $T_{A}$ sia stato inviato da Alice e non da
 un impostore. E' quindi possibile che un impostore, Mr. X, intercetti e modifichi i messaggi facendo credere a Bob di comunicare con Alice e

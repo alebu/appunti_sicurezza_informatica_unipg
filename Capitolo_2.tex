@@ -114,7 +114,7 @@ DES fu pubblicato nel 1977 dal \textbf{National Bureau of Standards}, ora rinomi
 
 DES è efficiente se realizzato in hardware, ma relativamente lento se implementato in software. Sebbene l'essere difficilmente implementabile come software non fosse un requisito specificato nel progetto molti sostengono che in realtà questa mancanza fosse voluta, forse per limitarne l'uso ad organizzazioni in grado di realizzare sistemi hardware, o forse perché rese più facile controllare l'accesso alla tecnologia. Ad ogni modo, l'aumento delle capacità di calcolo delle CPU rese possibile realizzare una versione software di DES. Una 500-MIPS (Million Instruction Per Second) CPU può infatti cifrare ad un tasso di circa 30 KB/s e forse più, a seconda dei dettagli architetturali della CPU e dell'intelligenza dell'implementazione. Un processore Intel Core i7 Extreme Edition i980EE ha una capacità di calcolo di circa 150 MIPS, quindi può cifrare ad un tasso di circa 9 KB/s (per cifrare 1 MB impiega circa 110 secondi). L’implementazione software è pertanto attualmente adeguata a molte applicazioni.\newline \newline
 
-\subsection{Perché chiavi da 56 bit?}
+\subsubsection{Perché chiavi da 56 bit?}
 La scelta di una chiave da 56 bit causò molte controversie. Prima che DES fu adottato, le persone al di fuori della \textit{intelligence community} lamentavano che 56 bit non offrivano una sicurezza adeguata. Perché solo 56 dei 64 bit di una chiave DES sono effettivamente usati nell'algoritmo? Lo svantaggio di usare 8 bit della chiave per un controllo di parità è che ciò rende DES molto meno sicuro (256 volte meno sicuro contro una ricerca esaustiva). Ma qual è il vantaggio di usare 8 bit per un controllo di parità? Una possibile risposta è che permette di verificare che la chiave non sia corrotta. Tuttavia questa spiegazione non regge. Se si considerassero infatti 64 bit a caso invece della chiave, c'è una probabilità su 256 che il controllo di parità dia esito positivo. La probabilità che la chiave sia comunque errata (nonostante il controllo di parità dia esito positivo) è troppo alta. Inoltre avere una chiave corrotta non comporta un problema di sicurezza, semplicemente la cifratura/decifratura non viene eseguita correttamente. Chiaramente è anche ridicolo sostenere che la scelta di 56 bit sia stata fatta per risparmiare memoria. \newline La risposta ormai condivisa è che il governo statunitense abbia deliberatamente indebolito la sicurezza di DES di una quantità appena sufficiente da consentire alla NSA di violarlo.
 
 \subsection{Violabilità e sicurezza di DES}
@@ -127,10 +127,10 @@ $40\%$ per anno. La lunghezza delle chiavi dovrebbe aumentare di 1 bit ogni 2 an
   \item $2^{56} \approx 10^{17} \approx 10^{3}$ MIPS-year
 \end{itemize}
 Questo vale tuttavia \textbf{SOLO} per effettuare una ricerca esaustiva. Dopo di che entra in gioco il fatto che io sappia riconoscere o meno il testo in chiaro.
-\subsection{Violabilità DES - esempio}
+\subsubsection{Violabilità DES - esempio}
 Anche nell'ipotesi più scomoda per l'avversario di disporre solo di testo cifrato (in ragionevole quantità), un attacco a forza bruta è ancora possibile. Se ad esempio l'avversario sa soltanto che il testo in chiaro è ASCII a 7 bit ogni volta che prova una chiave deve verificare se sono nulli tutti i bit nelle posizioni $8, 16, 24, ..., n \times 8, ...$. Per ogni blocco di 64 bit, vanno esaminati solo 8 bit; i bit in posizione 8, 16, 24, 32, 40, 48, 56, 64. Se almeno uno di questi bit vale 1 la chiave è sicuramente errata. in caso contrario nulla si può dire; \textbf{la probabilità di errore è pertanto 1 su 256 ossia la probabilità che tutti questi bit valgano 0}. Se l'avversario esamina diversi blocchi, ad esempio 10, e verifica che si tratta sempre di ASCII a 7 bit la probabilità che la chiave scelta sia errata si riduce a 1 su 2560. Si noti che gli attuali chip commerciali che implementano DES non si prestano a ricerche esaustive della chiave: sono pensati per cifrare molti dati con una stessa chiave. Infatti il caricamento di una chiave è un'operazione lenta se confrontata con la velocità con la quale viene eseguita la cifratura dei dati. Tuttavia è sempre possibile costruire un chip ottimizzato ad eseguire ricerche esaustive della chiave.
 
-\subsection{Violabilità DES - cifratura multipla}
+\subsubsection{Violabilità DES - cifratura multipla}
 Per ovviare a tali problemi di sicurezza è possibile cifrare più volte e con diverse chiavi lo stesso blocco di dati. Si parla di \textbf{cifratura multipla (multiple encryption)}. Si ritiene che una cifratura con un triplo DES sia
 $2^{56}$ volte più difficile da violare.
 
@@ -278,5 +278,27 @@ Infine gli otto output, da 4 bit, delle otto S-box sono riuniti in un unico outp
 	{\includegraphics[height=2cm, width=10cm, keepaspectratio]{Immagini/Capitolo2/sbox_perm.png}}
 	\caption{Permutazione output S-Box \label{fig:sbox_perm}} 	
 \end{figure}
+	
 \section{Advanced Encryption Standard - AES}
-AES fu introdotto perché DES aveva una chiave troppo corta, 3DES (triplo DES) era troppo lento e IDEA era protetto da un brevetto, ed era in parte sospetto e lento. Il NIST si impegnò quindi a sviluppare un nuovo standard. Non si trattava di un problema solo tecnico, ma anche di un problema politico, poiché alcuni rami del governo avevano ostacolato il più possibile la diffusione e l'esportazione della crittografia sicura, e il fatto che il governo appoggiasse NIST era visto con scetticismo, e molti non si fidavano.
+AES fu introdotto perché DES aveva una chiave troppo corta, 3DES (triplo DES) era troppo lento e IDEA era protetto da un brevetto, ed era in parte sospetto e lento. Il NIST si impegnò quindi a sviluppare un nuovo standard. Non si trattava di un problema solo tecnico, ma anche di un problema politico, poiché alcuni rami del governo avevano ostacolato il più possibile la diffusione e l'esportazione della crittografia sicura, e il fatto che il governo appoggiasse il NIST era visto con scetticismo, e molti non si fidavano. Il NIST voleva realmente creare un nuovo standard di sicurezza eccellente, cioè efficiente, flessibile, sicuro e free (non protetto). \newline
+
+Nel 1997 il NIST annunciò una gara per la selezione di un nuovo standard di cifratura destinato a proteggere informazioni governative sensibili. Dopo molti anni di studio e discussioni, il NIST scelse l'algoritmo \textbf{Rijndael}, proposto da due crittografi belgi Joan Daemen e Vincet Rijmen. Rijndael prevede diverse lunghezze per i blocchi e
+per la chiave: 128, 160, 192, 224, e 256 bit. La lunghezza di un blocco e quella della chiave possono differire. Il 26 Novembre 2001, viene emanato \textbf{AES}, una standardizzazione di Rijndael. AES quindi consiste in un'implementazione di \textbf{Rijndael} con determinati parametri. Lo standard AES, infatti:
+\begin{itemize}
+  \item fissa la lunghezza dei blocchi a 128 bit
+  \item la chiave può essere di 128, di 192 o di 256 bit. Si parla di \textbf{AES-128}, \textbf{AES-192} e \textbf{AES-256}
+\end{itemize}
+
+Nel seguito si descriverà Rijndael, specificando di volta in volta i parametri di AES. A grandi linee, Rijndael somiglia a DES e a IDEA. Ci sono più round che "strapazzano" un blocco di testo in chiaro per ottenere il corrispondente cifrato, e c'è un algoritmo per l'espansione della chiave; a partire dalla chiave segreta genera le chiavi da usare nei vari round.
+
+\subsubsection{Rijndael/AES - parametri}
+Rijndael ha una struttura flessibile grazie all'uso di due parametri indipendenti, e di un terzo parametro derivato dai primi due:
+\begin{itemize}
+  \item $N_{b}$ \textbf{dimensione di un blocco}: numero di parole (word) da 32 bit (colonne da 4 ottetti) in un blocco da cifrare. In AES $N_{b = 4}$, ovvero un blocco ha lunghezza 128 bit, ovvero 4 parole da 32 bit (4 colonne da 4 ottetti).
+  \item $N_{k}$ \textbf{dimensione della chiave}: numero di parole (word) da 32 bit (colonne da 4 ottetti) in una chiave di cifratura. In AES-128 $N_{k} = 4$, In AES-192 $N_{k} = 6$, In AES-256 $N_{k} = 8$. In Rijndael $N_{k}$ può essere un qualsiasi intero tra 4 e 8.
+  \item $N_{r}$ \textbf{numero di round}: questo parametro dipende da $N_{b}$ e da $N_{k}$. Il numero di round deve aumentare all'aumentare della lunghezza di un blocco (e della chiave); ogni bit del testo in chiaro (e della chiave) deve influenzare (in modo complesso) ciascun bit del testo cifrato. Rijndael specifica che $N_{r}$ = 6 + max($N_{b}$ ,$N_{k}$). In AES-128 $N_{r} = 10$, in AES-192 $N_{r} = 12$, in AES-256 $N_{r} = 14$.
+\end{itemize}
+  
+\subsubsection{Array di stato}
+Rijndael mantiene un array di stato rettangolare durante il funzionamento. Ogni elemento dell'array è un ottetto. Complessivamente ci sono $N_{b}$ colonne da 4 ottetti. Lo stato iniziale è ottenuto popolando l’array, colonna per colonna, mediante le $N_{b}$ colonne da 4 ottetti che costituiscono il blocco di input. 
+

@@ -412,7 +412,7 @@ L'attacco a DES doppio appena descritto è difficilmente praticabile (dover cost
 Vediamo quante coppie candidate ci saranno mediamente dopo la prima ricerca nelle due tabelle.\\
 Sia $cc_{1}$ il numero atteso di coppie candidate ottenute dopo la prima ricerca.
 Visto che i possibili blocchi di 64 bit sono $2^64$ e che le entry in ciascuna tabella sono $2^56$ la probabilità $P_{bt}$ che un blocco sia in una tabella è $P_{bt} = 2^56 / 2^64 = 2^-8$, mentre la probabilità $P_{c1}$ che un blocco sia in entrambe le tabelle (e che quindi identifichi una coppia candidata) è $P_{c1} = 2^-8 \times 2^-8 = 2^-16$. \\
-Ora, $cc1 \approx Pc1 ∙ numero blocchi = 2^64 / 2^16 = 2^48$, vale a dire che ci sono $2^48$ coppie candidate errate.\\
+Ora, $cc1 \approx Pc1 \dot numero blocchi = 2^64 / 2^16 = 2^48$, vale a dire che ci sono $2^48$ coppie candidate errate.\\
 Consideriamo adesso la probabilità $P_{c2}$ che una coppia candidata soddisfi anche il secondo test: questa vale $P_{c2} \approx 2^-64$. \\
 La probabilità $P_{e2}$ di trovare un coppia candidata errata dopo il secondo test vale $P_{e2} = 2^48 / 2^64$ e al terzo test si avrà $P_{e2} = 2^48 / 2^128 = 2^-80$: quindi la probabilità di trovare un falso positivo dopo tre test
 è di fatto nulla e dopo tre test si ottiene un'unica coppia candidata che è quella corretta.

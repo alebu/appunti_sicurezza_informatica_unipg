@@ -13,8 +13,8 @@ Un centro di distribuzione delle chiavi, \textbf{K}ey \textbf{D}istribution \tex
 [ins figura 52]
 
 \subsubsection{Centri di distribuzione delle chiavi}
-Se un nodo \alpha deve comunicare con un nodo \beta, \alpha comunica con il KDC in modo sicuro, e usando la loro chiave segreta condivisa $K_{\alphaKDC}$ gli chiede di inviargli una chiave per comunicare con \beta; il KDC autentica \alpha, sceglie un numero random $ R_{\alpha\beta} $ da usare come chiave segreta condivisa tra \alpha e \beta; cifra $ R_{\alpha\beta} $ con la chiave segreta $K_{\betaKDC}$ che condivide con \beta, e trasmette a \beta $ R_{\alpha\beta} $ cifrata insieme alle istruzioni che \beta deve usare per comunicare con \alpha (in genere, il KDC non trasmette direttamente $ R_{\alpha\beta} $ cifrato a \beta, per confinare il suo intervento all'interazione con un solo nodo e prevenire attacchi di DoS, ma lo invia ad \alpha che poi lo inoltrerà a \beta:
-il messaggio cifrato per \beta che il KDC invia ad \alpha, e che \alpha dovrà inoltrare a \beta e detto \textbf{ticket}, che, oltre a contenere $ R_{\alpha\beta} $ contiene altre informazioni utili, come data di scadenza, nome del nodo \alpha, ecc.). \\ \\
+Se un nodo $\alpha$ deve comunicare con un nodo $\beta$, $\alpha$ comunica con il KDC in modo sicuro, e usando la loro chiave segreta condivisa $K_{\alpha KDC}$ gli chiede di inviargli una chiave per comunicare con $\beta$; il KDC autentica $\alpha$, sceglie un numero random $R_{\alpha\beta}$ da usare come chiave segreta condivisa tra $\alpha$ e $\beta$; cifra $R_{\alpha\beta}$ con la chiave segreta $K_{\beta KDC}$ che condivide con $\beta$, e trasmette a $\beta$ $R_{\alpha\beta} $ cifrata insieme alle istruzioni che $\beta$ deve usare per comunicare con $\alpha$ (in genere, il KDC non trasmette direttamente $ R_{\alpha\beta} $ cifrato a $\beta$, per confinare il suo intervento all'interazione con un solo nodo e prevenire attacchi di DoS, ma lo invia ad $\alpha$ che poi lo inoltrerà a $\beta$:
+il messaggio cifrato per $\beta$ che il KDC invia ad $\alpha$, e che $\alpha$ dovrà inoltrare a $\beta$ e detto \textbf{ticket}, che, oltre a contenere $ R_{\alpha\beta} $ contiene altre informazioni utili, come data di scadenza, nome del nodo $\alpha$, ecc.). \\ \\
 I KDC semplificano la distribuzione delle chiavi: quando un nuovo utente deve essere aggiunto alla rete, o quando si sospetta che una chiave d’utente sia stata compromessa, c’è un singolo punto della rete, il KDC, la cui configurazione deve essere aggiornata. L’alternativa al KDC è installare le informazioni di un utente in ciascun server ove potrebbe accedere. \\
 L'uso dei KDC comporta però i seguenti svantaggi: 
 \begin{itemize}
@@ -50,7 +50,7 @@ insicuro (ad es. in un servizio di directory), un sabotatore può cancellare i c
 Una CA compromessa non puo decifrare le conversazioni tra due nodi (reali) da lei serviti (mentre un KDC compromesso può decifrare tutte le conversazioni tra coppie di nodi da lui serviti), pertanto una CA compromessa può ingannare un utente, diciamo Alice, inviandogli una falsa chiave pubblica di Bob e riuscire ad impersonare Bob in una comunicazione con Alice, ma non può decifrare una comunicazione tra la vera Alice e il vero Bob: quindi la compromissione di una CA rimane un fatto molto grave, ma non quanto la compromissione di un KDC. \\ \\
 Le CA presentano comunque il seguente svantaggio rispetto i KDC: \\
 Supponiamo che Fred offra dei servizi di hosting per conto dell'azienda X SpA; la società X SpA fornisce a Fred un certificato (rilasciato a favore della X SpA) necessario ad autenticare il server, pertanto Fred conosce la chiave privata della chiave pubblica certificata. Supponiamo inoltre che a causa di un contrasto con Fred, la X SpA decida di interrompere il rapporto di lavoro; se il certificato è ancora valido Fred può continuare a rendere dei servizi per conto della X SpA, magari anche danneggiandola. Per la X SpA sarebbe importante informare gli utenti di non accettare il certificato generato per Fred e ancora in corso di validità. \\
-Con i KDC tale problema è di facile soluzione: basta rimuovere K_{Fred} dal KDC.\\ 
+Con i KDC tale problema è di facile soluzione: basta rimuovere $K_{Fred}$ dal KDC.\\ 
 Ovviamente si ha un problema analogo anche quando viene smarrita, o peggio rubata, la chiave privata associata alla chiave pubblica certificata.\\
 Nel caso delle CA non è facile estromettere qualcuno che detiene una chiave privata la cui chiave pubblica è certificata (si noti che potrebbe essere molto rischioso attendere la scadenza naturale del certificato); in queste situazioni conviene revocare il certificato: si revoca un certificato quando, a partire da un certo momento, non devono essere più considerate valide le firme generate con la chiave privata abbinata alla chiave pubblica contenuta nel certificato. \\ \\
 La \textbf{revoca} di un certificato si attua inserendo un riferimento al certificato all'interno di una lista di revoca (\textbf{C}ertificate \textbf{R}evocation \textbf{L}ist CRL), che elenca i numeri seriali di certificati da non onorare. Ogni CA pubblica periodicamente una nuova CRL che contiene tutti i certificati revocati e non scaduti.\\
@@ -74,20 +74,20 @@ Lo standard X.509 ha definito anche il formato delle CRL, in base al quale una C
 Supponendo che Bob sia un'applicazione che deve autenticare l'utente Alice, illustrare un possibile protocollo di
 autenticazione a chiave pubblica, che includa una verifica dell'appartenenza della chiave pubblica all'utente Alice.
 \\ \\
-Chiaramente Bob ha bisogno del certificato di Alice, \textit{Cert_{Alice}}, e di una CRL recente: Bob può ottenerli da un servizio di directory, oppure Alice li trasmette a Bob. 
+Chiaramente Bob ha bisogno del certificato di Alice, \textit{$Cert_{Alice}$}, e di una CRL recente: Bob può ottenerli da un servizio di directory, oppure Alice li trasmette a Bob. 
 In riferimento alla FIGURA, una possibile soluzione è:
 \begin{itemize}
-\item Bob recupera il certificato di Alice \textit{Cert_{Alice}} e una CRL recente
-\item Consultando il certificato \textit{Cert_{Alice}} individua la chiave pubblica di Alice \textit{PU_{Alice}}
-\item Verifica la correttezza di \textit{PU_{Alice}} come segue:
+\item Bob recupera il certificato di Alice \textit{$Cert_{Alice}$} e una CRL recente
+\item Consultando il certificato \textit{$Cert_{Alice}$} individua la chiave pubblica di Alice \textit{$PU_{Alice}$}
+\item Verifica la correttezza di \textit{$PU_{Alice}$} come segue:
 \begin{itemize}
-\item se il certificato \textit{Cert_{Alice}} è correttamente firmato dalla CA che lo ha emesso e non è scaduto, e
-la CRL è correttamente firmata dalla CA ed è sufficientemente recente e non contiene il certificato \textit{Cert_{Alice}}, allora Bob conclude che \textit{PU_{Alice}} è corretta (quindi è quella nel certificato)
+\item se il certificato \textit{$Cert_{Alice}$} è correttamente firmato dalla CA che lo ha emesso e non è scaduto, e
+la CRL è correttamente firmata dalla CA ed è sufficientemente recente e non contiene il certificato \textit{$Cert_{Alice}$}, allora Bob conclude che \textit{$PU_{Alice}$} è corretta (quindi è quella nel certificato)
 \end{itemize}
 \item Bob ed Alice iniziano uno scambio di messaggi seguendo uno schema di autenticazione a chiave pubblica, ad esempio:
 \begin{itemize}
 \item Bob invia una sfida \textit{R} ad Alice
-\item Alice firma \textit{R} con la propria chiave privata ed invia [\textit{R}]\textit{_{Alice}} a Bob
+\item Alice firma \textit{R} con la propria chiave privata ed invia [\textit{R}]\textit{$NONLOSO_{Alice}$} a Bob
 \item Bob verifica la firma di Alice ed in caso affermativo autentica Alice
 \end{itemize}
 \end{itemize}

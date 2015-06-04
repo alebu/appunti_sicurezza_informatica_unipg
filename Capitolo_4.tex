@@ -1,43 +1,27 @@
 \chapter{Funzioni Crittografiche di Hash}
 \section{Introduzione}
-Una funzione di hash (o semplicemente hash o message digest) è una funzione unidirezionale (o one-way).
+Una funzione di hash (o semplicemente hash o message digest) è una funzione unidirezionale (o one-way), del tipo h: $\{0, 1\}^{*} \rightarrow \{0, 1\}^{b}$, dove:
+
 \begin{itemize}
-\item è una funzione perché prende in input un messaggio e produce un output che dipende dal messaggio :
-	\begin{itemize}
-	\item h: $\{0, 1\}^{*} \rightarrow \{0, 1\}^{b}$
 	\item $\{0, 1\}^{*}$: spazio delle stringhe binarie di lunghezza qualsiasi
 	\item $\{0, 1\}^{b}$: spazio delle stringhe binarie di lunghezza b bit
-	\item è considerata unidirezionale (one-way) perché è impraticabile capire quale input corrisponda ad un dato output
-	\end{itemize}
-
-Sia h() una funzione di hash, allora h() è una funzione di hash sicura se :
-	\begin{itemize}
-	\item resistenza alla preimmagine: fissato un hash $\hbar$ è
-	computazionalmente impraticabile trovare un messaggio
-	m tale che $h(m) = \hbar$
-	\item resistenza alle collisioni: è computazionalmente
-	impraticabile trovare due messaggi m1 e m2 aventi lo
-	stesso digest h(m1) = h(m2), le proprietà precedenti implicano la seguente
-	\item resistenza alla seconda preimmagine: dato un messaggio
-	m, è computazionalmente impraticabile trovare un
-	messaggio m’ avente lo stesso digest $h(m) = h(m’)$
-	\end{itemize}
 \end{itemize}
 
-Si useranno i termini hash e message digest in modo intercambiabile; la funzione di hash del NIST è chiamata SHA-1: Secure Hash Algorithm mentre l’acronimo MD degli algoritmi MD2, MD4 e MD5 sta per Message Digest. Tutti gli algoritmi di digest/hash basicalmente fanno la stessa cosa: prendono in input un messaggio di lunghezza variabile, e restituiscono in output una quantità avente lunghezza prefissata.
-Dato un messaggio m, il digest h(m) viene calcolato in modo deterministico. Tuttavia, l’output della funzione di hash dovrebbe apparire il più possibile casuale. Dovrebbe essere impossibile, senza applicare la funzione di
-hash, predire ogni porzione dell’output e per ogni sottoinsieme (di posizioni) di bit nel digest h(m)
-soltanto procedendo in modo esaustivo dovrebbe essere possibile ottenere due messaggi m1 e m2 tali che h(m1) e
-h(m2) presentino gli stessi bit in quelle posizioni.
-Perciò una funzione di hash sicura con n bit dovrebbe essere derivabile da una funzione di hash con più di n
-bit prendendo un arbitrario sottoinsieme di n bit dal digest più grande.
-Chiaramente, ci sono molti messaggi distinti che sono mappati in uno stesso digest h(m); m ha lunghezza arbitraria, mentre il digest h(m) ha una lunghezza prefissata, ad esempio 128 bit.
-Se m ha una lunghezza di 1000 bit e h(m) di 128 bit ci sono in media 2872 messaggi che sono mappati in uno
-stesso digest  dopo molti tentativi, due messaggi aventi lo stesso digest si trovano sicuramente.
-Tuttavia, per “molti tentativi” si intende un numero talmente grande che è di fatto impossibile
-considerando una buona funzione di digest a 128 bit, è necessario provare approssimativamente
-$2^{128}$ possibili messaggi prima di ottenere un messaggio avente un particolare digest, o
-$2^{64}$ messaggi prima di trovarne due aventi lo stesso digest ; trovare cioè due messaggi che collidono.
+La funzione di hash è considerata unidirezionale (one-way) perché in genere è impraticabile capire quale input corrisponda ad un dato output. Sia \textbf{h()} una funzione di hash, allora \textbf{h()} è una \textbf{funzione di hash sicura} se rispetta le seguenti proprietà:
+
+\begin{itemize}
+	\item \textbf{resistenza alla preimmagine}: fissato un hash $\hbar$ è computazionalmente impraticabile trovare un messaggio m tale che $h(m) = \hbar$
+	\item \textbf{resistenza alle collisioni}: è computazionalmente	impraticabile trovare due messaggi m1 e m2 aventi lo 	stesso digest h(m1) = h(m2), le proprietà precedenti implicano la seguente
+	\item \textbf{resistenza alla seconda preimmagine}: dato un messaggio m, è computazionalmente impraticabile trovare un	messaggio m’ avente lo stesso digest $h(m) = h(m’)$
+\end{itemize}
+
+
+Si useranno i termini hash e message digest in modo intercambiabile; la funzione di hash del NIST è chiamata \textbf{SHA-1}: Secure Hash Algorithm mentre l'acronimo MD degli algoritmi \textbf{MD2}, \textbf{MD4} e \textbf{MD5} sta per Message Digest. Tutti gli algoritmi di digest/hash di base fanno la stessa cosa: prendono in input un messaggio di lunghezza variabile, e restituiscono in output una quantità avente lunghezza prefissata. \newline \newline
+
+\subsubsection{Randomicità della funzione}
+Dato un messaggio \textbf{m}, il digest \textbf{h(m)} viene calcolato in modo \textbf{deterministico}. Tuttavia, l'output della funzione di hash dovrebbe apparire il più possibile casuale. Dovrebbe essere impossibile, senza applicare la funzione di hash, predire una qualsiasi porzione dell'output: per ogni sottoinsieme (di posizioni) di bit nel digest \textbf{h(m)} dovrebbe essere possibile ottenere due messaggi m1 e m2 tali che h(m1) e h(m2) presentino gli stessi bit in quelle posizioni \textbf{soltanto procedendo in modo esaustivo}. \newline \newline
+
+Chiaramente, ci sono molti messaggi distinti che sono mappati in uno stesso digest h(m); m ha lunghezza arbitraria, mentre il digest h(m) ha una lunghezza prefissata, ad esempio 128 bit. Se m ha una lunghezza di 1000 bit e h(m) di 128 bit ci sono in media 2872 messaggi che sono mappati in uno stesso digest  dopo molti tentativi, due messaggi aventi lo stesso digest si trovano sicuramente. Tuttavia, per "molti tentativi" si intende un numero talmente grande che è di fatto impossibile. Considerando una buona funzione di digest a 128 bit, è necessario provare approssimativamente $2^{128}$ possibili messaggi prima di ottenere un messaggio avente un particolare digest, o $2^{64}$ messaggi prima di trovarne due aventi lo stesso digest (trovare cioè due messaggi che collidono).
 
 \section{Esempio di Applicazioni}
 Un’applicazione delle funzioni di hash crittografiche è il calcolo dell’impronta digitale di

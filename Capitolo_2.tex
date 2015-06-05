@@ -114,10 +114,12 @@ DES fu pubblicato nel 1977 dal \textbf{National Bureau of Standards}, ora rinomi
 
 DES è efficiente se realizzato in hardware, ma relativamente lento se implementato in software. Sebbene l'essere difficilmente implementabile come software non fosse un requisito specificato nel progetto molti sostengono che in realtà questa mancanza fosse voluta, forse per limitarne l'uso ad organizzazioni in grado di realizzare sistemi hardware, o forse perché rese più facile controllare l'accesso alla tecnologia. Ad ogni modo, l'aumento delle capacità di calcolo delle CPU rese possibile realizzare una versione software di DES. Una 500-MIPS (Million Instruction Per Second) CPU può infatti cifrare ad un tasso di circa 30 KB/s e forse più, a seconda dei dettagli architetturali della CPU e dell'intelligenza dell'implementazione. Un processore Intel Core i7 Extreme Edition i980EE ha una capacità di calcolo di circa 150 MIPS, quindi può cifrare ad un tasso di circa 9 KB/s (per cifrare 1 MB impiega circa 110 secondi). L’implementazione software è pertanto attualmente adeguata a molte applicazioni.\newline \newline
 
+
+\subsection{Violabilità e sicurezza di DES}
+
 \subsubsection{Perché chiavi da 56 bit?}
 La scelta di una chiave da 56 bit causò molte controversie. Prima che DES fu adottato, le persone al di fuori della \textit{intelligence community} lamentavano che 56 bit non offrivano una sicurezza adeguata. Perché solo 56 dei 64 bit di una chiave DES sono effettivamente usati nell'algoritmo? Lo svantaggio di usare 8 bit della chiave per un controllo di parità è che ciò rende DES molto meno sicuro (256 volte meno sicuro contro una ricerca esaustiva). Ma qual è il vantaggio di usare 8 bit per un controllo di parità? Una possibile risposta è che permette di verificare che la chiave non sia corrotta. Tuttavia questa spiegazione non regge. Se si considerassero infatti 64 bit a caso invece della chiave, c'è una probabilità su 256 che il controllo di parità dia esito positivo. La probabilità che la chiave sia comunque errata (nonostante il controllo di parità dia esito positivo) è troppo alta. Inoltre avere una chiave corrotta non comporta un problema di sicurezza, semplicemente la cifratura/decifratura non viene eseguita correttamente. Chiaramente è anche ridicolo sostenere che la scelta di 56 bit sia stata fatta per risparmiare memoria. \newline La risposta ormai condivisa è che il governo statunitense abbia deliberatamente indebolito la sicurezza di DES di una quantità appena sufficiente da consentire alla NSA di violarlo.
 
-\subsection{Violabilità e sicurezza di DES}
 Gli avanzamenti tecnologici dell'industria dei semiconduttori hanno reso ancora più critico il problema della lunghezza della chiave di DES. la velocità dei chip e un po' di furbizia permettono di violare (individuare) le chiavi DES con approcci a forza bruta in tempi ragionevoli. Il rapporto prestazioni/prezzo dell'hardware cresce del
 $40\%$ per anno. La lunghezza delle chiavi dovrebbe aumentare di 1 bit ogni 2 anni. Assumendo che 56 bit erano appena sufficienti nel 1979 (quando DES fu standardizzato), 64 bit erano adeguati nel 1995, e 128 bit dovrebbero essere sufficienti fino al 2123. \newline \newline Ragioniamo ora sulla sicurezza di DES. Se si dispone di un singolo blocco $\langle plaintext,ciphertext \rangle$ quanto è difficile trovare la chiave? Un approccio a forza bruta dovrebbe provare ordine di $2^{56} \approx 10^{17}$ chiavi. Se ogni tentativo richiede una singola istruzione sono necessarie ordine di 1000 MIPS-year istruzioni.
 \begin{itemize}
@@ -134,7 +136,8 @@ Anche nell'ipotesi più scomoda per l'avversario di disporre solo di testo cifra
 Per ovviare a tali problemi di sicurezza è possibile cifrare più volte e con diverse chiavi lo stesso blocco di dati. Si parla di \textbf{cifratura multipla (multiple encryption)}. Si ritiene che una cifratura con un triplo DES sia
 $2^{56}$ volte più difficile da violare.
 
-\subsection{DES - Struttura base}
+\subsection{Funzionamento DES}
+\subsubsection{Struttura base}
 \begin{figure}[htbp]
 	\centering%
 	\subfigure%
@@ -154,7 +157,7 @@ La struttura di base dell'algoritmo DES è descritta in \figurename ~\ref{fig:de
 Per descrivere DES è quindi sufficiente discutere le permutazioni iniziale e finale, come le chiavi di round sono generate, e cosa succede durante un round.
 
 
-\subsection{DES - Permutazioni dei dati}
+\subsubsection{Permutazioni dei dati}
 L'operazione di permutazione è molto importante in quanto diffonde la dipendenza dei bit in/out. Nel caso di DES però le permutazioni finale e iniziale non hanno effetto. Dimostriamo tale affermazione. \newline
 \begin{figure}[htbp]
 	\centering%
@@ -178,7 +181,7 @@ Come sono state definite quindi le permutazioni iniziale e finale? E' di fatto u
 	{\includegraphics[height=10cm, width=10cm, keepaspectratio]{Immagini/Capitolo2/des_perm_2.png}}
 	\caption{Regolarità tabella permutazioni DES \label{fig:des_perm_2}} 	
 \end{figure}
-\subsection{DES - Generazione chiavi di round}
+\subsubsection{Generazione chiavi di round}
 DES genera sedici chiavi di round da 48 bit a partire dalla chiave principale K di 64 bit nominali, di cui solo 56 effettivi. I bit di parità di K non vengono infatti considerati. Denoteremo con $K_{1}$,$K_{2}$,...,$K_{16}$ le sedici chiavi di round. Il procedimento è il seguente:
 \begin{itemize}
   \item viene prima effettuata una permutazione iniziale sui 56 bit effettivi di K
@@ -231,7 +234,7 @@ Trattiamo ora la generazione della chiave $K_{i}$ che avviene nell'i-esimo round
 	\end{tabular}
 	\end{table}
 \end{itemize}
-\subsection{Un round di DES}
+\subsubsection{Un round di DES}
 \begin{figure}[htbp]
 	\centering%
 	\subfigure%
@@ -247,7 +250,7 @@ La struttura di un round di des è illustrata in \figurename ~\ref{fig:round_des
   \item il risultato ottenuto è $R_{n+1} = mangler(R_{n}, K_{n}) \oplus L_{n}$
 \end{itemize}
 Si noti che ogni round di DES è facilmente invertibile: noti $L_{n+1}$ , $R_{n+1}$ e $k_{n}$ è facile ottenere $L_{n}$ e $R_{n}$. Infatti $R_{n} = L_{n+1}$ e, poiché $R_{n+1} = mangler(R_{n}, K_{n}) \oplus L_{n}$, risulta $R_{n+1} \oplus mangler(R_{n}, K_{n}) = L_{n}$ (in virtù della proprietà dello XOR secondo cui $x \oplus y \oplus y = x$). La mangler function non è quindi mai utilizzata in senso inverso. DES è elegantemento progettato in modo da essere facilmente invertibile senza richiedere l'invertibilità della mangler function. Esaminando attentamente la \figurename ~\ref{fig:round_des}), si evince che la decifratura è di fatto identica alla cifratura, tranne per il fatto che le due metà da 32 bit sono invertite. In altre parole, fornendo $R_{n+1} \mid L_{n+1}$ in input al round n si ottiene $R_{n} \mid L_{n}$ in uscita
-\subsection{Mangler Function}
+\subsubsection{Mangler Function}
 \begin{figure}[htbp]
 	\centering%
 	\subfigure%
@@ -283,7 +286,7 @@ Infine gli otto output, da 4 bit, delle otto S-box sono riuniti in un unico outp
 AES fu introdotto perché DES aveva una chiave troppo corta, 3DES (triplo DES) era troppo lento e IDEA era protetto da un brevetto, ed era in parte sospetto e lento. Il NIST si impegnò quindi a sviluppare un nuovo standard. Non si trattava di un problema solo tecnico, ma anche di un problema politico, poiché alcuni rami del governo avevano ostacolato il più possibile la diffusione e l'esportazione della crittografia sicura, e il fatto che il governo appoggiasse il NIST era visto con scetticismo, e molti non si fidavano. Il NIST voleva realmente creare un nuovo standard di sicurezza eccellente, cioè efficiente, flessibile, sicuro e free (non protetto). \newline
 
 Nel 1997 il NIST annunciò una gara per la selezione di un nuovo standard di cifratura destinato a proteggere informazioni governative sensibili. Dopo molti anni di studio e discussioni, il NIST scelse l'algoritmo \textbf{Rijndael}, proposto da due crittografi belgi Joan Daemen e Vincet Rijmen. Rijndael prevede diverse lunghezze per i blocchi e
-per la chiave: 128, 160, 192, 224, e 256 bit. La lunghezza di un blocco e quella della chiave possono differire. Il 26 Novembre 2001, viene emanato \textbf{AES}, una standardizzazione di Rijndael. AES quindi consiste in un'implementazione di \textbf{Rijndael} con determinati parametri. Lo standard AES, infatti:
+per la chiave: 128, 160, 192, 224, e 256 bit. La lunghezza di un blocco e quella della chiave possono differire. Il 26 Novembre 2001, viene emanato \textbf{AES}, una standardizzazione di Rijndael. AES quindi consiste in \textbf{un'implementazione di Rijndael} con determinati parametri. Lo standard AES, infatti:
 \begin{itemize}
   \item fissa la lunghezza dei blocchi a 128 bit
   \item la chiave può essere di 128, di 192 o di 256 bit. Si parla di \textbf{AES-128}, \textbf{AES-192} e \textbf{AES-256}
@@ -296,9 +299,86 @@ Rijndael ha una struttura flessibile grazie all'uso di due parametri indipendent
 \begin{itemize}
   \item $N_{b}$ \textbf{dimensione di un blocco}: numero di parole (word) da 32 bit (colonne da 4 ottetti) in un blocco da cifrare. In AES $N_{b = 4}$, ovvero un blocco ha lunghezza 128 bit, ovvero 4 parole da 32 bit (4 colonne da 4 ottetti).
   \item $N_{k}$ \textbf{dimensione della chiave}: numero di parole (word) da 32 bit (colonne da 4 ottetti) in una chiave di cifratura. In AES-128 $N_{k} = 4$, In AES-192 $N_{k} = 6$, In AES-256 $N_{k} = 8$. In Rijndael $N_{k}$ può essere un qualsiasi intero tra 4 e 8.
-  \item $N_{r}$ \textbf{numero di round}: questo parametro dipende da $N_{b}$ e da $N_{k}$. Il numero di round deve aumentare all'aumentare della lunghezza di un blocco (e della chiave); ogni bit del testo in chiaro (e della chiave) deve influenzare (in modo complesso) ciascun bit del testo cifrato. Rijndael specifica che $N_{r}$ = 6 + max($N_{b}$ ,$N_{k}$). In AES-128 $N_{r} = 10$, in AES-192 $N_{r} = 12$, in AES-256 $N_{r} = 14$.
+  \item $N_{r}$ \textbf{numero di round}: questo parametro dipende da $N_{b}$ e da $N_{k}$. Come idea generale, più lunga è la chiave più round sono necessari per rendere la violazione della cifratura difficile quanto un attacco a forza bruta sulla chiave. Inoltre il numero di round deve aumentare all'aumentare della lunghezza di un blocco (e della chiave); ogni bit del testo in chiaro (e della chiave) deve influenzare (in modo complesso) ciascun bit del testo cifrato. Rijndael specifica che $N_{r}$ = 6 + max($N_{b}$ ,$N_{k}$). In AES-128 $N_{r} = 10$, in AES-192 $N_{r} = 12$, in AES-256 $N_{r} = 14$.
 \end{itemize}
   
 \subsubsection{Array di stato}
-Rijndael mantiene un array di stato rettangolare durante il funzionamento. Ogni elemento dell'array è un ottetto. Complessivamente ci sono $N_{b}$ colonne da 4 ottetti. Lo stato iniziale è ottenuto popolando l’array, colonna per colonna, mediante le $N_{b}$ colonne da 4 ottetti che costituiscono il blocco di input. 
+Rijndael mantiene un array di stato rettangolare durante il funzionamento. Ogni elemento dell'array è un ottetto. Complessivamente ci sono $N_{b}$ colonne da 4 ottetti. Lo stato iniziale è ottenuto popolando l’array, colonna per colonna, mediante le $N_{b}$ colonne da 4 ottetti che costituiscono il blocco di input. \\
 
+Durante gli $N_{r}$ round lo stato viene modificato e il blocco di output dell'algoritmo si ottiene leggendo colonna per colonna lo stato finale. \\
+
+La struttura base di Rijndael è mostrata in \figurename ~\ref{fig:Rij_struct}.Prima del primo round, tra i vari round, e dopo il round $N_{r}$ viene eseguito l'or-esclusivo ($\oplus$ XOR) del contenuto dell'array di stato, con i prossimi $4\cdot N_{b}$ ottetti della \textbf{chiave espansa}. Gli ottetti della chiave espansa vengono letti per colonna in modo da formare un matrice di $N_{b}$ colonne da 4 ottetti ciascuna. I primi $N_{r} – 1$ round comprendono una sequenza di operazioni identiche, mentre il round $N_{r}$ ne omette una.
+
+\begin{figure}[htbp]
+	\centering%
+	\subfigure%
+	{\includegraphics[height=13cm, width=10cm, keepaspectratio]{Immagini/Capitolo2/rijndael_struttura.png}}
+	\caption{Struttura di base di Rijndael \label{fig:Rij_struct}} 	
+\end{figure}
+
+\subsubsection{Espansione della chiave}
+La chiave segreta di Rijndael è un blocco formato da $4 \cdot N_{k}$ ottetti ($N_{k}$ word da 32 bit). L'algoritmo di espansione della chiave scandisce la chiave in modo da ottenere $N_{k}$ colonne da 4 ottetti, poi espande la matrice ottenuta introducendo delle colonne (da 4 ottetti) aggiuntive (avvalendosi dello stesso tipo di operazioni primitive usate durante i round, che verrano descritte in seguito). L'espansione si arresta quando si hanno complessivamente $(N_{r} + 1)N_{b}$ colonne, ovvero l'esatta quantità di chiavi espanse. Non tratteremo qui nel dettaglio come avviene l'espansione, per l'approfondimento si rimanda a testi dedicati.\\
+
+\textbf{Numerazioni}: righe, colonne, e chiavi di round sono numerate a
+partire 0, mentre i round sono invece numerati a partire da 1.
+
+\subsubsection{Operazioni primitive}
+Rijndael utilizza quattro operazioni primitive, sia nell'espansione della chiave che all'interno dei round:
+\begin{itemize}
+  \item \textbf{OR-esclusivo ($\oplus$ XOR)}, in cui sono coinvolte le chiavi espanse
+  \item \textbf{sostituzione di byte}, chiamata \textbf{S-box}. Si tratta di una sostituzione ottetto-per-ottetto (byte-per- byte) definita da una specifica tabella, che specifica, per ciascuno dei possibili 256 byte in input il corrispondente byte in output tra i 256 possibili. Per la rappresentazione della tabella fa comodo usare la notazione esadecimale in cui, ad esempio, FC rappresenta il 252-esimo byte. Un'esempio di S-box è mostrato in \figurename ~\ref{fig:Rij_sbox}.
+  \item \textbf{scorrimento circolare di ottetti (byte)} di una riga o di una colonna pari a un qualche numero di celle
+  \item mescolamento colonne, \textbf{MixColumn}. Consiste nella sostituzione di una colonna di 4 ottetti con un'altra colonna di 4 ottetti. MixColumn può essere implementata con una singola tabella contenente 256 colonne di 4 ottetti: ciascuno dei 4 ottetti in una colonna di input è usato come un indice per recuperare una colonna dalla tabella. Ogni colonna recuperata dalla tabella è ruotata (scorrimento verticale circolare dall'alto in basso) verticalmente in modo tale che il suo ottetto in cima sia posto nella stessa riga dell’ottetto di input, e le quattro colonne ruotate sono sommate XOR per produrre la colonna di output. Un esempio di quest'operazione è mostrata in \figurename ~\ref{fig:Rij_mixcol} e \figurename ~\ref{fig:Rij_mixcol_lookup}.
+\end{itemize}
+
+\begin{figure}[htbp]
+	\centering%
+	\subfigure%
+	{\includegraphics[height=10cm, width=10cm, keepaspectratio]{Immagini/Capitolo2/rijndael_sbox.png}}
+	\caption{il 97-esimo byte è il numero 61 HEX in esadecimale, quindi è mappato nel byte nella riga 6 e colonna 1 che è EF HEX che corrisponde
+al 239-esimo byte. In binario si ha che $(1100001)_{2} = (97)_{10}$
+è mappato in $(11101111)_{2} = (239)_{10}$ \label{fig:Rij_mixcol}} 	
+\end{figure}
+
+\begin{figure}[htbp]
+	\centering%
+	\subfigure%
+	{\includegraphics[height=13cm, width=13cm, keepaspectratio]{Immagini/Capitolo2/rijndael_mixcol.png}}
+	\caption{MixColumn \label{fig:Rij_mixcol}} 	
+\end{figure}
+
+\begin{figure}[htbp]
+	\centering%
+	\subfigure%
+	{\includegraphics[height=13cm, width=13cm, keepaspectratio]{Immagini/Capitolo2/rijndael_mixcol_lookup.png}}
+	\caption{All'ottetto "2b" corrisponde la colonna di 4 ottetti che si trova all’incrocio della riga "2" e della colonna "b", cioè la colonna ["56";"2b";"2b";"7d"] \label{fig:Rij_mixcol_lookup}} 	
+\end{figure}
+
+\subsubsection{Invertibilità delle operazioni primitive e decifratura di Rijndael}
+\begin{itemize}
+  \item L'or-esclusivo è chiaramente invertibile, come discusso nel capitolo dedicato a DES
+  \item L'inversa della S-box si ottiene considerando semplicemente una tabella diversa (ovviamente la tabella inversa)
+  \item L'inversa dello scorrimento circolare di una riga o colonna si ottiene semplicemente eseguendo lo stesso scorrimento, ma in direzione opposta
+  \item L'inversa di MixColumn, detta InvMixColumn, è esattamente come MixColumn, ma con una tabella di lookup diversa
+\end{itemize}
+
+Il cifrario inverso di Rijndael può pertanto implementarsi applicando le inverse delle operazioni primitive, eseguite in sequenza opposta rispetto quella di cifratura. Tuttavia si può mostrare che, grazie alle proprietà matematiche di cui gode Rijndael, il cifrario inverso ha una struttura molto simile al cifrario diretto, ma con operazioni invertite, e con le chiavi di round non soltanto in ordine inverso, ma con InvMixColumn applicato a tutte tranne la prima e l'ultima colonna.
+
+\subsubsection{Funzionamento di un Round}
+Ogni round di Rijndael è costituito da una sequenza identica di tre operazioni::
+\begin{enumerate}
+  \item Ogni ottetto della matrice di stato viene sottoposto alla S-box
+  \item Vengono effettuati una serie di scorrimenti circolari:
+  		\begin{itemize}
+  			\item la riga 1 dello stato viene fatta scorrere a sx di una colonna
+  			\item la riga 2 dello stato viene fatta scorrere a sx di $2 + \lfloor \frac{N_{b}}{8} \rfloor$ colonne (2 se $N_{b} < 8$, 3 altrimenti)
+  			\item la riga 3 dello stato viene fatta scorrere a sx di $3 + \lfloor \frac{N_{b}}{7} \rfloor$ colonne (3 se $N_{b} < 7$, 4 altrimenti)
+		\end{itemize}
+		(in AES si semplifica in scorrimento a sx di i colonne della riga i)
+  \item Ogni colonna dello stato viene sottoposta alla MixColumn; il round $N_{r}$ omette questa operazione
+\end{enumerate}
+
+\subsubsection{Round invertito}
+Essendo ogni operazione invertibile la decifratura può effettuarsi applicando in ordine inverso l'inversa (in senso matematico) di ogni operazione, e usando le chiavi di round in ordine inverso. Tuttavia la decifratura può avere la stessa struttura della cifratura: è necessario usare le chiavi di round in ordine opposto, e applicare InvMixColumn ad ogni colonna delle chiavi espanse tranne quelle del round iniziale e finale.
+
+\section{Cifrari a flusso e RC4}

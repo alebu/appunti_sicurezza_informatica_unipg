@@ -382,3 +382,91 @@ Ogni round di Rijndael è costituito da una sequenza identica di tre operazioni:
 Essendo ogni operazione invertibile la decifratura può effettuarsi applicando in ordine inverso l'inversa (in senso matematico) di ogni operazione, e usando le chiavi di round in ordine inverso. Tuttavia la decifratura può avere la stessa struttura della cifratura: è necessario usare le chiavi di round in ordine opposto, e applicare InvMixColumn ad ogni colonna delle chiavi espanse tranne quelle del round iniziale e finale.
 
 \section{Cifrari a flusso e RC4}
+Sebbene i cifrari a blocchi siano molto più comuni, in alcune applicazioni i cifrari a flusso sono più adatti. Si pensi ad applicazioni che richiedono la cifratura/decifratura di un flusso di dati (come le trasmissioni di stream audio/video). Di seguito sarà esaminato il cifrario a flusso più popolare: \textbf{RC4} e  preliminarmente sarà discussa la struttura generale diun cifrario a flusso.
+
+\subsection{Struttura di un cifrario a flusso}
+\begin{figure}[htbp]
+	\centering%
+	\subfigure%
+	{\includegraphics[height=13cm, width=13cm, keepaspectratio]{Immagini/Capitolo2/flusso_struct.png}}
+	\caption{Struttura di un cifrario a flusso \label{fig:flusso_struct}} 	
+\end{figure}
+
+Un tipico cifrario a flusso cifra il testo in chiaro un byte per volta (sebbene possa essere progettato per agire su unità più grandi di un byte). La chiave segreta \textbf{K} (di lunghezza finita) è l'ingresso di un generatore \textbf{pseudo-casuale} di bit che produce un flusso (di lunghezza arbitraria) di byte apparentemente casuale, chiamato chiave di flusso (\textbf{keystream}). La chiave di flusso è un flusso "\textbf{impredicibile}" se non si conosce la chiave (nel senso che non presenta regolarità statistiche), ma viene generato in modo deterministico a partire dalla questa. \\
+
+Il keystream è combinato un byte alla volta con il flusso del testo in chiaro mediante un or-esclusivo \textbf{bit a bit}, e il risultato di questo processo è il flusso cifrato. Ad esempio, se $p_{i} = 11001100$ è l'i-esimo byte del flusso del testo in chiaro, e $k_{i} = 01101100$ è l'i-esimo byte del keystream, allora l'i-esimo byte del flusso del testo cifrato è:
+
+\begin{equation}
+	c_{i} = p_{i} \oplus k_{i} = 10100000
+\end{equation}
+
+La decifratura richiede l'uso della stessa sequenza pseudo-casuale (keystream) combinata un byte alla volta con il testo cifrato mediante or-esclusivo \textbf{bit a bit}. Ad esempio, se $c_{i} = p_{i} \oplus k_{i} = 10100000$ è l’i-esimo byte del flusso del testo cifrato, e $k_{i} = 01101100$ è l'i-esimo byte del keystream, allora l'i-esimo byte del flusso del testo in chiaro è: 
+
+\begin{equation}
+	p_{i} = c_{i} \oplus k_{i} = (p_{i} \oplus k_{i}) \oplus k_{i} = p_{i} \oplus (k_{i} \oplus k_{i}) = p_{i} = 11001100
+\end{equation}
+
+Più è casuale l'aspetto del keystream, più è randomizzato il testo cifrato, rendendo la crittoanalisi più difficile. Pertanto il keystream dovrebbe avere un periodo grande (la funzione deterministica che genera il keystream, a partire dalla chiave segreta, è per forza di cose periodica), e dovrebbe approssimare il più possibile un flusso casuale. Ad esempio, 0 e 1 dovrebbero essere equamente presenti e riguardando il keystream come una sequenza di byte, tutti i 256 possibili byte dovrebbero apparire "disordinatamente" e con una frequenza uniforme. Come nei cifrari a blocchi, è necessario che la chiave sia sufficientemente lunga per proteggersi dagli attacchi a forza bruta (è preferibile una lunghezza della chiave di almeno 128 bit).
+
+\subsection{Cifrari a flusso vs cifrari a blocchi}
+\begin{figure}[htbp]
+	\centering%
+	\subfigure%
+	{\includegraphics[height=13cm, width=13cm, keepaspectratio]{Immagini/Capitolo2/flusso_vel.png}}
+	\caption{Confronto delle velocità di cifrari simmetrici su un Pentium II \label{fig:flusso_vel}} 	
+\end{figure}
+Se un cifrario a flusso è correttamente progettato, a parità di lunghezza della chiave segreta, può essere sicuro tanto quanto un cifrario a blocchi. Il vantaggio principale di un cifrario a flusso è che è quasi sempre più veloce (vedi \figurename ~\ref{fig:flusso_vel}), ed è facilmente implementabile.\\
+
+Il vantaggio di un cifrario a blocchi è che la chiave segreta è riutilizzabile per più comunicazioni, mentre nei cifrari a flusso è sconsigliato. Infatti, se due testi in chiaro sono cifrati con la stessa chiave segreta, usando un cifrario a flusso, la crittoanalisi è spesso molto semplice: basta sommare XOR i due flussi di testo cifrato per ottenere la somma XOR dei due testi in chiaro. Se i testi in chiaro sono stringhe testuali, numeri di carta di credito o altri flussi di byte con proprietà note la crittoanalisi può aver successo.
+
+\subsection{RC4}
+RC4 è un cifrario a flusso progettato nel 1987 da Ron Rivest (RSA Security) con dimensione della chiave variabile e funzionamento orientato al byte. Si basa sull'uso di una permutazione casuale, e dagli studi svolti sembra che il periodo del cifrario sia superire a $10^{100}$. Viene usato negli standard \textbf{SSL/TLS} (\textit{Secure Socket Layer/Transport Layer Security}), nel protocollo \textbf{WEP} (\textit{Wired Equivalent Privacy}) e nel protocollo \textbf{WPA} (\textit{WiFi Protected Access}). L'algoritmo RC4 è molto semplice da spiegare: basta capire come viene generato il
+\textbf{keystream}. \\
+
+L’algoritmo mantiene un array di stato monodimensionale \textbf{S} contenente 256 byte. S[0], S[1], ..., S[255] sono i 256 byte, ciascuno dei quali rappresenta un numero da 1 a 255. Una chiave di lunghezza variabile da 1 a 256 byte (da 8 a 2048 bit) viene usata per inizializzare il contenuto dell'array di stato. Quindi \textbf{S} contiene, in ogni momento, una delle 256! permutazioni dei numeri da 0 a 255. Per la cifratura/decifratura viene generato un byte \textbf{k} selezionando da \textbf{S} uno dei 255 elementi in maniera sistematica. Subito dopo la generazione del byte \textbf{k}, gli elementi di \textbf{S} vengono permutati, e l'algoritmo prosegue alternando le ultime due fasi (generazione di k e permutazione) finché il flusso in input non termina.\\
+
+\subsubsection{Inizializzazione}
+Gli elementi di \textbf{S} vengono impostati uguali ai valori da 0 a 255 in ordine crescente:
+\begin{equation}
+	S[0] = 0, S[1] = 1, ..., S[255] = 255
+\end{equation}
+Un vettore temporaneo \textbf{T}, della stessa lunghezza di \textbf{S}, viene usato per memorizzare temporaneamente la chiave \textbf{K}. Se la lunghezza di \textbf{K} è 256 byte \textbf{K} viene trasferita in \textbf{T}. Altrimenti, \textbf{K} viene copiata più volte in \textbf{T} fino a riempirlo.
+
+\begin{algorithm}
+\begin{lstlisting}[caption={Inizializzazione RC4}]
+for i = 0 to 255 do {
+	S[i] = i;
+	T[i] = K[i mod keylen]; // keylen: lunghezza di S
+}
+\end{lstlisting}
+\end{algorithm}
+
+\subsubsection{Permutazione iniziale}
+successivamente si userà T per produrre la \textit{permutazione iniziale}. Si scandisce \textbf{S} e per ciascun S[i], si scambia S[i] con un altro elemento di S scelto in modo sistematico in base, tra l'altro, al contenuto di T[i]. Poiché la sola operazione su \textbf{S} è lo scambio, il solo effetto è una permutazione (\textbf{S} contiene ancora tutti i numeri da 0 a 255).
+
+\begin{algorithm}
+\begin{lstlisting}[caption={Permutazione iniziale RC4}]
+j = 0;
+for i = 0 to 255 do {
+	j = (j + S[i] + T[i]) mod 256;
+	scambia(S[i], S[j]);
+}
+\end{lstlisting}
+\end{algorithm}
+
+\subsubsection{Generazione del flusso}
+Una volta che \textbf{S} è inizializzato, la chiave segreta \textbf{K} (quindi anche l'array \textbf{T}) non viene più utilizzata. Il keystream viene generato facendo una
+scansione ciclica di \textbf{S}. Ciascun elemento S[i] viene scambiato con un altro byte di \textbf{S} a secondo di uno schema che dipende dalla configurazione corrente di \textbf{S}, dopodiché viene generato un singolo byte \textbf{k} del keystream sempre in base alla configurazione corrente di \textbf{S}.
+
+\begin{algorithm}
+\begin{lstlisting}[caption={Generazione flusso}]
+i, j = 0;
+while (true) {
+	i = (i + 1) mod 256;
+	j = (j + S[i]) mod 256;
+	scambia(S[i], S[j]);
+	t = (S[i] + S[j]) mod 256;
+	k = S[t];
+}
+\end{lstlisting}
+\end{algorithm}

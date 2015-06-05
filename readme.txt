@@ -5,7 +5,7 @@ Istruzioni collaborazione appunti:
 Divisione lavori:
 
  - Capitolo 1: Alessio OK
- - Capitolo 2: Alessio
+ - Capitolo 2: Alessio OK
  - Capitolo 3: Silvia OK 
  - Capitolo 4: Spossssss REV
  - Capitolo 5: Spossssss (stesso file capitolo 4) REV

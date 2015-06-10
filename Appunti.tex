@@ -2,7 +2,6 @@
 \usepackage{lmodern}
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
-\usepackage{mathtools}
 \usepackage{cite}
 \usepackage[italian]{babel} %Lingua Documento (da impostare per la sillabazione)
 \usepackage{graphicx} %Pacchetto necessario per la gestione delle immagini
@@ -53,12 +52,6 @@
      {\LARGE \textbf{Appunti di Sicurezza Informatica}}\\
  \end{center}
  
- \vskip 2.5cm
-  \begin{center}
-	\Large{\textit{Alessio Burani}}\\
-	\Large{\textit{Silvia Cascianelli}}\\[0.4cm]
-  \end{center}
-
 \vskip 2.5cm
 \begin{center}
 {\normalsize Anno Accademico 2014/2015}
@@ -75,22 +68,24 @@
 \fancyhead[LE,RO]{\bfseries\thepage} 
 \fancyhead[LO,RE]{\bfseries\leftmark} 
 \fancypagestyle{plain}{%
-\fancyhead{} % leva l'intestazione
+\fancyhead{} % toglie l'intestazione
 \renewcommand{\headrulewidth}{0pt} % e la linea
 }
 
+\frontmatter
 %%INDICE%%==============================================
 \tableofcontents
-
+\mainmatter
 
 %%CAPITOLI===============================================
 \input{Capitolo_1} 
 \input{Capitolo_2} 
 \input{Capitolo_3} 
 \input{Capitolo_4}
-\input{Capitolo_6}
+%%\input{Capitolo_6}
 \input{Capitolo_8}
 \input{Capitolo_9}
+\input{Capitolo_11}
 
 
 %%BIBLIOGRAFIA============================================

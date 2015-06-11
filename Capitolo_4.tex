@@ -21,14 +21,10 @@ Si useranno i termini hash e message digest in modo intercambiabile; la funzione
 \subsubsection{Randomicità della funzione}
 Dato un messaggio \textbf{m}, il digest \textbf{h(m)} viene calcolato in modo \textbf{deterministico}. Tuttavia, l'output della funzione di hash dovrebbe apparire il più possibile casuale. Dovrebbe essere impossibile, senza applicare la funzione di hash, predire una qualsiasi porzione dell'output: per ogni sottoinsieme (di posizioni) di bit nel digest \textbf{h(m)} dovrebbe essere possibile ottenere due messaggi m1 e m2 tali che h(m1) e h(m2) presentino gli stessi bit in quelle posizioni \textbf{soltanto procedendo in modo esaustivo}. \newline \newline
 
-Chiaramente, ci sono molti messaggi distinti che sono mappati in uno stesso digest h(m); m ha lunghezza arbitraria, mentre il digest h(m) ha una lunghezza prefissata, ad esempio 128 bit. Se m ha una lunghezza di 1000 bit e h(m) di 128 bit ci sono in media 2872 messaggi che sono mappati in uno stesso digest  dopo molti tentativi, due messaggi aventi lo stesso digest si trovano sicuramente. Tuttavia, per "molti tentativi" si intende un numero talmente grande che è di fatto impossibile. Considerando una buona funzione di digest a 128 bit, è necessario provare approssimativamente $2^{128}$ possibili messaggi prima di ottenere un messaggio avente un particolare digest, o $2^{64}$ messaggi prima di trovarne due aventi lo stesso digest (trovare cioè due messaggi che collidono).
+Chiaramente, ci sono molti messaggi distinti che sono mappati in uno stesso digest h(m); m ha lunghezza arbitraria, mentre il digest h(m) ha una lunghezza prefissata, ad esempio 128 bit. Se m ha una lunghezza di 1000 bit e h(m) di 128 bit ci sono in media 2872 messaggi che sono mappati in uno stesso digest e dopo molti tentativi, due messaggi aventi lo stesso digest si trovano sicuramente. Tuttavia, per "molti tentativi" si intende un numero talmente grande che è di fatto impossibile. Considerando una buona funzione di digest a 128 bit, è necessario provare approssimativamente $2^{128}$ possibili messaggi prima di ottenere un messaggio avente un particolare digest, o $2^{64}$ messaggi prima di trovarne due aventi lo stesso digest (trovare cioè due messaggi che collidono).
 
 \section{Esempio di Applicazioni}
-Un’applicazione delle funzioni di hash crittografiche è il calcolo dell’impronta digitale di
-un programma o di un documento di cui si desiderano monitorare eventuali modifiche :
-se il message digest h(p) del programma p è noto e se h(p) è memorizzato in modo sicuro (cioè non può essere
-modificato da utenti non autorizzati) allora nessun utente non autorizzato può modificare p
-senza essere scoperto perché non sarà in grado di trovare un diverso programma p’ tale che h(p’) = h(p).
+Un’applicazione delle funzioni di hash crittografiche è il calcolo dell’impronta digitale di un programma o di un documento di cui si desiderano monitorare eventuali modifiche : se il message digest h(p) del programma p è noto e se h(p) è memorizzato in modo sicuro (cioè non può essere modificato da utenti non autorizzati) allora nessun utente non autorizzato può modificare p senza essere scoperto perché non sarà in grado di trovare un diverso programma p’ tale che h(p’) = h(p).
 Quindi sia h:$\{0, 1\}^{*} \rightarrow \{0, 1\}^{b}$ una funzione di hash siano $m_{1}, m_{2}, ..., m_{N}$ N messaggi arbitrariamente
 scelti in ${0, 1}^{*}$. \\
 \textbf{DOMANDA}: quanto deve valere N per avere una probabilità di 0.5 che due messaggi $m_{i}, m_{j}$ abbiano lo stesso hash?
@@ -39,12 +35,12 @@ Una prima stima di N (affinché ci sia 0.5 di possibilità di collisione), per d
 \item $\frac{1}{k}$ : probabilità che una coppia di messaggi collida
 \item $\textbf{Ipotesi}$: gli eventi considerati sono mutuamente esclusivi 
 	\begin{itemize}
-		\item $\Pr\{h(mi) = h(mj) \textit{OR} h(mp) = h(mq)\} = \Pr\{h(mi) = h(mj)\} + \Pr\{ h(mp) = h(mq)\}$
+		\item $\Pr\{h(mi) = h(mj) \mbox{ OR } h(mp) = h(mq)\} = \Pr\{h(mi) = h(mj)\} + \Pr\{ h(mp) = h(mq)\}$
 	\end{itemize}
 \end{itemize}
  
-A rigore tale ipotesi non è soddisfatta, molti eventi hanno intersezione non nulla, perciò la stima ottenuta della probabilità è per eccesso e ciò si traduce in una stima per difetto di N $(\Pr\{E1 OR E2\} = \Pr\{E1\} + \Pr\{E2\} – \Pr\{E1 \bigcap E2\})$.
-Si ha una probabilità di 0.5 se si considerano $k/2$ coppie, perciò $N(N – 1)/2 = k/2$ e ipotizzando $N >> 1$ si ha $N = k^{1/2} = 2^{b/2}$.
+A rigore tale ipotesi non è soddisfatta, molti eventi hanno intersezione non nulla, perciò la stima ottenuta della probabilità è per eccesso e ciò si traduce in una stima per difetto di N $(\Pr\{E1 \mbox{ OR } E2\} = \Pr\{E1\} + \Pr\{E2\} - \Pr\{E1 \bigcap E2\})$.
+Si ha una probabilità di 0.5 se si considerano $k/2$ coppie, perciò $N(N - 1)/2 = k/2$ e ipotizzando $N >> 1$ si ha $N = k^{1/2} = 2^{b/2}$.
 
 Una seconda stima, più accurata di N è la seguente:
 \begin{itemize}
@@ -52,12 +48,12 @@ Una seconda stima, più accurata di N è la seguente:
 \item $P^{*}$: probabilità che tutte le coppie di messaggi abbiano digest diversi, quindi $P = 1 - P^{*}$
 \item \textbf{Ipotesi}: gli eventi considerati sono indipendenti
 	\begin{itemize}
-		\item $\Pr\{h(mi) \neq h(mj) \textit{AND} h(mp) \neq h(mq)\} = \Pr\{h(mi) \neq h(mj)\} * \Pr\{ h(mp) \neq h(mq)\}$
+		\item $\Pr\{h(mi) \neq h(mj) \mbox{ AND } h(mp) \neq h(mq)\} = \Pr\{h(mi) \neq h(mj)\} * \Pr\{ h(mp) \neq h(mq)\}$
 	\end{itemize}
 \end{itemize}
 
-A rigore tale ipotesi non è soddisfatta, gli eventi non sono del tutto indipendenti quindi la stima ottenuta della probabilità P è per difetto e ciò si traduce in una stima per eccesso di N ($\Pr\{E1 AND E2\} = \Pr\{E1\} * \Pr\{E1|E2\}$).
-Nella ipotesi di eventi indipendenti si ha $P = 1 – P^{*} = 1 – (1 – 1/k)^{\frac{N(N – 1)}{2}}$, e ipotizzando che k >> 1 si ottiene che $P \approx 1 – e^{– N(N – 1)/2k}$, ponendo pertanto $P\geq1/2 si ottiene che e^{– N(N – 1)/2k} \leqslant 1/2 = e^{–ln2}$; da cui si ottiene che $N(N – 1)/2 \geq (ln2)k$ e, ipotizzando che N >> 1, $N \geqslant (2ln2)^{1/2} \cdot k^{1/2} = (2ln2)^{1/2} \cdot 2^{b/2}$.
+A rigore tale ipotesi non è soddisfatta, gli eventi non sono del tutto indipendenti quindi la stima ottenuta della probabilità P è per difetto e ciò si traduce in una stima per eccesso di N ($\Pr\{E1 \mbox{ AND } E2\} = \Pr\{E1\} * \Pr\{E1|E2\}$).
+Nella ipotesi di eventi indipendenti si ha $P = 1 - P^{*} = 1 - (1 - 1/k)^{\frac{N(N - 1)}{2}}$, e ipotizzando che k >> 1 si ottiene che $P \approx 1 - e^{- N(N - 1)/2k}$, ponendo pertanto $P\geq1/2 si ottiene che e^{- N(N - 1)/2k} \leqslant 1/2 = e^{-ln2}$; da cui si ottiene che $N(N - 1)/2 \geq (ln2)k$ e, ipotizzando che N >> 1, $N \geqslant (2ln2)^{1/2} \cdot k^{1/2} = (2ln2)^{1/2} \cdot 2^{b/2}$.
 
 Una terza stima ancor più corretta si può ottenere utilizzando la modalità di calcolo utilizzata anche nel paradosso del compleanno :
 \begin{itemize}
@@ -75,15 +71,14 @@ Si consideri inoltre la seguente notazione:
 \item $P_{N^{*}}$: la probabilità che h(mN) sia diverso da h(mj), $\forall 1\leq j \leq N-1$
 \end{itemize}
 Da tutto ciò segue che $P^{*}=P_{2^{*}}*P_{3^{*}}*...*P_{i^{*}}*...*P_{N^{*}}=
-(k – 1)/k*(k – 2)/k*...*(k – N + 1)/k = \frac{k!}{(k^{N}*(k – N)!)}\Rightarrow P^{*} = \frac{k!}{(k^{N}*(k – N)!)}$.
-Questa è la stima esatta di $P^{*}$, si nota che il precedente valore di $P^{*}$ si può approssimare con $1 – e^{– N(N – 1)/2k}$.
+(k - 1)/k*(k - 2)/k*...*(k - N + 1)/k = \frac{k!}{(k^{N}*(k - N)!)}\Rightarrow P^{*} = \frac{k!}{(k^{N}*(k - N)!)}$.
+Questa è la stima esatta di $P^{*}$, si nota che il precedente valore di $P^{*}$ si può approssimare con $1 - e^{- N(N - 1)/2k}$.
 
 \section{Lunghezza di un messaggio di Digest}
 Quanti bit deve avere l’output di una funzione di hash in modo tale che nessuno sia in grado di trovare due messaggi aventi lo stesso digest?
 Se il digest ha b bit, per trovare due messaggi aventi lo stesso digest, è necessario considerare circa $2^{b/2}$ messaggi, se il digest è lungo 64 bit, la ricerca esaustiva in uno spazio di circa $2^{32}$ elementi può essere fattibile mentre se il digest è lungo 128 bit si ritiene che una ricerca in uno spazio di $2^{64}$ elementi sia impraticabile dato l’attuale stato dell’arte.
 Per quale ragione è importante che una funzione crittografica di hash sia resistente alle collisioni?
-Il fatto che debba essere resistente alla preeimmagine è scontato, ma la resistenza alle collisioni è veramente necessaria?? Si, dato che in alcune circostanze riuscire a trovare due messaggi
-con lo stesso digest può comportare dei seri problemi di sicurezza!!
+Il fatto che debba essere resistente alla preeimmagine è scontato, ma la resistenza alle collisioni è veramente necessaria?? Si, dato che in alcune circostanze riuscire a trovare due messaggi con lo stesso digest può comportare dei seri problemi di sicurezza!!
 Ad esempio, Alice genera una informazione $x_{A}$ e incarica Bob di calcolare un messaggio $m_{A}$ il cui contenuto deve dipendere da $x_{A}$ secondo criteri prestabiliti.
 Una volta che Bob ha calcolato $m_{A}$ lo sottopone ad Alice che ne verifica l'integrità e calcola l'impronta $h(m_{A})$, la firma con la sua chiave privata e invia a Trudy il messaggio in chiaro $m_{A}$ e la sua firma.
 Trudy legge il messaggio $m_{A}$ e la firma, controlla che la firma sia quella di Alice e verifica che tutto $m_{A}$ coincida con $h(m_{A})$.
@@ -101,9 +96,9 @@ Una volta che Alice ha firmato il messaggio, sostituisce $m_{A}$ con $m_{A1}$ e 
 \end{figure}
 Ma, per calcolare due messaggi con lo stesso hash, Bob può seguire il seguente approccio a forza bruta:
 \begin{itemize}
-\item dato xA, calcola prima il messaggio mA come desiderato da Alice;
-\item genera un messaggio falsato $mA^{'}$;
-\item esegue il test $h(mA)==h(mA^{'})$;
+\item dato $x_{A}$, calcola prima il messaggio $m_{A}$ come desiderato da Alice;
+\item genera un messaggio falsato $m_{A^{'}}$;
+\item esegue il test $h(m_{A})==h(m_{A}^{'})$;
 \item in caso negativo ritorna al punto 2;
 \end{itemize}
 con questo approccio a forza bruta, però, sono necessari circa $2^{b}$ tentativi, e non $2^{b/2}$!

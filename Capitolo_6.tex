@@ -88,16 +88,19 @@ a $d$ un valore piccolo, sebbene ciò renderebbe molto più veloci le operazioni
 La scelta $e=3$ comporta alcune vulnerabilità: \begin{itemize}
 \item se il messaggio $m$ da cifrare rappresenta un intero piccolo, in particolare se $m < n^{1/3} \Rightarrow  c = m^e \, mod \, n = m^3 \, mod \, n = m^3 \Rightarrow$ un avversario può decifrare $c$ senza conoscere la chiave privata semplicemente estraendo la radice
 cubica ordinaria di $c \Rightarrow m = c^{1/3}$. Tale vulnerabilità può essere rimossa eseguendo un padding random del messaggio tale che $m^3 > n$. Ciò garantisce che $m^3$ viene sempre ridotto $ mod \, n $.
-\item se uno stesso messaggio $m$ viene inviato cifrato a tre o più destinatari aventi un esponente pubblico $e=3$, il messaggio in chiaro $m$ può essere decifrato conoscendo soltanto i tre messaggi cifrati $c_{1}$, $c_{2}$ e $c_{3}$ e le tre chiavi pubbliche $<3,n_{1}>$, $<3,n_{2}>$ e $<3,n_{3}>$: si supponga infatti che un avversario intercetti tre cifrature dello stesso messaggio $m$, cioè $c_{1}$, $c_{2}$ e $c_{3}$. Conoscendo anche le tre chiavi pubbliche $<3,n_{1}>$, $<3,n_{2}>$ e $<3,n_{3}>$ e utilizzando il teorema cinese del resto, l'avversario può calcolare  $m^3 \, mod \, n_{1} \, n_{2} \, n_{3}$. Essendo $m<n_{i}$, per $i=1,2,3 \Rightarrow m^3<n_{1},n_{2},n_{3}$, da cui si ricava che $m^3 \, mod \, n_{1} \, n_{2} \, n_{3} = m^3 \Rightarrow$ l'avversario può risalire ad $m$ estraendo una radice cubica ordinaria. Anche questa vulnerabilità può essere rimossa
-mediante un padding random, così si evita che uno stesso messaggio cifrato venga inviato a piu destinatari. 
+\item se uno stesso messaggio $m$ viene inviato cifrato a tre o più destinatari aventi un esponente pubblico $e=3$, il messaggio in chiaro $m$ può essere decifrato conoscendo soltanto i tre messaggi cifrati $c_{1}$, $c_{2}$ e $c_{3}$ e le tre chiavi pubbliche $<3,n_{1}>$, $<3,n_{2}>$ e $<3,n_{3}>$: si supponga infatti che un avversario intercetti tre cifrature dello stesso messaggio $m$, cioè $c_{1}$, $c_{2}$ e $c_{3}$. Conoscendo anche le tre chiavi pubbliche $<3,n_{1}>$, $<3,n_{2}>$ e $<3,n_{3}>$ e utilizzando il teorema cinese del resto, l'avversario può calcolare  $m^3 \, mod \, n_{1} \, n_{2} \, n_{3}$. Essendo $m<n_{i}$, per $i=1,2,3 \Rightarrow m^3<n_{1},n_{2},n_{3}$, da cui si ricava che $m^3 \, mod \, n_{1} \, n_{2} \, n_{3} = m^3 \Rightarrow$ l'avversario può risalire ad $m$ estraendo una radice cubica ordinaria. Anche questa vulnerabilità può essere rimossa mediante un padding random, così si evita che uno stesso messaggio cifrato venga inviato a piu destinatari. 
 \end{itemize}
+
 Si osservi che nelle applicazioni pratiche di RSA,il messaggio $m$ è generalmente una chiave di un algoritmo di cifratura a chiave segreta e in ogni caso $m$ è molto più piccolo di $n$, per cui è sempre possibile aggiungere dei bit di riempimento(padding) in modo tale che il messaggio risultante presenti delle caratteristiche desiderate. Se per ogni destinatario il padding scelto è random, la precedente vulnerabilità viene rimossa; la vulnerabilità può essere rimossa anche usando come padding gli identificatori univoci (ID) dei
-destinatari. \\
-Un'altra scelta possibile è $e=65537$. Infatti esso è pari a $2^{16}+1$, che è un numero primo, e rimuove o riduce del tutto le vulnerabilità viste nel caso $e=3$: la prima vulnerabilità con $e=3$ si ha se $m^3<n$ e nel caso $e=65537$ non ci sono molti valori di $m$ tali che $m^{65537} < n$, a meno che $n$ non sia molto più lungo di 512 bit, quindi l'estrazione della 65537-esima radice ordinaria di $m$ non costituisce una vulnerabilità seria; la seconda vulnerabilità con $e=3$ si ha se uno stesso messaggio $m$ cifrato è inviato a 3 destinatari e nel caso $e=65537$, lo stesso tipo di vulnerabilità si ha quando $m$ viene inviato a 65537 destinatari e non si può dire certo che si tratti di un messaggio segreto!. \\ Infine, la scelta di fissare a priori $e=3$ ha richiesto di scegliere $n$ in modo tale che $\phi(n)$ e 3 fossero relativamente primi. Nel caso $e=65537$ conviene generare $p$ e $q$ come se $e$ non fosse prefissato e rigettare ogni valore di $p$ o $q$ che è uguale a $1 \, mod \: 65537$. Tale evento si verifica con una probabilità molto piccola, cioè $2^{-16}$.\\
+destinatari. 
+
+Un'altra scelta possibile è $e=65537$. Infatti esso è pari a $2^{16}+1$, che è un numero primo, e rimuove o riduce del tutto le vulnerabilità viste nel caso $e=3$: la prima vulnerabilità con $e=3$ si ha se $m^3<n$ e nel caso $e=65537$ non ci sono molti valori di $m$ tali che $m^{65537} < n$, a meno che $n$ non sia molto più lungo di 512 bit, quindi l'estrazione della 65537-esima radice ordinaria di $m$ non costituisce una vulnerabilità seria; la seconda vulnerabilità con $e=3$ si ha se uno stesso messaggio $m$ cifrato è inviato a 3 destinatari e nel caso $e=65537$, lo stesso tipo di vulnerabilità si ha quando $m$ viene inviato a 65537 destinatari e non si può dire certo che si tratti di un messaggio segreto. Infine, la scelta di fissare a priori $e=3$ ha richiesto di scegliere $n$ in modo tale che $\phi(n)$ e 3 fossero relativamente primi. Nel caso $e=65537$ conviene generare $p$ e $q$ come se $e$ non fosse prefissato e rigettare ogni valore di $p$ o $q$ che è uguale a $1 \, mod \: 65537$. Tale evento si verifica con una probabilità molto piccola, cioè $2^{-16}$.
+
 Sono presenti altri tipi di vulnerabilità: nel caso della firma digitale risulta che, per ogni numero $x < n$, $x$ è la firma digitale del messaggio $m_{x} = x^e \,  mod \, n$, infatti, $m_{x}^d \, mod \, n = (x^e \, mod \, n)^d \, mod \, n = x^{ed} \, mod \, n = x^{1 \, mod \, \phi(n)} \, mod \, n = x \, mod \, n = x \Rightarrow$ è banale falsificare la firma di qualcuno se il messaggio $m$ da firmare non interessa. La difficoltà sta però nel falsificare la firma di uno
-specifico messaggio. \\ Generalmente, ciò che viene firmato(messaggio + padding) ha una struttura sufficientemente vincolata: vengono inseriti dei bit di riempimento organizzati in pattern regolari;la probabilità che un numero random costituisca un messaggio (padding incluso) valido è trascurabile, cioè è estremamente improbabile che un numero random contenga i pattern regolari di bit. Tuttavia, visto che i numeri in RSA sono molto grandi un avversario ha a disposizione molti tentativi, dunque i pattern di riempimento vanno scelti in modo opportuno. \\ Si fa utilizzo dunque degli \textit{smooth numbers}. Intuitivamente, uno smooth number è un numero scomponibile nel prodotto di (molti) numeri primi ragionevolmente piccoli(non conviene usare una definizione assoluta, ovvero un numero è piccolo o grande in base alle capacità di calcolo dell'avversario). Ad esempio, il numero 6056820 è più smooth del numero 6567587, poiché $6056820 = 22 \cdot 32 \cdot 5 \cdot 7 \cdot 11 \cdot 19 \cdot 23$, mentre $ 6567587 = 13 \cdot 557 \cdot 907$. Si tratta di una vulnerabilità prevalentemente teorica, nella pratica difficilmente realizzabile, poichè richiede un'enorme capacità di calcolo, la raccolta di un numero elevato di messaggi firmati e molta fortuna(per l'avversario). \\ \\
-\textbf{Idea base}: dalle firme $s_{1}$ e $s_{2}$ dei messaggi $m_{1}$ ed $m_{2}$, è possibile calcolare le firme dei messaggi $m_{1} \cdot m_{2}$, $m_{1}/m_{2}$, $m_{1}^j$, $m_{2}^k$ e $m_{1}^j \cdot m_{2}^k$. Ad esempio, conoscendo la firma $s_{1} = m_{1}^d \, mod \, n $, è possibile ottenere la firma di $m_{1}^2$ senza conoscere $d$(chiave privata): infatti, $(m_{1}^2)^d \, mod \, n = (m_{1}^d)^2 \, mod \, n = (m_{1}^d \, mod \, n)^2 \, mod \, n $, ottenendo quindi la firma di $m_{1}^2$. Se un avversario riesce a collezionare molti messaggi firmati, può ottenere la firma di ogni messaggio $m$ esprimibile come prodotto e/o divisione di messaggi della collezione. In particolare, se ottiene le firme di due messaggi $m_{1}$ e $m_{2}$ tali che il rapporto $m_{1}/m_{2}=p$, dove $p$ è un numero primo, l'attaccante può calcolare la firma di $p$. Inoltre, se è abbastanza fortunato da raccogliere molte coppie di questo tipo, egli può calcolare la firma di molti numeri primi, quindi può falsificare la firma di ogni messaggio dato dal prodotto di ogni sottoinsieme di tali numeri primi ciascuno elevato ad una qualunque potenza. Con abbastanza coppie, può falsificare la firma di ogni messaggio rappresentato da uno smooth number. \\ Generalmente, ciò che si firma con RSA è un digest
-messaggio con padding $m^{*} = pad(h(m))$. Al digest del messaggio $m$ vengono aggiunti, in modo opportuno, dei bit di riempimento(padding) ottenendo $m^*$. Se i bit di riempimento sono degli zeri, anzichè essere random, è piu probabile che $m^*$ sia uno smooth number. Invece, è estremamente improbabile che un numero random $mod \, n$ sia smooth: \begin{itemize}
+specifico messaggio. \\ Generalmente, ciò che viene firmato(messaggio + padding) ha una struttura sufficientemente vincolata: vengono inseriti dei bit di riempimento organizzati in pattern regolari;la probabilità che un numero random costituisca un messaggio (padding incluso) valido è trascurabile, cioè è estremamente improbabile che un numero random contenga i pattern regolari di bit. Tuttavia, visto che i numeri in RSA sono molto grandi un avversario ha a disposizione molti tentativi, dunque i pattern di riempimento vanno scelti in modo opportuno. Si fa utilizzo dunque degli \textit{smooth numbers}. Intuitivamente, uno smooth number è un numero scomponibile nel prodotto di (molti) numeri primi ragionevolmente piccoli(non conviene usare una definizione assoluta, ovvero un numero è piccolo o grande in base alle capacità di calcolo dell'avversario). Ad esempio, il numero 6056820 è più smooth del numero 6567587, poiché $6056820 = 22 \cdot 32 \cdot 5 \cdot 7 \cdot 11 \cdot 19 \cdot 23$, mentre $ 6567587 = 13 \cdot 557 \cdot 907$. Si tratta di una vulnerabilità prevalentemente teorica, nella pratica difficilmente realizzabile, poichè richiede un'enorme capacità di calcolo, la raccolta di un numero elevato di messaggi firmati e molta fortuna(per l'avversario). \\ \\
+\textbf{Idea base}: dalle firme $s_{1}$ e $s_{2}$ dei messaggi $m_{1}$ ed $m_{2}$, è possibile calcolare le firme dei messaggi $m_{1} \cdot m_{2}$, $m_{1}/m_{2}$, $m_{1}^j$, $m_{2}^k$ e $m_{1}^j \cdot m_{2}^k$. Ad esempio, conoscendo la firma $s_{1} = m_{1}^d \, mod \, n $, è possibile ottenere la firma di $m_{1}^2$ senza conoscere $d$(chiave privata): infatti, $(m_{1}^2)^d \, mod \, n = (m_{1}^d)^2 \, mod \, n = (m_{1}^d \, mod \, n)^2 \, mod \, n $, ottenendo quindi la firma di $m_{1}^2$. Se un avversario riesce a collezionare molti messaggi firmati, può ottenere la firma di ogni messaggio $m$ esprimibile come prodotto e/o divisione di messaggi della collezione. In particolare, se ottiene le firme di due messaggi $m_{1}$ e $m_{2}$ tali che il rapporto $m_{1}/m_{2}=p$, dove $p$ è un numero primo, l'attaccante può calcolare la firma di $p$. Inoltre, se è abbastanza fortunato da raccogliere molte coppie di questo tipo, egli può calcolare la firma di molti numeri primi, quindi può falsificare la firma di ogni messaggio dato dal prodotto di ogni sottoinsieme di tali numeri primi ciascuno elevato ad una qualunque potenza. Con abbastanza coppie, può falsificare la firma di ogni messaggio rappresentato da uno smooth number. 
+
+Generalmente, ciò che si firma con RSA è un digest messaggio con padding $m^{*} = pad(h(m))$. Al digest del messaggio $m$ vengono aggiunti, in modo opportuno, dei bit di riempimento(padding) ottenendo $m^*$. Se i bit di riempimento sono degli zeri, anzichè essere random, è piu probabile che $m^*$ sia uno smooth number. Invece, è estremamente improbabile che un numero random $mod \, n$ sia smooth: \begin{itemize}
 \item con un padding a sinistra di soli zeri, l'intero da firmare $m_{p} = h(m)$ rimane piccolo, per cui il padding non riduce la probabilità che $m_{p}$ sia smooth;
 \item con un padding a destra di soli zeri, $m_{p} = h(m) \cdot 2^k $ è un intero molto più grande, ma è divisibile per una potenza di due, quindi, analogamente, il padding non riduce la probabilità che $m_{p}$ sia smooth;
 \item con un padding a destra random, l'intero da firmare $m_{p}$ è estremamente improbabile che sia smooth. 
@@ -144,16 +147,29 @@ La fase 0, viene eseguita dall'iniziatore della comunicazione qualora i numeri $
 \end{enumerate}
 \item L'aritmetica modulare garantisce che $K_{AB}=K_{BA}$. Infatti si ha $ K_{AB} = T_{B}^{s_{A}} \, mod \,p = ({g^{s_{B}} \, mod \, p})^{s_{A}} \, mod \,p = g^{s_{B}s_{A}} \, mod \, p = g^{s_{A}s_{B}} \, mod \, p = ({g^{s_{A}} \, mod \, p})^{s_{B}} \, mod \,p = T_{A}^{s_{B}} \, mod \, p = K_{BA}$.
 \end{enumerate}
+\begin{figure}[htbp]
+	\centering%
+	\subfigure%
+	{\includegraphics[scale=0.5, keepaspectratio]{Immagini/Capitolo6/DiffieHellman_schema.png}}
+	\caption{Diffie-Hellman: schema}
+	\end{figure}
 
 Tuttavia, dati $p$, $g$, $T_{A}$ e $T_{B}$, è possibile calcolare $s_{A}$, $s_{B}$ oppure $g^{s_{A}s_{B}}$? Si può ottenere $s_{A}$ da $g^{s_{A}}$ tramite logaritmo discreto $dlog_{g} \, g^{s_{A}}$, ma al momento non sono note tecniche per calcolare tale quantità in un tempo ragionevole, anche conoscendo $g^{s_{A}}$ e $g^{s_{B}}$.
-\\
+
 La vulnerabilità di Diffie-Hellman è che tale algoritmo non fornisce alcuna prova di autenticazione: Alice non può essere certa che $T_{B}$ sia stato inviato da Bob e non da un impostore; allo stesso modo, Bob non può essere certa che $T_{A}$ sia stato inviato da Alice e non da
 un impostore. E' quindi possibile che un impostore, Mr. X, intercetti e modifichi i messaggi facendo credere a Bob di comunicare con Alice e
 viceversa. Alice e Bob non hanno modo di rendersi conto dell'attacco in atto. Un attacco di questo tipo viene detto Man-in-the-Middle(o Bucket Brigade Attack): Alice pensa che $K_{AX}$ sia la chiave segreta $K_{AB}$ che condivide con Bob; Bob pensa che $K_{bX}$ sia la chiave segreta $K_{BA}$ che condivide con Alice; invece, Mr. X ha due chiavi segrete: \begin{itemize}
 \item $K_{XA}$ per comunicare con Alice;
 \item $K_{XB}$ per comunicare con Bob.
 \end{itemize}
-Questo perchè Mr. X conosce $g$ e $p$, quindi si calcola $s_{x}<p$ e $T_{x}=g^{s_{x}} \, mod \, p$ e li invia sia ad Alice che a Bob. Tale attacco è un attacco all'integrità. \\
+Questo perchè Mr. X conosce $g$ e $p$, quindi si calcola $s_{x}<p$ e $T_{x}=g^{s_{x}} \, mod \, p$ e li invia sia ad Alice che a Bob. Tale attacco è un attacco all'integrità. 
+\begin{figure}[htbp]
+	\centering%
+	\subfigure%
+	{\includegraphics[scale=0.5, keepaspectratio]{Immagini/Capitolo6/DiffieHellman_maninthemiddle.png}}
+	\caption{Man-in-the-Middle Attack}
+	\end{figure}
+	
 Come risolvere tale problema? 
 \begin{itemize}
 \item \textbf{Autenticazione via password}: \\ Ipotesi: Alice e Bob si sono preliminarmente accordate su una coppia di password($pwd_{A}$, password che Alice invia a Bob; $pwd_{B}$, password che Bob invia ad Alice). Si consideri allora la seguente procedura di autenticazione, dove $K_{AB}$ è la chiave segreta condivisa ottenuta con Diffie-Hellman: \begin{enumerate}
@@ -162,26 +178,20 @@ Come risolvere tale problema?
 \item Bob invia un messaggio cifrato con $K_{BA}$ e $pwd_{B}$.
 \end{enumerate}
 Il problema è che l'autenticazione via password, se è in corso un attacco Man-in-the-Middle, non funziona: Mr. X può decifrare tutte i messaggi che riceve da Alice con $K_{AX}$, cifrarli con $K_{XB}$ e inviarli a Bob. Viceversa, può decifrare tutte i messaggi che riceve da Bob con $K_{XB}$, cifrarli con $K_{AX}$ e inviarli ad Alice.
+\begin{figure}[htbp]
+	\centering%
+	\subfigure%
+	{\includegraphics[scale=0.5, keepaspectratio]{Immagini/Capitolo6/DiffieHellman_passauth.png}}
+	\caption{Autenticazione via password}
+	\end{figure}
 \item Anche altri tipi di proposte sono insufficienti(timestamp, domande personali..). Il problema è che Diffie-Hellman effettua delle operazioni invertibili(cifratura/decifratura) ed è sicuro solo nel caso di attacchi passivi(un intruso intercetta i messaggi, ma non li modifica). E' necessario proteggere l'integrità, per cui si adottano due strategie generali: Diffie-Hellman con Numeri Pubblici e Scambio Diffie-Hellman Autenticato.	
 \end{itemize}
 
 \textbf{Diffie-Hellman con Numeri Pubblici}. Un possibile modo per sventare attacchi attivi è evitare che $p$, $g$, $s_{A}$, $s_{B}$, $T_{A}$ e $T_{B}$ vengano generati/calcolati ad ogni scambio. $p$, $g$, $T_{A}$ e $T_{B}$ potrebbero essere resi pubblici in una repository fidata, con $p$ e $g$ uguali per tutti gli utenti, mentre ogni utente U pubblica il proprio valore $T_{U}$, mantenendo privato il segreto $s_{U}$. Ne consegue che, se un avversario non è in grado di accedere alla repository e di modificare i valori pubblici, allora Diffie-Hellman diventa sicuro anche nel caso di attacchi attivi. Inoltre, non è più necessario lo scambio dei valori $T_{A}$ e $T_{B}$: consultando la repository ogni utente A può ottenere la chiave $K_{AB}$ che condividerebbe con l'utente B. \\
 
 \textbf{Scambio Diffie-Hellman Autenticato}. Alice e Bob conoscono un qualche tipo di informazione che permette loro di autenticarsi reciprocamente, ovvero una chiave segreta condivisa $K^{AB}$, da non confondere con la chiave concordata con Diffie-Hellman $K_{AB}$, la propria coppia <chiave privata, chiave pubblica> e la chiave
-pubblica dell'altro. Si possono usare tale(i) informazione(i) per provare che sono realmente loro, e non un impostore, coloro che generano i valori di Diffie-Hellman $g$, $p$, $T_{A}$ e $T_{B}$. Tale prova può avvenire sia contestualmente che dopo lo scambio Diffie-Hellman esaminato in precedenza. \\ Alcune possibili soluzioni sono:
-\begin{itemize}
-\item Autenticazione contestuale allo scambio Diffie-Hellman: \begin{enumerate}
-\item Cifrare lo scambio Diffie-Hellman con la chiave segreta $K^{AB}$.
-\item Cifrare il valore Diffie-Hellman con la chiave pubblica dell'altro interlocutore.
-\item Firmare il valore Diffie-Hellman con la propria chiave privata
-\end{enumerate}
-\item Autenticazione successiva allo scambio Diffie-Hellman:
-\begin{enumerate}
-\item Dopo lo scambio Diffie-Hellman, trasmettere un hash della chiave concordata $K_{AB}$, del proprio nome e della chiave segreta $K^{AB}$.
-\item Dopo lo scambio Diffie-Hellman, trasmettere un hash del valore
-Diffie-Hellman trasmesso e della chiave segreta $K^{AB}$.
-\end{enumerate}
-\end{itemize}
+pubblica dell'altro. Si possono usare tale(i) informazione(i) per provare che sono realmente loro, e non un impostore, coloro che generano i valori di Diffie-Hellman $g$, $p$, $T_{A}$ e $T_{B}$. Tale prova può avvenire sia contestualmente che dopo lo scambio Diffie-Hellman esaminato in precedenza. 
+
 Notazione adottata: \begin{itemize}
 \item $K^{AB}$: chiave segreta condivisa tra Alice e Bob prima di effettuare lo scambio Diffie-Hellman.
 \item $K_{AB}$: chiave concordata con Diffie-Hellman.
@@ -190,17 +200,68 @@ Notazione adottata: \begin{itemize}
 \item $[msg]_{Bob}$ : firma di msg con la chiave privata di Bob, cioè
 $E(PR_{Bob}, msg)$.
 \end{itemize}
+Di seguito sono indicate alcune possibili soluzioni per lo scambio Diffie-Hellman autenticato:
+\begin{itemize}
+\item Autenticazione contestuale allo scambio Diffie-Hellman: \begin{enumerate}
+\item Cifrare lo scambio Diffie-Hellman con la chiave segreta $K^{AB}$.
+\begin{figure}[htbp]
+	\centering%
+	\subfigure%
+	{\includegraphics[scale=0.5, keepaspectratio]{Immagini/Capitolo6/DiffieHellman_auth1.png}}
+	\caption{Utilizzo $K^{AB}$.}
+	\end{figure}
+\item Cifrare il valore Diffie-Hellman con la chiave pubblica dell'altro interlocutore(figura \ref{fig:auth2}).
+\begin{figure}[htbp]
+	\centering%
+	\subfigure%
+	{\includegraphics[scale=0.5, keepaspectratio]{Immagini/Capitolo6/DiffieHellman_auth2.png}}
+	\caption{Utilizzo chiave pubblica dell'altro interlocutore.}
+	\label{fig:auth2}
+	\end{figure}
+\item Firmare il valore Diffie-Hellman con la propria chiave privata(figura \ref{fig:auth3}).
+\begin{figure}[htbp]
+	\centering
+	\subfigure
+	{\includegraphics[scale=0.5, keepaspectratio]{Immagini/Capitolo6/DiffieHellman_auth3.png}}
+	\caption{Utilizzo propria chiave privata.}
+	\label{fig:auth3}
+	\end{figure}
+\end{enumerate}
+\item Autenticazione successiva allo scambio Diffie-Hellman(figura \ref{fig:auth45}):
+\begin{enumerate}
+\item Dopo lo scambio Diffie-Hellman, trasmettere un hash della chiave concordata $K_{AB}$, del proprio nome e della chiave segreta $K^{AB}$.
+\item Dopo lo scambio Diffie-Hellman, trasmettere un hash del valore
+Diffie-Hellman trasmesso e della chiave segreta $K^{AB}$.
+\end{enumerate}
+\end{itemize}
+\begin{figure}[htbp]
+	\centering
+	\subfigure
+	{\includegraphics[scale=0.5, keepaspectratio]{Immagini/Capitolo6/DiffieHellman_auth4.png}}
+	\hspace{2mm}
+	\subfigure
+	{\includegraphics[scale=0.5, keepaspectratio]{Immagini/Capitolo6/DiffieHellman_auth5.png}}
+	\caption{Autenticazione successiva allo scambio Diffie-Hellman.}
+	\label{fig:auth45}
+	\end{figure}
 
 Oltre alla mancanza di autenticazione, Diffie-Hellman classico presenta anche lo svantaggio che, la comunicazione cifrata con la chiave concordata, può avvenire soltanto dopo l'esecuzione di uno scambio attivo. In pratica, Alice non può inviare un messaggio cifrato a Bob prima di ricevere $T_{B}$. Tale problema puo essere ovviato
 introducendo le chiavi pubbliche Diffie-Hellman: una chiave pubblica D-H è una tripla $<p, g, T>$, dove $T = g^s \, mod \, p$, dove $s$ è la corrispondente chiave privata. Le chiavi pubbliche vanno custodite in un luogo fidato e accessibile da tutti in modo sicuro. La chiave pubblica di Bob è $<p_{B}, g_{B}, T_{B}>$. \\
 
-Di seguito mostriamo un esempio di procedura che consenta ad Alice di inviare un messaggio cifrato a Bob, con la chiave concordata $K_{AB}$, anche se Bob risulta essere inattivo, cioè Alice deve essere in grado di cifrare senza dover attendere alcuna risposta da Bob, il quale, una volta attivo, dovrà poter calcolare $K_{AB}$ e decifrare il messaggio:
+Di seguito(figura \ref{fig:authex}), mostriamo un esempio di procedura che consenta ad Alice di inviare un messaggio cifrato a Bob, con la chiave concordata $K_{AB}$, anche se Bob risulta essere inattivo, cioè Alice deve essere in grado di cifrare senza dover attendere alcuna risposta da Bob, il quale, una volta attivo, dovrà poter calcolare $K_{AB}$ e decifrare il messaggio:
 \begin{enumerate}
 \item Alice genera $s_{A}<p_{B}$, calcola $T_{A}^{*}=g_{B}^{s_{A}} \, mod \, p_{B}$ e $K_{AB}=T_{B}^{S_{A}} \, mod \, p_{B}$.
 \item Poi cifra il messaggio $msg=E(K_{AB},msg)$ e lo invia a Bob assieme a $T_{A}^{*}$.
 \item Bob, una volta attivo, calcola  $K_{BA}=(T_{A}^*)^{S_{B}} \, mod \, p_{B}$.
 \item Decifra $E(K_{AB},msg)$, ottenendo $msg=D(K_{BA},E(K_{AB},msg))$.
 \end{enumerate}
+\begin{figure}[htbp]
+	\centering%
+	\subfigure%
+	{\includegraphics[scale=0.6, keepaspectratio]{Immagini/Capitolo6/DiffieHellman_pubseckey.png}}
+	\caption{Chiavi pubbliche/private Diffie-Hellman}
+	\label{fig:authex}
+\end{figure} 
 
 \section{Zero Knowledge Proof System}
 
@@ -240,6 +301,12 @@ Dunque, tale protocollo consiste dei seguenti passi: \begin{enumerate}
 \item Victor eleva al quadrato ciascun numero della risposta di Peggy e verifica che tale quadrato valga $vr_{i}^2 \, mod \, n$ se il corrispondente $r_{i}^2$ aveva etichetta 1, oppure $r_{i}^2 \, mod \, n$ se il corrispondente $r_{i}^2$ aveva etichetta 0.
 \end{itemize}
 \end{enumerate}
+\begin{figure}[htbp]
+	\centering%
+	\subfigure%
+	{\includegraphics[scale=0.6, keepaspectratio]{Immagini/Capitolo6/zkasmsr_auth.png}}
+	\caption{}
+\end{figure}
 
 Supponiamo che Fred voglia impersonare Peggy. Allora egli è in grado di rispondere in modo corretto agli $r_{i}^2$ che Victor etichetta con 0(Fred può scegliere a suo piacimento gli $r_{i}$), ma non è in grado di rispondere agli $r_{i}^2$ etichettati con 1. In assenza di etichette 0, infatti, il protocollo si semplificherebbe: Peggy si limiterebbe ad inviare delle coppie $<r_{i}^2, sr_{i} \, mod \, n>$, tuttavia non si avrebbe più un protocollo a conoscenza zero, poichè Fred potrebbe usare una precedente sequenza inviata di Peggy ed impersonarla con successo. Invece, l'etichettatura scelta in modo casuale da Victor implica che Fred ha una probabilità del 50\% di
 rispondere in modo corretto ad ogni $r_{i}^2$. Fred potrebbe generarsi autonomamente gli $r_{i}$, ma in tal caso non saprebbe rispondere agli $r_{i}^2$ con etichetta 1 oppure potrebbe usare un insieme di $r_{i}^2$ etichettati in passato con 1 in una precedente autenticazione, ma allora non conoscerebbe i corrispondenti $r_{i}$ e non saprebbe rispondere nel caso in cui l'etichetta è 0. Se $k$ è sufficientemente grande la probabilità che Fred impersoni correttamente Peggy tende a 0. \\

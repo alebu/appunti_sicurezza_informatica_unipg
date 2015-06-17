@@ -14,7 +14,7 @@ In generale si ha che solo \textbf{alcuni dati sono sensibili} e che, inoltre, o
 \begin{figure}[htbp]
 	\centering
 
-	{\includegraphics[height=15cm, width=12cm, keepaspectratio]{Immagini/Appendice1/prot_dati_01.jpg}}
+	{\includegraphics[height=15cm, width=12cm, keepaspectratio]{Immagini/Appendice1/prot_dati_01.JPG}}
 	\caption{Esempio di una tabella di un DB \label{fig:tabella_db}}
 	
 \end{figure}
@@ -37,7 +37,7 @@ Il come non divulgare dati sensibili può non essere semplice, infatti si posson
 
 	\centering
 
-		{\includegraphics[height=15cm, width=12cm, keepaspectratio]{Immagini/Appendice1/prot_dati_02.jpg}}
+		{\includegraphics[height=15cm, width=12cm, keepaspectratio]{Immagini/Appendice1/prot_dati_02.JPG}}
 			\caption{Esempio di come ottenere dati sensibili senza leggerli effettivamente \label{fig:query_db}}
 \end{figure}
 
@@ -55,7 +55,7 @@ Perciò abbiamo due esigenze contrastanti:
 
 	\centering
 
-	{\includegraphics[height=15cm, width=12cm, keepaspectratio]{Immagini/Appendice1/prot_dati_03.jpg}}
+	{\includegraphics[height=15cm, width=12cm, keepaspectratio]{Immagini/Appendice1/prot_dati_03.JPG}}
 				\caption{Rappresentazione grafica di accessibilità vs. protezione dei dati \label{fig:protezione_vs_accessibilita}}
 
 \end{figure}
@@ -77,7 +77,7 @@ L'\textbf{Inferenza} è un metodo per dedurre o derivare dati, sia sensibili che
 \begin{figure}[htbp]
 
 
-	{\includegraphics[height=5cm, width=8cm, keepaspectratio]{Immagini/Appendice1/prot_dati_04.jpg}}
+	{\includegraphics[height=5cm, width=8cm, keepaspectratio]{Immagini/Appendice1/prot_dati_04.JPG}}
 				\caption{Query che sfrutta inferenza per ottenere dati sensibili e viene bloccata \label{fig:query_inferenza}}
 
 \end{figure}
@@ -88,7 +88,7 @@ La seguente query, invece, intuitivamente risulta legale ma va a selezionare sol
 \begin{figure}[htbp]
 
 
-	{\includegraphics[height=5cm, width=8cm, keepaspectratio]{Immagini/Appendice1/prot_dati_05.jpg}}
+	{\includegraphics[height=5cm, width=8cm, keepaspectratio]{Immagini/Appendice1/prot_dati_05.JPG}}
 				\caption{Query che sfrutta inferenza per ottenere dati sensibili e non viene bloccata \label{fig:query_inferenza1}}
 
 \end{figure}
@@ -106,10 +106,10 @@ Una query del genere \ref{fig:query_indiretta_result} potrebbe sembrare innocua 
 	\centering
 	
 	\subfigure[Query di attacco indiretto di somma]
-		{\includegraphics[height=5cm, width=8cm, keepaspectratio]{Immagini/Appendice1/prot_dati_06.jpg}}
+		{\includegraphics[height=5cm, width=8cm, keepaspectratio]{Immagini/Appendice1/prot_dati_06.JPG}}
 				
 	\subfigure[Risultato della query]
-		{\includegraphics[height=5cm, width=8cm, keepaspectratio]{Immagini/Appendice1/prot_dati_09.jpg}}
+		{\includegraphics[height=5cm, width=8cm, keepaspectratio]{Immagini/Appendice1/prot_dati_09.JPG}}
 							\caption{Esempio di attacco Indiretto \label{fig:query_indiretta_result}}                           
 	
 \end{figure}
@@ -120,10 +120,10 @@ Inoltre, il conteggio può essere combinato con la somma per produrre risultati 
 	\centering
 	
 	\subfigure[Query di attacco indiretto di conteggio]
-		{\includegraphics[height=5cm, width=8cm, keepaspectratio]{Immagini/Appendice1/prot_dati_07.jpg}}
+		{\includegraphics[height=5cm, width=8cm, keepaspectratio]{Immagini/Appendice1/prot_dati_07.JPG}}
 				
 	\subfigure[Risultato della query]
-		{\includegraphics[height=5cm, width=8cm, keepaspectratio]{Immagini/Appendice1/prot_dati_08.jpg}}
+		{\includegraphics[height=5cm, width=8cm, keepaspectratio]{Immagini/Appendice1/prot_dati_08.JPG}}
 							\caption{Esempio di attacco Indiretto di Somma e Conteggio \label{fig:query_indiretta_result1}}                           
 	
 \end{figure}
@@ -138,18 +138,13 @@ Ad esempio, supponiamo che la media non venga divulgata se la somma degli elemen
 \begin{figure}[htpb]
 	\centering
 		\subfigure[Query di Media per ottenere informazioni sugli studenti di Sesso Femminile]
-
-		{\includegraphics[height=2cm, width=8cm, keepaspectratio]{Immagini/Appendice1/prot_dati_10.jpg}}
-		
+		{\includegraphics[height=2cm, width=8cm, keepaspectratio]{Immagini/Appendice1/prot_dati_10.JPG}}
 		\subfigure[Query di Count da combinare con la Query di Media per ottenere un Attacco Inferenziale]
-		{\includegraphics[height=2cm, width=8cm, keepaspectratio]{Immagini/Appendice1/prot_dati_11.jpg}}
-		
+		{\includegraphics[height=2cm, width=8cm, keepaspectratio]{Immagini/Appendice1/prot_dati_11.JPG}}
 		\subfigure[Combinazione delle informazioni ottenute]
-				{\includegraphics[height=2cm, width=8cm, keepaspectratio]{Immagini/Appendice1/prot_dati_12.jpg}}
-		
+		{\includegraphics[height=2cm, width=8cm, keepaspectratio]{Immagini/Appendice1/prot_dati_12.JPG}}
 		\caption{Esempio di query di media per ottenere indirettamente informazioni 
 		  \label{fig:query_media}}  
-
 \end{figure}
 
 Dalla procedure di \ref{fig:query_media} si trova che $ a_{3} = 5000 $ che sarebbe un dato sensibile, in quanto media di un valore su un unico elemento!
@@ -160,7 +155,7 @@ Abbiamo visto che una delle tecniche di protezione dall'inferenza consiste nel n
 \begin{figure}[htpb]
 \centering
 
-	{\includegraphics[height=5cm, width=8cm, keepaspectratio]{Immagini/Appendice1/prot_dati_13.jpg}}
+	{\includegraphics[height=5cm, width=8cm, keepaspectratio]{Immagini/Appendice1/prot_dati_13.JPG}}
 		\caption{Esempio di query di tracker non lecita du DB
 				  \label{fig:query_tracker_sbagliata}}  
 \end{figure}
@@ -170,14 +165,14 @@ Il dato non viene divulgato in quanto \underline{dominato da una sola tupla}, ma
 
 \begin{figure}[htpb]
 \centering
-	{\includegraphics[height=5cm, width=8cm, keepaspectratio]{Immagini/Appendice1/prot_dati_14.jpg}}
+	{\includegraphics[height=5cm, width=8cm, keepaspectratio]{Immagini/Appendice1/prot_dati_14.JPG}}
 		\caption{Esempio di query di tracker non lecita du DB
 				  \label{fig:query_tracker}}  
 \end{figure}
 
 \subsection{Vulnerabilità del Sistema Lineare}
 L'attacco di Tracker è un caso specifico di una vulnerabilità più generica in cui sfruttando l'algebra, la logica e un po' di fortuna si riesce ad ottenere tramite diverse query dei valori protetti.
-\newpage
+
 Nell'esempio \ref{fig:query_tracker} la query protetta è del tipo \textit{q = COUNT\{(Sesso = F)}$\wedge$\textit{(Razza = C)}$\wedge$\textit{(Dormitorio = Holmes)\}}.
 \newline
 In base all'algebra, possiamo riscrivere la query nel seguente modo: 
@@ -216,10 +211,10 @@ Un esempio di soppressione è la già citata regola del ``\textit{n elementi sul
 \begin{figure}[htpb]
 	\centering
 		\subfigure[Numero di residenti per Sesso e Dormitorio]
-		{\includegraphics[height=2cm, width=8cm, keepaspectratio]{Immagini/Appendice1/prot_dati_15.jpg}}
+		{\includegraphics[height=2cm, width=8cm, keepaspectratio]{Immagini/Appendice1/prot_dati_15.JPG}}
 		
 		\subfigure[Tabella dopo la soppressione]
-		{\includegraphics[height=2cm, width=8cm, keepaspectratio]{Immagini/Appendice1/prot_dati_16.jpg}}
+		{\includegraphics[height=2cm, width=8cm, keepaspectratio]{Immagini/Appendice1/prot_dati_16.JPG}}
 				
 		\caption{Esempio di protezione per soppressione
 		  \label{fig:query_soppressione}}  
@@ -230,10 +225,10 @@ Per evitare di divulgare dati sensibili è possibile combinare più righe o colo
 \begin{figure}[htpb]
 	\centering
 		\subfigure[Numero di residenti per Sesso e Uso di Droghe]
-		{\includegraphics[height=2cm, width=8cm, keepaspectratio]{Immagini/Appendice1/prot_dati_17.jpg}}
+		{\includegraphics[height=2cm, width=8cm, keepaspectratio]{Immagini/Appendice1/prot_dati_17.JPG}}
 		
 		\subfigure[Tabella dopo l'occultamento]
-		{\includegraphics[height=2cm, width=8cm, keepaspectratio]{Immagini/Appendice1/prot_dati_18.jpg}}
+		{\includegraphics[height=2cm, width=8cm, keepaspectratio]{Immagini/Appendice1/prot_dati_18.JPG}}
 				
 		\caption{Esempio di protezione per occultamento
 		  \label{fig:query_occultamento}}  

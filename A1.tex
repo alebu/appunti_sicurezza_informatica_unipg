@@ -13,7 +13,7 @@ In generale si ha che solo \textbf{alcuni dati sono sensibili} e che, inoltre, o
 
 \begin{figure}[htbp]
 	\centering
-	{\includegraphics[height=15cm, width=12cm, keepaspectratio]{Immagini/Capitolo10/prot_dati_01.jpg}}
+	{\includegraphics[height=15cm, width=12cm, keepaspectratio]{Immagini/Appendice1/prot_dati_01.jpg}}
 	\caption{Esempio di una tabella di un DB \label{fig:tabella_db}}
 	
 \end{figure}
@@ -35,7 +35,7 @@ Il come non divulgare dati sensibili può non essere semplice, infatti si posson
 \begin{figure}[htbp]
 
 	\centering
-		{\includegraphics[height=15cm, width=12cm, keepaspectratio]{Immagini/Capitolo10/prot_dati_02.jpg}}
+		{\includegraphics[height=15cm, width=12cm, keepaspectratio]{Immagini/Appendice1/prot_dati_02.jpg}}
 			\caption{Esempio di come ottenere dati sensibili senza leggerli effettivamente \label{fig:query_db}}
 \end{figure}
 
@@ -52,7 +52,7 @@ Perciò abbiamo due esigenze contrastanti:
 \begin{figure}[htbp]
 
 	\centering
-	{\includegraphics[height=15cm, width=12cm, keepaspectratio]{Immagini/Capitolo10/prot_dati_03.jpg}}
+	{\includegraphics[height=15cm, width=12cm, keepaspectratio]{Immagini/Appendice1/prot_dati_03.jpg}}
 				\caption{Rappresentazione grafica di accessibilità vs. protezione dei dati \label{fig:protezione_vs_accessibilita}}
 
 \end{figure}
@@ -73,7 +73,7 @@ La divulgazione può essere suddivisa nei seguenti gruppi:
 L'\textbf{Inferenza} è un metodo per dedurre o derivare dati, sia sensibili che non. Ricordando la tabella di fig. \ref{fig:tabella_db}, una query del tipo è un \textbf{Attacco Diretto}.
 \begin{figure}[htbp]
 
-	{\includegraphics[height=5cm, width=8cm, keepaspectratio]{Immagini/Capitolo10/prot_dati_04.jpg}}
+	{\includegraphics[height=5cm, width=8cm, keepaspectratio]{Immagini/Appendice1/prot_dati_04.jpg}}
 				\caption{Query che sfrutta inferenza per ottenere dati sensibili e viene bloccata \label{fig:query_inferenza}}
 
 \end{figure}
@@ -83,7 +83,7 @@ La seguente query, invece, intuitivamente risulta legale ma va a selezionare sol
 
 \begin{figure}[htbp]
 
-	{\includegraphics[height=5cm, width=8cm, keepaspectratio]{Immagini/Capitolo10/prot_dati_05.jpg}}
+	{\includegraphics[height=5cm, width=8cm, keepaspectratio]{Immagini/Appendice1/prot_dati_05.jpg}}
 				\caption{Query che sfrutta inferenza per ottenere dati sensibili e non viene bloccata \label{fig:query_inferenza1}}
 
 \end{figure}
@@ -101,10 +101,10 @@ Una query del genere \ref{fig:query_indiretta_result} potrebbe sembrare innocua 
 	\centering
 	
 	\subfigure[Query di attacco indiretto di somma]
-		{\includegraphics[height=5cm, width=8cm, keepaspectratio]{Immagini/Capitolo10/prot_dati_06.jpg}}
+		{\includegraphics[height=5cm, width=8cm, keepaspectratio]{Immagini/Appendice1/prot_dati_06.jpg}}
 				
 	\subfigure[Risultato della query]
-		{\includegraphics[height=5cm, width=8cm, keepaspectratio]{Immagini/Capitolo10/prot_dati_09.jpg}}
+		{\includegraphics[height=5cm, width=8cm, keepaspectratio]{Immagini/Appendice1/prot_dati_09.jpg}}
 							\caption{Esempio di attacco Indiretto \label{fig:query_indiretta_result}}                           
 	
 \end{figure}
@@ -115,10 +115,10 @@ Inoltre, il conteggio può essere combinato con la somma per produrre risultati 
 	\centering
 	
 	\subfigure[Query di attacco indiretto di conteggio]
-		{\includegraphics[height=5cm, width=8cm, keepaspectratio]{Immagini/Capitolo10/prot_dati_07.jpg}}
+		{\includegraphics[height=5cm, width=8cm, keepaspectratio]{Immagini/Appendice1/prot_dati_07.jpg}}
 				
 	\subfigure[Risultato della query]
-		{\includegraphics[height=5cm, width=8cm, keepaspectratio]{Immagini/Capitolo10/prot_dati_08.jpg}}
+		{\includegraphics[height=5cm, width=8cm, keepaspectratio]{Immagini/Appendice1/prot_dati_08.jpg}}
 							\caption{Esempio di attacco Indiretto di Somma e Conteggio \label{fig:query_indiretta_result1}}                           
 	
 \end{figure}
@@ -133,13 +133,13 @@ Ad esempio, supponiamo che la media non venga divulgata se la somma degli elemen
 \begin{figure}[htpb]
 	\centering
 		\subfigure[Query di Media per ottenere informazioni sugli studenti di Sesso Femminile]
-		{\includegraphics[height=2cm, width=8cm, keepaspectratio]{Immagini/Capitolo10/prot_dati_10.jpg}}
+		{\includegraphics[height=2cm, width=8cm, keepaspectratio]{Immagini/Appendice1/prot_dati_10.jpg}}
 		
 		\subfigure[Query di Count da combinare con la Query di Media per ottenere un Attacco Inferenziale]
-		{\includegraphics[height=2cm, width=8cm, keepaspectratio]{Immagini/Capitolo10/prot_dati_11.jpg}}
+		{\includegraphics[height=2cm, width=8cm, keepaspectratio]{Immagini/Appendice1/prot_dati_11.jpg}}
 		
 		\subfigure[Combinazione delle informazioni ottenute]
-				{\includegraphics[height=2cm, width=8cm, keepaspectratio]{Immagini/Capitolo10/prot_dati_12.jpg}}
+				{\includegraphics[height=2cm, width=8cm, keepaspectratio]{Immagini/Appendice1/prot_dati_12.jpg}}
 		
 		\caption{Esempio di query di media per ottenere indirettamente informazioni 
 		  \label{fig:query_media}}  
@@ -153,7 +153,7 @@ Abbiamo visto che una delle tecniche di protezione dall'inferenza consiste nel n
 
 \begin{figure}[htpb]
 \centering
-	{\includegraphics[height=5cm, width=8cm, keepaspectratio]{Immagini/Capitolo10/prot_dati_13.jpg}}
+	{\includegraphics[height=5cm, width=8cm, keepaspectratio]{Immagini/Appendice1/prot_dati_13.jpg}}
 		\caption{Esempio di query di tracker non lecita du DB
 				  \label{fig:query_tracker_sbagliata}}  
 \end{figure}
@@ -163,13 +163,13 @@ Il dato non viene divulgato in quanto \underline{dominato da una sola tupla}, ma
 
 \begin{figure}[htpb]
 \centering
-	{\includegraphics[height=5cm, width=8cm, keepaspectratio]{Immagini/Capitolo10/prot_dati_14.jpg}}
+	{\includegraphics[height=5cm, width=8cm, keepaspectratio]{Immagini/Appendice1/prot_dati_14.jpg}}
 		\caption{Esempio di query di tracker non lecita du DB
 				  \label{fig:query_tracker}}  
 \end{figure}
 
 \subsection{Vulnerabilità del Sistema Lineare}
-L'attacco di Tracker è un caso specifico di una vulnerabilità più generica in cui sfruttando l'algebra, la logica e un pò di fortuna si riesce ad ottenere tramite diverse query dei valori protetti.
+L'attacco di Tracker è un caso specifico di una vulnerabilità più generica in cui sfruttando l'algebra, la logica e un po' di fortuna si riesce ad ottenere tramite diverse query dei valori protetti.
 \newpage
 Nell'esempio \ref{fig:query_tracker} la query protetta è del tipo \textit{q = COUNT\{(Sesso = F)}$\wedge$\textit{(Razza = C)}$\wedge$\textit{(Dormitorio = Holmes)\}}.
 \newline
@@ -187,13 +187,14 @@ $q_{3} = c_{5} + c_{1} + c_{3}$
 $q_{4} = c_{4} + c_{7} + c_{2}$
 \newline
 $q_{5} = c_{8} + c_{3}$
+\\
 Nessuna delle query rivela un qualsiasi valore $c_{i}$ ma, risolvendo il sistema, possiamo conoscerli tutti.
 
 \subsection{Aggregazione}
 L'aggregazione è un altro particolare tipo di inferenza, in cui si cerca di ottenere dati sensibili mettendo insieme dati non sensibili (ad esempio il nome di un impiegato e il suo stipendio, divisi non sono dati sensibili ma insieme si). 
 \newline
 Evitare l'aggregazione è difficile perché bisogna tenere conto delle informazioni giù in possesso dell'utente. Se un utente conosce il nome di un dipendente non devo comunicargli lo stipendio e viceversa. Purtroppo tenere traccia di tutti i dati rivelati ad ogni utente è proibitivo, soprattutto per il fatto che utenti diversi potrebbero condividere tutti le informazioni in loro possesso.
-\newpage
+
 \section{Protezione dall'Inferenza}
 Esistono alcune tecniche per combattere l'inferenza: 
 \begin{itemize}
@@ -208,10 +209,10 @@ Un esempio di soppressione è la già citata regola del ``\textit{n elementi sul
 \begin{figure}[htpb]
 	\centering
 		\subfigure[Numero di residenti per Sesso e Dormitorio]
-		{\includegraphics[height=2cm, width=8cm, keepaspectratio]{Immagini/Capitolo10/prot_dati_15.jpg}}
+		{\includegraphics[height=2cm, width=8cm, keepaspectratio]{Immagini/Appendice1/prot_dati_15.jpg}}
 		
 		\subfigure[Tabella dopo la soppressione]
-		{\includegraphics[height=2cm, width=8cm, keepaspectratio]{Immagini/Capitolo10/prot_dati_16.jpg}}
+		{\includegraphics[height=2cm, width=8cm, keepaspectratio]{Immagini/Appendice1/prot_dati_16.jpg}}
 				
 		\caption{Esempio di protezione per soppressione
 		  \label{fig:query_soppressione}}  
@@ -222,10 +223,10 @@ Per evitare di divulgare dati sensibili è possibile combinare più righe o colo
 \begin{figure}[htpb]
 	\centering
 		\subfigure[Numero di residenti per Sesso e Uso di Droghe]
-		{\includegraphics[height=2cm, width=8cm, keepaspectratio]{Immagini/Capitolo10/prot_dati_17.jpg}}
+		{\includegraphics[height=2cm, width=8cm, keepaspectratio]{Immagini/Appendice1/prot_dati_17.jpg}}
 		
 		\subfigure[Tabella dopo l'occultamento]
-		{\includegraphics[height=2cm, width=8cm, keepaspectratio]{Immagini/Capitolo10/prot_dati_18.jpg}}
+		{\includegraphics[height=2cm, width=8cm, keepaspectratio]{Immagini/Appendice1/prot_dati_18.jpg}}
 				
 		\caption{Esempio di protezione per occultamento
 		  \label{fig:query_occultamento}}  
@@ -238,3 +239,72 @@ Nel caso \ref{fig:query_occultamento} la query viene eseguita su di un \textbf{C
 \subsection{Perturbazione Casuale dei dati}
 A volte può essere utile perturbare i valori del DB con un piccolo errore, per ogni $x_{i}$ che rappresenta il valore vero dell'attributo i si può generare un piccolo errore $e_{i}$ e aggiungerlo a $x_{i}$ per calcolare dati statistici.
 Valori di query aggregate, quali la somma o la media, produrranno valori vicini a quelli veri ma non esatti.
+\section{Esercitazione sull'inferenza}
+Con riferimento alla tabella dipendenti, in \figurename ~\ref{fig:Tabella_dipendenti}, trovare lo stipendio di Mister X con un attacco indiretto di tipo media.\\
+\begin{figure}[htbp]
+	\centering%
+	\subfigure%
+	{\includegraphics[height=6cm, width=12cm, keepaspectratio]{Immagini/Appendice1/Tabella_dipendenti.png}}
+	\caption{Tabella dipendenti\label{fig:Tabella_dipendenti}} 	
+\end{figure}
+Si hanno a disposizione le seguenti informazioni:
+\begin{enumerate}
+\item [a.] Mister X è un uomo con più di 30 anni e non è di Roma;
+\item [b.] i rimanenti dipendenti maschi con più di 30 anni sono tutti romani;
+\item [c.] nessun dipendente donna è di Roma.
+\end{enumerate}
+Si tenga conto, inoltre, che viene applicata la seguente politica di protezione dei dati sensibili:
+\begin{enumerate}
+\item il campo stipendio non può essere divulgato direttamente e non può essere utilizzato come criterio di filtraggio;
+\item i criteri di filtraggio possono essere età, sesso, e città;
+\item non possono essere utilizzati più di due criteri di filtraggio in una singola interrogazione;
+\item è consentita la divulgazione di medie e conteggi a patto che si riferiscano ad almeno tre tuple.
+\end{enumerate}
+\subsection{Svolgimento}
+\subsubsection{Idea base}
+Una possibile strategia di attacco prevede l'individuazione di due insiemi di tuple U e V tali che:
+\begin{enumerate}
+\item [I.] ciascun insieme contiene singolarmente almeno tre tuple (vincolo 4.);
+\item [II.] ciascun insieme deve poter essere individuato usando al più due condizioni di filtraggio (vincolo 3.) basate sugli attributi eta, sesso, e città (vincolo 2.);
+\item [III.] la differenza insiemistica $U \ V$ deve contenere soltanto mister X; ovvero ${Mister X} = U \ V$;
+\item [IV.] l'insieme $V$ deve essere un sottoinsieme di $U$, i.e. $V \subset U$
+\end{enumerate}
+Una volta individuati due insiemi $U$ e $V$, soddisfacenti le condizioni I, II, III e IV, ponendo:
+\begin{itemize}
+\item $m_{U}$ = media degli stipendi dei dipendenti in $U$;
+\item $c_{U}$ = numero dei dipendenti in $U$;
+\item $m_{V}$ = media degli stipendi dei dipendenti in $V$;
+\item $c_{V}$ = numero dei dipendenti in $V$;
+\end{itemize}
+si ottiene che: $stipendio_{Mister X} = m_{U} \times c_{U} – m_{V} \times c_{V}$.\\
+\subsubsection{Individuazione di $U$ e $V$}
+A questo punto si considerino i seguenti insiemi:
+\begin{itemize}
+\item $A$: insieme dei dipendenti di sesso maschile (sesso = M);
+\item $B$: insieme dei dipendenti con più di 30 anni (eta > 30);
+\item $C$: insieme dei dipendenti romani (citta = Roma);
+\end{itemize}
+Si osservi che dalla (a) e dalla (b) risulta che: ${Mister X} = (A \cap B) \ C = (A \cap B) \ (B \cap C)$\\
+mentre dalla (c) si ha che: $C \subset A$\\
+pertanto risulta che: ${Mister X} = (A \cap B) \ (B \cap C)$ e $(B \cap C) \subset (A \cap B)$\\
+quindi gli insiemi $U$ e $V$ sono:
+\begin{itemize}
+\item $U = A \cap B$
+\item $V = B \cap C$
+\end{itemize}
+\subsubsection{Query SQL}
+Infine vediamo quali sono le query  SQL per ottenere le informazioni che ci servono:\\ \\
+Individuazione di $m_{U}$ e $c_{U}$:
+\begin{lstlisting}
+SELECT avg(stipendi), count(stipendi) 
+FROM dipendenti 
+WHERE sesso = 'M' AND eta > 30;
+\end{lstlisting}
+Individuazione di $m_{V}$ e $c_{V}$:
+\begin{lstlisting}
+SELECT avg(stipendi), count(stipendi) 
+FROM dipendenti 
+WHERE eta > 30 AND citta = 'Roma';
+\end{lstlisting}
+
+

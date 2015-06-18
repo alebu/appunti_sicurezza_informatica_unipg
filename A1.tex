@@ -1,102 +1,83 @@
 \chapter{Protezione Dati Sensibili}
 
 \section{Introduzione}
-Molti DB contengono \textbf{dati sensibili}, che si definiscono come quei dati che \underline{non dovrebbero essere resi pubblici}.
-La identificazione dei dati sensibili dipende molto dal \textbf{DB} e dalla sua specifica \underline{applicazione}.
-I due casi estremi di questa categorizzazione sono : 
+Molti Database contengono \textbf{dati sensibili}. La definizione di dato sensibile, e la distinzione dal dato \textbf{personale}, in senso \textbf{giuridico}, è complessa, e dipende dal contesto legislativo in cui si valuta. In particolare in Italia il dato personale viene indicato come un'informazione che permette di identificare un individuo (anagrafica), mentre un dato sensibile rappresenta un'informazione su aspetti della vita privata dell'individuo (orientamento sessuale, opinione politica, credo religioso, etc.). \\
+
+Ai fini pratici della sicurezza informatica definiremo dati sensibili quei dati che \textbf{non dovrebbero essere resi pubblici}. L'identificazione dei dati sensibili dipende molto dal \textbf{database} e dalla sua specifica \underline{applicazione}. I due casi estremi di questa categorizzazione sono : 
 \begin{itemize}
 \item \underline{Nessun} dato sensibile (ad es. il catalogo di una biblioteca)
 \item \underline{Tutti} dati sensibili (ad es. un database della difesa militare)
 \end{itemize}
-Questi sono, inoltre, i casi più semplici da gestire, in quanto si \underline{garantisce} accesso a tutto il DB o si \underline{nega} accesso a tutto il DB.
-In generale si ha che solo \textbf{alcuni dati sono sensibili} e che, inoltre, ognuno presenta un \textbf{diverso livello di sensibilità} necessario da applicare.
+Questi sono i casi più semplici da gestire, in quanto si \underline{garantisce} accesso a tutto il database o si \underline{nega} accesso a tutto il DB. In generale si ha che solo \textbf{alcuni dati sono sensibili} e che, inoltre, ognuno presenta un textbf{diverso livello di sensibilità} necessario da applicare.
 
 \begin{figure}[htbp]
 	\centering
-
-	{\includegraphics[height=15cm, width=12cm, keepaspectratio]{Immagini/Appendice1/prot_dati_01.JPG}}
-	\caption{Esempio di una tabella di un DB \label{fig:tabella_db}}
-	
+	{\includegraphics[height=8cm, width=8cm, keepaspectratio]{Immagini/Appendice1/prot_dati_01.JPG}}
+	\caption{Esempio di una tabella Studente che contiene informazioni sugli studenti di una facoltà\label{fig:tabella_db}}
 \end{figure}
 
-Nella tabella di fig: \ref{fig:tabella_db} i Campi Non Sensibili risultano essere Nome e Dormitorio, quelli Sensibili sono Aiuto, Multe e Droghe mente quelli Parzialmente Sensibili sono Sesso e Razza.
-I dati possono essere sensibili secondo i seguenti parametri:
-\begin{itemize}
+Prendiamo come esempio la tabella \textbf{Studente} di fig: \ref{fig:tabella_db}. In questo contesto campi \textbf{non sensibili} risultano essere \textbf{Cognome} e \textbf{Dormitorio}, quelli \textbf{sensibili} sono \textbf{Aiuto}, \textbf{Multe} e \textbf{Droghe} mentre quelli \textbf{parzialmente sensibili} sono \textbf{Sesso} e \textbf{Razza}. La classificazione dei dati come sensibili avviene secondo i seguenti parametri:
 
+\begin{itemize}
 	\item \textbf{Sensibili per Contenuto}, in cui è il valore dell'attributo ad essere sensibile.
-	\item \textbf{Sensibili per Provenienza}, in questo caso è la fonte dei dati a necessitare riservatezza.
-	\item \textbf{Dichiarati Sensibili}, è lo stesso Amministratore del Sistema a dichiarare che i dati sono sensibili.
-	
+	\item \textbf{Sensibili per Provenienza}, in questo caso è la fonte dei dati a necessitare riservatezza (e.g. messaggi di un informatore la cui identità segreta verrebbe compromessa se i dati venissero divulgati).
+	\item \textbf{Dichiarati Sensibili}, è lo stesso amministratore del sistema a dichiarare che i dati sono sensibili. (e.g.  donatore anonimo)
 \end{itemize}
 
-Le parti sensibili di un dato possono essere un \textbf{attributo o record}, un intero record o solo un certo attributo possono risultare sensibili; le parti sensibili lo possono essere sempre o \textbf{diventare sensibili in funzione alla divulgazione di altri dati}, ad esempio la longitudine di un sito segreto non è sensibile finché non è fornito insieme alla latitudine.
+Le parti sensibili di un dato possono essere un singolo \textbf{attributo} di un record o un intero \textbf{record}. Inoltre la sensibilità di una parte potrebbe essere tale in senso assoluto o dipendere dal resto dei dati: ad esempio, la latitudine di una postazione segreta diventa sensibile se si conosce anche la longitudine, mentre lo stipendio di un dipendente è un dato sensibile a prescindere dal resto delle informazioni divulgate. \\
 
-Il come non divulgare dati sensibili può non essere semplice, infatti si possono ottenere dati sensibili anche se i dati in sè non vengono mostrati, perciò anche alcune delle caratteristiche dei dati devono essere considerate sensibili.
-
+Il trattamento dei dati sensibili è una materia complicata. Come divulgarli e come proteggerli sono i problemi principali. Va tenuto conto del fatto che, attraverso attacchi inferenziali, è possibile risalire a dati sensibili anche se questi ultimi non vengono divulgati direttamente. Vediamolo con un esempio.
 \begin{figure}[htbp]
-
 	\centering
-
-		{\includegraphics[height=15cm, width=12cm, keepaspectratio]{Immagini/Appendice1/prot_dati_02.JPG}}
-			\caption{Esempio di come ottenere dati sensibili senza leggerli effettivamente \label{fig:query_db}}
+		{\includegraphics[height=8cm, width=8cm, keepaspectratio]{Immagini/Appendice1/prot_dati_02.JPG}}
+			\caption{Esempio di come ottenere dati sensibili senza leggerli direttamente \label{fig:query_db}}
 \end{figure}
 
-Nella fig. \ref{fig:query_db} si nota come, anche se non si accede fisicamente al campo sensibile, si riesce a dedurlo.
-Per poter proteggere i dati si potrebbe pensare di attuare delle politiche sempre più restrittive, ad esempio rifiutare ogni tipo di query che faccia riferimento al campo sensibile...ma ciò va a limitare anche le interrogazioni legittime.
-Perciò abbiamo due esigenze contrastanti:
-\begin{itemize}
+Per evitare questo tipo di attacchi si potrebbe pensare di impedire totalmente l'accesso ai campi sensibili, ad esempio rifiutando ogni tipo di query che faccia riferimento al campo sensibile. Tuttavia ciò limiterebbe anche le interrogazioni legittime.
+Emergono quindi due esigenze contrastanti:
 
+\begin{itemize}
 	\item Nascondere i dati per evitare di fornire dati sensibili
-	\item Facilitare la divulgazione dei dati non sensibili per consentire l'uso corretto dei dati da parte degli utenti autorizzati
+	\item Facilitare la divulgazione dei dati non sensibili per consentire l'uso corretto di questi da parte degli utenti autorizzati
+	\end{itemize}
 	
-\end{itemize}
-
 \begin{figure}[htbp]
-
 	\centering
-
-	{\includegraphics[height=15cm, width=12cm, keepaspectratio]{Immagini/Appendice1/prot_dati_03.JPG}}
+	{\includegraphics[height=8.5cm, width=8.5cm, keepaspectratio]{Immagini/Appendice1/prot_dati_03.JPG}}
 				\caption{Rappresentazione grafica di accessibilità vs. protezione dei dati \label{fig:protezione_vs_accessibilita}}
-
 \end{figure}
 
-\subsection{Tipi di Divulgazione}
-La divulgazione può essere suddivisa nei seguenti gruppi:
+\subsection{Tipi di Divulgazione} 
+Esistono diverse modalità di divulgazione di un dato o insieme di dati:
 
 \begin{itemize}
-
-	\item\textbf{Dati Esatti}: consiste nella divulgazione del valore esatto del campo sensibile, può avvenire per richiesta esplicita o vengono restituiti come parte di una query insieme ad altri dati non sensibili o, addirittura, per errore del sistema
-	\item \textbf{Limiti}: si rendono noti gli estremi di variabilità di un dato sensibile, con una ricerca dicotomica si potrebbe arrivare a dedurre un valore molto prossimo a quello esatto. In certi casi, comunque, la semplice conoscenza dei limiti rappresenta una violazione alla sicurezza stessa.
-	\item \textbf{Risultato Negativo}: si può dedurre un certo valore anche dal fatto che è uguale ad un altro valore con cui si è fatta la query (se il numero di condanne di una persona non è zero, si sa che quest'ultima è stata condannata almeno una volta)
-	\item \textbf{Esistenza}: anche la sola conoscenza di esistenza di un attributo è sensibile
-	\item \textbf{Valore Probabile}: tramite l'utilizzo di diverse query e interpolando i dati ottenuti si possono ottenere informazioni non precise, ma attendibili, riguardo i valori di alcuni dati sensibili
+	\item\textbf{Dati Esatti}: consiste nella divulgazione del valore esatto del campo sensibile. Può avvenire per richiesta esplicita o come parte del risultato di una query insieme ad altri dati non sensibili o, addirittura, per errore del sistema
+	\item \textbf{Limiti}: si rendono noti gli estremi tra cui varia un dato sensibile (superiore, \textbf{H}, e inferiore, \textbf{L}). Con una ricerca dicotomica si potrebbe arrivare a dedurre un valore molto prossimo a quello esatto. In certi casi, comunque, la semplice conoscenza del fatto che un valore superi o meno una certa soglia rappresenta una violazione alla sicurezza.
+	\item \textbf{Risultato Negativo}: a volte l'informazione risiede più che nel valore assoluto di un attributo, nel suo confronto con un altro valore. Sapere che un attributo è diverso da zero, ad esempio, potrebbe di per sé rappresentare una discreta quantità di informazione (se il numero di condanne di una persona non è zero, si sa che quest'ultima è stata condannata almeno una volta).
+	\item \textbf{Esistenza}: anche la sola conoscenza di esistenza di un attributo è sensibile (un responsabile del personale potrebbe desiderare che non si sappia che la durata delle interurbane dei dipendenti viene monitorata, quindi la scoperta del campo interurbane in una tabella con i dati del personale rivelerebbe dati sensibili)
+	\item \textbf{Valore Probabile}: tramite l'utilizzo di diverse query e incrociando i dati ottenuti si possono inferire informazioni non precise, ma attendibili, riguardo i valori di alcuni dati sensibili. Ad esempio, se conosciamo l'indirizzo di residenza di tizio, sappiamo che 4 persone risiedono nello stesso indirizzo, e che una persona che risiede in quell'indirizzo è iscritta al partito X possiamo dire che tizio è iscritto al partito X con una probabilità del 25 $\%$.
 \end{itemize}
 
 \section{Inferenza}
-L'\textbf{Inferenza} è un metodo per dedurre o derivare dati, sia sensibili che non. Ricordando la tabella di fig. \ref{fig:tabella_db}, una query del tipo è un \textbf{Attacco Diretto}.
+L'\textbf{Inferenza} è un metodo per dedurre o derivare dati sensibili a partire dai dati non sensibili a disposizione. Ricordando la tabella di fig. \ref{fig:tabella_db}, la queri seguente rappresenta un \textbf{Attacco Diretto}, ovvero un tentativo diretto di accedere ad un dato sensibile:
+
 \begin{figure}[htbp]
-
-
-	{\includegraphics[height=5cm, width=8cm, keepaspectratio]{Immagini/Appendice1/prot_dati_04.JPG}}
+	\centering
+	{\includegraphics[height=5cm, width=6cm, keepaspectratio]{Immagini/Appendice1/prot_dati_04.JPG}}
 				\caption{Query che sfrutta inferenza per ottenere dati sensibili e viene bloccata \label{fig:query_inferenza}}
-
 \end{figure}
 
-Potrebbe essere rifiutata dal DBMS in quanto le tuple del risultato sono quelle con uno specifico valore su un attributo sensibile.
-La seguente query, invece, intuitivamente risulta legale ma va a selezionare solo tuple sensibili, in quanto la seconda e la terza condizione non sono mai soddisfatte.
+Una query di questo tipo potrebbe essere rifiutata dal DBMS in quanto le tuple del risultato sono quelle con uno specifico valore su un attributo sensibile. La seguente query, invece, intuitivamente risulta legale ma va a selezionare solo tuple sensibili, in quanto la seconda e la terza condizione non sono mai soddisfatte.
 
 \begin{figure}[htbp]
-
-
-	{\includegraphics[height=5cm, width=8cm, keepaspectratio]{Immagini/Appendice1/prot_dati_05.JPG}}
+	\centering
+	{\includegraphics[height=5cm, width=6cm, keepaspectratio]{Immagini/Appendice1/prot_dati_05.JPG}}
 				\caption{Query che sfrutta inferenza per ottenere dati sensibili e non viene bloccata \label{fig:query_inferenza1}}
-
 \end{figure}
 
-Per scovare l'accesso improprio ai dati, il DBMS dovrebbe capire che ci sono solo due valori ammessi per il campo Sesso e che non c'è alcuna tupla con valore Dormitorio uguale ad Ayres.
-Per limitare gli Attacchi Diretti è applicata, alle volte, una regola ``\textit{n elementi sul k percento}``, che consiste nel non divulgare se un piccolo numero di elementi divulgati costituisce una grande percentuale del valore restituito dalla query (nel caso precedente un unico elemento era il 100\%).
+Per scovare l'accesso improprio ai dati, il DBMS dovrebbe capire che ci sono solo due valori ammessi per il campo Sesso e che non c'è alcuna tupla con valore Dormitorio uguale ad 'Ayres'. Per limitare gli Attacchi Diretti è applicata, alle volte, una regola \textit{n elementi sul k percento}, che consiste nel non restituire il risultato di una query se un piccolo numero di elementi divulgati costituisce una grande percentuale del valore restituito. (nel caso mostrato come esempio nel paragrafo relativo alla divulgazione per valore probabile, fare una query che richiede i residenti ad un dato indirizzo ed iscritti ad un partito da come risultato un unico elemento che rappresenta il 100\%).
 
-Un attacco inferenziale \textbf{Indiretto} si basa sulla deduzione di dati sensibile a partire da uno o più dati statistici intermedi.
+Un attacco inferenziale \textbf{Indiretto} si basa sulla deduzione di dati sensibile a partire da uno o più dati statistici intermedi (somme, medie o conteggi, spesso divulgate da organizzazioni che mirano alla diffusione di informazioni aggregate e detengono dati sensibili di molto soggetti). In seguito descriveremo diversi tipi di attacchi inferenziali indiretti.
 
 \subsection{Somma e Conteggio}
 
@@ -106,7 +87,7 @@ Una query del genere \ref{fig:query_indiretta_result} potrebbe sembrare innocua 
 	\centering
 	
 	\subfigure[Query di attacco indiretto di somma]
-		{\includegraphics[height=5cm, width=8cm, keepaspectratio]{Immagini/Appendice1/prot_dati_06.JPG}}
+		{\includegraphics[height=5cm, width=5cm, keepaspectratio]{Immagini/Appendice1/prot_dati_06.JPG}}
 				
 	\subfigure[Risultato della query]
 		{\includegraphics[height=5cm, width=8cm, keepaspectratio]{Immagini/Appendice1/prot_dati_09.JPG}}
@@ -114,21 +95,18 @@ Una query del genere \ref{fig:query_indiretta_result} potrebbe sembrare innocua 
 	
 \end{figure}
 
-Inoltre, il conteggio può essere combinato con la somma per produrre risultati ancora più rivelatori!!
-
 \begin{figure}[htpb]
 	\centering
-	
-	\subfigure[Query di attacco indiretto di conteggio]
-		{\includegraphics[height=5cm, width=8cm, keepaspectratio]{Immagini/Appendice1/prot_dati_07.JPG}}
+		\subfigure[Query di attacco indiretto di conteggio]
+		{\includegraphics[height=5cm, width=5cm, keepaspectratio]{Immagini/Appendice1/prot_dati_07.JPG}}
 				
-	\subfigure[Risultato della query]
+		\subfigure[Risultato della query]
 		{\includegraphics[height=5cm, width=8cm, keepaspectratio]{Immagini/Appendice1/prot_dati_08.JPG}}
 							\caption{Esempio di attacco Indiretto di Somma e Conteggio \label{fig:query_indiretta_result1}}                           
 	
 \end{figure}
 
-Il risultato della query di \textbf{Attacco di Somma} \ref{fig:query_indiretta_result} combinata con la query di \textbf{Attacco di Conteggio} \ref{fig:query_indiretta_result1} rivela che i due uomini nel dormitorio Holmes e West ricevono un aiuto finanziario di 5000 e 4000.
+Inoltre, il conteggio può essere combinato con la somma per produrre risultati ancora più rivelatori. Il risultato della query di \textbf{Attacco di Somma} \ref{fig:query_indiretta_result} combinata con la query di \textbf{Attacco di Conteggio} \ref{fig:query_indiretta_result1} rivela che i due uomini nel dormitorio Holmes e West ricevono un aiuto finanziario di 5000 e 4000.
 
 \subsection{Media}
 

@@ -84,14 +84,14 @@ Una volta che Bob ha calcolato $m_{A}$ lo sottopone ad Alice che ne verifica l'i
 Trudy legge il messaggio $m_{A}$ e la firma, controlla che la firma sia quella di Alice e verifica che tutto $m_{A}$ coincida con $h(m_{A})$.
 \begin{figure}
 	\begin{center}
-	{\includegraphics[height=13cm, width=13cm, keepaspectratio]{Immagini/Capitolo4/schema_hash_collisioni.JPG}}
+	{\includegraphics[height=13cm, width=13cm, keepaspectratio]{Immagini/hash/schema_hash_collisioni.JPG}}
 	\end{center}
 \end{figure}
 Se la funzione non è resistente alla collisioni, Bob potrebbe trovare $m_{A1}$ tale che risulti $h(m_{A})= h(m_{A1})$.
 Una volta che Alice ha firmato il messaggio, sostituisce $m_{A}$ con $m_{A1}$ e Trudy non si potrà mai accorgere di nulla.
 \begin{figure}
 	\begin{center}
-	{\includegraphics[height=13cm, width=13cm, keepaspectratio]{Immagini/Capitolo4/schema_hash_collisioni_1.JPG}}
+	{\includegraphics[height=13cm, width=13cm, keepaspectratio]{Immagini/hash/schema_hash_collisioni_1.JPG}}
 	\end{center}
 \end{figure}
 Ma, per calcolare due messaggi con lo stesso hash, Bob può seguire il seguente approccio a forza bruta:
@@ -109,13 +109,13 @@ Disponendo di un segreto condiviso, l'algoritmo di hash può "sostituire" un alg
 Un possibile schema di autenticazione a chiave segreta (composta da "sfide") è il seguente
 \begin{figure}
 	\begin{center}
-	{\includegraphics[height=13cm, width=13cm, keepaspectratio]{Immagini/Capitolo4/schema_autenticazione.JPG}}
+	{\includegraphics[height=13cm, width=13cm, keepaspectratio]{Immagini/hash/schema_autenticazione.JPG}}
 	\end{center}
 \end{figure}
 Questo schema, purtroppo, presenta delle vulnerabilità...così come il seguente:
 \begin{figure}
 	\begin{center}
-	{\includegraphics[height=13cm, width=13cm, keepaspectratio]{Immagini/Capitolo4/schema_autenticazione_md.JPG}}
+	{\includegraphics[height=13cm, width=13cm, keepaspectratio]{Immagini/hash/schema_autenticazione_md.JPG}}
 	\end{center}
 \end{figure}
 Le vulnerabilità degli algoritmi di digest MD, sono note e facilmente attuabili in un possibile attacco.
@@ -131,7 +131,7 @@ Dato che ognuna delle soluzioni è equivalentemente corretta per ovviare al prob
 Come faccio a cifrare con un algoritmo di hash? Devo utilizzare la funzione di hash potendo rendere tutto il processo invertibile, quindi introducendo lo XOR tra un chunk del messaggio e l' hash della chiave (genero un keypad) e ottengo un cifrario a flusso!!
 \begin{figure}
 	\begin{center}
-	{\includegraphics[height=13cm, width=13cm, keepaspectratio]{Immagini/Capitolo4/schema_cifratura_flusso.JPG}}
+	{\includegraphics[height=13cm, width=13cm, keepaspectratio]{Immagini/hash/schema_cifratura_flusso.JPG}}
 	\end{center}
 \end{figure}
 
@@ -142,7 +142,7 @@ Ma come si modifica un algoritmo di cifratura che sia resistente alle collisioni
 Lo schema di funzionamento (minimale) è questa
 \begin{figure}
 	\begin{center}
-	{\includegraphics[height=13cm, width=13cm, keepaspectratio]{Immagini/Capitolo4/schema_des_come_hash.JPG}}
+	{\includegraphics[height=13cm, width=13cm, keepaspectratio]{Immagini/hash/schema_des_come_hash.JPG}}
 	\end{center}
 \end{figure}
 Ma questo schema funziona per soli messaggi corti e non è troppo resistente alle collisioni, sebbene $K_{PWD}$ sia ottenuta dalla pwd considerandone i primi 8 caratteri ed espansa con con i bit di parità per ogni gruppo di 8 bit.
@@ -154,13 +154,13 @@ Come si deve operare per estendere questi algoritmi a messaggi di lunghezza arbi
 Si può pensare di suddividere il messaggio $m = m_{1},m_{2},m_{3},...,m_{n}$, ogni $m_{i}$ viene utilizzato come input a un blocco in cascata di cifratura, alla fine della cascata ho realizzato un algoritmo di hash tramite cifratura...per un messaggio di lunghezza qualsiasi.\\
 \begin{figure}
 	\begin{center}
-	{\includegraphics[height=10cm, width=10cm, keepaspectratio]{Immagini/Capitolo4/schema_des_come_hash_1.JPG}}
+	{\includegraphics[height=10cm, width=10cm, keepaspectratio]{Immagini/hash/schema_des_come_hash_1.JPG}}
 	\end{center}
 \end{figure}
 Purtroppo questo sistema soffre degli stessi problemi di cui soffriva il DES doppio, per ovviare ciò, basta rendere l'output di ogni blocco differente diverso dall'input del successivo, una possibile implementazione è la seguente
 \begin{figure}
 	\begin{center}
-	{\includegraphics[height=10cm, width=10cm, keepaspectratio]{Immagini/Capitolo4/schema_des_come_hash_2.JPG}}
+	{\includegraphics[height=10cm, width=10cm, keepaspectratio]{Immagini/hash/schema_des_come_hash_2.JPG}}
 	\end{center}
 \end{figure}
 
@@ -169,7 +169,7 @@ Le Rainbow tables sono un meccanismo per l'attacco di reverse hash. Le tables bi
 Le Rainbow tables utilizzano delle funzioni di riduzione r(), la funzione di riduzione è una applicazione dallo spazio degli Hash allo spazio dei Plaintext, r() non è l'inversa di un algoritmo di hash; per questo, prima di avvicinarmi a una buona inversione dovrò concatenare fino a centinaia di iterazioni di $h(m) = k \longrightarrow r(k) = m^{'}$.
 \begin{figure}
 	\begin{center}
-	{\includegraphics[height=10cm, width=10cm, keepaspectratio]{Immagini/Capitolo4/riduzione.JPG}}
+	{\includegraphics[height=10cm, width=10cm, keepaspectratio]{Immagini/hash/riduzione.JPG}}
 	\end{center}
 \end{figure}
 Per popolare la table, si memorizzano solo il messaggio iniziale e il messaggio finale della catena. In questo modo, con una catena di 100 iterazioni (dato che le funzioni sono deterministiche) si risparmia uno spazio in memoria di 100 volte la grandezza della table, in confronto a memorizzare solo coppie $\langle plaintext, hash \rangle$.
@@ -177,6 +177,6 @@ Per recuperare un plaintext di un hash, si controlla se questo sia un endpoint d
 Appena recuperato l'hash giusto, si utilizza la catena determinata dall'inizio finchè non si trova l'hash di inizio; il messaggio che ha generato quell'hash sarà ciò che si cercava.
 \begin{figure}
 	\begin{center}
-	{\includegraphics[height=10cm, width=10cm, keepaspectratio]{Immagini/Capitolo4/riduzione.JPG}}
+	{\includegraphics[height=10cm, width=10cm, keepaspectratio]{Immagini/hash/riduzione.JPG}}
 	\end{center}
 \end{figure}

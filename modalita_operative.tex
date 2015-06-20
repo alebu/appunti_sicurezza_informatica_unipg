@@ -28,10 +28,10 @@ Come illustrato nella figure \figurename ~\ref{fig:ECB_enc} e \figurename ~\ref{
 \begin{figure}[htbp]
 	\centering%
 	\subfigure%
-	{\includegraphics[height=4cm, width=12cm, keepaspectratio]{Immagini/Capitolo3/ECB_enc.png}}
+	{\includegraphics[height=4cm, width=12cm, keepaspectratio]{Immagini/modalita_operative/ECB_enc.png}}
 	\caption{Schema di crittografia ECB \label{fig:ECB_enc}} 	
 	\subfigure%
-	{\includegraphics[height=4cm, width=12cm, keepaspectratio]{Immagini/Capitolo3/ECB_dec.png}}
+	{\includegraphics[height=4cm, width=12cm, keepaspectratio]{Immagini/modalita_operative/ECB_dec.png}}
 	\caption{Schema di decrittografia ECB \label{fig:ECB_dec}} 
 \end{figure}
 \subsubsection{Problemi di sicurezza in ECB}
@@ -39,7 +39,7 @@ La modalità operativa ECB introduce una serie di problemi non presenti nel cifr
 \begin{figure}
 \centering%
 	\subfigure%
-	{\includegraphics[height=6cm, width=10cm, keepaspectratio]{Immagini/Capitolo3/File_salari.png}}
+	{\includegraphics[height=6cm, width=10cm, keepaspectratio]{Immagini/modalita_operative/File_salari.png}}
 	\caption{File con i salari, oggetto di attacco \label{fig:File_salari}} 	
 \end{figure}
 Si consideri ad esempio lo scenario della \figurename ~\ref{fig:File_salari}: supponiamo che l'ascoltatore sappia che il testo in chiaro contiene l'elenco, ordinato alfabeticamente, degli impiegati e dei relativi salari inviato dall'amministrazione all'ufficio paghe, supponiamo inoltre che ogni riga del file sia lunga esattamente 64 byte (8 blocchi da 8 byte) e che i vari blocchi risultino suddivisi in modo tale che alcuni contengono la codifica della cifra decimale più significativa del campo salario (migliaia di dollari/euro). Comparando i testi cifrati, l'ascoltatore, oltre a dedurre quanti dipendenti hanno lo stesso salario, può anche dedurre quanti dipendenti hanno uno stipendio nello stesso range (ordine di 10 euro/dollari); se ci sono complessivamente pochi range salariali, l'ascoltatore può dedurre a quale categoria di dipendente corrisponda un dato blocco cifrato; inoltre, se l'ascoltatore è un impiegato, può sostituire il blocco cifrato di un altro dipendente (un manager) al suo blocco cifrato (dedotto in base all'ordine e alla
@@ -69,7 +69,7 @@ E per riottenere il testo in chiaro:
 \begin{figure}
 \centering%
 	\subfigure%
-	{\includegraphics[height=5cm, width=10cm, keepaspectratio]{Immagini/Capitolo3/rand_ele_cb_enc.png}}
+	{\includegraphics[height=5cm, width=10cm, keepaspectratio]{Immagini/modalita_operative/rand_ele_cb_enc.png}}
 	\caption{Randomized Electronic Code Book Encryption\label{fig:rand_ele_cb_enc}} 	
 \end{figure}
 L'esempio appena visto è molto inefficiente, infatti l'informazione da trasmettere è duplicata perché per ogni blocco va trasmesso il corrispondente numero random. \newline
@@ -92,10 +92,10 @@ Quanto detto, rappresentato nelle figure \figurename ~\ref{fig:CBC_enc} e \figur
 \begin{figure}[htbp]
 	\centering%
 	\subfigure%
-	{\includegraphics[height=4cm, width=12cm, keepaspectratio]{Immagini/Capitolo3/CBC_enc.png}}
+	{\includegraphics[height=4cm, width=12cm, keepaspectratio]{Immagini/modalita_operative/CBC_enc.png}}
 	\caption{Schema di crittografia CBC \label{fig:CBC_enc}} 	
 	\subfigure%
-	{\includegraphics[height=4cm, width=12cm, keepaspectratio]{Immagini/Capitolo3/CBC_dec.png}}
+	{\includegraphics[height=4cm, width=12cm, keepaspectratio]{Immagini/modalita_operative/CBC_dec.png}}
 	\caption{Schema di decrittografia CBC \label{fig:CBC_dec}} 
 \end{figure}
 Si noti che, essendo il costo della somma ($\oplus$ XOR) trascurabile rispetto al costo della cifratura a chiave segreta, la cifratura con CBC ha le stesse prestazioni della cifratura con ECB eccetto il costo delle generazione e trasmissione di $IV$. In molti casi, tuttavia, la sicurezza di CBC non dipende dalla
@@ -112,7 +112,7 @@ Vediamo a tal proposito l'esempio seguente, illustrato in \figurename ~\ref{fig:
 \begin{figure}[htbp]
 	\centering%
 	\subfigure%
-	{\includegraphics[height=4cm, width=12cm, keepaspectratio]{Immagini/Capitolo3/modifica_blk_cifrati.png}}
+	{\includegraphics[height=4cm, width=12cm, keepaspectratio]{Immagini/modalita_operative/modifica_blk_cifrati.png}}
 	\caption{Modifica dei blocchi cifrati \label{fig:modifica_blk_cifrati}}	
 \end{figure}
 \newline Supponiamo che un avversario (Trudy) sappia che una data sequenza di blocchi cifrati, del file
@@ -124,7 +124,7 @@ Con riferimento alla \figurename ~\ref{fig:riarrangiamento_blk_cifrati}, si supp
 \begin{figure}[htbp]
 	\centering%
 	\subfigure%
-	{\includegraphics[height=3cm, width=12cm, keepaspectratio]{Immagini/Capitolo3/riarrangiamento_blk_cifrati.png}}
+	{\includegraphics[height=3cm, width=12cm, keepaspectratio]{Immagini/modalita_operative/riarrangiamento_blk_cifrati.png}}
 	\caption{Riarrangiamento dei blocchi cifrati \label{fig:riarrangiamento_blk_cifrati}}	
 \end{figure}
 Da queste informazioni, Trudy può considerare ciascun $c_{i}$ come un "building block" e costruire un flusso cifrato usando ogni combinazione di $c_{i}$ ed essere in grado di calcolare quale sarà il corrispondente testo in chiaro. \newline \newline
@@ -147,7 +147,7 @@ La cifratura con OFB (\figurename ~\ref{fig:OFB_enc}) consiste nel sommare ($\op
 \begin{figure}[htbp]
 	\centering%
 	\subfigure%
-	{\includegraphics[height=4cm, width=12cm, keepaspectratio]{Immagini/Capitolo3/OFB_enc.png}}
+	{\includegraphics[height=4cm, width=12cm, keepaspectratio]{Immagini/modalita_operative/OFB_enc.png}}
 	\caption{Schema di crittografia OFB \label{fig:OFB_enc}} 	
 \end{figure}
 Il risultato della cifratura $c = OTP \oplus m$ viene trasmesso insieme a $IV$ (la lunghezza $l_{c}$ di c coincide con $l_{m}$).\newline
@@ -155,7 +155,7 @@ In decifratura (\figurename ~\ref{fig:OFB_dec}) il destinatario riceve $IV$ e co
 \begin{figure}[htbp]
 	\centering%
 	\subfigure%
-	{\includegraphics[height=4cm, width=12cm, keepaspectratio]{Immagini/Capitolo3/OFB_dec.png}}
+	{\includegraphics[height=4cm, width=12cm, keepaspectratio]{Immagini/modalita_operative/OFB_dec.png}}
 	\caption{Schema di decrittografia OFB \label{fig:OFB_dec}} 	
 \end{figure}
 \subsubsection{Vantaggi e svantaggi di OFB}
@@ -176,7 +176,7 @@ La modalità k-bit OFB funziona nel seguente modo (si descriverà la versione da
 \begin{figure}[htbp]
 	\centering%
 	\subfigure%
-	{\includegraphics[height=4cm, width=12cm, keepaspectratio]{Immagini/Capitolo3/k-bit_OFB.png}}
+	{\includegraphics[height=4cm, width=12cm, keepaspectratio]{Immagini/modalita_operative/k-bit_OFB.png}}
 	\caption{k-bit OFB \label{fig:k-bit_OFB}} 	
 \end{figure}
 \begin{itemize}
@@ -189,7 +189,7 @@ La modalità CFB è molto simile a OFB, con riferimento alla \figurename ~\ref{f
 \begin{figure}[htbp]
 	\centering%
 	\subfigure%
-	{\includegraphics[height=4cm, width=12cm, keepaspectratio]{Immagini/Capitolo3/k-bit_CFB.png}}
+	{\includegraphics[height=4cm, width=12cm, keepaspectratio]{Immagini/modalita_operative/k-bit_CFB.png}}
 	\caption{k-bit CFB \label{fig:k-bit_CFB}} 	
 \end{figure}
 \begin{itemize}
@@ -214,7 +214,7 @@ CTR (\figurename ~\ref{fig:CTR}) è simile a OFB perché un one-time pad viene g
 \begin{figure}[htbp]
 	\centering%
 	\subfigure%
-	{\includegraphics[height=4cm, width=12cm, keepaspectratio]{Immagini/Capitolo3/CTR.png}}
+	{\includegraphics[height=4cm, width=12cm, keepaspectratio]{Immagini/modalita_operative/CTR.png}}
 	\caption{CTR \label{fig:CTR}} 	
 \end{figure}
 \subsection{Vantaggi e svantaggi di CTR}
@@ -236,7 +236,7 @@ Un modo standard per assicurare l'autenticità di un messaggio $m$ (cioè per pr
 \begin{figure}[htbp]
 	\centering%
 	\subfigure%
-	{\includegraphics[height=4cm, width=12cm, keepaspectratio]{Immagini/Capitolo3/residuo_CBC.png}}
+	{\includegraphics[height=4cm, width=12cm, keepaspectratio]{Immagini/modalita_operative/residuo_CBC.png}}
 	\caption{Residuo CBC \label{fig:residuo_CBC}} 	
 \end{figure}
 Il calcolo del residuo CBC richiede la conoscenza della chiave segreta $K$, quindi se un avversario modifica $m$ in $m’$ allora $res_{CBC}(m’)$ sarà diverso da $res_{CBC}(m)$ (c'è solo 1 possibilità su $2^64$ che siano uguali) perchè l'avversario non è in grado di calcolare $res_{CBC}(m’)$ senza conoscere la chiave segreta $K$. \\
@@ -255,7 +255,7 @@ Allora a prima vista la soluzione riportata in \figurename ~\ref{fig:residuo_CBC
 \begin{figure}[htbp]
 	\centering%
 	\subfigure%
-	{\includegraphics[height=4cm, width=12cm, keepaspectratio]{Immagini/Capitolo3/residuo_CBC_1.png}}
+	{\includegraphics[height=4cm, width=12cm, keepaspectratio]{Immagini/modalita_operative/residuo_CBC_1.png}}
 	\caption{Assicurare confidenzialità e autenticità: soluzione 1 \label{fig:residuo_CBC_1}} 	
 \end{figure}
 In realtà tale soluzione è chiaramente errata, infatti consiste nell'inviare il messaggio cifrato nella modalità CBC ($E_{CBC}(K, IV, m)$) ripetendo soltanto l'ultimo blocco cifrato ($res_{CBC}(m)$); così chiunque voglia alterare il messaggio deve solo modificare uno o più blocchi cifrati con CBC e inviare il nuovo messaggio ripetendo due volte l'ultimo blocco cifrato. \\
@@ -268,7 +268,7 @@ Un'alternativa potrebbe essere calcolare il residuo CBC del messaggio $res_{CBC}
 \begin{figure}[htbp]
 	\centering%
 	\subfigure%
-	{\includegraphics[height=4cm, width=12cm, keepaspectratio]{Immagini/Capitolo3/residuo_CBC_2.png}}
+	{\includegraphics[height=4cm, width=12cm, keepaspectratio]{Immagini/modalita_operative/residuo_CBC_2.png}}
 	\caption{Assicurare confidenzialità e autenticità: soluzione 2 \label{fig:residuo_CBC_2}} 	
 \end{figure}
 In realtà neanche questa soluzione funziona, infatti: $c_{7} = res_{CBC}(m) = E(K, c_{6} \oplus c_{6}) = E(K, 000 … 0)$, cioè il residuo CBC è una stringa ottenuta cifrando con la chiave segreta una stringa di 64 bit a 0, quindi il residuo CBC non dipende da $m$ e non può offrire alcune protezione di integrità.\\ \\
@@ -276,7 +276,7 @@ Come altra alternativa, supponiamo di calcolare un checksum non crittografico $C
 \begin{figure}[htbp]
 	\centering%
 	\subfigure%
-	{\includegraphics[height=4cm, width=12cm, keepaspectratio]{Immagini/Capitolo3/residuo_CBC_3.png}}
+	{\includegraphics[height=4cm, width=12cm, keepaspectratio]{Immagini/modalita_operative/residuo_CBC_3.png}}
 	\caption{Assicurare confidenzialità e autenticità: soluzione 3 \label{fig:residuo_CBC_3}} 	
 \end{figure}
 Questa soluzione "quasi" funziona: è vulnerabile ad attacchi molto sottili se il CRC è corto, d'altro canto checksum non crittografici più lunghi sono "sospetti". \\ 
@@ -319,14 +319,14 @@ Quanto ottenuto è di fatto un nuovo schema di cifratura a chiave segreta (\figu
 \begin{figure}[htbp]
 	\centering%
 	\subfigure%
-	{\includegraphics[height=2cm, width=10cm, keepaspectratio]{Immagini/Capitolo3/EDE.png}}
+	{\includegraphics[height=2cm, width=10cm, keepaspectratio]{Immagini/modalita_operative/EDE.png}}
 	\caption{Cifratura EDE o 3DES \label{fig:EDE}} 	
 \end{figure}
 La decifratura EDE è semplicemente il processo inverso (\figurename ~\ref{fig:DED}):
 \begin{figure}[htbp]
 	\centering%
 	\subfigure%
-	{\includegraphics[height=2cm, width=10cm, keepaspectratio]{Immagini/Capitolo3/DED.png}}
+	{\includegraphics[height=2cm, width=10cm, keepaspectratio]{Immagini/modalita_operative/DED.png}}
 	\caption{Decifratura EDE \label{fig:DED}} 	
 \end{figure}
 \subsection{EDE con CBC Outside/Inside}
@@ -334,14 +334,14 @@ Per ottenere un cifrario a flusso (i.e. la corrispondente modalità operativa di
 \begin{figure}[htbp]
 	\centering%
 	\subfigure%
-	{\includegraphics[height=4cm, width=12cm, keepaspectratio]{Immagini/Capitolo3/EDE_CBC_Out.png}}
+	{\includegraphics[height=4cm, width=12cm, keepaspectratio]{Immagini/modalita_operative/EDE_CBC_Out.png}}
 	\caption{EDE con CBC Outside \label{fig:EDE_CBC_Out}} 	
 \end{figure}
 Il cifrario a flusso è ottenibile anche con un concatenamento \textbf{CBC inside}, i.e. si considerano una cascata di tre concatenamenti CBC (semplificando alcuni passaggi): prima utilizzando $CBC-E_{1}()$, poi utilizzando $CBC-D_{2}()$ e infine utilizzando ancora $CBC-E_{1}()$ (\figurename ~\ref{fig:EDE_CBC_In}).
 \begin{figure}[htbp]
 	\centering%
 	\subfigure%
-	{\includegraphics[height=4cm, width=12cm, keepaspectratio]{Immagini/Capitolo3/EDE_CBC_In.png}}
+	{\includegraphics[height=4cm, width=12cm, keepaspectratio]{Immagini/modalita_operative/EDE_CBC_In.png}}
 	\caption{EDE con CBC Inside \label{fig:EDE_CBC_In}} 	
 \end{figure}
 \subsubsection{CBC Outside vs Inside}
@@ -370,10 +370,10 @@ Supponiamo di non volere il disagio di leggere in due chiavi, secondo lo schema 
 \begin{figure}[htbp]
 	\centering%
 	\subfigure%
-	{\includegraphics[height=2cm, width=10cm, keepaspectratio]{Immagini/Capitolo3/Cif_doppia_stessaK.png}}
+	{\includegraphics[height=2cm, width=10cm, keepaspectratio]{Immagini/modalita_operative/Cif_doppia_stessaK.png}}
 	\caption{Schema di cifratura doppia con una stessa chiave \label{fig:Cif_doppia_stessaK}} 
 	\subfigure%
-	{\includegraphics[height=6cm, width=10cm, keepaspectratio]{Immagini/Capitolo3/Cif_doppia_stessaK_alternative.png}}
+	{\includegraphics[height=6cm, width=10cm, keepaspectratio]{Immagini/modalita_operative/Cif_doppia_stessaK_alternative.png}}
 	\caption{Schemi alternativi di cifratura doppia con una stessa chiave \label{fig:Cif_doppia_stessaK_alternative}} 
 \end{figure}
 Cifrare due volte con la stessa chiave $K$ risulta non essere molto più sicuro di eseguire una singola cifratura con $K$, poiché una ricerca esaustiva nello spazio della chiave richiede ancora, nel caso peggiore, $2^{56}$ tentativi, dove ogni tentativo ha un costo computazionale duplicato; perciò l'avversario deve eseguire una decifratura doppia, ma raddoppiare lo sforzo computazionale non è considerato in generale un aumento significativo della sicurezza, soprattutto tenendo conto che anche l'efficienza risulta essere dimezzata.
@@ -384,7 +384,7 @@ Supponiamo di eseguire una cifratura doppia, con due chiavi $K_{1}$ e $K_{2}$ (s
 \begin{figure}[htbp]
 	\centering%
 	\subfigure%
-	{\includegraphics[height=2cm, width=10cm, keepaspectratio]{Immagini/Capitolo3/Cif_doppia_dueK.png}}
+	{\includegraphics[height=2cm, width=10cm, keepaspectratio]{Immagini/modalita_operative/Cif_doppia_dueK.png}}
 	\caption{Schema di cifratura doppia con due chiavi diverse \label{fig:Cif_doppia_dueK}} 
 \end{figure}
 in apparenza, sembra che l'uso di due chiavi diverse equivalga a raddoppiare la lunghezza della chiave (infatti un attacco brute force deve indovinare sia $K_{1}$ che $K_{2}$ per ottenere il testo in chiaro da quello cifrato), tuttavia esiste un attacco più sofisticato che richiede approssimativamente soltanto un raddoppio del costo computazionale necessario a violare DES (singolo). Si tratta di un attacco difficilmente praticabile, ma il fatto che esista spinge a ricercare schemi di cifratura più sicuri: di fatto la cifratura DES con due chiavi non è considerata.

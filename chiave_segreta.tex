@@ -5,7 +5,7 @@ La crittografia a chiave segreta richiede l'uso di \textbf{una sola chiave}: dat
 \begin{figure}[htbp]
 	\centering%
 	\subfigure%
-	{\includegraphics[height=13cm, width=13cm, keepaspectratio]{Immagini/Capitolo2/segreta_schema_blocchi.png}}
+	{\includegraphics[height=13cm, width=13cm, keepaspectratio]{Immagini/chiave_segreta/segreta_schema_blocchi.png}}
 	\caption{Schema a blocchi crittografia a chiave segreta \label{fig:segreta_schema_blocchi}} 	
 \end{figure}
 
@@ -36,7 +36,7 @@ Si supponga che Alice e Bob condividano una chiave segreta $K_{AB}$ e che voglia
 \begin{figure}[htbp]
 	\centering%
 	\subfigure%
-	{\includegraphics[height=10cm, width=10cm, keepaspectratio]{Immagini/Capitolo2/strong_auth_secret.png}}
+	{\includegraphics[height=10cm, width=10cm, keepaspectratio]{Immagini/chiave_segreta/strong_auth_secret.png}}
 	\caption{Schema a blocchi crittografia a chiave segreta \label{fig:strong_auth_sec}} 	
 \end{figure}
 La sicurezza del precedente protocollo si fonda sulle seguenti condizioni che non devono venire meno:
@@ -81,7 +81,11 @@ D'altra parte, avere blocchi esageratamente lunghi oltre a non essere necessario
   \item come pure l’ordinamento per consentire ricerche efficienti
 \end{itemize}
 
-Il modo più generale per cifrare un blocco da 64 bit è definire una \textbf{biiezione} $\gamma :\{0,1\}^{64} \rightarrow \{0,1\}^{64}$. Tuttavia, memorizzare la definizione della \emph{biiezione} in una struttura dati è impraticabile: sarebbero richiesti $2^{64} \times 64 = 2^{70}$ bit. Per la precisione ne servono di meno, trattandosi di una \textbf{biiezione} (almeno $2^{69}$). Inoltre, così facendo la chiave è incorporata nella biiezione: per renderla parametrica rispetto alla chiave è necessario memorizzare una biiezione per ogni possibile chiave.\newline \newline
+Il modo più generale per cifrare un blocco da 64 bit è definire una \textbf{biiezione} $\gamma :\{0,1\}^{64} \rightarrow \{0,1\}^{64}$. Tuttavia, memorizzare la definizione della \emph{biiezione} in una struttura dati è impraticabile: sarebbero richiesti $2^{64} \times 64 = 2^{70}$ bit. Per la precisione ne servono di meno, trattandosi di una \textbf{biiezione}: una volta memorizzata la relazione $ P \rightarrow C $ non serve memorizzare $ P' \rightarrow C' $ con $ P' = C $. Infatti, trattandosi di una biiezione:
+\begin{equation}
+(P' = C) \Rightarrow (C' = P)
+\end{equation} 
+Quindi in effetti bastano $\frac{2^{70}}{2} = 2^{69}$ bit. Inoltre, così facendo la chiave è incorporata nella biiezione: per renderla parametrica rispetto alla chiave è necessario memorizzare una biiezione per ogni possibile chiave.\newline \newline
 I sistemi di crittografia a chiave segreta sono concepiti per usare una chiave ragionevolmente lunga (ad esempio 64 bit) e generare una \textbf{biiezione} che appare, a chi non conosce la chiave, completamente \underline{random}. Se la biiezione fosse realmente random, due input $i$ e $i'$ nei quali cambia un solo bit (uno qualunque) sarebbero \textbf{statisticamente indipendenti}: non può succedere, ad esempio, che il terzo bit dell'output cambia \textbf{sempre} quando il dodicesimo bit dell'input cambia. Gli algoritmi crittografici sono pensati per \textbf{diffondere/spargere} in tutti i bit dell'output il valore di ogni bit dell'input: si cerca di fare in modo che ogni bit dell'output dipenda allo stesso modo da tutti i bit dell'input.
 
 \subsection{Sostituzione e Permutazione}
@@ -108,7 +112,7 @@ Ogni attraversamento del cifrario viene detto \textbf{round}. In riferimento all
 \begin{figure}[htbp]
 	\centering%
 	\subfigure%
-	{\includegraphics[height=13cm, width=13cm, keepaspectratio]{Immagini/Capitolo2/block_cipher.png}}
+	{\includegraphics[height=13cm, width=13cm, keepaspectratio]{Immagini/chiave_segreta/block_cipher.png}}
 	\caption{Schema a blocchi crittografia a chiave segreta \label{fig:block_chipher}} 	
 \end{figure}
 
@@ -153,7 +157,7 @@ $2^{56}$ volte più difficile da violare.
 \begin{figure}[htbp]
 	\centering%
 	\subfigure%
-	{\includegraphics[height=9cm, width=10cm, keepaspectratio]{Immagini/Capitolo2/des_structure.png}}
+	{\includegraphics[height=9cm, width=10cm, keepaspectratio]{Immagini/chiave_segreta/des_structure.png}}
 	\caption{Schema a blocchi DES \label{fig:des_struct}} 	
 \end{figure}
 La struttura di base dell'algoritmo DES è descritta in \figurename ~\ref{fig:des_struct}. In estrema sintesi:
@@ -174,7 +178,7 @@ L'operazione di permutazione è molto importante in quanto diffonde la dipendenz
 \begin{figure}[htbp]
 	\centering%
 	\subfigure%
-	{\includegraphics[height=10cm, width=8cm, keepaspectratio]{Immagini/Capitolo2/des_perm_3.png}}
+	{\includegraphics[height=10cm, width=8cm, keepaspectratio]{Immagini/chiave_segreta/des_perm_3.png}}
 	\caption{Inutilità delle permutazioni iniziale e finale \label{fig:des_perm_3}} 	
 \end{figure}
 Supponiamo di non averle. Se assumiamo per assurdo che il cifrario cosi ottenuto sia facile da violare, vogliamo dimostrare che anche DES è facile da violare. Procedendo in questo modo, dimostriamo l'effettiva inutilità di tali permutazioni. \\
@@ -187,7 +191,7 @@ L'ipotesi è che tali permutazioni siano state introdotte per rendere più compl
 \begin{figure}[htbp]
 	\centering%
 	\subfigure%
-	{\includegraphics[height=10cm, width=13cm, keepaspectratio]{Immagini/Capitolo2/des_perm.png}}
+	{\includegraphics[height=10cm, width=13cm, keepaspectratio]{Immagini/chiave_segreta/des_perm.png}}
 	\caption{Tabella permutazioni DES \label{fig:des_perm}} 	
 \end{figure}
 Come sono state definite quindi le permutazioni iniziale e finale? E' di fatto una permutazione regolare, come è mostrato in \figurename ~\ref{fig:des_perm}. Le tabelle vanno interpretate nel seguente modo: i numeri, da 1 a 64, riportati in tabella rappresentano le posizioni dei bit in input alla permutazione, mentre l’ordine (per righe da sx verso dx) dei numeri nella tabella rappresenta la corrispondente posizione dei bit in output. \\
@@ -197,7 +201,7 @@ Ad esempio, la permutazione iniziale sposta il 58-esimo bit in input nel primo b
 \begin{figure}[htbp]
 	\centering%
 	\subfigure%
-	{\includegraphics[height=10cm, width=10cm, keepaspectratio]{Immagini/Capitolo2/des_perm_2.png}}
+	{\includegraphics[height=10cm, width=10cm, keepaspectratio]{Immagini/chiave_segreta/des_perm_2.png}}
 	\caption{Regolarità tabella permutazioni DES \label{fig:des_perm_2}} 	
 \end{figure}
 
@@ -212,13 +216,13 @@ DES genera sedici chiavi di round da 48 bit a partire dalla chiave principale K 
 \begin{figure}[htbp]
 	\centering%
 	\subfigure%
-	{\includegraphics[height=10cm, width=10cm, keepaspectratio]{Immagini/Capitolo2/des_perm_keys.png}}
+	{\includegraphics[height=10cm, width=10cm, keepaspectratio]{Immagini/chiave_segreta/des_perm_keys.png}}
 	\caption{Permutazione iniziale della chiave \label{fig:des_perm_keys}} 	
 \end{figure}
 \begin{figure}[htbp]
 	\centering%
 	\subfigure%
-	{\includegraphics[height=10cm, width=10cm, keepaspectratio]{Immagini/Capitolo2/des_perm_keys_2.png}}
+	{\includegraphics[height=10cm, width=10cm, keepaspectratio]{Immagini/chiave_segreta/des_perm_keys_2.png}}
 	\caption{Regolarità tabella permutazioni delle chiavi DES \label{fig:des_perm_keys_2}} 	
 \end{figure}
 La struttura della permutazione iniziale della chiave è illustrata in \figurename ~\ref{fig:des_perm}. Il valore numerico di un elemento della tabella rappresenta la posizione del bit in input, mentre l’ordine nella tabella rappresenta la posizione del bit in output (come per le permutazioni dei dati). Anche in questo caso non è random, in quanto presenta delle evidenti regolarità, come è evidenziato in \figurename ~\ref{fig:des_perm_keys_2}. Come nel caso delle permutazioni iniziale e finale dei dati, non apportano alcun miglioramento alla sicurezza.
@@ -226,7 +230,7 @@ La struttura della permutazione iniziale della chiave è illustrata in \figurena
 \begin{figure}[htbp]
 	\centering%
 	\subfigure%
-	{\includegraphics[height=10cm, width=10cm, keepaspectratio]{Immagini/Capitolo2/round_i.png}}
+	{\includegraphics[height=10cm, width=10cm, keepaspectratio]{Immagini/chiave_segreta/round_i.png}}
 	\caption{generazione di Ki: round i \label{fig:round_i}} 	
 \end{figure}
 Trattiamo ora la generazione della chiave $K_{i}$ che avviene nell'i-esimo round. La procedura avviene seguendo questi passi (come mostrato in \figurename ~\ref{fig:round_i}):
@@ -257,7 +261,7 @@ Trattiamo ora la generazione della chiave $K_{i}$ che avviene nell'i-esimo round
 \begin{figure}[htbp]
 	\centering%
 	\subfigure%
-	{\includegraphics[height=10cm, width=9cm, keepaspectratio]{Immagini/Capitolo2/round_des.png}}
+	{\includegraphics[height=10cm, width=9cm, keepaspectratio]{Immagini/chiave_segreta/round_des.png}}
 	\caption{Struttura di un round di DES \label{fig:round_des}} 	
 \end{figure}
 La struttura di un round di des è illustrata in \figurename ~\ref{fig:round_des}. I 64 bit in input sono divisi in due metà da 32 bit: $L_{n}$, la metà sinistra dopo l'(n-1)-esimo round, e $R_{n}$, la metà destra dopo l'(n-1)-esimo round. L'output di 64 bit del round si ottiene concatenando le due metà: $L_{n + 1}$, la metà sinistra dopo l'n-esimo round, e $R_{n + 1}$, la metà destra dopo l'n-esimo round. $L_{n+1}$ è semplicemente $R_{n}$, mentre $R_{n + 1}$ è ottenuto come segue:
@@ -273,7 +277,7 @@ Si noti che ogni round di DES è facilmente invertibile: noti $L_{n+1}$ , $R_{n+
 \begin{figure}[htbp]
 	\centering%
 	\subfigure%
-	{\includegraphics[height=11cm, width=11cm, keepaspectratio]{Immagini/Capitolo2/mangler.png}}
+	{\includegraphics[height=11cm, width=11cm, keepaspectratio]{Immagini/chiave_segreta/mangler.png}}
 	\caption{Mangler function \label{fig:mangler}} 	
 \end{figure}
 La mangler function prende in input i 32 bit di $R_{n}$, o R per semplificare, e i 48 bit della chiave $K_{n}$ , o K per semplificare. Produce un output da 32 bit che sommato (XOR) con $L_{n}$ permette di ottenere $R_{n+1}$ (il prossimo R).\newline
@@ -281,7 +285,7 @@ La prima operazione è l’espansione di R, da 32 bit a 48 bit. R è scomposto i
 \begin{figure}[htbp]
 	\centering%
 	\subfigure%
-	{\includegraphics[height=11cm, width=11cm, keepaspectratio]{Immagini/Capitolo2/mangler_exp.png}}
+	{\includegraphics[height=11cm, width=11cm, keepaspectratio]{Immagini/chiave_segreta/mangler_exp.png}}
 	\caption{Mangler function - espansione \label{fig:mangler_exp}} 	
 \end{figure}
 \newline
@@ -290,14 +294,14 @@ input distinti sono mappati in ciascun output possibile. Ogni S-box può riguard
 \begin{figure}[htbp]
 	\centering%
 	\subfigure%
-	{\includegraphics[height=7cm, width=7cm, keepaspectratio]{Immagini/Capitolo2/sbox.png}}
+	{\includegraphics[height=7cm, width=7cm, keepaspectratio]{Immagini/chiave_segreta/sbox.png}}
 	\caption{S-Box \label{fig:sbox}} 	
 \end{figure}
 Infine gli otto output, da 4 bit, delle otto S-box sono riuniti in un unico output a 32 bit che viene sottoposto ad una permutazione. Tale permutazione aumenta il livello di sicurezza perché le sostituzioni fatte in ciascuna S-box in un round di DES vengono diffuse negli input di più S-box nel round seguente. Senza tale permutazione, un bit nella parte sinistra dell'input influenzerebbe principalmente alcuni bit della parte sinistra dell'output. Tale permutazione è mostrata in \figurename ~\ref{fig:sbox_perm}).
 \begin{figure}[htbp]
 	\centering%
 	\subfigure%
-	{\includegraphics[height=2cm, width=10cm, keepaspectratio]{Immagini/Capitolo2/sbox_perm.png}}
+	{\includegraphics[height=2cm, width=10cm, keepaspectratio]{Immagini/chiave_segreta/sbox_perm.png}}
 	\caption{Permutazione output S-Box \label{fig:sbox_perm}} 	
 \end{figure}
 	
@@ -331,7 +335,7 @@ La struttura base di Rijndael è mostrata in \figurename ~\ref{fig:Rij_struct}.P
 \begin{figure}[htbp]
 	\centering%
 	\subfigure%
-	{\includegraphics[height=13cm, width=10cm, keepaspectratio]{Immagini/Capitolo2/rijndael_struttura.png}}
+	{\includegraphics[height=13cm, width=10cm, keepaspectratio]{Immagini/chiave_segreta/rijndael_struttura.png}}
 	\caption{Struttura di base di Rijndael \label{fig:Rij_struct}} 	
 \end{figure}
 
@@ -353,7 +357,7 @@ Rijndael utilizza quattro operazioni primitive, sia nell'espansione della chiave
 \begin{figure}[htbp]
 	\centering%
 	\subfigure%
-	{\includegraphics[height=10cm, width=10cm, keepaspectratio]{Immagini/Capitolo2/rijndael_sbox.png}}
+	{\includegraphics[height=10cm, width=10cm, keepaspectratio]{Immagini/chiave_segreta/rijndael_sbox.png}}
 	\caption{il 97-esimo byte è il numero 61 HEX in esadecimale, quindi è mappato nel byte nella riga 6 e colonna 1 che è EF HEX che corrisponde
 al 239-esimo byte. In binario si ha che $(1100001)_{2} = (97)_{10}$
 è mappato in $(11101111)_{2} = (239)_{10}$ \label{fig:Rij_mixcol}} 	
@@ -362,14 +366,14 @@ al 239-esimo byte. In binario si ha che $(1100001)_{2} = (97)_{10}$
 \begin{figure}[htbp]
 	\centering%
 	\subfigure%
-	{\includegraphics[height=13cm, width=13cm, keepaspectratio]{Immagini/Capitolo2/rijndael_mixcol.png}}
+	{\includegraphics[height=13cm, width=13cm, keepaspectratio]{Immagini/chiave_segreta/rijndael_mixcol.png}}
 	\caption{MixColumn \label{fig:Rij_mixcol}} 	
 \end{figure}
 
 \begin{figure}[htbp]
 	\centering%
 	\subfigure%
-	{\includegraphics[height=13cm, width=13cm, keepaspectratio]{Immagini/Capitolo2/rijndael_mixcol_lookup.png}}
+	{\includegraphics[height=13cm, width=13cm, keepaspectratio]{Immagini/chiave_segreta/rijndael_mixcol_lookup.png}}
 	\caption{All'ottetto "2b" corrisponde la colonna di 4 ottetti che si trova all’incrocio della riga "2" e della colonna "b", cioè la colonna ["56";"2b";"2b";"7d"] \label{fig:Rij_mixcol_lookup}} 	
 \end{figure}
 
@@ -407,7 +411,7 @@ Sebbene i cifrari a blocchi siano molto più comuni, in alcune applicazioni i ci
 \begin{figure}[htbp]
 	\centering%
 	\subfigure%
-	{\includegraphics[height=13cm, width=13cm, keepaspectratio]{Immagini/Capitolo2/flusso_struct.png}}
+	{\includegraphics[height=13cm, width=13cm, keepaspectratio]{Immagini/chiave_segreta/flusso_struct.png}}
 	\caption{Struttura di un cifrario a flusso \label{fig:flusso_struct}} 	
 \end{figure}
 
@@ -431,7 +435,7 @@ Più è casuale l'aspetto del keystream, più è randomizzato il testo cifrato, 
 \begin{figure}[htbp]
 	\centering%
 	\subfigure%
-	{\includegraphics[height=13cm, width=13cm, keepaspectratio]{Immagini/Capitolo2/flusso_vel.png}}
+	{\includegraphics[height=13cm, width=13cm, keepaspectratio]{Immagini/chiave_segreta/flusso_vel.png}}
 	\caption{Confronto delle velocità di cifrari simmetrici su un Pentium II \label{fig:flusso_vel}} 	
 \end{figure}
 Se un cifrario a flusso è correttamente progettato, a parità di lunghezza della chiave segreta, può essere sicuro tanto quanto un cifrario a blocchi. Il vantaggio principale di un cifrario a flusso è che è quasi sempre più veloce (vedi \figurename ~\ref{fig:flusso_vel}), ed è facilmente implementabile.\\

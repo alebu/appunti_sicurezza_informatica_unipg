@@ -12,7 +12,7 @@ Nel caso di autenticazione basata su password l'identità equivale alla conoscen
 \begin{figure}[htbp]
 	\centering%
 	\subfigure%
-	{\includegraphics[height=4cm, width=12cm, keepaspectratio]{Immagini/Capitolo8/ImgS5.png}}
+	{\includegraphics[height=4cm, width=12cm, keepaspectratio]{Immagini/autenticazione/ImgS5.png}}
 	\caption{Autenticazione basata su password\label{fig:ImgS5}} 	
 \end{figure}
 Un'autenticazione che richiede l'inserimento di una password non è detto che ricada nella categoria autenticazione basata su password: se infatti le informazioni inviate risultano cifrate (magari con una chiave derivata dalla password), allora si parlerà di autenticazione crittografica.
@@ -49,7 +49,7 @@ Proviamo a combinare l'uso della password con tecniche crittografiche a chiave p
 \begin{figure}[htbp]
 	\centering%
 	\subfigure%
-	{\includegraphics[height=4cm, width=12cm, keepaspectratio]{Immagini/Capitolo8/ImgS37.png}}
+	{\includegraphics[height=4cm, width=12cm, keepaspectratio]{Immagini/autenticazione/ImgS37.png}}
 	\caption{Uso di $pwd_{Alice} + PU_{Bob}$\label{fig:ImgS37}} 	
 \end{figure}
 Si noti però che con precedente soluzione...
@@ -68,7 +68,7 @@ Modifichiamo allora lo schema proposto, come mostrato in \figurename ~\ref{fig:I
 \begin{figure}[htbp]
 	\centering%
 	\subfigure%
-	{\includegraphics[height=4cm, width=12cm, keepaspectratio]{Immagini/Capitolo8/ImgS39.png}}
+	{\includegraphics[height=4cm, width=12cm, keepaspectratio]{Immagini/autenticazione/ImgS39.png}}
 	\caption{Uso di $pwd_{Alice} + PU_{Bob}$, schema modificato\label{fig:ImgS39}} 	
 \end{figure}
 Con questa soluzione...
@@ -81,7 +81,7 @@ Se non fosse possibile ricorrere alla cifratura a chiave pubblica, si può ricor
 \begin{figure}[htbp]
 	\centering%
 	\subfigure%
-	{\includegraphics[height=4cm, width=12cm, keepaspectratio]{Immagini/Capitolo8/ImgS42.png}}
+	{\includegraphics[height=4cm, width=12cm, keepaspectratio]{Immagini/autenticazione/ImgS42.png}}
 	\caption{Uso di $pwd_{Alice} + segreto condiviso$\label{fig:ImgS42}} 	
 \end{figure}
 Si assuma che Alice e Bob condividano un segreto $S_{AB}$ da cui sia possibile ottenere, con una procedura conosciuta, una chiave segreta $K_{AB}$.
@@ -95,7 +95,7 @@ Utilizzando password in chiaro, come nello schema in \figurename ~\ref{fig:ImgS4
 \begin{figure}[htbp]
 	\centering%
 	\subfigure%
-	{\includegraphics[height=4cm, width=12cm, keepaspectratio]{Immagini/Capitolo8/ImgS43.png}}
+	{\includegraphics[height=4cm, width=12cm, keepaspectratio]{Immagini/autenticazione/ImgS43.png}}
 	\caption{Uso di una password in chiaro\label{fig:ImgS43}} 	
 \end{figure}
 \begin{itemize}
@@ -107,7 +107,7 @@ Nell'ipotesi che Alice (o il suo client) disponga di un qualche tipo di chiave c
 \begin{figure}[htbp]
 	\centering%
 	\subfigure%
-	{\includegraphics[height=4cm, width=12cm, keepaspectratio]{Immagini/Capitolo8/ImgS45.png}}
+	{\includegraphics[height=4cm, width=12cm, keepaspectratio]{Immagini/autenticazione/ImgS45.png}}
 	\caption{Uso di $PR_{Alice}$\label{fig:ImgS45}} 	
 \end{figure}
 In alternativa si può applicare lo schema in \figurename ~\ref{fig:ImgS46}, che non fa uso di password e sfrutta una chiave segreta condivisa $K_{AB}$ tra Alice e Bob, soddisfacendo (R1), ma non (R2), perché violando il server
@@ -115,7 +115,7 @@ Bob si otterrebbe il segreto $K_{AB}$.
 \begin{figure}[htbp]
 	\centering%
 	\subfigure%
-	{\includegraphics[height=4cm, width=12cm, keepaspectratio]{Immagini/Capitolo8/ImgS46.png}}
+	{\includegraphics[height=4cm, width=12cm, keepaspectratio]{Immagini/autenticazione/ImgS46.png}}
 	\caption{Uso di $K_{AB}$ non derivata da $pwd$\label{fig:ImgS46}} 	
 \end{figure}
 \subsubsection{Riassumendo}
@@ -133,14 +133,14 @@ Sarebbe pertanto necessario distribuire tali \textit{n} chiavi in modo sicuro a 
 \begin{figure}[htbp]
 	\centering%
 	\subfigure%
-	{\includegraphics[height=4cm, width=12cm, keepaspectratio]{Immagini/Capitolo8/ImgS50.png}}
+	{\includegraphics[height=4cm, width=12cm, keepaspectratio]{Immagini/autenticazione/ImgS50.png}}
 	\caption{Distribuzione delle chiavi\label{fig:ImgS50}} 	
 \end{figure}
 Un centro di distribuzione delle chiavi, \textbf{K}ey \textbf{D}istribution \textbf{C}enter (KDC), agevola la gestione/distribuzione delle chiavi segrete: conosce le chiavi di tutti i nodi e se un nuovo nodo si aggiunge alla rete, sola una chiave segreta, condivisa tra quel nodo e il KDC, deve essere generata (\figurename ~\ref{fig:ImgS52}). 
 \begin{figure}[htbp]
 	\centering%
 	\subfigure%
-	{\includegraphics[height=4cm, width=12cm, keepaspectratio]{Immagini/Capitolo8/ImgS52.png}}
+	{\includegraphics[height=4cm, width=12cm, keepaspectratio]{Immagini/autenticazione/ImgS52.png}}
 	\caption{Distribuzione delle chiavi con KDC\label{fig:ImgS52}} 	
 \end{figure}
 
@@ -209,7 +209,7 @@ Chiaramente Bob ha bisogno del certificato di Alice, \textit{$Cert_{Alice}$}, e 
 \begin{figure}[htbp]
 	\centering%
 	\subfigure%
-	{\includegraphics[height=4cm, width=12cm, keepaspectratio]{Immagini/Capitolo8/ImgS76.png}}
+	{\includegraphics[height=4cm, width=12cm, keepaspectratio]{Immagini/autenticazione/ImgS76.png}}
 	\caption{Possibile soluzione per l'autenticazione a chiave pubblica\label{fig:ImgS76}} 	
 \end{figure}
 In riferimento alla \figurename ~\ref{fig:ImgS76}, una possibile soluzione è:
@@ -242,7 +242,7 @@ Si consideri il protocollo di tipo "login only", in \figurename ~\ref{fig:ImgS11
 \begin{figure}[htbp]
 	\centering%
 	\subfigure%
-	{\includegraphics[height=4cm, width=12cm, keepaspectratio]{Immagini/Capitolo8/ImgS11bis.png}}
+	{\includegraphics[height=4cm, width=12cm, keepaspectratio]{Immagini/autenticazione/ImgS11bis.png}}
 	\caption{Bob autentica Alice sfruttando un segreto condiviso $K_{Alice-Bob}$\label{fig:ImgS11bis}} 	
 \end{figure}
 Tale protocollo rappresenta un notevole passo in avanti rispetto a spedire la password in chiaro, infatti uno spione non può impersonare Alice "ascoltando" lo scambio perché la sfida $R$ cambia di volta in volta in modo non prevedibile.\\
@@ -260,7 +260,7 @@ Una piccola variante del protocollo (P1) è riportata in \figurename ~\ref{fig:I
 \begin{figure}[htbp]
 	\centering%
 	\subfigure%
-	{\includegraphics[height=4cm, width=12cm, keepaspectratio]{Immagini/Capitolo8/ImgS17bis.png}}
+	{\includegraphics[height=4cm, width=12cm, keepaspectratio]{Immagini/autenticazione/ImgS17bis.png}}
 	\caption{Bob autentica Alice sfruttando una chiave segreta condivisa $K_{Alice-Bob}$\label{fig:ImgS17bis}} 	
 \end{figure}
 Bob sceglie una sfida random $R$, la cifra, e trasmette il risultato; Alice decifra la quantità ricevuta, usando $K_{Alice-Bob}$ per ottenere $R$, ed invia $R$ a Bob.\\
@@ -273,7 +273,7 @@ Quella in \figurename ~\ref{fig:ImgS20bis} è un'altra variante di (P1) che util
 \begin{figure}[htbp]
 	\centering%
 	\subfigure%
-	{\includegraphics[height=4cm, width=12cm, keepaspectratio]{Immagini/Capitolo8/ImgS20bis.png}}
+	{\includegraphics[height=4cm, width=12cm, keepaspectratio]{Immagini/autenticazione/ImgS20bis.png}}
 	\caption{Bob autentica Alice sfruttando la sincronizzazione degli orologi e un segreto condiviso $K_{Alice-Bob}$\label{fig:ImgS20bis}} 	
 \end{figure}
 Alice cifra l'istante temporale corrente, Bob decifra il risultato e si assicura che sia un istante temporale circa uguale a quello fornito dal suo orologio, perciò è necessario che gli orologi di Alice e Bob siano ragionevolmente ben sincronizzati.\\
@@ -291,7 +291,7 @@ Assumendo che si voglia utilizzare un timestamp in microsecondi e una funzione d
 \begin{figure}[htbp]
 	\centering%
 	\subfigure%
-	{\includegraphics[height=4cm, width=12cm, keepaspectratio]{Immagini/Capitolo8/ImgS25bis.png}}
+	{\includegraphics[height=4cm, width=12cm, keepaspectratio]{Immagini/autenticazione/ImgS25bis.png}}
 	\caption{Bob autentica Alice calcolando l’hash di un timestamp ad alta risoluzione e sfruttando e un segreto condiviso $K_{Alice-Bob}$\label{fig:ImgS25bis}} 	
 \end{figure}
 \subsubsection{(P5) Protocollo 5 – Chiave pubblica unidirezionale}
@@ -299,7 +299,7 @@ Tutti i precedenti protocolli, a chiave segreta, consentono a Trudy di impersona
 \begin{figure}[htbp]
 	\centering%
 	\subfigure%
-	{\includegraphics[height=4cm, width=12cm, keepaspectratio]{Immagini/Capitolo8/ImgS26bis.png}}
+	{\includegraphics[height=4cm, width=12cm, keepaspectratio]{Immagini/autenticazione/ImgS26bis.png}}
 	\caption{Bob autentica Alice verificando la sua firma digitale}\label{fig:ImgS26bis} 	
 \end{figure}
 Si noti che $[R]_{Alice}$ è $R$ firmato da Alice, cioè cifrato con la sua chiave privata $PR_{Alice}$; Bob verifica la firma $[R]_{Alice}$ usando la chiave pubblica di Alice $PU_{Alice}$ ed accetta il login se il risultato è $R$. Il vantaggio di questo protocollo è che il database di Bob non è più vulnerabile agli accessi in lettura non
@@ -310,7 +310,7 @@ Una variante al (P5) è quella riportata in \figurename ~\ref{fig:ImgS28bis}:
 \begin{figure}[htbp]
 	\centering%
 	\subfigure%
-	{\includegraphics[height=4cm, width=12cm, keepaspectratio]{Immagini/Capitolo8/ImgS28bis.png}}
+	{\includegraphics[height=4cm, width=12cm, keepaspectratio]{Immagini/autenticazione/ImgS28bis.png}}
 	\caption{Bob autentica Alice se lei può decifrare un messaggio cifrato con la sua chiave pubblica}\label{fig:ImgS28bis} 	
 \end{figure}
 In questo schema Bob sceglie $R$ e la cifra con $PU_{Alice}$, Alice dimostra di conoscere $PR_{Alice}$ decifrando $\lbrace R\rbrace_{Alice}$ e recuperando $R$.\\
@@ -324,7 +324,7 @@ entrambe le direzioni (\figurename ~\ref{fig:ImgS35bis}).
 \begin{figure}[htbp]
 	\centering%
 	\subfigure%
-	{\includegraphics[height=4cm, width=12cm, keepaspectratio]{Immagini/Capitolo8/ImgS35bis.png}}
+	{\includegraphics[height=4cm, width=12cm, keepaspectratio]{Immagini/autenticazione/ImgS35bis.png}}
 	\caption{Mutua autenticazione basata su un segreto condiviso $K_{Alice-Bob}$}\label{fig:ImgS35bis} 	
 \end{figure}
 \subsubsection{(P8) Protocollo 8 - Mutua autenticazione a chiave segreta}
@@ -332,7 +332,7 @@ Il protocollo (P7) richiede lo scambio di cinque messaggi complessivi, quindi è
 \begin{figure}[htbp]
 	\centering%
 	\subfigure%
-	{\includegraphics[height=4cm, width=12cm, keepaspectratio]{Immagini/Capitolo8/ImgS36bis.png}}
+	{\includegraphics[height=4cm, width=12cm, keepaspectratio]{Immagini/autenticazione/ImgS36bis.png}}
 	\caption{Mutua autenticazione ottimizzata basata su un segreto condiviso $K_{Alice-Bob}$}\label{fig:ImgS36bis} 	
 \end{figure}
 Il protocollo (P8), più compatto del (P7), è però vulnerabile ad un attacco di tipo \textbf{reflection} (\figurename ~\ref{fig:ImgS39bis}). \\
@@ -340,7 +340,7 @@ Si supponga che Trudy voglia impersonare Alice: Trudy inizia il protocollo (P8),
 \begin{figure}[htbp]
 	\centering%
 	\subfigure%
-	{\includegraphics[height=6.5cm, width=12cm, keepaspectratio]{Immagini/Capitolo8/ImgS39bis.png}}
+	{\includegraphics[height=6.5cm, width=12cm, keepaspectratio]{Immagini/autenticazione/ImgS39bis.png}}
 	\caption{Attacco di tipo reflection}\label{fig:ImgS39bis} 	
 \end{figure}
 Un attacco di tipo reflection è facile da sferrare se è possibile aprire simultaneamente più connessioni con lo
@@ -359,7 +359,7 @@ Aggiungendo un messaggio al protocollo (P8) è possibile renderlo molto più rob
 \begin{figure}[htbp]
 	\centering%
 	\subfigure%
-	{\includegraphics[height=4cm, width=12cm, keepaspectratio]{Immagini/Capitolo8/ImgS45bis.png}}
+	{\includegraphics[height=4cm, width=12cm, keepaspectratio]{Immagini/autenticazione/ImgS45bis.png}}
 	\caption{Mutua autenticazione parzialmente ottimizzata basata su un segreto condiviso $K_{Alice-Bob}$}\label{fig:ImgS45bis} 	
 \end{figure}
 Si noti che il nuovo protocollo è chiaramente meno efficiente. Si noti anche che ora Trudy non può più effettuare un attacco off-line sulla password semplicemente spacciandosi per Alice, i.e. senza dover intercettare i messaggi; tuttavia, impersonando l'indirizzo di Bob può tentare di ingannare Alice facendogli stabilire una connessione con lei
@@ -369,7 +369,7 @@ Assumendo che Alice e Bob conoscano ognuno la chiave pubblica dell'altro, utiliz
 \begin{figure}[htbp]
 	\centering%
 	\subfigure%
-	{\includegraphics[height=4cm, width=12cm, keepaspectratio]{Immagini/Capitolo8/ImgS48bis.png}}
+	{\includegraphics[height=4cm, width=12cm, keepaspectratio]{Immagini/autenticazione/ImgS48bis.png}}
 	\caption{Mutua autenticazione a chiave pubblica (basata sulla cifratura/decifratura)}\label{fig:ImgS47bis} 	
 \end{figure}
 \subsubsection{(P11) Protocollo 11 – Mutua autenticazione a chiave pubblica/timestamp}
@@ -377,14 +377,14 @@ Una variante del protocollo (P10) e che fa uso della firma digitale è riportata
 \begin{figure}[htbp]
 	\centering%
 	\subfigure%
-	{\includegraphics[height=4cm, width=12cm, keepaspectratio]{Immagini/Capitolo8/ImgS48bis.png}}
+	{\includegraphics[height=4cm, width=12cm, keepaspectratio]{Immagini/autenticazione/ImgS48bis.png}}
 	\caption{Mutua autenticazione a chiave pubblica (basata sulla firma digitale)}\label{fig:ImgS48bis} 	
 \end{figure}
 Utilizzando dei timestamp, anziché sfide random, è possibile ottenere un protocollo di mutua autenticazione di due soli messaggi: tale soluzione è molto utile e può essere facilmente aggiunta ai protocolli a richiesta/risposta (HTTP) senza dover aggiungere un ulteriore messaggio (\figurename ~\ref{fig:ImgS53bis}).
 \begin{figure}[htbp]
 	\centering%
 	\subfigure%
-	{\includegraphics[height=4cm, width=12cm, keepaspectratio]{Immagini/Capitolo8/ImgS53bis.png}}
+	{\includegraphics[height=4cm, width=12cm, keepaspectratio]{Immagini/autenticazione/ImgS53bis.png}}
 	\caption{Mutua autenticazione basata sulla sincronizzazione degli orologi e su un segreto condiviso $K_{Alice-Bob}$}\label{fig:ImgS53bis} 	
 \end{figure}
 Per evitare che Trudy possa impersonare Bob riusando $f(K_{Alice-Bob}, timestamp)$ (i.e. copiando la quantità crittografica di Alice e restituendogliela), nella risposta viene richiesto un $timestamp$ diverso, cioè $timestamp + 1$.\\
@@ -394,7 +394,7 @@ Chiaramente, tutte le questioni viste nel caso unidirezionale e riguardanti gli 
 \begin{figure}[htbp]
 	\centering%
 	\subfigure%
-	{\includegraphics[height=4cm, width=12cm, keepaspectratio]{Immagini/Capitolo8/ImgS56bis.png}}
+	{\includegraphics[height=4cm, width=12cm, keepaspectratio]{Immagini/autenticazione/ImgS56bis.png}}
 	\caption{Mutua autenticazione basata sulla sincronizzazione degli orologi e su un segreto condiviso $K_{Alice-Bob}$}\label{fig:ImgS56bis} 	
 \end{figure}
 \subsection{Cifratura e integrità dei dati}
@@ -412,7 +412,7 @@ Sia $K_{Alice-Bob}$ il segreto a lungo termine condiviso tra Alice e Bob, si con
 \begin{figure}[htbp]
 	\centering%
 	\subfigure%
-	{\includegraphics[height=4cm, width=12cm, keepaspectratio]{Immagini/Capitolo8/ImgS61bis.png}}
+	{\includegraphics[height=4cm, width=12cm, keepaspectratio]{Immagini/autenticazione/ImgS61bis.png}}
 	\caption{Autenticazione con chiave segreta $K_{Alice-Bob}$}\label{fig:ImgS61bis} 	
 \end{figure}
 Una possibile chiave di sessione è $K_{s} = (K_{Alice-Bob}+1)\lbrace R\rbrace$; in generale, una chiave di sessione può ottenersi modificando $K_{Alice-Bob}$ in qualche modo ($K_{modified} = f(K_{Alice-Bob})$) e cifrando la sfida $R$ con la chiave modificata: il risultato è la chiave di sessione $K_{modified} = K_{s} = (f(K_{Alice-Bob})\lbrace R\rbrace$\\
@@ -422,7 +422,7 @@ Si noti anche che $K_{Alice-Bob}\lbrace R+1\rbrace$ non è sicura per una ragion
 \begin{figure}[htbp]
 	\centering%
 	\subfigure%
-	{\includegraphics[height=4cm, width=12cm, keepaspectratio]{Immagini/Capitolo8/ImgS65bis.png}}
+	{\includegraphics[height=4cm, width=12cm, keepaspectratio]{Immagini/autenticazione/ImgS65bis.png}}
 	\caption{Trudy impersona Bob}\label{fig:ImgS65bis} 	
 \end{figure}
 Si supponga che Alice e Bob abbiano iniziato una conversazione e Bob abbia inviato $R$ come sfida; Trudy potrebbe aver registrato l'intera conversazione, cifrata con $K_{s} = K_{Alice-Bob}\lbrace R\rbrace$. In seguito, Trudy potrebbe impersonare l'indirizzo di rete di Bob in una successiva comunicazione con Alice e dichiarandosi Bob, potrebbe inviare $R+1$ come sfida, alla quale Alice risponderebbe con $K_{Alice-Bob}\lbrace R+1\rbrace$. A questo punto Trudy sarebbe in grado di decifrare la precedente conversazione (registrata) tra Alice e Bob.\\
@@ -433,7 +433,7 @@ Nello schema in \figurename ~\ref{fig:ImgS67bis} una parte, diciamo Alice, scegl
 \begin{figure}[htbp]
 	\centering%
 	\subfigure%
-	{\includegraphics[height=4cm, width=12cm, keepaspectratio]{Immagini/Capitolo8/ImgS67bis.png}}
+	{\includegraphics[height=4cm, width=12cm, keepaspectratio]{Immagini/autenticazione/ImgS67bis.png}}
 	\caption{Autenticazione a chiave pubblica bidirezionale, $K_{s} = R$ e Alice invia $\lbrace R\rbrace_{Bob}$}\label{fig:ImgS67bis} 	
 \end{figure}
 Questo schema presenta la seguente vulnerabilità: un intruso, Trudy, può dirottare la conversazione scegliendo un suo $R$, cifrandolo con la chiave pubblica di Bob e inviando il risultato a Bob al posto della chiave cifrata fornita da Alice; contestualmente dovrebbe impersonare l'indirizzo di rete di Alice.\\ \\
@@ -441,7 +441,7 @@ In riferimento allo schema in \figurename ~\ref{fig:ImgS69bis}, rispetto a prima
 \begin{figure}[htbp]
 	\centering%
 	\subfigure%
-	{\includegraphics[height=4cm, width=12cm, keepaspectratio]{Immagini/Capitolo8/ImgS69bis.png}}
+	{\includegraphics[height=4cm, width=12cm, keepaspectratio]{Immagini/autenticazione/ImgS69bis.png}}
 	\caption{Autenticazione a chiave pubblica bidirezionale, $K_{s} = R$ e Alice invia $[\lbrace R\rbrace_{Bob}]_{Alice}$}\label{fig:ImgS69bis} 	
 \end{figure}
 L'attacco visto per il caso precedente (in cui Trudy sceglie un proprio $R$, in luogo di quello di Alice, e lo invia a Bob crittografato) ora non può funzionare perché Trudy non è in grado di forgiare la firma di Alice; tuttavia, se si vuole essere paranoici, c'è ancora una "piccola" vulnerabilità che può essere ridotta parzialmente (vedi caso (3)) o del tutto (vedi caso (4)). La vulnerabilità è la seguente:\\
@@ -453,7 +453,7 @@ Nello schema in \figurename ~\ref{fig:ImgS74bis} Alice genera una quantità rand
 \begin{figure}[htbp]
 	\centering%
 	\subfigure%
-	{\includegraphics[height=4cm, width=12cm, keepaspectratio]{Immagini/Capitolo8/ImgS74bis.png}}
+	{\includegraphics[height=4cm, width=12cm, keepaspectratio]{Immagini/autenticazione/ImgS74bis.png}}
 	\caption{$K_{s} = R \oplus P$}\label{fig:ImgS74bis} 	
 \end{figure}
 Definendo $K_{s} = R \oplus P$, per ottenere la chiave di sessione, Trudy deve registrare lo scambio tra Alice e Bob,  violare Bob per ottenere $PR_{Bob}$ e quindi $R$, ma deve anche violare Alice per ottenere $PR_{Alice}$ e quindi $P$, (i.e. per ottenere $K_{s}$ Trudy dovrebbe violare entrambi).\\ \\
@@ -461,7 +461,7 @@ Alice e Bob possono effettuare uno scambio Diffie-Hellman autenticato (\figurena
 \begin{figure}[htbp]
 	\centering%
 	\subfigure%
-	{\includegraphics[height=4cm, width=12cm, keepaspectratio]{Immagini/Capitolo8/ImgS77bis.png}}
+	{\includegraphics[height=4cm, width=12cm, keepaspectratio]{Immagini/autenticazione/ImgS77bis.png}}
 	\caption{Autenticazione a chiave pubblica bidirezionale, uso di D-H con $K_{s} = K_{AB} = T_{B}^{s_{A}}modp = T_{A}^{s_{B}}modp = K_{BA}$}\label{fig:ImgS77bis} 	
 \end{figure}
 Usando Diffie-Hellman autenticato anche se Trudy riesce a violare sia Alice che Bob, ma non potrà comunque essere in grado di decifrare delle conversazioni registrate perché non è in grado di dedurre né $S_{A}$ né $S_{B}$.
@@ -474,7 +474,7 @@ Vediamo ora due possibili modi per stabilire una chiave di sessione condivisa $K
 \begin{figure}[htbp]
 	\centering%
 	\subfigure%
-	{\includegraphics[height=4cm, width=12cm, keepaspectratio]{Immagini/Capitolo8/ImgS81bis.png}}
+	{\includegraphics[height=4cm, width=12cm, keepaspectratio]{Immagini/autenticazione/ImgS81bis.png}}
 	\caption{Autenticazione a chiave pubblica unidirezionale, $K_{s} = R$ e Alice invia $\lbrace R\rbrace_{Bob}$}\label{fig:ImgS81bis} 	
 \end{figure}
 Alice sceglie un numero random $R$, lo cifra con la chiave pubblica di Bob ed invia $\lbrace R\rbrace_{Bob}$. Si noti che tale schema presenta le debolezze viste nel caso (1), i.e. Trudy può registrare una intera conversazione e decifrarla; se riesce in futuro a violare Bob, Trudy può sostituire un suo $\lbrace R\rbrace_{Bob}$ e dirottare la
@@ -483,7 +483,7 @@ conversazione seguente. Tale debolezza è meno critica in un contesto dove non �
 \begin{figure}[htbp]
 	\centering%
 	\subfigure%
-	{\includegraphics[height=4cm, width=12cm, keepaspectratio]{Immagini/Capitolo8/ImgS82bis.png}}
+	{\includegraphics[height=4cm, width=12cm, keepaspectratio]{Immagini/autenticazione/ImgS82bis.png}}
 	\caption{Autenticazione a chiave pubblica unidirezionale, uso di D-H con $K_{s} = K_{AB} = T_{B}^{s_{A}}modp = T_{A}^{s_{B}}modp = K_{BA}$}\label{fig:ImgS82bis} 	
 \end{figure}
 Si noti che Alice non può firmare nulla non disponendo di una coppia $<PU, PR>$. Si noti anche che il caso (b) rispetto al caso (a) è un po' più sicuro, infatti Trudy non può ottenere la chiave di sessione $K_{s}$ usata in
@@ -506,7 +506,7 @@ $K_{Alice}\lbrace use K_{AB} for Bob\rbrace$; Trudy al massimo può indurre il K
 \begin{figure}[htbp]
 	\centering%
 	\subfigure%
-	{\includegraphics[height=4cm, width=12cm, keepaspectratio]{Immagini/Capitolo8/ImgS94bis.png}}
+	{\includegraphics[height=4cm, width=12cm, keepaspectratio]{Immagini/autenticazione/ImgS94bis.png}}
 	\caption{Operazioni svolte dal KDC (in linea di principio)}\label{fig:ImgS94bis} 	
 \end{figure}
 Le uniche parti che conoscono $K_{AB}$ dopo questo scambio sono Alice, Bob e il KDC, pertanto, dopo lo scambio Alice e Bob possono autenticarsi reciprocamente utilizzando il segreto condiviso $K_{AB}$. \\
@@ -516,7 +516,7 @@ Nella pratica la mediazione del KDC avviene in modo simile a come illustrato in 
 \begin{figure}[htbp]
 	\centering%
 	\subfigure%
-	{\includegraphics[height=4cm, width=12cm, keepaspectratio]{Immagini/Capitolo8/ImgS97bis.png}}
+	{\includegraphics[height=4cm, width=12cm, keepaspectratio]{Immagini/autenticazione/ImgS97bis.png}}
 	\caption{Operazioni svolte dal KDC (nella pratica)}\label{fig:ImgS97bis} 	
 \end{figure}
 Naturalmente Alice e Bob devono poi autenticarsi reciprocamente con una delle tecniche esaminate prima, i.e. ciascuno deve dimostrare all'altro di conoscere realmente $K_{AB}$.\\ \\
@@ -527,7 +527,7 @@ In \figurename ~\ref{fig:ImgS103bis} è rappresentato il protocollo (P12.1), ott
 \begin{figure}[htbp]
 	\centering%
 	\subfigure%
-	{\includegraphics[height=4cm, width=12cm, keepaspectratio]{Immagini/Capitolo8/ImgS103bis.png}}
+	{\includegraphics[height=4cm, width=12cm, keepaspectratio]{Immagini/autenticazione/ImgS103bis.png}}
 	\caption{Protocollo (P12.1)}\label{fig:ImgS103bis} 	
 \end{figure}
 Nel protocollo (P12.1) sussiste ancora la seguente vulnerabilità:\\
@@ -537,7 +537,7 @@ Implementando le precedenti modifiche si ottiene il protocollo (P12.2), riportat
 \begin{figure}[htbp]
 	\centering%
 	\subfigure%
-	{\includegraphics[height=4cm, width=12cm, keepaspectratio]{Immagini/Capitolo8/ImgS106bis.png}}
+	{\includegraphics[height=4cm, width=12cm, keepaspectratio]{Immagini/autenticazione/ImgS106bis.png}}
 	\caption{Protocollo (P12.2)}\label{fig:ImgS106bis} 	
 \end{figure}
 Il protocollo (P12.2), analogamente ai precedenti, non include uno scambio che permetta di autenticare reciprocamente Alice e Bob: per l'autenticazione reciproca ciascuno deve provare all'altro di conoscere $K_{AB}$. Alice sa che soltanto chi conosce $K_{Bob}$ può decifrare il ticket per Bob e quindi riottenere $K_{AB}$; Bob decifrando il ticket, oltre a $K_{AB}$, ottiene $"Alice"$ e sa pertanto che il KDC è stato contattato da Alice e che solo lui,
@@ -552,7 +552,7 @@ Il protocollo (P12.3), riportato in \figurename ~\ref{fig:ImgS109bis}, include a
 \begin{figure}[htbp]
 	\centering%
 	\subfigure%
-	{\includegraphics[height=4cm, width=12cm, keepaspectratio]{Immagini/Capitolo8/ImgS109bis.png}}
+	{\includegraphics[height=4cm, width=12cm, keepaspectratio]{Immagini/autenticazione/ImgS109bis.png}}
 	\caption{Protocollo (P12.3)}\label{fig:ImgS109bis} 	
 \end{figure}
 \subsubsection{Protocollo di Needham-Schroeder}
@@ -560,7 +560,7 @@ Il protocollo di Needham-Schroeder (\figurename ~\ref{fig:ImgS111bis}) in pratic
 \begin{figure}[htbp]
 	\centering%
 	\subfigure%
-	{\includegraphics[height=4cm, width=12cm, keepaspectratio]{Immagini/Capitolo8/ImgS111bis.png}}
+	{\includegraphics[height=4cm, width=12cm, keepaspectratio]{Immagini/autenticazione/ImgS111bis.png}}
 	\caption{Protocollo di Needham-Schroeder}\label{fig:ImgS111bis} 	
 \end{figure}
 

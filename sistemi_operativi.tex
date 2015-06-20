@@ -43,7 +43,7 @@ Il \textbf{Salt} consiste nell'aggiunta di bit random all'input di una funzione 
 \begin{figure}[htbp]
 	\centering%
 	\subfigure%
-	{\includegraphics[height=8cm, width=13cm, keepaspectratio]{Immagini/Capitolo9/password.png}}
+	{\includegraphics[height=8cm, width=13cm, keepaspectratio]{Immagini/sistemi_operativi/password.png}}
 	\caption{Esempi di Salt \label{fig:salt}} 	
 \end{figure}
 \newpage
@@ -56,7 +56,7 @@ Il processo di autenticazione funziona nel seguente modo:
 \begin{figure}[htbp]
 	\centering%
 	\subfigure%
-	{\includegraphics[height=8cm, width=8cm, keepaspectratio]{Immagini/Capitolo9/password2.png}}
+	{\includegraphics[height=8cm, width=8cm, keepaspectratio]{Immagini/sistemi_operativi/password2.png}}
 	\caption{Processo di autenticazione con Salt \label{fig:salt}} 	
 \end{figure}
 Tale meccanismo comporta evidenti benefici. Se l’attaccante non può trovare il salt associato con l’userID, allora lo spazio di ricerca per un attacco con dizionario cresce notevolmente, diventando $2^{B} x D$, dove B è il numero di bit del Salt, mentre D lo spazio del dizionario. \newline
@@ -164,7 +164,7 @@ Linux utilizza una versione semplificata delle ACL: la \textbf{File permission m
 \begin{figure}[htbp]
 	\centering%
 	\subfigure%
-	{\includegraphics[height=10cm, width=10cm, keepaspectratio]{Immagini/Capitolo9/perm_linux.png}}
+	{\includegraphics[height=10cm, width=10cm, keepaspectratio]{Immagini/sistemi_operativi/perm_linux.png}}
 	\caption{Esempi di permission matrix \label{fig:perm_linux}} 	
 \end{figure}
 
@@ -190,7 +190,7 @@ Nei sistemi Linux i bit di permessi sono espressi in notazione ottale (con 3 o 4
 \begin{figure}[htbp]
 	\centering%
 	\subfigure%
-	{\includegraphics[height=10cm, width=10cm, keepaspectratio]{Immagini/Capitolo9/notazione_ottale.png}}
+	{\includegraphics[height=10cm, width=10cm, keepaspectratio]{Immagini/sistemi_operativi/notazione_ottale.png}}
 	\caption{Esempi di permission matrix in notazione ottale\label{fig:notazione_ottale}} 	
 \end{figure}
 \begin{itemize}
@@ -259,7 +259,7 @@ In \figurename ~\ref{fig:addr_space_unix} è mostrato il modello. Si noti che lo
 \begin{figure}[htbp]
 	\centering
 	\subfigure
-	{\includegraphics[height=10cm, width=13cm, keepaspectratio]{Immagini/Capitolo9/addr_space_unix.png}}
+	{\includegraphics[height=10cm, width=13cm, keepaspectratio]{Immagini/sistemi_operativi/addr_space_unix.png}}
 	\caption{Modello Address Space Unix \label{fig:salt}} 	
 \end{figure}
 
@@ -296,14 +296,14 @@ Lo stack viene gestito attraverso opportune variabili e registri (vedi \figurena
 \begin{figure}[htbp]
 	\centering%
 	\subfigure%
-	{\includegraphics[height=13cm, width=13cm, keepaspectratio]{Immagini/Capitolo9/buffer.png}}
+	{\includegraphics[height=13cm, width=13cm, keepaspectratio]{Immagini/sistemi_operativi/buffer.png}}
 	\caption{Stack Structure \label{fig:salt}} 	
 \end{figure}
 Gli indirizzi delle variabili locali di una routine sono specificati rispetto al frame pointer poiché il suo valore rimane invariato per tutta la durata della routine stessa. \newline \newline
 \begin{figure}[htbp]
 	\centering%
 	\subfigure%
-	{\includegraphics[height=13cm, width=13cm, keepaspectratio]{Immagini/Capitolo9/esempio_stack.png}}
+	{\includegraphics[height=13cm, width=13cm, keepaspectratio]{Immagini/sistemi_operativi/esempio_stack.png}}
 	\caption{Esempio Stack di un programma in C\label{fig:esempio_stack}} 	
 \end{figure}
 \subsection{Esempio codice C}
@@ -326,7 +326,7 @@ Main(int argc, char *argv[])
 \begin{figure}[htbp]
 	\centering%
 	\subfigure%
-	{\includegraphics[height=7cm, width=13cm, keepaspectratio]{Immagini/Capitolo9/esempio_stack_2.png}}
+	{\includegraphics[height=7cm, width=13cm, keepaspectratio]{Immagini/sistemi_operativi/esempio_stack_2.png}}
 	\caption{Esempio Stack-Based buffer overflow\label{fig:esempio_stack}} 	
 \end{figure}
 
@@ -341,7 +341,7 @@ Per svolegere quest'ultimo task sono disponibili diverse tecniche, che vedremo n
 \begin{figure}[htbp]
 	\centering%
 	\subfigure%
-	{\includegraphics[height=13cm, width=13cm, keepaspectratio]{Immagini/Capitolo9/stack_smash.png}}
+	{\includegraphics[height=13cm, width=13cm, keepaspectratio]{Immagini/sistemi_operativi/stack_smash.png}}
 	\caption{Esempio Stack-Smashing\label{fig:stack_smash}} 	
 \end{figure}
 \subsection{NOP Sledding}
@@ -355,8 +355,8 @@ Al fine di semplificare la stima dell'indirizzo del codice malevolo (da posizion
 \begin{figure}[htbp]
 	\centering%
 	\subfigure%
-	{\includegraphics[height=13cm, width=13cm, keepaspectratio]{Immagini/Capitolo9/nop_sledding.png}}
-	{\includegraphics[height=10cm, width=13cm, keepaspectratio]{Immagini/Capitolo9/nop_sledding_2.png}}
+	{\includegraphics[height=13cm, width=13cm, keepaspectratio]{Immagini/sistemi_operativi/nop_sledding.png}}
+	{\includegraphics[height=10cm, width=13cm, keepaspectratio]{Immagini/sistemi_operativi/nop_sledding_2.png}}
 	\caption{NOP Sledding\label{fig:nop_sledding}} 	
 \end{figure}
 Il NOP-Sledding aumenta le probabilità di riuscita per un attacco buffer overflow. E' un attacco molto utilizzato, anche se presenta ancora diverse difficoltà: è difficile da automatizzare, serve molto spazio per il payload e bisogna ancora stimare, in qualche misura, l'indirizzo dello shellcode.
@@ -372,7 +372,7 @@ L'attacco consiste nel:
 \begin{figure}[htbp]
 	\centering%
 	\subfigure%
-	{\includegraphics[height=13cm, width=13cm, keepaspectratio]{Immagini/Capitolo9/return_libc.png}}
+	{\includegraphics[height=13cm, width=13cm, keepaspectratio]{Immagini/sistemi_operativi/return_libc.png}}
 	\caption{Esempio return to libc\label{fig:return_libc}} 	
 \end{figure}
 Il principale vantaggio di questa tecnica consiste nel fatto che non viene eseguito alcun codice sullo stack, rendendo inefficaci le contromisure che rendono lo stack non eseguibili.
@@ -390,8 +390,8 @@ Tecnica che consiste nell'arrangiare randomicamente l'address space di un proces
 \begin{figure}[htbp]
 	\centering%
 	\subfigure%
-	{\includegraphics[height=13cm, width=10cm, keepaspectratio]{Immagini/Capitolo9/aslr.png}}
-	{\includegraphics[height=13cm, width=10cm, keepaspectratio]{Immagini/Capitolo9/aslr_2.png}}
+	{\includegraphics[height=13cm, width=10cm, keepaspectratio]{Immagini/sistemi_operativi/aslr.png}}
+	{\includegraphics[height=13cm, width=10cm, keepaspectratio]{Immagini/sistemi_operativi/aslr_2.png}}
 	\caption{Effetto ASLR sull'indirizzo di librerie Windows\label{fig:aslr}} 	
 \end{figure}
 \subsubsection{Stack-Smashing protection}
@@ -402,7 +402,7 @@ Anche questo metodo implementa un controllo in fase di esecuzione. Si definisce 
 \begin{figure}[htbp]
 	\centering%
 	\subfigure%
-	{\includegraphics[height=13cm, width=13cm, keepaspectratio]{Immagini/Capitolo9/canary.png}}
+	{\includegraphics[height=13cm, width=13cm, keepaspectratio]{Immagini/sistemi_operativi/canary.png}}
 	\caption{Canary\label{fig:canary}} 	
 \end{figure}
 \subsection{Race Conditions}

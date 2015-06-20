@@ -12,7 +12,7 @@ Questi sono i casi più semplici da gestire, in quanto si \underline{garantisce}
 
 \begin{figure}[htbp]
 	\centering
-	{\includegraphics[height=8cm, width=8cm, keepaspectratio]{Immagini/Appendice1/prot_dati_01.JPG}}
+	{\includegraphics[height=8cm, width=8cm, keepaspectratio]{Immagini/dati_sensibili/prot_dati_01.JPG}}
 	\caption{Esempio di una tabella Studente che contiene informazioni sugli studenti di una facoltà\label{fig:tabella_db}}
 \end{figure}
 
@@ -29,7 +29,7 @@ Le parti sensibili di un dato possono essere un singolo \textbf{attributo} di un
 Il trattamento dei dati sensibili è una materia complicata. Come divulgarli e come proteggerli sono i problemi principali. Va tenuto conto del fatto che, attraverso attacchi inferenziali, è possibile risalire a dati sensibili anche se questi ultimi non vengono divulgati direttamente. Vediamolo con un esempio.
 \begin{figure}[htbp]
 	\centering
-		{\includegraphics[height=8cm, width=8cm, keepaspectratio]{Immagini/Appendice1/prot_dati_02.JPG}}
+		{\includegraphics[height=8cm, width=8cm, keepaspectratio]{Immagini/dati_sensibili/prot_dati_02.JPG}}
 			\caption{Esempio di come ottenere dati sensibili senza leggerli direttamente \label{fig:query_db}}
 \end{figure}
 
@@ -43,7 +43,7 @@ Emergono quindi due esigenze contrastanti:
 	
 \begin{figure}[htbp]
 	\centering
-	{\includegraphics[height=8.5cm, width=8.5cm, keepaspectratio]{Immagini/Appendice1/prot_dati_03.JPG}}
+	{\includegraphics[height=11cm, width=11cm, keepaspectratio]{Immagini/dati_sensibili/prot_dati_03.JPG}}
 				\caption{Rappresentazione grafica di accessibilità vs. protezione dei dati \label{fig:protezione_vs_accessibilita}}
 \end{figure}
 
@@ -61,19 +61,25 @@ Esistono diverse modalità di divulgazione di un dato o insieme di dati:
 \section{Inferenza}
 L'\textbf{Inferenza} è un metodo per dedurre o derivare dati sensibili a partire dai dati non sensibili a disposizione. Ricordando la tabella di fig. \ref{fig:tabella_db}, la queri seguente rappresenta un \textbf{Attacco Diretto}, ovvero un tentativo diretto di accedere ad un dato sensibile:
 
-\begin{figure}[htbp]
-	\centering
-	{\includegraphics[height=5cm, width=6cm, keepaspectratio]{Immagini/Appendice1/prot_dati_04.JPG}}
-				\caption{Query che sfrutta inferenza per ottenere dati sensibili e viene bloccata \label{fig:query_inferenza}}
-\end{figure}
+\begin{algorithm}
+\begin{lstlisting}[caption={Query che sfrutta inferenza per ottenere dati sensibili e viene bloccata}]
+SELECT Cognome
+FROM Studente
+WHERE Sesso = M AND Droghe = 1
+\end{lstlisting}
+\end{algorithm}
 
 Una query di questo tipo potrebbe essere rifiutata dal DBMS in quanto le tuple del risultato sono quelle con uno specifico valore su un attributo sensibile. La seguente query, invece, intuitivamente risulta legale ma va a selezionare solo tuple sensibili, in quanto la seconda e la terza condizione non sono mai soddisfatte.
 
-\begin{figure}[htbp]
-	\centering
-	{\includegraphics[height=5cm, width=6cm, keepaspectratio]{Immagini/Appendice1/prot_dati_05.JPG}}
-				\caption{Query che sfrutta inferenza per ottenere dati sensibili e non viene bloccata \label{fig:query_inferenza1}}
-\end{figure}
+\begin{algorithm}
+\begin{lstlisting}[caption={Query che sfrutta inferenza per ottenere dati sensibili e non viene bloccata}]
+SELECT Cognome
+FROM Studente
+WHERE (Sesso = M AND Droghe = 1)
+	OR (Sesso != M AND Sesso != F)
+	OR (Dormitorio = 'Ayres')
+\end{lstlisting}
+\end{algorithm}
 
 Per scovare l'accesso improprio ai dati, il DBMS dovrebbe capire che ci sono solo due valori ammessi per il campo Sesso e che non c'è alcuna tupla con valore Dormitorio uguale ad 'Ayres'. Per limitare gli Attacchi Diretti è applicata, alle volte, una regola \textit{n elementi sul k percento}, che consiste nel non restituire il risultato di una query se un piccolo numero di elementi divulgati costituisce una grande percentuale del valore restituito. (nel caso mostrato come esempio nel paragrafo relativo alla divulgazione per valore probabile, fare una query che richiede i residenti ad un dato indirizzo ed iscritti ad un partito da come risultato un unico elemento che rappresenta il 100\%).
 
@@ -81,82 +87,150 @@ Un attacco inferenziale \textbf{Indiretto} si basa sulla deduzione di dati sensi
 
 \subsection{Somma e Conteggio}
 
-Una query del genere \ref{fig:query_indiretta_result} potrebbe sembrare innocua poichè restituisce solo valori aggregati, ma il risultato è una \textbf{Divulgazione di Tipo Negativo}, in quanto posso dedurre dal valore nullo nel dormitorio Holmes che le donne in quel dormitorio nn ricevono aiuti finanziari (che è un dato decretato sensibile). 
+Una query del genere \ref{query:neg} potrebbe sembrare innocua dato che restituisce solo valori aggregati, ma il risultato è una \textbf{Divulgazione di Tipo Negativo}, in quanto è possibile dedurre dal valore nullo nel dormitorio Holmes che le donne in quel dormitorio non ricevono aiuti finanziari (che è un dato decretato sensibile). 
+
+\begin{algorithm} 
+\begin{lstlisting}[caption={Query che implementa un attacco con somma per ottenere Divulgazione di tipo negativo \label{query:neg}}] 
+SELECT Sesso, Dormitorio, SUM(Aiuto)
+FROM Studente
+GROUP BY Sesso,Dormitorio
+\end{lstlisting}
+\end{algorithm}
 
 \begin{figure}[htbp]
-	\centering
-	
-	\subfigure[Query di attacco indiretto di somma]
-		{\includegraphics[height=5cm, width=5cm, keepaspectratio]{Immagini/Appendice1/prot_dati_06.JPG}}
-				
-	\subfigure[Risultato della query]
-		{\includegraphics[height=5cm, width=8cm, keepaspectratio]{Immagini/Appendice1/prot_dati_09.JPG}}
-							\caption{Esempio di attacco Indiretto \label{fig:query_indiretta_result}}                           
-	
+	\centering				
+		{\includegraphics[height=11cm, width=11cm, keepaspectratio]{Immagini/dati_sensibili/prot_dati_09.JPG}}
+							\caption{Risultato query ~\ref{query:neg} \label{fig:query_indiretta_result}}                         
 \end{figure}
+
+\begin{algorithm}
+\begin{lstlisting}[caption={Query che implementa un attacco con conteggio \label{query:count}}] 
+SELECT Sesso, Dormitorio, COUNT(*)
+FROM Studente
+GROUP BY Sesso,Dormitorio
+\end{lstlisting}
+\end{algorithm}
 
 \begin{figure}[htpb]
 	\centering
-		\subfigure[Query di attacco indiretto di conteggio]
-		{\includegraphics[height=5cm, width=5cm, keepaspectratio]{Immagini/Appendice1/prot_dati_07.JPG}}
-				
-		\subfigure[Risultato della query]
-		{\includegraphics[height=5cm, width=8cm, keepaspectratio]{Immagini/Appendice1/prot_dati_08.JPG}}
-							\caption{Esempio di attacco Indiretto di Somma e Conteggio \label{fig:query_indiretta_result1}}                           
-	
+		{\includegraphics[height=11cm, width=11cm, keepaspectratio]{Immagini/dati_sensibili/prot_dati_08.JPG}}
+							\caption{Risultato query ~\ref{query:count} \label{fig:query_indiretta_result1}}                           
 \end{figure}
 
-Inoltre, il conteggio può essere combinato con la somma per produrre risultati ancora più rivelatori. Il risultato della query di \textbf{Attacco di Somma} \ref{fig:query_indiretta_result} combinata con la query di \textbf{Attacco di Conteggio} \ref{fig:query_indiretta_result1} rivela che i due uomini nel dormitorio Holmes e West ricevono un aiuto finanziario di 5000 e 4000.
+Inoltre, il conteggio può essere combinato con la somma per produrre risultati ancora più rivelatori. Il risultato della query di \textbf{Attacco di Somma} \ref{query:neg} combinata con la query di \textbf{Attacco di Conteggio} \ref{query:count} rivela che i due uomini nel dormitorio Holmes e West ricevono un aiuto finanziario di 5000 e 4000.
 
 \subsection{Media}
 
-La media può permettere di ottenere informazioni esatte se utilizzate in combinazione con il conteggio. Usata in modo opportuno riesce anche ad aggirare eventuali controlli sulla numerosità dell'insieme su cui viene calcolata.
-Ad esempio, supponiamo che la media non venga divulgata se la somma degli elementi su cui è calcolata è pari ad 1 (legge interna del DBMS). 
+La media può permettere di ottenere informazioni esatte se utilizzate in combinazione con il conteggio: se riesco ad ottenere la media su un insieme formato da un solo elemento, riesco a conoscere il valore esatto per quell’elemento. Per ovviare a questa minaccia a volte i DBMS implementano meccanismi di sicurezza che impediscono di dilvugare la media calcolata su un numero di elementi al di sotto di una certa soglia. Tuttavia, usati in modo opportuno, gli attacchi con media riescono anche ad aggirare eventuali controlli sulla numerosità dell'insieme su cui viene calcolata. Ad esempio, supponiamo che la media non venga divulgata se la somma degli elementi su cui è calcolata è pari ad 1 (legge interna del DBMS). 
 
-\begin{figure}[htpb]
-	\centering
-		\subfigure[Query di Media per ottenere informazioni sugli studenti di Sesso Femminile]
-		{\includegraphics[height=2cm, width=8cm, keepaspectratio]{Immagini/Appendice1/prot_dati_10.JPG}}
-		\subfigure[Query di Count da combinare con la Query di Media per ottenere un Attacco Inferenziale]
-		{\includegraphics[height=2cm, width=8cm, keepaspectratio]{Immagini/Appendice1/prot_dati_11.JPG}}
-		\subfigure[Combinazione delle informazioni ottenute]
-		{\includegraphics[height=2cm, width=8cm, keepaspectratio]{Immagini/Appendice1/prot_dati_12.JPG}}
-		\caption{Esempio di query di media per ottenere indirettamente informazioni 
-		  \label{fig:query_media}}  
-\end{figure}
+\begin{algorithm}
+\begin{lstlisting}[caption={Query di Media per ottenere informazioni sugli studenti del dormitorio Holmes \label{query:avg2}}] 
+SELECT AVG(Aiuto)
+FROM Studente
+WHERE Dormitorio = 'Holmes'
 
-Dalla procedure di \ref{fig:query_media} si trova che $ a_{3} = 5000 $ che sarebbe un dato sensibile, in quanto media di un valore su un unico elemento!
+SELECT AVG(Aiuto)
+FROM Studente
+WHERE Dormitorio = 'Holmes'
+	AND Sesso = 'F'
+\end{lstlisting}
+\end{algorithm}
+
+La prima query di~\ref{query:avg2} restituisce una media di 4000, mentre la seconda restituisce una media di 3500. Conosciamo quindi quanto recepiscono come aiuto, in media, tutti gli studenti e le sole femmine del dormitorio Holmes. Possiamo inoltre aggiungere informazioni di conteggio, utilizzando le query~\ref{query:count2}.
+
+\begin{algorithm}
+\begin{lstlisting}[caption={Query di conteggio per ottenere informazioni sugli studenti del dormitorio Holmes \label{query:count2}}]
+SELECT COUNT(*)
+FROM Studente
+WHERE Dormitorio = 'Holmes'
+
+SELECT COUNT(*)
+FROM Studente
+WHERE Dormitorio = 'Holmes'
+	AND Sesso = 'F'
+\end{lstlisting}
+\end{algorithm}
+
+A questo punto sappiamo che nel dormitorio Holmes risiedono 3 persone, due delle quali femmine. Denominati $a_1,a_2,a_3$ gli aiuti recepiti dai tre individui, possiamo scrivere:
+
+\begin{equation}
+\frac{a_1 + a_2 + a_3}{3} = 4000 \Rightarrow a_1 + a_2 + a_3 = 12000
+\end{equation}
+
+\begin{equation}
+\frac{a_1 + a_2}{2} = 3500 \Rightarrow a_1 + a_2 = 7000
+\end{equation}
+
+\begin{equation}
+ a_3 = 12000 - (a_1 + a_2) = 5000
+\end{equation}
+
+Tramite la procedura illustrata si trova che $ a_{3} = 5000 $, ovvero l'importo esatto dell'unico maschio che risiede nel dormitorio Holmes
 
 \subsection{Attacchi di Tracker}
-Abbiamo visto che una delle tecniche di protezione dall'inferenza consiste nel non divulgare i dati se solo un piccolo numero di elementi fornisce molta informazione; è possibile aggirare questa limitazione effettuando più query lecite e combinandole insieme. 
+Abbiamo visto che una delle tecniche di protezione dall'inferenza consiste nel non divulgare i dati se un \textbf{piccolo numero di elementi fornisce molta informazione}; è possibile aggirare questa limitazione effettuando più query lecite e combinandole insieme. Vediamolo con un esempio: esaminiamo la query.
 
-\begin{figure}[htpb]
-\centering
+\begin{algorithm}
+\begin{lstlisting}[caption={Esempio di query di tracker non lecita du DB \label{query:tracker1}}] 
+SELECT COUNT(*)
+FROM Studente
+WHERE Razza = 'C'
+	AND Sesso = 'F'
+	AND Dormitorio = 'Holmes'
+\end{lstlisting}
+\end{algorithm}
 
-	{\includegraphics[height=5cm, width=8cm, keepaspectratio]{Immagini/Appendice1/prot_dati_13.JPG}}
-		\caption{Esempio di query di tracker non lecita du DB
-				  \label{fig:query_tracker_sbagliata}}  
-\end{figure}
+La query \ref{query:tracker1} è, ovviamente, bloccata dal DBMS in quanto va a richiedere un unico risultato sulla tabella del DB in fig. \ref{fig:tabella_db}. Il dato non viene divulgato in quanto \textbf{dominato da una sola tupla}, ma osserviamo che può essere calcolato contando le donne che \textbf{non sono di razza C} e sommandole a quelle che \textbf{non risiedono nel dormitorio Holmes}, e sottraendo questa somma al numero totale delle femmine. Tale calcolo deriva dalle leggi di DeMorgan. Infatti, ponendo:
 
-La query \ref{fig:query_tracker_sbagliata} è, ovviamente, bloccata dal DBMS in quanto va a richiedere un unico risultato sulla tabella del DB in fig. \ref{fig:tabella_db}.
-Il dato non viene divulgato in quanto \underline{dominato da una sola tupla}, ma osserviamo che il dato in questione pò essere calcolato contando partendo dal fatto che tutte le donne non sono di razza \textit{C} o che non risiedono nel dormitorio Holmes.
+\begin{itemize}
+\item R := (Razza='C')
+\item D := (Dormitorio='Holmes')
+\item S := (Sesso = 'F')
+\end{itemize}
 
-\begin{figure}[htpb]
-\centering
-	{\includegraphics[height=5cm, width=8cm, keepaspectratio]{Immagini/Appendice1/prot_dati_14.JPG}}
-		\caption{Esempio di query di tracker non lecita du DB
-				  \label{fig:query_tracker}}  
-\end{figure}
+Allora:
+
+\begin{equation}
+A \cdot D \cdot S = (A \cdot D) \cdot S =\overline{\overline{(A \cdot D)}} \cdot S
+\end{equation}
+
+Per le leggi di DeMorgan:
+\begin{equation}
+\overline{(A \cdot D)} = \overline{A} + \overline{D}
+\end{equation}
+
+Allora:
+\begin{equation} \label{eq:tracker}
+\overline{\overline{(A \cdot D)}} \cdot S = \overline{(\overline{A} + \overline{D})} \cdot S
+\end{equation}
+
+Possiamo allora ricavare il risultato desiderato attraverso le query~\ref{query:tracker2}. In particolare il dato si può ricavare sottraendo il risultato della seconda query dal risultato della prima.
+\begin{algorithm}
+\begin{lstlisting}[caption={Esempio di query di tracker lecita du DB \label{query:tracker2}}] 
+SELECT COUNT(*)
+FROM Studente
+WHERE Sesso = 'F'
+	
+SELECT COUNT(*)
+FROM Studente
+WHERE Sesso = 'F'
+	AND ( Razza != C
+	OR Dormitorio != 'Holmes')
+\end{lstlisting}
+\end{algorithm}
 
 \subsection{Vulnerabilità del Sistema Lineare}
-L'attacco di Tracker è un caso specifico di una vulnerabilità più generica in cui sfruttando l'algebra, la logica e un po' di fortuna si riesce ad ottenere tramite diverse query dei valori protetti.
+L'attacco di Tracker è un caso specifico di una vulnerabilità più generica in cui sfruttando l'algebra, la logica e un po' di fortuna si riesce ad ottenere tramite diverse query dei valori protetti. Nell'esempio~\ref{query:tracker1} la query protetta è del tipo:
 
-Nell'esempio \ref{fig:query_tracker} la query protetta è del tipo \textit{q = COUNT\{(Sesso = F)}$\wedge$\textit{(Razza = C)}$\wedge$\textit{(Dormitorio = Holmes)\}}.
-\newline
+\begin{equation}
+q = \parallel (Sesso \: = \: 'F') \wedge (Razza \: = \: 'C') \wedge (Dormitorio \: = \: 'Holmes') \parallel
+\end{equation}
 In base all'algebra, possiamo riscrivere la query nel seguente modo: 
-\textit{q = COUNT(Sesso = F)}$-$\textit{COUNT\{(Sesso = F)}$\neg$\textit{(Razza = C)}$\wedge$\textit{(Dormitorio = Holmes)\}}.
-\newline
+\begin{equation}
+q = \parallel (Sesso = F) \parallel - \parallel (Sesso \: = \: 'F') \wedge \neg( (Razza \: = \: 'C') \vee (Dormitorio \: = \: 'Holmes')) \parallel
+\end{equation}
 Più in generale potremmo avere le seguenti query:
+\newline
 \newline
 $q_{1} = c_{1} + c_{2} + c_{3} + c_{42}$
 \newline
@@ -167,64 +241,74 @@ $q_{3} = c_{5} + c_{1} + c_{3}$
 $q_{4} = c_{4} + c_{7} + c_{2}$
 \newline
 $q_{5} = c_{8} + c_{3}$
+\newline
 \\
 Nessuna delle query rivela un qualsiasi valore $c_{i}$ ma, risolvendo il sistema, possiamo conoscerli tutti.
 
 \subsection{Aggregazione}
-L'aggregazione è un altro particolare tipo di inferenza, in cui si cerca di ottenere dati sensibili mettendo insieme dati non sensibili (ad esempio il nome di un impiegato e il suo stipendio, divisi non sono dati sensibili ma insieme si). 
-\newline
-Evitare l'aggregazione è difficile perché bisogna tenere conto delle informazioni giù in possesso dell'utente. Se un utente conosce il nome di un dipendente non devo comunicargli lo stipendio e viceversa. Purtroppo tenere traccia di tutti i dati rivelati ad ogni utente è proibitivo, soprattutto per il fatto che utenti diversi potrebbero condividere tutti le informazioni in loro possesso.
+L'aggregazione è un altro particolare tipo di inferenza, in cui si cerca di ottenere dati sensibili mettendo insieme dati non sensibili (ad esempio il nome di un impiegato e il suo stipendio, divisi, non sono dati sensibili. La loro combinazione invece si). \\
+
+Evitare l'aggregazione è difficile perché bisogna tenere conto delle informazioni già in possesso dell'utente. Se un utente conosce il nome di un dipendente non devo, ad esempio, comunicargli lo stipendio e viceversa. Purtroppo tenere traccia di tutte le informazioni in possesso ad ogni utente è proibitivo. Inoltre utenti diversi potrebbero condividere tutti le informazioni in loro possesso, aiutandosi a vicenda ad aggregare i dati al fine di ricavare informazioni sensibili.
 
 \section{Protezione dall'Inferenza}
-Esistono alcune tecniche per combattere l'inferenza: 
+Esistono alcune tecniche per combattere l'inferenza:
 \begin{itemize}
-\item Analisi delle query
-\item Soppressione dei valori sensibili per non fornirli
-\item Occultamento del valore reale, con un altro simile
+\item \textbf{Analisi} delle query
+\item \textbf{Soppressione} dei valori sensibili per non fornirli
+\item \textbf{Occultamento} del valore reale, con un altro simile
 \end{itemize}
-
-\subsection{Soppressione e Occultamento}
-Un esempio di soppressione è la già citata regola del ``\textit{n elementi sul k percento}``; purtroppo, per essere efficace, può essere necessario sopprimere altri dati per evitare che quelli sensibili siano ottenibili per differenza.
+Tali soluzioni tendono a proteggere un DB dal problema dell'inferenza, ma al tempo stesso limitano anche le
+informazioni fornite agli utenti che intendono fare un uso legittimo dei dati.
+\subsection{Soppressione}
+Un esempio di \textbf{soppressione} è la già citata regola del \textit{n elementi sul k percento}; purtroppo, affinché questo tipo di protezione sia efficace, può essere necessario sopprimere altri dati per evitare che quelli sensibili siano ottenibili per differenza.
 
 \begin{figure}[htpb]
 	\centering
 		\subfigure[Numero di residenti per Sesso e Dormitorio]
-		{\includegraphics[height=2cm, width=8cm, keepaspectratio]{Immagini/Appendice1/prot_dati_15.JPG}}
+		{\includegraphics[height=2cm, width=8cm, keepaspectratio]{Immagini/dati_sensibili/prot_dati_15.JPG}}
 		
-		\subfigure[Tabella dopo la soppressione]
-		{\includegraphics[height=2cm, width=8cm, keepaspectratio]{Immagini/Appendice1/prot_dati_16.JPG}}
+		\subfigure[Tabella dopo la soppressione. Si noti come i dati sopressi possono essere comunque ricavati per differenza]
+		{\includegraphics[height=2cm, width=8cm, keepaspectratio]{Immagini/dati_sensibili/prot_dati_16.JPG}}
 				
 		\caption{Esempio di protezione per soppressione
 		  \label{fig:query_soppressione}}  
 
 \end{figure}
-Per evitare di divulgare dati sensibili è possibile combinare più righe o colonne, implementando una protezione dei dati di Occultamento.
+
+
+\subsection{Occultamento}
+
+\subsubsection{Utilizzo di dati combinati}
+Per evitare di divulgare dati sensibili è possibile combinare più righe o colonne, come riportato in fig.~\ref{fig:query_occultamento}.
 
 \begin{figure}[htpb]
 	\centering
 		\subfigure[Numero di residenti per Sesso e Uso di Droghe]
-		{\includegraphics[height=2cm, width=8cm, keepaspectratio]{Immagini/Appendice1/prot_dati_17.JPG}}
+		{\includegraphics[height=2cm, width=8cm, keepaspectratio]{Immagini/dati_sensibili/prot_dati_17.JPG}}
 		
 		\subfigure[Tabella dopo l'occultamento]
-		{\includegraphics[height=2cm, width=8cm, keepaspectratio]{Immagini/Appendice1/prot_dati_18.JPG}}
+		{\includegraphics[height=2cm, width=8cm, keepaspectratio]{Immagini/dati_sensibili/prot_dati_18.JPG}}
 				
 		\caption{Esempio di protezione per occultamento
 		  \label{fig:query_occultamento}}  
 
 \end{figure}
 
+\subsubsection{Campione Casuale dei dati}
 
-Nel caso \ref{fig:query_occultamento} la query viene eseguita su di un \textbf{Campione Casuale} dei dati, il campione deve essere abbastanza ampio da rappresentare l'intera popolazione. In questo modo i dati sono sempre rappresentativi ma si diminuisce la possibilità di attacchi statistici.
+Alternativamente la query può essere eseguita su di un \textbf{Campione Casuale} dei dati, in cui il campione deve essere abbastanza ampio da rappresentare l'intera popolazione. In questo modo i dati sono sempre rappresentativi ma si diminuisce la possibilità di attacchi statistici.
 
-\subsection{Perturbazione Casuale dei dati}
-A volte può essere utile perturbare i valori del DB con un piccolo errore, per ogni $x_{i}$ che rappresenta il valore vero dell'attributo i si può generare un piccolo errore $e_{i}$ e aggiungerlo a $x_{i}$ per calcolare dati statistici.
+\subsubsection{Perturbazione Casuale dei dati}
+
+A volte può essere utile perturbare i valori del database con un piccolo errore, per ogni $x_{i}$ che rappresenta il valore vero dell'attributo i si può generare un piccolo errore $e_{i}$ e aggiungerlo a $x_{i}$ per calcolare dati statistici.
 Valori di query aggregate, quali la somma o la media, produrranno valori vicini a quelli veri ma non esatti.
+
 \section{Esercitazione sull'inferenza}
-Con riferimento alla tabella dipendenti, in \figurename ~\ref{fig:Tabella_dipendenti}, trovare lo stipendio di Mister X con un attacco indiretto di tipo media.\\
+Con riferimento alla tabella dipendenti, in \figurename ~\ref{fig:Tabella_dipendenti}, trovare lo stipendio di Mister X con un attacco indiretto di tipo media. \newline
 \begin{figure}[htbp]
 	\centering%
 	\subfigure%
-	{\includegraphics[height=6cm, width=12cm, keepaspectratio]{Immagini/Appendice1/Tabella_dipendenti.png}}
+	{\includegraphics[height=8cm, width=12cm, keepaspectratio]{Immagini/dati_sensibili/Tabella_dipendenti.png}}
 	\caption{Tabella dipendenti\label{fig:Tabella_dipendenti}} 	
 \end{figure}
 Si hanno a disposizione le seguenti informazioni:

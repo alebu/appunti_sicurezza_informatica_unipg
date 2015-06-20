@@ -150,7 +150,7 @@ La fase 0, viene eseguita dall'iniziatore della comunicazione qualora i numeri $
 \begin{figure}[htbp]
 	\centering%
 	\subfigure%
-	{\includegraphics[scale=0.5, keepaspectratio]{Immagini/Capitolo6/DiffieHellman_schema.png}}
+	{\includegraphics[scale=0.5, keepaspectratio]{Immagini/chiave_pubblica/DiffieHellman_schema.png}}
 	\caption{Diffie-Hellman: schema}
 	\end{figure}
 
@@ -166,7 +166,7 @@ Questo perchè Mr. X conosce $g$ e $p$, quindi si calcola $s_{x}<p$ e $T_{x}=g^{
 \begin{figure}[htbp]
 	\centering%
 	\subfigure%
-	{\includegraphics[scale=0.5, keepaspectratio]{Immagini/Capitolo6/DiffieHellman_maninthemiddle.png}}
+	{\includegraphics[scale=0.5, keepaspectratio]{Immagini/chiave_pubblica/DiffieHellman_maninthemiddle.png}}
 	\caption{Man-in-the-Middle Attack}
 	\end{figure}
 	
@@ -181,7 +181,7 @@ Il problema è che l'autenticazione via password, se è in corso un attacco Man-
 \begin{figure}[htbp]
 	\centering%
 	\subfigure%
-	{\includegraphics[scale=0.5, keepaspectratio]{Immagini/Capitolo6/DiffieHellman_passauth.png}}
+	{\includegraphics[scale=0.5, keepaspectratio]{Immagini/chiave_pubblica/DiffieHellman_passauth.png}}
 	\caption{Autenticazione via password}
 	\end{figure}
 \item Anche altri tipi di proposte sono insufficienti(timestamp, domande personali..). Il problema è che Diffie-Hellman effettua delle operazioni invertibili(cifratura/decifratura) ed è sicuro solo nel caso di attacchi passivi(un intruso intercetta i messaggi, ma non li modifica). E' necessario proteggere l'integrità, per cui si adottano due strategie generali: Diffie-Hellman con Numeri Pubblici e Scambio Diffie-Hellman Autenticato.	
@@ -207,14 +207,14 @@ Di seguito sono indicate alcune possibili soluzioni per lo scambio Diffie-Hellma
 \begin{figure}[htbp]
 	\centering%
 	\subfigure%
-	{\includegraphics[scale=0.5, keepaspectratio]{Immagini/Capitolo6/DiffieHellman_auth1.png}}
+	{\includegraphics[scale=0.5, keepaspectratio]{Immagini/chiave_pubblica/DiffieHellman_auth1.png}}
 	\caption{Utilizzo $K^{AB}$.}
 	\end{figure}
 \item Cifrare il valore Diffie-Hellman con la chiave pubblica dell'altro interlocutore(figura \ref{fig:auth2}).
 \begin{figure}[htbp]
 	\centering%
 	\subfigure%
-	{\includegraphics[scale=0.5, keepaspectratio]{Immagini/Capitolo6/DiffieHellman_auth2.png}}
+	{\includegraphics[scale=0.5, keepaspectratio]{Immagini/chiave_pubblica/DiffieHellman_auth2.png}}
 	\caption{Utilizzo chiave pubblica dell'altro interlocutore.}
 	\label{fig:auth2}
 	\end{figure}
@@ -222,7 +222,7 @@ Di seguito sono indicate alcune possibili soluzioni per lo scambio Diffie-Hellma
 \begin{figure}[htbp]
 	\centering
 	\subfigure
-	{\includegraphics[scale=0.5, keepaspectratio]{Immagini/Capitolo6/DiffieHellman_auth3.png}}
+	{\includegraphics[scale=0.5, keepaspectratio]{Immagini/chiave_pubblica/DiffieHellman_auth3.png}}
 	\caption{Utilizzo propria chiave privata.}
 	\label{fig:auth3}
 	\end{figure}
@@ -237,10 +237,10 @@ Diffie-Hellman trasmesso e della chiave segreta $K^{AB}$.
 \begin{figure}[htbp]
 	\centering
 	\subfigure
-	{\includegraphics[scale=0.5, keepaspectratio]{Immagini/Capitolo6/DiffieHellman_auth4.png}}
+	{\includegraphics[scale=0.5, keepaspectratio]{Immagini/chiave_pubblica/DiffieHellman_auth4.png}}
 	\hspace{2mm}
 	\subfigure
-	{\includegraphics[scale=0.5, keepaspectratio]{Immagini/Capitolo6/DiffieHellman_auth5.png}}
+	{\includegraphics[scale=0.5, keepaspectratio]{Immagini/chiave_pubblica/DiffieHellman_auth5.png}}
 	\caption{Autenticazione successiva allo scambio Diffie-Hellman.}
 	\label{fig:auth45}
 	\end{figure}
@@ -258,7 +258,7 @@ Di seguito(figura \ref{fig:authex}), mostriamo un esempio di procedura che conse
 \begin{figure}[htbp]
 	\centering%
 	\subfigure%
-	{\includegraphics[scale=0.6, keepaspectratio]{Immagini/Capitolo6/DiffieHellman_pubseckey.png}}
+	{\includegraphics[scale=0.6, keepaspectratio]{Immagini/chiave_pubblica/DiffieHellman_pubseckey.png}}
 	\caption{Chiavi pubbliche/private Diffie-Hellman}
 	\label{fig:authex}
 \end{figure} 
@@ -304,7 +304,7 @@ Dunque, tale protocollo consiste dei seguenti passi: \begin{enumerate}
 \begin{figure}[htbp]
 	\centering%
 	\subfigure%
-	{\includegraphics[scale=0.6, keepaspectratio]{Immagini/Capitolo6/zkasmsr_auth.png}}
+	{\includegraphics[scale=0.6, keepaspectratio]{Immagini/chiave_pubblica/zkasmsr_auth.png}}
 	\caption{}
 \end{figure}
 

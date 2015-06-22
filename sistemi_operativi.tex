@@ -211,8 +211,8 @@ Per quanto riguarda il controllo dei permessi va notato che:
   \item I permessi ereditati hanno precedenza tra di loro in base alla distanza dalla risorsa
 \end{itemize}
   
-\subsubsection{File Descriptors}
-L'assegnazione dei permessi a file o cartelle, in Windows, viene gestita tramite il meccanismo dei file descriptors. Un \textbf{file descriptor} o \textbf{file handle} è un identificatore per un file o per una cartella. I file descriptor sono memorizzati in una tabella che li mappa con il percorso del file a cui si riferiscono, chiamata \textbf{file descriptor table}. L'accesso ai file e cartelle tramite System Calls passa quindi per questi costrutti. Le operazioni possibili sono:
+\subsubsection{File Descriptors e File Handles}
+L'assegnazione dei permessi a file o cartelle, in Windows e Unix, viene gestita tramite il meccanismo dei file descriptors. Un \textbf{file descriptor}, per Unix, o \textbf{file handle}, per Windows, è un identificatore per un file o per una cartella. I file descriptor sono memorizzati in una tabella che li mappa con il percorso del file a cui si riferiscono, chiamata \textbf{file descriptor table}. L'accesso ai file e cartelle tramite System Calls passa quindi per questi costrutti. Le operazioni possibili sono:
 \begin{itemize}
   \item \textbf{open}: ritorna un file handle
   \item \textbf{read/write/execute} file

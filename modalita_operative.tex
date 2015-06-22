@@ -1,4 +1,4 @@
-\chapter{Modalità operative}
+\chapter{Modalità operative} \label{ch:modes}
 
 \section{Introduzione}
 Si illustrerà come usare gli algoritmi di crittografia a chiave segreta, DES, IDEA e AES, in applicazioni reali: è stato visto soltanto come usare tali algoritmi per cifrare blocchi di lunghezza prefissata (64 bit per DES e IDEA, 128 bit per AES), come si procede se è necessario cifrare dei messaggi di lunghezza arbitraria/diversa? \newline \newline
@@ -135,7 +135,7 @@ alcuni dati che vengono caricati attraverso la rete, ma in realtà, c'è un modo
 potrebbe scambiare i blocchi in modo da cambiarlo con il suo, ma poi dovrà modificare molto probabilmente gran parte del messaggio restante per garantire che il CRC risulti invariato.\newline \newline
 Per prevenire attacchi di questo tipo, basati sul riarrangiamento dei blocchi cifrati e tali da preservare il CRC originario, potrebbe essere usato un CRC a 64 bit: ciò è sicuramente sufficiente se l'attacco al CRC, nell'ambito di un CBC, è di tipo a forza bruta. \newline
 Per chi progetta protocolli crittografici sicuri, una modalità di cifratura ad un singolo step che protegga sia la confidenzialità che l'autenticità di un messaggio è stata per molti anni una sorta di "Sacro Graal" da ricercare!
-\subsection{Output FeedBack Mode (OFB)}
+\subsection{Output FeedBack Mode (OFB)} \label{par:ofb}
 L’OFB è un cifrario a flusso: la cifratura consiste nel sommare ($\oplus$ XOR) il messaggio con il keystream (o one-time pad) generato da OFB stesso. Supponiamo che il keystream sia ottenuto generando singoli blocchi di 64 bit alla volta; un possibile modo per generarlo è il seguente:
 \begin{itemize}
 \item viene generato un numero random $IV$ (Initialization Vector) di 64 bit

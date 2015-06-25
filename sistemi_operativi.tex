@@ -73,11 +73,12 @@ Un processo può inoltre avviare e controllare altri processi. Un nuovo processo
 \begin{lstlisting}[caption={Esempio forking in C}]
 int main()
 {
-	printf("I'm the parent, my PID is %d, my parent is process %d\n", 
-			getpid(), getppid());
-	fork();
-	printf("This sentence has been printed by process: %d my parent 
+	printf("I'm the parent, my PID is %d, my parent 
 			is process %d\n", getpid(), getppid());
+	fork();
+	printf("This sentence has been printed by process:
+	 		%d my parent is process %d\n", getpid(), 
+	 		getppid());
 }
 \end{lstlisting}
 \end{algorithm}

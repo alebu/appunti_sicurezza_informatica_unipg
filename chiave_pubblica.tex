@@ -1,5 +1,40 @@
 \chapter{Crittografia a chiave pubblica} \label{ch:publickey}
-La crittografia a chiave pubblica si basa su alcuni risultati nell'ambito della teoria dei numeri. Si esamineranno i seguenti schemi di cifratura a chiave pubblica: \begin{itemize}
+\section{Introduzione}
+La crittografia a chiave pubblica (\textbf{public key cryptogarphy}) (talvolta detta anche crittografia asimmetrica (\textbf{asymmetric cryptography}) fu pubblicamente introdotta nel 1975, anche se alcune voci sostengono che l'NSA già la utilizzasse da diverso tempo. Diversamente dalla crittografia a chiave segreta non prevede la \textbf{condivisione di un segreto}. Ogni entità ha due chiavi:
+\begin{itemize}
+	\item una chiave privata da \textbf{non rivelare} a nessuno
+	\item una chiave pubblica da rivelare preferibilmente a tutto il mondo
+\end{itemize}
+
+\subsubsection{Terminologia e notazione}
+Per convenzione non si userà il termine \textbf{chiave segreta} in luogo di \textbf{chiave privata}, per distinguere il concetto di chiave segreta utilizzata nel contesto di un algoritmo a crittografia simmetrica e chiave privata nel contesto di un algoritmo di crittografia asimmetrica. In base all’aggettivo della chiave sarà quindi immediato risalire allo schema di crittografia usato.
+\begin{figure}[htbp]
+	\centering%
+	\subfigure%
+	{\includegraphics[height=13cm, width=10cm, keepaspectratio]{Immagini/chiave_pubblica/chiave_pubblica_schema.png}}
+	\caption{Schema a blocchi crittografia a chiave pubblica \label{fig:pubblica_schema_blocchi}} 	
+\end{figure}
+Per quanto riguarda la notazione faremo riferimento alla \figurename~\ref{fig:pubblica_schema_blocchi}, in cui:
+\begin{itemize}
+	\item \textbf{PU} rappresenta la chiave \textbf{Pubblica}; ad esempio $PU_B$ indica la chiave pubblica di Bob
+	\item \textbf{PR} rappresenta la chiave \textbf{Privata}; ad esempio $PR B$ indica la chiave privata di Bob
+\end{itemize}
+Cifratura e decifratura sono due funzioni matematiche che sono l'una l'inverso dell’altra:
+\begin{equation}
+m = D(PR, c) = D(PR, E (PU, m))
+\end{equation}
+
+\subsubsection{Firma digitale}
+La tecnologia a chiave pubblica consente anche di generare una \textbf{firma digitale} su un messaggio (ovvero garantirne l'autenticità). Basta infatti invertire il ruolo delle chiavi, come mostrato in \figurename~\ref{fig:pubblica_schema_firma}. In questo contesto le funzioni E() e D() vengono denominate S()(Sign) e V()(Verify). 
+\begin{figure}[htbp]
+	\centering%
+	\subfigure%
+	{\includegraphics[height=13cm, width=10cm, keepaspectratio]{Immagini/chiave_pubblica/chiave_pubblica_firma.png}}
+	\caption{Schema a blocchi crittografia a chiave pubblica \label{fig:pubblica_schema_firma}} 	
+\end{figure}
+
+La crittografia a chiave pubblica si basa su alcuni risultati nell'ambito della teoria dei numeri. Si esamineranno i seguenti schemi di cifratura a chiave pubblica: 
+\begin{itemize}
 \item RSA usata per cifrare e per calcolare la firma digitale
 \item ElGamal e DSS, usati per la firma digitale
 \item Diffie-Hellman, permette di stabilire un segreto condiviso, ma non fornisce alcun algoritmo che usa effettivamente tale segreto

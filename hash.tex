@@ -344,7 +344,7 @@ Questo principio è utilizzato (ad esempio) per la gestione delle password in UN
 Ogni volta che una password \textbf{pwd} d’utente viene impostata viene generato il salt, \textbf{pwd} viene convertita in una chiave segreta $K_{pwd}$ a 64 bit, viene generato l'hash come descritto e il risultato e il salt vengono memorizzati nel file \textit{passwd}.
 \newline \newline
 Questo schema funziona bene, però, solamente per la cifratura di messaggi corti. Com'è possibile calcolare l'hash di un messaggio di lunghezza arbitraria utilizzando un algoritmo di cifratura a chiave segreta?
-\subsection{Hash di grandi messaggi con algoritmi di cifratura come hash}
+\subsection{Hash di grandi messaggi tramite algoritmi di cifratura}
 Una possibile soluzione consiste nel suddividere il messaggio $m = m_{1},m_{2},m_{3},...,m_{n}$, e utilizzare ogni $m_{i}$ come input a un blocco in cascata. L’hash h(m) sarà l’output della cascata. Tale schema è mostrato in figura \ref{fig:hash_lung_ar}.
 \begin{figure}
 	\begin{center}

@@ -1,4 +1,4 @@
-\chapter{Secret Key Cryptography} \label{ch:secretkey}
+\chapter{Crittografia a chiave segreta} \label{ch:secretkey}
 
 \section{Introduzione}
 La crittografia a chiave segreta richiede l'uso di \textbf{una sola chiave}: dato un messaggio (il \textbf{testo in chiaro}) e la chiave, la cifratura produce dati non intellegibili (il \textbf{testo cifrato}). Il testo cifrato ha circa la stessa lunghezza di quello in chiaro e la decifratura è l'inverso della cifratura, ed usa la stessa chiave. La crittografia a chiave segreta è talvolta chiamata crittografia \textbf{convenzionale} o crittografia \textbf{simmetrica}.
@@ -67,7 +67,7 @@ Un \textbf{cifrario a blocchi} elabora un blocco di elementi in ingresso per vol
   \item il testo in chiaro deve essere preliminarmente suddiviso in blocchi
   \item il testo cifrato si ottiene combinando i vari blocchi cifrati
 \end{itemize}
-DES, IDEA e AES sono esempi di cifrari a blocchi simmetrici. Un \textbf{cifrario a flusso}, invece, elabora continuamente gli elementi in ingresso, producendo in uscita un "flusso" di elementi cifrati. Gli elementi cifrati vengono prodotti singolarmente, uno alla volta, man mano che la cifratura procede. La distinzione tra la due categorie di cifrari è duale alla distinzione dei codici a blocchi e convoluzionali nell'ambito dei codici per la rivelazione di errore nei sistemi di telecomunicazione.
+DES, IDEA e AES sono esempi di cifrari a blocchi simmetrici. Un \textbf{cifrario a flusso}, invece, elabora continuamente gli elementi in ingresso, producendo in uscita un "flusso" di elementi cifrati. Gli elementi cifrati vengono prodotti singolarmente, uno alla volta, man mano che la cifratura procede. La distinzione tra la due categorie di cifrari è duale alla distinzione tra codici a blocchi e convoluzionali nell'ambito dei codici per la rivelazione di errore nei sistemi di telecomunicazione. La differenza sostanziale risiede infatti nella presenza del concetto di \textbf{stato} nei cifrari a flusso: sebbene per cifrare il singolo \textbf{quanto minimo di informazione} (e.g. il bit) non serva avere a disposizione l'intero blocco informativo (e.g. il messaggio), il risultato di tale cifratura dipende (attraverso lo stato del cifrario) dai quanti precedenti.
 
 \section{Cifratura a blocchi}
 
@@ -174,15 +174,15 @@ Per descrivere DES è quindi sufficiente discutere le permutazioni iniziale e fi
 
 
 \subsubsection{Permutazioni dei dati}
-L'operazione di permutazione è molto importante in quanto diffonde la dipendenza dei bit in/out. Nel caso di DES però le permutazioni finale e iniziale non hanno effetto. Dimostriamo tale affermazione. \newline
+L'operazione di permutazione è molto importante in quanto diffonde la dipendenza dei bit in/out. Nel caso di DES però le permutazioni finale e iniziale non hanno effetto. Dimostriamo tale affermazione. \newline \newline
 \begin{figure}[htbp]
 	\centering%
 	\subfigure%
 	{\includegraphics[height=10cm, width=8cm, keepaspectratio]{Immagini/chiave_segreta/des_perm_3.png}}
 	\caption{Inutilità delle permutazioni iniziale e finale \label{fig:des_perm_3}} 	
 \end{figure}
-Supponiamo di non averle. Se assumiamo per assurdo che il cifrario cosi ottenuto sia facile da violare, vogliamo dimostrare che anche DES è facile da violare. Procedendo in questo modo, dimostriamo l'effettiva inutilità di tali permutazioni. \\
-
+Supponiamo di non averle. Se assumiamo \textbf{per assurdo} che il cifrario cosi ottenuto sia facile da violare, vogliamo dimostrare che anche \textbf{DES} è facile da violare. Procedendo in questo modo, dimostriamo l'effettiva inutilità di tali permutazioni. 
+\newline \newline
 Chiamiamo il cifrario senza permutazione \textbf{EDS}. Se posso violare \textbf{EDS} (disponendo, ad esempio, di una coppia $\langle plaintext, ciphertext \rangle$), basta permutare ciò che ottengo e violo DES. Infatti, sia $\langle m, c \rangle$ una coppia $\langle plaintext, ciphertext \rangle$ di DES. Si consideri allora la coppia $\langle m', c' \rangle$, dove m' e c' sono ottenuti applicando la permutazione iniziale ad m e c. Allora, la chiave $K_{EDS}$ che si ottiene violando EDS per la
 coppia $\langle m', c' \rangle$ coincide con la chiave $K_{DES}$ di DES per la
 coppia $\langle m, c \rangle$ (vedi \figurename ~\ref{fig:des_perm_3}). \\
@@ -264,7 +264,7 @@ Trattiamo ora la generazione della chiave $K_{i}$ che avviene nell'i-esimo round
 	{\includegraphics[height=10cm, width=9cm, keepaspectratio]{Immagini/chiave_segreta/round_des.png}}
 	\caption{Struttura di un round di DES \label{fig:round_des}} 	
 \end{figure}
-La struttura di un round di des è illustrata in \figurename ~\ref{fig:round_des}. I 64 bit in input sono divisi in due metà da 32 bit: $L_{n}$, la metà sinistra dopo l'(n-1)-esimo round, e $R_{n}$, la metà destra dopo l'(n-1)-esimo round. L'output di 64 bit del round si ottiene concatenando le due metà: $L_{n + 1}$, la metà sinistra dopo l'n-esimo round, e $R_{n + 1}$, la metà destra dopo l'n-esimo round. $L_{n+1}$ è semplicemente $R_{n}$, mentre $R_{n + 1}$ è ottenuto come segue:
+La struttura di un round di DES è illustrata in \figurename~\ref{fig:round_des}. I 64 bit in input sono divisi in due metà da 32 bit: $L_{n}$, la metà sinistra dopo l'(n-1)-esimo round, e $R_{n}$, la metà destra dopo l'(n-1)-esimo round. L'output di 64 bit del round si ottiene concatenando le due metà: $L_{n + 1}$, la metà sinistra dopo l'n-esimo round, e $R_{n + 1}$, la metà destra dopo l'n-esimo round. $L_{n+1}$ è semplicemente $R_{n}$, mentre $R_{n + 1}$ è ottenuto come segue:
 \begin{itemize}
   \item $R_{n}$ e $K_{n}$ sono posti in input alla mangler function; la mangler function viene anche detta funzione di Feistel
   \item l'output della mangler function, $mangler(R_{n}, K_{n})$, è una quantità di 32 bit; si noti che $R_{n}, K_{n}$ sono composti da
@@ -272,7 +272,20 @@ La struttura di un round di des è illustrata in \figurename ~\ref{fig:round_des
   \item l'output $mangler(R_{n}, K_{n})$ viene poi sommato (XOR) con $L_{n}$
   \item il risultato ottenuto è $R_{n+1} = mangler(R_{n}, K_{n}) \oplus L_{n}$
 \end{itemize}
-Si noti che ogni round di DES è facilmente invertibile: noti $L_{n+1}$ , $R_{n+1}$ e $k_{n}$ è facile ottenere $L_{n}$ e $R_{n}$. Infatti $R_{n} = L_{n+1}$ e, poiché $R_{n+1} = mangler(R_{n}, K_{n}) \oplus L_{n}$, risulta $R_{n+1} \oplus mangler(R_{n}, K_{n}) = L_{n}$ (in virtù della proprietà dello XOR secondo cui $x \oplus y \oplus y = x$). La mangler function non è quindi mai utilizzata in senso inverso. DES è elegantemento progettato in modo da essere facilmente invertibile senza richiedere l'invertibilità della mangler function. Esaminando attentamente la \figurename ~\ref{fig:round_des}), si evince che la decifratura è di fatto identica alla cifratura, tranne per il fatto che le due metà da 32 bit sono invertite. In altre parole, fornendo $R_{n+1} \mid L_{n+1}$ in input al round n si ottiene $R_{n} \mid L_{n}$ in uscita
+Si noti che ogni round di DES è facilmente invertibile: noti $L_{n+1}$ , $R_{n+1}$ e $K_{n}$ è facile ottenere $L_{n}$ e $R_{n}$. Infatti $R_{n} = L_{n+1}$ e, ricordando che:
+\begin{equation}
+x \oplus y \oplus y = x 
+\end{equation}
+Ho che:
+\begin{equation}
+x  = z \oplus y \Rightarrow  x \oplus y = z \oplus y \oplus y \Rightarrow  x \oplus y = z
+\end{equation}
+Applicando tale proprietà dello XOR al caso in esame ottengo:
+\begin{equation}
+R_{n+1} = mangler(R_{n}, K_{n}) \oplus L_{n} \Rightarrow R_{n+1} \oplus mangler(R_{n}, K_{n}) = L_{n}
+\end{equation}
+La mangler function non è quindi mai utilizzata in senso inverso. DES è elegantemento progettato in modo da essere facilmente invertibile senza richiedere l'invertibilità della mangler function. Esaminando attentamente la \figurename ~\ref{fig:round_des}), si evince che la decifratura è di fatto identica alla cifratura, tranne per il fatto che le due metà da 32 bit sono invertite. In altre parole, fornendo $R_{n+1} \mid L_{n+1}$ in input al round n si ottiene $R_{n} \mid L_{n}$ in uscita
+
 \subsubsection{Mangler Function}
 \begin{figure}[htbp]
 	\centering%
@@ -320,28 +333,28 @@ Nel seguito si descriverà Rijndael, specificando di volta in volta i parametri 
 \subsubsection{Rijndael/AES - parametri}
 Rijndael ha una struttura flessibile grazie all'uso di due parametri indipendenti, e di un terzo parametro derivato dai primi due:
 \begin{itemize}
-  \item $N_{b}$ \textbf{dimensione di un blocco}: numero di parole (word) da 32 bit (colonne da 4 ottetti) in un blocco da cifrare. In AES $N_{b = 4}$, ovvero un blocco ha lunghezza 128 bit, ovvero 4 parole da 32 bit (4 colonne da 4 ottetti).
+  \item $N_{b}$ \textbf{dimensione di un blocco}: numero di parole (word) da 32 bit (colonne da 4 ottetti) in un blocco da cifrare. In AES $N_{b}$ = 4 $\Rightarrow$ un blocco ha lunghezza 128 bit, ovvero 4 parole da 32 bit (4 colonne da 4 ottetti).
   \item $N_{k}$ \textbf{dimensione della chiave}: numero di parole (word) da 32 bit (colonne da 4 ottetti) in una chiave di cifratura. In AES-128 $N_{k} = 4$, In AES-192 $N_{k} = 6$, In AES-256 $N_{k} = 8$. In Rijndael $N_{k}$ può essere un qualsiasi intero tra 4 e 8.
-  \item $N_{r}$ \textbf{numero di round}: questo parametro dipende da $N_{b}$ e da $N_{k}$. Come idea generale, più lunga è la chiave più round sono necessari per rendere la violazione della cifratura difficile quanto un attacco a forza bruta sulla chiave. Inoltre il numero di round deve aumentare all'aumentare della lunghezza di un blocco (e della chiave); ogni bit del testo in chiaro (e della chiave) deve influenzare (in modo complesso) ciascun bit del testo cifrato. Rijndael specifica che $N_{r}$ = 6 + max($N_{b}$ ,$N_{k}$). In AES-128 $N_{r} = 10$, in AES-192 $N_{r} = 12$, in AES-256 $N_{r} = 14$.
+  \item $N_{r}$ \textbf{numero di round}: questo parametro dipende da $N_{b}$ e da $N_{k}$. Come idea generale, più lunga è la chiave più round sono necessari per rendere la violazione della cifratura difficile quanto un attacco a forza bruta sulla chiave. Inoltre il numero di round deve aumentare all'aumentare della lunghezza di un blocco e della chiave, poiché ogni bit del testo in chiaro (e della chiave) deve influenzare (in modo complesso) ciascun bit del testo cifrato. Rijndael specifica che $N_{r}$ = 6 + max($N_{b}$ ,$N_{k}$). In AES-128 $N_{r} = 10$, in AES-192 $N_{r} = 12$, in AES-256 $N_{r} = 14$.
 \end{itemize}
   
 \subsubsection{Array di stato}
 Rijndael mantiene un array di stato rettangolare durante il funzionamento. Ogni elemento dell'array è un ottetto. Complessivamente ci sono $N_{b}$ colonne da 4 ottetti. Lo stato iniziale è ottenuto popolando l’array, colonna per colonna, mediante le $N_{b}$ colonne da 4 ottetti che costituiscono il blocco di input. \\
-
-Durante gli $N_{r}$ round lo stato viene modificato e il blocco di output dell'algoritmo si ottiene leggendo colonna per colonna lo stato finale. \\
-
-La struttura base di Rijndael è mostrata in \figurename ~\ref{fig:Rij_struct}.Prima del primo round, tra i vari round, e dopo il round $N_{r}$ viene eseguito l'or-esclusivo ($\oplus$ XOR) del contenuto dell'array di stato, con i prossimi $4\cdot N_{b}$ ottetti della \textbf{chiave espansa}. Gli ottetti della chiave espansa vengono letti per colonna in modo da formare un matrice di $N_{b}$ colonne da 4 ottetti ciascuna. I primi $N_{r} – 1$ round comprendono una sequenza di operazioni identiche, mentre il round $N_{r}$ ne omette una.
+\newline \newline
+Durante gli $N_{r}$ round lo stato viene modificato e il blocco di output dell'algoritmo si ottiene leggendo colonna per colonna lo stato finale. 
+\newline \newline 
+La struttura base di Rijndael è mostrata in \figurename ~\ref{fig:Rij_struct}. Prima del primo round, tra i vari round, e dopo il round $N_{r}$ viene eseguito l'or-esclusivo ($\oplus$ XOR) del contenuto dell'array di stato, con i prossimi $4\cdot N_{b}$ ottetti della \textbf{chiave espansa}. Gli ottetti della chiave espansa vengono letti per colonna in modo da formare un matrice di $N_{b}$ colonne da 4 ottetti ciascuna. I primi $N_{r} - 1$ round comprendono una sequenza di operazioni identiche, mentre il round $N_{r}$ ne omette una.
 
 \begin{figure}[htbp]
 	\centering%
 	\subfigure%
-	{\includegraphics[height=13cm, width=10cm, keepaspectratio]{Immagini/chiave_segreta/rijndael_struttura.png}}
+	{\includegraphics[height=10cm, width=10cm, keepaspectratio]{Immagini/chiave_segreta/rijndael_struttura.png}}
 	\caption{Struttura di base di Rijndael \label{fig:Rij_struct}} 	
 \end{figure}
 
 \subsubsection{Espansione della chiave}
-La chiave segreta di Rijndael è un blocco formato da $4 \cdot N_{k}$ ottetti ($N_{k}$ word da 32 bit). L'algoritmo di espansione della chiave scandisce la chiave in modo da ottenere $N_{k}$ colonne da 4 ottetti, poi espande la matrice ottenuta introducendo delle colonne (da 4 ottetti) aggiuntive (avvalendosi dello stesso tipo di operazioni primitive usate durante i round, che verrano descritte in seguito). L'espansione si arresta quando si hanno complessivamente $(N_{r} + 1)N_{b}$ colonne, ovvero l'esatta quantità di chiavi espanse. Non tratteremo qui nel dettaglio come avviene l'espansione, per l'approfondimento si rimanda a testi dedicati.\\
-
+La chiave segreta di Rijndael è un blocco formato da $4 \cdot N_{k}$ ottetti ($N_{k}$ word da 32 bit). L'algoritmo di espansione della chiave scandisce la chiave in modo da ottenere $N_{k}$ colonne da 4 ottetti, poi espande la matrice ottenuta introducendo delle colonne (da 4 ottetti) aggiuntive (avvalendosi dello stesso tipo di operazioni primitive usate durante i round, che verrano descritte in seguito). L'espansione si arresta quando si hanno complessivamente $(N_{r} + 1)N_{b}$ colonne, ovvero l'esatta quantità di chiavi espanse. Non tratteremo qui nel dettaglio come avviene l'espansione, per l'approfondimento si rimanda a testi dedicati.
+\newline \newline
 \textbf{Numerazioni}: righe, colonne, e chiavi di round sono numerate a
 partire 0, mentre i round sono invece numerati a partire da 1.
 
@@ -349,18 +362,16 @@ partire 0, mentre i round sono invece numerati a partire da 1.
 Rijndael utilizza quattro operazioni primitive, sia nell'espansione della chiave che all'interno dei round:
 \begin{itemize}
   \item \textbf{OR-esclusivo ($\oplus$ XOR)}, in cui sono coinvolte le chiavi espanse
-  \item \textbf{sostituzione di byte}, chiamata \textbf{S-box}. Si tratta di una sostituzione ottetto-per-ottetto (byte-per- byte) definita da una specifica tabella, che specifica, per ciascuno dei possibili 256 byte in input il corrispondente byte in output tra i 256 possibili. Per la rappresentazione della tabella fa comodo usare la notazione esadecimale in cui, ad esempio, FC rappresenta il 252-esimo byte. Un'esempio di S-box è mostrato in \figurename ~\ref{fig:Rij_sbox}.
+  \item \textbf{sostituzione di byte}, chiamata \textbf{S-box}. Si tratta di una sostituzione ottetto-per-ottetto (byte-per- byte) definita da una specifica tabella, che specifica, per ciascuno dei possibili 256 byte in input il corrispondente byte in output tra i 256 possibili. Per la rappresentazione della tabella fa comodo usare la notazione esadecimale in cui, ad esempio, FC rappresenta il 252-esimo byte. Un esempio di S-box è riportato in figura \ref{fig:Rij_sbox}.
   \item \textbf{scorrimento circolare di ottetti (byte)} di una riga o di una colonna pari a un qualche numero di celle
-  \item mescolamento colonne, \textbf{MixColumn}. Consiste nella sostituzione di una colonna di 4 ottetti con un'altra colonna di 4 ottetti. MixColumn può essere implementata con una singola tabella contenente 256 colonne di 4 ottetti: ciascuno dei 4 ottetti in una colonna di input è usato come un indice per recuperare una colonna dalla tabella. Ogni colonna recuperata dalla tabella è ruotata (scorrimento verticale circolare dall'alto in basso) verticalmente in modo tale che il suo ottetto in cima sia posto nella stessa riga dell’ottetto di input, e le quattro colonne ruotate sono sommate XOR per produrre la colonna di output. Un esempio di quest'operazione è mostrata in \figurename ~\ref{fig:Rij_mixcol} e \figurename ~\ref{fig:Rij_mixcol_lookup}.
+  \item mescolamento colonne, \textbf{MixColumn}. Consiste nella sostituzione di una colonna di 4 ottetti con un'altra colonna di 4 ottetti. \textbf{MixColumn} può essere implementata con una singola tabella contenente 256 colonne di 4 ottetti: ciascuno dei 4 ottetti in una colonna di input è usato come un indice per recuperare una colonna dalla tabella. Ogni colonna recuperata dalla tabella è ruotata (scorrimento verticale circolare dall'alto in basso) verticalmente in modo tale che il suo ottetto in cima sia posto nella stessa riga dell’ottetto di input, e le quattro colonne ruotate sono sommate XOR per produrre la colonna di output. Un esempio di quest'operazione è mostrata in \figurename ~\ref{fig:Rij_mixcol} e \figurename ~\ref{fig:Rij_mixcol_lookup}.
 \end{itemize}
 
 \begin{figure}[htbp]
 	\centering%
 	\subfigure%
 	{\includegraphics[height=10cm, width=10cm, keepaspectratio]{Immagini/chiave_segreta/rijndael_sbox.png}}
-	\caption{il 97-esimo byte è il numero 61 HEX in esadecimale, quindi è mappato nel byte nella riga 6 e colonna 1 che è EF HEX che corrisponde
-al 239-esimo byte. In binario si ha che $(1100001)_{2} = (97)_{10}$
-è mappato in $(11101111)_{2} = (239)_{10}$ \label{fig:Rij_mixcol}} 	
+	\caption{Esempio di S-box. Il 97-esimo byte è il numero 61 HEX in esadecimale, quindi è mappato nel byte nella riga 6 e colonna 1 che è EF HEX che corrisponde al 239-esimo byte. In binario si ha che $(1100001)_{2} = (97)_{10}$ è mappato in $(11101111)_{2} = (239)_{10}$ \label{fig:Rij_sbox}} 	
 \end{figure}
 
 \begin{figure}[htbp]
@@ -374,7 +385,7 @@ al 239-esimo byte. In binario si ha che $(1100001)_{2} = (97)_{10}$
 	\centering%
 	\subfigure%
 	{\includegraphics[height=13cm, width=13cm, keepaspectratio]{Immagini/chiave_segreta/rijndael_mixcol_lookup.png}}
-	\caption{All'ottetto "2b" corrisponde la colonna di 4 ottetti che si trova all’incrocio della riga "2" e della colonna "b", cioè la colonna ["56";"2b";"2b";"7d"] \label{fig:Rij_mixcol_lookup}} 	
+	\caption{Esempio tabella di lookup di MixColumn. All'ottetto "2b" corrisponde la colonna di 4 ottetti che si trova all’incrocio della riga "2" e della colonna "b", cioè la colonna ["56";"2b";"2b";"7d"] \label{fig:Rij_mixcol_lookup}} 	
 \end{figure}
 
 \subsubsection{Invertibilità delle operazioni primitive e decifratura di Rijndael}
@@ -446,7 +457,7 @@ Il vantaggio di un cifrario a blocchi è che la chiave segreta è riutilizzabile
 RC4 è un cifrario a flusso progettato nel 1987 da Ron Rivest (RSA Security) con dimensione della chiave variabile e funzionamento orientato al byte. Si basa sull'uso di una permutazione casuale, e dagli studi svolti sembra che il periodo del cifrario sia superire a $10^{100}$. Viene usato negli standard \textbf{SSL/TLS} (\textit{Secure Socket Layer/Transport Layer Security}), nel protocollo \textbf{WEP} (\textit{Wired Equivalent Privacy}) e nel protocollo \textbf{WPA} (\textit{WiFi Protected Access}). L'algoritmo RC4 è molto semplice da spiegare: basta capire come viene generato il
 \textbf{keystream}. \\
 
-L’algoritmo mantiene un array di stato monodimensionale \textbf{S} contenente 256 byte. S[0], S[1], ..., S[255] sono i 256 byte, ciascuno dei quali rappresenta un numero da 1 a 255. Una chiave di lunghezza variabile da 1 a 256 byte (da 8 a 2048 bit) viene usata per inizializzare il contenuto dell'array di stato. Quindi \textbf{S} contiene, in ogni momento, una delle 256! permutazioni dei numeri da 0 a 255. Per la cifratura/decifratura viene generato un byte \textbf{k} selezionando da \textbf{S} uno dei 255 elementi in maniera sistematica. Subito dopo la generazione del byte \textbf{k}, gli elementi di \textbf{S} vengono permutati, e l'algoritmo prosegue alternando le ultime due fasi (generazione di k e permutazione) finché il flusso in input non termina.\\
+L’algoritmo mantiene un array di stato monodimensionale \textbf{S} contenente 256 byte. S[0], S[1], ..., S[255] sono i 256 byte, ciascuno dei quali rappresenta un numero da 0 a 255. Una chiave di lunghezza variabile da 1 a 256 byte (da 8 a 2048 bit) viene usata per inizializzare il contenuto dell'array di stato. Per come è gestita l'inizializzazione e l'evoluzione dello stato (che vedremo nel dettaglio in seguito) \textbf{S} contiene, in ogni momento, una delle $256!$ permutazioni dei numeri da 0 a 255. Per la cifratura/decifratura viene generato un byte \textbf{k} selezionando da \textbf{S} uno dei 255 elementi in maniera sistematica. Subito dopo la generazione del byte \textbf{k}, gli elementi di \textbf{S} vengono permutati, e l'algoritmo prosegue alternando le ultime due fasi (generazione di k e permutazione) finché il flusso in input non termina.\\
 
 \subsubsection{Inizializzazione}
 Gli elementi di \textbf{S} vengono impostati uguali ai valori da 0 a 255 in ordine crescente:
@@ -459,7 +470,7 @@ Un vettore temporaneo \textbf{T}, della stessa lunghezza di \textbf{S}, viene us
 \begin{lstlisting}[caption={Inizializzazione RC4}]
 for i = 0 to 255 do {
 	S[i] = i;
-	T[i] = K[i mod keylen]; // keylen: lunghezza di S
+	T[i] = K[i mod keylen]; // keylen: lunghezza di K
 }
 \end{lstlisting}
 \end{algorithm}

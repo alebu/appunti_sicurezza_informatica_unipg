@@ -1,12 +1,12 @@
-\chapter{Modalità operative} \label{ch:modes}
+\chapter{Modalità operative dei cifrari a blocchi} \label{ch:modes}
 
 \section{Introduzione}
-Si illustrerà come usare gli algoritmi di crittografia a chiave segreta, DES, IDEA e AES, in applicazioni reali: è stato visto soltanto come usare tali algoritmi per cifrare blocchi di lunghezza prefissata (64 bit per DES e IDEA, 128 bit per AES), come si procede se è necessario cifrare dei messaggi di lunghezza arbitraria/diversa? \newline \newline
+Il seguente capitolo è dedicato all'impiego effettivo degli algoritmi di cifratura a simmetrice. Si illustrerà come usare tali algoritmi - in particolare DES, IDEA e AES - in applicazioni reali: è stato visto come usarli per cifrare blocchi di lunghezza prefissata (64 bit per DES e IDEA, 128 bit per AES), ma come si procede se è necessario cifrare dei messaggi di lunghezza arbitraria? \newline \newline
 Si vedrà inoltre come si generano dei MAC (\textbf{M}essage \textbf{A}uthentication \textbf{C}ode) sfruttando la crittografia a chiave segreta.
 
 \section{Cifrare messaggi di grandi dimensioni}
-Come è possibile cifrare messaggi di dimensioni superiori a 64 bit? \newline
-Sono state proposte diverse \textbf{modalità operative dei cifrari a blocchi}, cioè ci si è interrogati su come utilizzare i cifrari a blocchi nel caso di messaggi di lunghezza maggiore di quella di un singolo blocco.\newline \newline
+Come è possibile cifrare messaggi di dimensioni superiori a 64 bit? Sono state proposte diverse \textbf{modalità operative dei cifrari a blocchi}, cioè ci si è interrogati su come utilizzare i cifrari a blocchi nel caso di messaggi di lunghezza maggiore di quella di un singolo blocco.
+\newline \newline
 Le modalità più conosciute e che verranno descritte di seguito sono:
 \begin{itemize}
   \item \textbf{E}lectronic \textbf{C}ode \textbf{B}ook (ECB)
@@ -17,21 +17,21 @@ Le modalità più conosciute e che verranno descritte di seguito sono:
 \end{itemize} 
 Si noti che nel seguito si farà riferimento a cifrari a blocchi con blocchi di 64 bit (tutte le considerazioni valgono anche nel casi di cifrari con blocchi di dimensione diversa da 64 bit).
 \subsection{Electronic Code Book (ECB)}
-Questa modalità consiste nel fare la cosa più ovvia, ma corrisponde, in genere, alla soluzione peggiore, cioè:
+Questa modalità consiste nel fare la cosa più ovvia (ma corrisponde, in genere, alla soluzione peggiore) cioè:
 \begin{itemize}
-\item il messaggio viene decomposto in blocchi da 64 bit (inserendo eventualmente dei bit di padding nell'ultimo blocco al fine di riempirlo)
+\item decomporre il messaggio in blocchi da 64 bit (inserendo eventualmente dei bit di padding nell'ultimo blocco al fine di riempirlo)
 \item ciascun blocco da 64 bit viene cifrato con la chiave segreta
 \item ciascun blocco cifrato viene decifrato
 \item il messaggio viene ricomposto a partire dai singoli blocchi decifrati
 \end{itemize}
-Come illustrato nella figure \figurename ~\ref{fig:ECB_enc} e \figurename ~\ref{fig:ECB_dec}
+La modalità operativa è schematizzata nelle figure ~\ref{fig:ECB_enc} e ~\ref{fig:ECB_dec}.
 \begin{figure}[htbp]
 	\centering%
 	\subfigure%
-	{\includegraphics[height=4cm, width=12cm, keepaspectratio]{Immagini/modalita_operative/ECB_enc.png}}
+	{\includegraphics[height=4cm, width=10cm, keepaspectratio]{Immagini/modalita_operative/ECB_enc.png}}
 	\caption{Schema di crittografia ECB \label{fig:ECB_enc}} 	
 	\subfigure%
-	{\includegraphics[height=4cm, width=12cm, keepaspectratio]{Immagini/modalita_operative/ECB_dec.png}}
+	{\includegraphics[height=4cm, width=10cm, keepaspectratio]{Immagini/modalita_operative/ECB_dec.png}}
 	\caption{Schema di decrittografia ECB \label{fig:ECB_dec}} 
 \end{figure}
 \subsubsection{Problemi di sicurezza in ECB}
@@ -42,7 +42,8 @@ La modalità operativa ECB introduce una serie di problemi non presenti nel cifr
 	{\includegraphics[height=6cm, width=10cm, keepaspectratio]{Immagini/modalita_operative/File_salari.png}}
 	\caption{File con i salari, oggetto di attacco \label{fig:File_salari}} 	
 \end{figure}
-Si consideri ad esempio lo scenario della \figurename ~\ref{fig:File_salari}: supponiamo che l'ascoltatore sappia che il testo in chiaro contiene l'elenco, ordinato alfabeticamente, degli impiegati e dei relativi salari inviato dall'amministrazione all'ufficio paghe, supponiamo inoltre che ogni riga del file sia lunga esattamente 64 byte (8 blocchi da 8 byte) e che i vari blocchi risultino suddivisi in modo tale che alcuni contengono la codifica della cifra decimale più significativa del campo salario (migliaia di dollari/euro). Comparando i testi cifrati, l'ascoltatore, oltre a dedurre quanti dipendenti hanno lo stesso salario, può anche dedurre quanti dipendenti hanno uno stipendio nello stesso range (ordine di 10 euro/dollari); se ci sono complessivamente pochi range salariali, l'ascoltatore può dedurre a quale categoria di dipendente corrisponda un dato blocco cifrato; inoltre, se l'ascoltatore è un impiegato, può sostituire il blocco cifrato di un altro dipendente (un manager) al suo blocco cifrato (dedotto in base all'ordine e alla
+\subsubsection{Esempio (Opzionale)}
+Si consideri ad esempio lo scenario della \figurename ~\ref{fig:File_salari}: supponiamo che l'ascoltatore sappia che il testo in chiaro contiene l'elenco, ordinato alfabeticamente, degli impiegati e dei relativi salari inviato dall'amministrazione all'ufficio paghe. Supponiamo inoltre che ogni riga del file sia lunga esattamente 64 byte (8 blocchi da 8 byte) e che i vari blocchi risultino suddivisi in modo tale che alcuni contengono la codifica della cifra decimale più significativa del campo salario (migliaia di dollari/euro). Comparando i testi cifrati, l'ascoltatore, oltre a dedurre quanti dipendenti hanno lo stesso salario, può anche dedurre quanti dipendenti hanno uno stipendio nello stesso range (ordine di 10 euro/dollari); se ci sono complessivamente pochi range salariali, l'ascoltatore può dedurre a quale categoria di dipendente corrisponda un dato blocco cifrato; inoltre, se l'ascoltatore è un impiegato, può sostituire il blocco cifrato di un altro dipendente (un manager) al suo blocco cifrato (dedotto in base all'ordine e alla
 numerosità della sua classe salariale).\newline \newline
 ECB quindi ha due serie debolezze, legate al fatto che qualcuno, analizzando diversi blocchi cifrati potrebbe:
 \begin{itemize}
@@ -51,7 +52,7 @@ ECB quindi ha due serie debolezze, legate al fatto che qualcuno, analizzando div
 \end{itemize}
 Per tali ragioni ECB è raramente usato.
 \subsection{Cipher Block Chaining (CBC)}
-CBC non presenta i problemi di ECB: a due blocchi in chiaro identici non corrispondono
+\textbf{CBC} non presenta i problemi di ECB: a due blocchi in chiaro identici non corrispondono
 due blocchi cifrati identici.
 \subsubsection{Idea base}
 Per comprendere CBC conviene prima considerare il seguente esempio, in riferimento alla \figurename ~\ref{fig:rand_ele_cb_enc} che ne condivide l’idea base:
@@ -72,19 +73,19 @@ E per riottenere il testo in chiaro:
 	{\includegraphics[height=5cm, width=10cm, keepaspectratio]{Immagini/modalita_operative/rand_ele_cb_enc.png}}
 	\caption{Randomized Electronic Code Book Encryption\label{fig:rand_ele_cb_enc}} 	
 \end{figure}
-L'esempio appena visto è molto inefficiente, infatti l'informazione da trasmettere è duplicata perché per ogni blocco va trasmesso il corrispondente numero random. \newline
-Un altro problema è che un avversario può riarrangiare i blocchi in modo da ottenere un effetto predittivo sul testo in chiaro, ad esempio:
+L'esempio appena visto è molto inefficiente essendo l'informazione da trasmettere è duplicata (per ogni blocco va trasmesso il corrispondente numero random). \newline
+Un altro problema è che un avversario può riarrangiare i blocchi in modo da ottenere un effetto prevedibile sul testo in chiaro, ad esempio:
 \begin{itemize}
 \item se la coppia $r_{2}|c_{2}$ fosse rimossa il corrispondente blocco in chiaro $m_{2}$ scomparirebbe 
 \item se la coppia $r_{2}|c_{2}$ fosse scambiata con la coppia $r_{7}|c_{7} \Rightarrow$ $m_{2}$ e $m_{7}$ risulterebbero scambiati
-\item se l’avversario conosce ciascun  $m_{i}$, può modificare  $m_{i}$ in modo predittivo cambiando il corrispondente numero random $r_{i}$
+\item se l’avversario conosce ciascun  $m_{i}$, può modificarli in modo prevedibile cambiando il corrispondente numero random $r_{i}$
 \end{itemize}
 \subsubsection{Funzionamento}
-CBC genera i “propri” numeri random usando $c_{i}$ come numero random $r_{i+1}$, cioè usa il precedente blocco cifrato come numero random da sommare ($\oplus$ XOR) al blocco di testo in chiaro successivo.\newline
-Per evitare che due testi in chiaro inizialmente identici diano luogo a dei blocchi cifrati inizialmente identici CBC genera un singolo numero random, detto vettore di inizializzazione (\textbf{Initialization Vector $IV$}), che viene sommato ($\oplus$ XOR) con il primo blocco di testo in chiaro. \newline
-Il risultato viene trasmesso dopo la cifratura a chiave segreta. \newline
-La decifratura è semplice essendo l'or-esclusivo un'operazione che coincide con la propria inversa.\newline
-Quanto detto, rappresentato nelle figure \figurename ~\ref{fig:CBC_enc} e \figurename ~\ref{fig:CBC_dec}, può essere espresso anche algebricamente:
+\textbf{CBC} genera i "propri" numeri random usando $c_{i}$ come numero random $r_{i+1}$, cioè usa il blocco i-esimo cifrato come numero random da sommare ($\oplus$ XOR) al blocco (i+1)-esimo di testo in chiaro.
+\newline \newline
+Inoltre, per evitare che due testi in chiaro inizialmente identici diano luogo a dei blocchi cifrati inizialmente identici, \textbf{CBC} genera un singolo numero random, detto vettore di inizializzazione (\textbf{Initialization Vector $IV$}), che viene sommato ($\oplus$ XOR) con il primo blocco di testo in chiaro. Il risultato viene trasmesso dopo la cifratura a chiave segreta. La decifratura è semplice essendo l'or-esclusivo un'operazione che coincide con la propria inversa.
+\newline \newline
+Quanto detto, rappresentato nelle figure~\ref{fig:CBC_enc} e ~\ref{fig:CBC_dec}, può essere espresso anche algebricamente:
 \begin{itemize}
 \item CIFRATURA\newline $c_{1} = E(K, (IV \oplus m_{1}))$\newline $c_{i} = E(K, (c_{i-1} \oplus m_{i})) \forall i > 1$
 \item DECIFRATURA\newline $m_{1} = E(K,c_{1})\oplus IV$\newline $m_{i} = E(K,c_{i})\oplus c_{i-1}$
@@ -92,10 +93,10 @@ Quanto detto, rappresentato nelle figure \figurename ~\ref{fig:CBC_enc} e \figur
 \begin{figure}[htbp]
 	\centering%
 	\subfigure%
-	{\includegraphics[height=4cm, width=12cm, keepaspectratio]{Immagini/modalita_operative/CBC_enc.png}}
+	{\includegraphics[height=4cm, width=10cm, keepaspectratio]{Immagini/modalita_operative/CBC_enc.png}}
 	\caption{Schema di crittografia CBC \label{fig:CBC_enc}} 	
 	\subfigure%
-	{\includegraphics[height=4cm, width=12cm, keepaspectratio]{Immagini/modalita_operative/CBC_dec.png}}
+	{\includegraphics[height=4cm, width=10cm, keepaspectratio]{Immagini/modalita_operative/CBC_dec.png}}
 	\caption{Schema di decrittografia CBC \label{fig:CBC_dec}} 
 \end{figure}
 Si noti che, essendo il costo della somma ($\oplus$ XOR) trascurabile rispetto al costo della cifratura a chiave segreta, la cifratura con CBC ha le stesse prestazioni della cifratura con ECB eccetto il costo delle generazione e trasmissione di $IV$. In molti casi, tuttavia, la sicurezza di CBC non dipende dalla
@@ -104,20 +105,20 @@ In alcuni casi, tuttavia, l'assenza di $IV$ riduce la sicurezza. Ad esempio, si 
 giornalmente delle informazioni segrete dicendo “continue holding your position”; il testo cifrato sarebbe ogni giorno lo stesso, finché il generale decide di cambiare ordine, inviando il messaggio “start bombing”: il testo cifrato cambierebbe immediatamente, allertando il nemico.\newline
 Un vettore di inizializzazione scelto randomicamente garantisce che, anche se lo stesso messaggio è inviato ripetutamente, il corrispondente testo cifrato risulta ogni volta differente, e previene attacchi all'algoritmo di cifratura di tipo testo in chiaro selezionato anche quando un avversario può fornire del testo in chiaro al CBC.
 \subsubsection{CBC minaccia 1 – Modifica dei blocchi cifrati}
-L’uso di CBC non elimina il problema che qualcuno possa modificare il messaggio in transito, semplicemente cambia la natura della minaccia: un avversario non può più vedere ripetizioni di blocchi cifrati, e non può più copiare/spostare blocchi cifrati (ad esempio per scambiare il salario di due dipendenti) ma può ancora modificare il testo cifrato in modo predittivo. \newline
-Cosa potrebbe succedere se modificasse un blocco di testo cifrato, ad esempio $c_{n}$?\newline
-Da $m_{n+1} = E(K,c_{n+1})\oplus c_{n}$ si evince che una modifica di $c_{n}$ può avere un effetto prevedibile su $m_{n+1}$ (ad esempio, cambiando il terzo bit di $c_{n}$ cambia il terzo bit di $m_{n+1}$);
-chiaramente essendo anche $m_{n} = E(K,c_{n})\oplus c_{n-1}$,  l'avversario non può prevedere quale possa essere il nuovo valore di $m_{n}$, molto probabilmente la modifica di $c_{n}$ corrompe completamente il blocco in chiaro $m_{n}$.\newline
-Vediamo a tal proposito l'esempio seguente, illustrato in \figurename ~\ref{fig:modifica_blk_cifrati}:
+L’uso di CBC non elimina il problema della possibile modifica del messaggio in transito, semplicemente cambia la natura della minaccia: un avversario non può più vedere ripetizioni di blocchi cifrati, e non può più copiare/spostare blocchi cifrati (ad esempio per scambiare il salario di due dipendenti). Infatti lo spostamento di un blocco cifrato corromperebbe il messaggio finale, a causa della dipendenza incrociata dei blocchi. Tuttavia un eventuale attaccante può ancora modificare il testo cifrato in modo prevedebile, modificando, ad esempio, un blocco $c_{n}$ al fine di influenzare la natura del messaggio $m_{n+1}$. Da
+\begin{equation}
+m_{n+1} = E(K,c_{n+1})\oplus c_{n}
+\end{equation}
+si evince che una modifica di $c_{n}$ può avere un effetto prevedibile su $m_{n+1}$ (ad esempio, cambiando il terzo bit di $c_{n}$ cambia il terzo bit di $m_{n+1}$). Chiaramente essendo anche $m_{n} = E(K,c_{n})\oplus c_{n-1}$,  l'avversario non può prevedere quale possa essere il nuovo valore di $m_{n}$. Molto probabilmente la modifica di $c_{n}$ corrompe completamente il blocco in chiaro $m_{n}$. Vediamo a tal proposito l'esempio seguente (Opzionale), illustrato in \figurename ~\ref{fig:modifica_blk_cifrati}:
 \begin{figure}[htbp]
 	\centering%
 	\subfigure%
 	{\includegraphics[height=4cm, width=12cm, keepaspectratio]{Immagini/modalita_operative/modifica_blk_cifrati.png}}
 	\caption{Modifica dei blocchi cifrati \label{fig:modifica_blk_cifrati}}	
 \end{figure}
-\newline Supponiamo che un avversario (Trudy) sappia che una data sequenza di blocchi cifrati, del file
-dei salari, corrispondano alla riga contenente i suoi dati personali; se Trudy vuole aumentare il suo salario di 10K, e se sa che l'ultimo byte di $m_{7}$ corrisponde alle decine di migliaia nella codifica decimale (00000010), per darsi 10K in più deve semplicemente cambiare il bit meno significativo di $c_{6}$; da $m_{7} = D(K, c_{7}) \oplus c_{6}$ tuttavia, Trudy non sarà più in grado di predire cosa apparirà nella voce “Posizione”, infatti, da $m_{6} = D(K, c_{6}) \oplus c_{5}$, si vede che è impraticabile
-prevedere l'effetto della modifica di $c_{6}$ su $m_{6}$. Se il file decifrato fosse letto da una persona umana, questa potrebbe insospettirsi della presenza di simboli strani nel campo “Posizione”, se invece il file decifrato viene elaborato da un programma l'attacco potrebbe non essere rilevato.\newline \newline
+\newline \newline
+Supponiamo che un avversario (Trudy) sappia che una data sequenza di blocchi cifrati, del file dei salari, corrispondano alla riga contenente i suoi dati personali. Se Trudy vuole aumentare il suo salario di 10K, e se sa che l'ultimo byte di $m_{7}$ corrisponde alle decine di migliaia nella codifica decimale (00000010), per darsi 10K in più deve semplicemente cambiare il bit meno significativo di $c_{6}$; da $m_{7} = D(K, c_{7}) \oplus c_{6}$. Tuttavia, Trudy non sarà più in grado di predire cosa apparirà nella voce “Posizione”. Infatti, da $m_{6} = D(K, c_{6}) \oplus c_{5}$, si vede che è impraticabile prevedere l'effetto della modifica di $c_{6}$ su $m_{6}$. Se il file decifrato fosse letto da una persona umana, questa potrebbe insospettirsi della presenza di simboli strani nel campo “Posizione”, se invece il file decifrato viene elaborato da un programma l'attacco potrebbe non essere rilevato.
+\newline \newline
 Ricapitolando: Trudy è stato in grado di modificare un blocco in modo predittivo con l'effetto collaterale di modificare il blocco precedente senza poter prevedere il risultato finale.
 \subsubsection{CBC minaccia 2 – Riarrangiamento blocchi cifrati}
 Con riferimento alla \figurename ~\ref{fig:riarrangiamento_blk_cifrati}, si supponga che Trudy conosca il testo in chiaro e, il corrispondente testo cifrato di qualche messaggio, cioè $m_{1}$, $m_{2}$, ..., $m_{n}$ e $IV$, $c_{1}$, $c_{2}$, ..., $c_{n}$; in questo modo Trudy conosce automaticamente anche il blocco decifrato di ciascun $c_{i}$, da $D(K, c_{1}) = c_{i-1} \oplus m_{i}$.
@@ -128,22 +129,23 @@ Con riferimento alla \figurename ~\ref{fig:riarrangiamento_blk_cifrati}, si supp
 	\caption{Riarrangiamento dei blocchi cifrati \label{fig:riarrangiamento_blk_cifrati}}	
 \end{figure}
 Da queste informazioni, Trudy può considerare ciascun $c_{i}$ come un "building block" e costruire un flusso cifrato usando ogni combinazione di $c_{i}$ ed essere in grado di calcolare quale sarà il corrispondente testo in chiaro. \newline \newline
-Per capire a cosa potrebbe servire questo tipo di attacco si tenga presente che uno dei modi di combattere la minaccia di modifica di blocchi cifrati è includere un \textbf{CRC} (\textbf{C}yclic \textbf{R}edundancy \textbf{C}heck) al testo in chiaro prima di cifrarlo con un CBC, perciò se Trudy modifica qualche blocco cifrato, il CRC consentirà ad un computer di rilevare prontamente l'alterazione del messaggio (e.g. se si fosse scelto un CRC a 32 bit ci sarebbe una possibilità su $2^{32}$ che il CRC coincida con quello corretto); supponiamo che a Trudy non interessi quale possa essere il nuovo messaggio di testo in chiaro (che potrebbe essere completamente indecifrabile), ma interessi solamente che il nuovo messaggio manomesso sia accettato dal computer ricevente sapendo che viene eseguito un controllo di tipo CRC, Trudy può provare a costruire molti flussi cifrati combinando in modi diversi i blocchi $c_{1}$, $c_{2}$, ..., $c_{n}$ e può calcolare il risultante testo in chiaro per ciascuno di essi, per poi testare se il testo in chiaro risultante ha un CRC corretto (mediamente serviranno $2^{31}$ tentativi).\newline 
+Ma quale utilità ha la costruzione di un testo cifrato eseguita in questo modo? Per capire a cosa potrebbe servire questo tipo di attacco si tenga presente che uno dei modi di combattere la minaccia di modifica di blocchi cifrati è includere un \textbf{CRC} (\textbf{C}yclic \textbf{R}edundancy \textbf{C}heck) al testo in chiaro prima di cifrarlo con un CBC. In questo modo, se Trudy modifica qualche blocco cifrato, il CRC consentirà ad un computer di rilevare prontamente l'alterazione del messaggio, con una certa probabilità di successo (e.g. se si fosse scelto un CRC a 32 bit ci sarebbe una possibilità su $2^{32}$ che il CRC coincida con quello corretto); supponiamo che a Trudy non interessi quale possa essere il nuovo messaggio di testo in chiaro (che potrebbe essere completamente indecifrabile), ma interessi solamente che il nuovo messaggio manomesso sia accettato dal computer ricevente sapendo che viene eseguito un controllo di tipo CRC. Trudy può provare a costruire molti flussi cifrati combinando in modi diversi i blocchi $c_{1}$, $c_{2}$, ..., $c_{n}$ e può calcolare il risultante testo in chiaro per ciascuno di essi, per poi testare se il testo in chiaro risultante ha un CRC corretto (mediamente serviranno $2^{31}$ tentativi).
+\newline \newline 
 Che male potrebbe fare Trudy modificando un messaggio, senza controllarne il contenuto, in modo
-tale che sia accettato dal computer ricevente? Forse Trudy è soltanto maliziosa, e vuole distruggere
-alcuni dati che vengono caricati attraverso la rete, ma in realtà, c'è un modo sottile di controllare, seppur in misura ridotta, il contenuto del messaggio modificato: supponiamo che Trudy sposti blocchi contigui, ad esempio, se $c_{n}$ e $c_{n+1}$ vengono spostati in qualche altro posto, allora il blocco originale $m_{n+1}$ apparirà in un'altra posizione; se $m_{n+1}$ contiene il salario del presidente, Trudy
-potrebbe scambiare i blocchi in modo da cambiarlo con il suo, ma poi dovrà modificare molto probabilmente gran parte del messaggio restante per garantire che il CRC risulti invariato.\newline \newline
-Per prevenire attacchi di questo tipo, basati sul riarrangiamento dei blocchi cifrati e tali da preservare il CRC originario, potrebbe essere usato un CRC a 64 bit: ciò è sicuramente sufficiente se l'attacco al CRC, nell'ambito di un CBC, è di tipo a forza bruta. \newline
-Per chi progetta protocolli crittografici sicuri, una modalità di cifratura ad un singolo step che protegga sia la confidenzialità che l'autenticità di un messaggio è stata per molti anni una sorta di "Sacro Graal" da ricercare!
+tale che sia accettato dal computer ricevente? Un possibile scenario è che Trudy non voglia manomettere in modo intelligente il contenuto del messaggio, ma voglia solo danneggiare i dati in modo che il ricevente, controllando il CRC, non si accorga di tale danno. 
+\newline \newline
+In realtà esiste un modo sottile di controllare, seppur in misura ridotta, il contenuto del messaggio modificato. Supponiamo che Trudy sposti blocchi contigui, ad esempio, se $c_{n}$ e $c_{n+1}$ vengono spostati in qualche altro posto, allora il blocco originale $m_{n+1}$ apparirà in un'altra posizione. Se $m_{n+1}$ contiene il salario del presidente, Trudy potrebbe scambiare i blocchi in modo da cambiarlo con il suo, dovrendo però modificare molto probabilmente gran parte del messaggio restante per garantire che il CRC risulti invariato.\newline \newline
+Per prevenire attacchi di questo tipo, basati sul riarrangiamento dei blocchi cifrati tale da preservare il CRC originario, potrebbe essere usato un CRC a 64 bit. Ciò è sicuramente sufficiente se l'attacco al CRC, nell'ambito di un CBC, è di tipo a forza bruta. 
+\newline \newline
+Per chi progetta protocolli crittografici sicuri, una modalità di cifratura ad un \textbf{singolo step} che protegga sia la \textbf{confidenzialità} che l'\textbf{autenticità} di un messaggio è stata per molti anni una sorta di "\textbf{Sacro Graal}" da ricercare.
 \subsection{Output FeedBack Mode (OFB)} \label{par:ofb}
 L’OFB è un cifrario a flusso: la cifratura consiste nel sommare ($\oplus$ XOR) il messaggio con il keystream (o one-time pad) generato da OFB stesso. Supponiamo che il keystream sia ottenuto generando singoli blocchi di 64 bit alla volta; un possibile modo per generarlo è il seguente:
 \begin{itemize}
-\item viene generato un numero random $IV$ (Initialization Vector) di 64 bit
-\item il primo blocco del keystream coincide con $IV$: $b_{0} = IV$
-\item i blocchi seguenti $b_{i}$ si ottengono cifrando $b_{i-1}$ con la chiave segreta: $b_{i} = E(K,b_{i-1})$
+	\item viene generato un numero random $IV$ (Initialization Vector) di 64 bit
+	\item il primo blocco del keystream coincide con $IV$: $b_{0} = IV$
+	\item i blocchi seguenti $b_{i}$ si ottengono cifrando $b_{i-1}$ con la chiave segreta: $b_{i} = E(K,b_{i-1})$
 \end{itemize}
-Il one-time pad (keystream) risultante è dato dalla sequenza $OTP = OTP(K, IV) = b_{0}|b_{1}|b_{2}|…|b_{i}|b_{i+1}|…$.
-La cifratura con OFB (\figurename ~\ref{fig:OFB_enc}) consiste nel sommare ($\oplus$ XOR) il messaggio $m$ con OTP, se $m$ ha lunghezza $l_{m}$ bit si considereranno soltanto $l_{m}$ bit di OTP.
+Il one-time pad (keystream) risultante è dato dalla sequenza $OTP = OTP(K, IV) = \{b_{0}|b_{1}|b_{2}|...|b_{i}|b_{i+1}|...\}$. La cifratura con \textbf{OFB} (\figurename ~\ref{fig:OFB_enc}) consiste nel sommare ($\oplus$ XOR) il messaggio $m$ con OTP: denotata con $l_{m}$ la lunghezza in bit $m$ ha  $l_{m}$, si considereranno soltanto $l_{m}$ bit di OTP.
 \begin{figure}[htbp]
 	\centering%
 	\subfigure%
@@ -161,7 +163,7 @@ In decifratura (\figurename ~\ref{fig:OFB_dec}) il destinatario riceve $IV$ e co
 \subsubsection{Vantaggi e svantaggi di OFB}
 OFB presenta i seguenti vantaggi:
 \begin{itemize}
-\item visto che il one-time pad OTP può essere generato in anticipo, prima che sia noto il messaggio m da cifrare, una volta ottenuto m è necessario soltanto effettuare la somma ($\oplus$ XOR) con il one-time pad (lo XOR è eseguibile in modo estremamente veloce)
+\item visto che il one-time pad OTP può essere generato in anticipo, prima che sia noto il messaggio m da cifrare, una volta ottenuto \textbf{m} è necessario soltanto effettuare la somma ($\oplus$ XOR) con il one-time pad (lo XOR è eseguibile in modo estremamente veloce)
 \item se qualche bit del testo cifrato dovesse corrompersi, soltanto i corrispondenti bit del testo in chiaro sarebbero corrotti, diversamente dalla modalità CBC, dove se $c_{n}$ fosse corrotto allora $m_{n}$ sarebbe completamente corrotto e $m_{n+1}$ sarebbe corrotto in corrispondenza dei medesimi bit di $c_{n}$
 \item un messaggio m può arrivare a pezzi di lunghezza arbitraria, e, ogni volta che arriva un pezzo, il corrispondente testo cifrato può essere immediatamente trasmesso; in CBC invece, se il messaggio arriva un byte alla volta, per la cifratura è comunque necessario attendere che un blocco di 64 bit (o un multiplo intero di 8 byte) sia completo (ciò può comportare l'attesa di altri 7 byte o l'aggiunta di bit di riempimento, cosa che aumenta la quantità di dati da trasmettere)
 \end{itemize}
@@ -170,7 +172,7 @@ OTP ha però anche il seguente svantaggio:
 \item se un avversario conoscesse il testo in chiaro m e quello cifrato c, potrebbe modificare il testo in
 chiaro a piacimento semplicemente sommando il testo cifrato con il testo in chiaro noto, e sommando il risultato con un qualsiasi messaggio $m'$ che desidera sostituire ad m; cioè l'avversario dovrebbe modificare il testo cifrato come $c' = c \oplus m \oplus m'$ e verificare che decifrando $c'$ anziché $c$ si ottiene $m'$ anziché $m$.
 \end{itemize}
-\subsection{k-bit Output FeedBack Mode (k-OFB)}
+\subsection{k-bit Output FeedBack Mode (k-OFB) (Opzionale)}
 In generale la modalità OFB consente di generare flussi di "pezzi" da $k$ bit (quanto visto prima corrisponde al caso in cui $k$ = 64 bit).
 La modalità k-bit OFB funziona nel seguente modo (si descriverà la versione data in [DES81]) con riferimento alla \figurename ~\ref{fig:k-bit_OFB}:
 \begin{figure}[htbp]
@@ -184,7 +186,7 @@ La modalità k-bit OFB funziona nel seguente modo (si descriverà la versione da
 \item il primo pezzo $b_{0}$ di OTP si ottiene selezionando $k$ bit dall’output $O_{0} = E(K, I_{0})$ di DES (una quantità a 64 bit); da un punto di vista crittografico non ha importanza come siano scelti tali bit da $O_{0}$; [DES81] specifica che devono essere i $k$ bit più significativi
 \item l’i-esimo pezzo $b_{i}$ si ottiene selezionando i $k$ bit più significativi dell'output $O_{i} = E(K, I_{i})$ di DES, ove l'input $I_{i}$ è stato ottenuto da $I_{i-1}$ eseguendo una traslazione a sinistra di $k$ bit, e un inserimento di $b_{i-1}$ nei $k$ bit meno significativi di $I_{1}$ ($k$ bit più a destra)
 \end{itemize}
-\subsection{Cipher FeedBack Mode (CFB)}
+\subsection{Cipher FeedBack Mode (CFB) (Opzionale)}
 La modalità CFB è molto simile a OFB, con riferimento alla \figurename ~\ref{fig:k-bit_CFB}:
 \begin{figure}[htbp]
 	\centering%
@@ -209,7 +211,7 @@ CBF ha anche i seguenti svantaggi:
 \item 8-bit CFB ha lo svantaggio che ogni byte di input richiede un'operazione DES. Inizialmente CFB fu concepito per essere utilizzato con un numero arbitrario $k$ di bit per "pezzo", con $k$ minore della dimensione di un blocco completo (64 bit per DES); nella pratica tuttavia $k$ è pari a 1 byte oppure coincide con la dimensione piena (full-block) dei blocchi del modulo di cifratura. Quando utilizzato in modalità full-block le prestazioni di CFB sono comparabili a quelle di ECB, CBC, e OFB.
 \item come OFB consente di cifrare ed inviare ciascun byte del messaggio non appena è noto tuttavia, a differenza di OFB non è in grado di anticipare il calcolo del one-time pad in fine, è in grado di rilevare delle alterazioni meglio di OFB, ma non bene quanto CBC.
 \end{itemize}
-\subsection{CounTeR Mode (CTR)}
+\subsection{CounTeR Mode (CTR) (Opzionale)}
 CTR (\figurename ~\ref{fig:CTR}) è simile a OFB perché un one-time pad viene generato e sommato ($\oplus$ XOR) con i dati; tuttavia differisce da OFB perché non concatena ciascun blocco di one-time-pad con il precedente, ma incrementa $IV$ e poi cifra quanto ottenuto per ottenere il prossimo blocco di one-time pad. 
 \begin{figure}[htbp]
 	\centering%
@@ -217,18 +219,18 @@ CTR (\figurename ~\ref{fig:CTR}) è simile a OFB perché un one-time pad viene g
 	{\includegraphics[height=4cm, width=12cm, keepaspectratio]{Immagini/modalita_operative/CTR.png}}
 	\caption{CTR \label{fig:CTR}} 	
 \end{figure}
-\subsection{Vantaggi e svantaggi di CTR}
+\subsubsection{Vantaggi e svantaggi di CTR}
 Il vantaggio principale di CTR è che, come OFB, il one-time pad può essere pre-calcolato, e la cifratura consiste in un semplice XOR; inoltre, come in CBC, la decifratura di un messaggio può iniziare da un qualunque blocco (non e obbligata ad iniziare dal primo blocco). Per questo CRT è l'ideale in applicazioni che richiedono la cifratura di file/memorie ad accesso casuale (sottoinsiemi di dati prelevati ed ordine non prevedibili).\newline \newline
 Come in OFB (e in tutti i cifrari a flusso), nella modalità CTR si ha una perdita di sicurezza se messaggi diversi sono cifrati con la stessa coppia $\langle K, IV \rangle$, poichè un avversario potrebbe ottenere la somma ($\oplus$ XOR) dei testi in chiaro se somma ($\oplus$ XOR) due testi cifrati ottenuti con la stessa coppia $\langle K, IV \rangle$.
 
 \section{Generare message authentication code(MAC)}
-Un sistema di cifratura a chiave segreta può essere usato per generare un MAC cioè un checksum cifrato: \textbf{MAC} sta per \textbf{M}essage \textbf{A}uthentication \textbf{C}ode. \\
-Un sinonimo di MAC è \textbf{MIC} (\textbf{M}essage \textbf{I}ntegrity \textbf{C}ode) e, anche se il termine MAC è più popolare; nella \textbf{PEM} (\textbf{P}rivacy \textbf{E}nhanced \textbf{M}ail) viene usato il termine MIC.\\
-\\
-Le modalità operative CBC, CFB, OFB, e CTR offrono una buona protezione della confidenzialità, i.e. un messaggio intercettato è difficilmente decifrabile, ma non offrono una buona protezione dell'integrità/autenticità di un messaggio, i.e. non proteggono da ascoltatori che lo modificano in modo non rilevabile.\\
-Nel seguito useremo i termini integrità e autenticità in modo intercambiabile visto che se il messaggio é integro allora non è stato modificato dal momento in cui è stato generato, i.e. il messaggio è autentico.
+Un sistema di cifratura a chiave segreta può essere usato per generare un MAC cioè un checksum cifrato (\textbf{MAC} sta per \textbf{M}essage \textbf{A}uthentication \textbf{C}ode). Un sinonimo di MAC è \textbf{MIC} (\textbf{M}essage \textbf{I}ntegrity \textbf{C}ode) e, anche se il termine MAC è più popolare; nella \textbf{PEM} (\textbf{P}rivacy \textbf{E}nhanced \textbf{M}ail) viene usato il termine MIC.
+\newline \newline
+Le modalità operative CBC, CFB, OFB, e CTR offrono una buona protezione della confidenzialità, i.e. un messaggio intercettato è difficilmente decifrabile, ma non offrono una buona protezione dell'integrità/autenticità di un messaggio, i.e. non proteggono da ascoltatori che lo modificano in modo non rilevabile.
+\newline \newline
+Nel seguito useremo i termini \textbf{integrità} e \textbf{autenticità} in modo intercambiabile visto che se il messaggio è integro allora non è stato modificato dal momento in cui è stato generato, e di conseguenza il messaggio è autentico.
 \subsection{Residuo CBC}
-Un modo standard per assicurare l'autenticità di un messaggio $m$ (cioè per proteggersi da modifiche di $m$ non rilevabili) è, in riferimento alla \figurename ~\ref{fig:residuo_CBC} :
+Un modo standard per assicurare l'autenticità di un messaggio $m$ (cioè per proteggersi da modifiche di $m$ non rilevabili) è, in riferimento alla \figurename~\ref{fig:residuo_CBC} :
 \begin{itemize}
 \item calcolare il CBC di $m$
 \item inviare soltanto l'ultimo blocco cifrato (64 bit) e il messaggio $m$ in chiaro; l'ultimo blocco cifrato è detto \textbf{residuo CBC}.
@@ -239,9 +241,10 @@ Un modo standard per assicurare l'autenticità di un messaggio $m$ (cioè per pr
 	{\includegraphics[height=4cm, width=12cm, keepaspectratio]{Immagini/modalita_operative/residuo_CBC.png}}
 	\caption{Residuo CBC \label{fig:residuo_CBC}} 	
 \end{figure}
-Il calcolo del residuo CBC richiede la conoscenza della chiave segreta $K$, quindi se un avversario modifica $m$ in $m’$ allora $res_{CBC}(m’)$ sarà diverso da $res_{CBC}(m)$ (c'è solo 1 possibilità su $2^64$ che siano uguali) perchè l'avversario non è in grado di calcolare $res_{CBC}(m’)$ senza conoscere la chiave segreta $K$. \\
-Il destinatario del messaggio calcola il residuo del messaggio in chiaro ricevuto, e verifica che sia uguale al residuo ricevuto; se i residui coincidono deduce che (con elevata probabilità) il residuo ricevuto è stato calcolato da qualcuno che conosce la chiave segreta, i.e. il mittente è autentico.\\
-\\
+Il calcolo del residuo CBC richiede la conoscenza della chiave segreta $K$, quindi se un avversario modifica $m$ in $m’$ la modifica sarà facilmente rilevabile, in quanto $res_{CBC}(m’)$ sarà diverso da $res_{CBC}(m)$ (c'è solo 1 possibilità su $2^{64}$ che siano uguali), e l'avversario non è in grado di calcolare $res_{CBC}(m’)$ senza conoscere la chiave segreta $K$. 
+\newline \newline
+Il destinatario del messaggio calcola il residuo del messaggio in chiaro ricevuto, e verifica che sia uguale al residuo ricevuto; se i residui coincidono deduce che (con elevata probabilità) il residuo ricevuto è stato calcolato da qualcuno che conosce la chiave segreta.
+\newline \newline
 In molte applicazioni non è necessario proteggere la confidenzialità, ma solo l'autenticità; in questi casi si può trasmettere il testo in chiaro più il residuo. Tuttavia, è assai frequente la necessità di
 proteggere contemporaneamente confidenzialità e autenticità: se il messaggio $m$ è un singolo blocco, ciò può ottenersi con una semplice cifratura a chiave segreta. Nel caso di un messaggio multi blocco qual è la
 trasformazione equivalente?
@@ -251,43 +254,48 @@ Dato un messaggio $m$:
 \item per assicurare la \textbf{confidenzialità} di $m$ basta cifrarlo in modalità CBC
 \item per assicurare l'\textbf{autenticità} di $m$ basta inviare $res_{CBC}(m)$ più $m$ in chiaro
 \end{itemize}
-Allora a prima vista la soluzione riportata in \figurename ~\ref{fig:residuo_CBC_1} sembrerebbe assicurare confidenzialità e autenticità:
+Allora a prima vista la soluzione riportata in \figurename~\ref{fig:residuo_CBC_1} sembrerebbe assicurare confidenzialità e autenticità:
 \begin{figure}[htbp]
 	\centering%
 	\subfigure%
-	{\includegraphics[height=4cm, width=12cm, keepaspectratio]{Immagini/modalita_operative/residuo_CBC_1.png}}
+	{\includegraphics[height=4cm, width=10cm, keepaspectratio]{Immagini/modalita_operative/residuo_CBC_1.png}}
 	\caption{Assicurare confidenzialità e autenticità: soluzione 1 \label{fig:residuo_CBC_1}} 	
 \end{figure}
-In realtà tale soluzione è chiaramente errata, infatti consiste nell'inviare il messaggio cifrato nella modalità CBC ($E_{CBC}(K, IV, m)$) ripetendo soltanto l'ultimo blocco cifrato ($res_{CBC}(m)$); così chiunque voglia alterare il messaggio deve solo modificare uno o più blocchi cifrati con CBC e inviare il nuovo messaggio ripetendo due volte l'ultimo blocco cifrato. \\
-Quindi inviare il residuo CBC in aggiunta al messaggio cifrato con CBC non aumenta la sicurezza. \\ 
-Si noti infatti che per autenticità (integrità) intendiamo che un calcolatore è in grado di rilevare automaticamente se il messaggio è stato alterato. Usando CBC da solo, allora, non è possibile rilevare in
-modo automatico eventuali modifiche di un messaggio, poiché ogni stringa di bit, comunque venga generata, viene decifrata in "qualcosa", e gli ultimi 64 bit di quella stringa sono il suo residuo CBC corretto; in questo modo chiunque intercetti il testo cifrato può modificarlo, e un computer a destinazione decifrerà il risultato, che potrebbe essere assolutamente privo di senso, senza essere consapevole che quanto ottenuto è di fatto spazzatura. \\
-Un utente umano si renderebbe conto che il testo cifrato è stato alterato, a meno che la modifica non sia stata eseguita da un avversario in modo "pulito", ma un computer non è in grado di farlo se non si
-aggiunge un controllo di integrità.\\ \\
-Un'alternativa potrebbe essere calcolare il residuo CBC del messaggio $res_{CBC}(m)$, allegarlo al testo in chiaro $m$, e cifrare con CBC la concatenazione $m|res_{CBC}(m)$ (\figurename ~\ref{fig:residuo_CBC_2})
+In realtà tale soluzione è chiaramente errata, infatti consiste nell'inviare il messaggio cifrato nella modalità CBC ($E_{CBC}(K, IV, m)$) ripetendo soltanto l'ultimo blocco cifrato ($res_{CBC}(m)$); così chiunque voglia alterare il messaggio deve solo modificare uno o più blocchi cifrati con CBC e inviare il nuovo messaggio ripetendo due volte l'ultimo blocco cifrato. 
+\newline \newline 
+Ha senso chiedersi, a questo punto, se sia possibile assicurare autenticità e confidenzialità utilizzando solamente CBC. Si noti infatti che avere la possibilità di verificare l'autenticità (integrità) consiste nella possibilità, da parte di un calcolatore, di rilevare automaticamente se il messaggio è stato alterato. Usando CBC da solo, allora, non è possibile rilevare in modo automatico eventuali modifiche di un messaggio. In CBC infatti ogni stringa di bit, comunque venga generata, viene decifrata in "qualcosa", e gli ultimi 64 bit di quella stringa sono il suo residuo CBC corretto. In questo modo chiunque intercetti il testo cifrato può modificarlo, e un computer a destinazione decifrerà il risultato, che potrebbe essere assolutamente privo di senso, senza essere consapevole che quanto ottenuto è di fatto spazzatura. 
+\newline \newline
+Un utente umano si renderebbe conto che il testo cifrato è stato alterato, a meno che la modifica non sia stata eseguita da un avversario in modo "pulito", ma un computer non è in grado di farlo se non si aggiunge un controllo di integrità.
+\newline \newline
+Un'alternativa potrebbe essere calcolare il residuo CBC del messaggio $res_{CBC}(m)$, allegarlo al testo in chiaro $m$, e cifrare con CBC la concatenazione $\{ m|res_{CBC}(m) \}$ (\figurename ~\ref{fig:residuo_CBC_2})
 \begin{figure}[htbp]
 	\centering%
 	\subfigure%
-	{\includegraphics[height=4cm, width=12cm, keepaspectratio]{Immagini/modalita_operative/residuo_CBC_2.png}}
+	{\includegraphics[height=4cm, width=10cm, keepaspectratio]{Immagini/modalita_operative/residuo_CBC_2.png}}
 	\caption{Assicurare confidenzialità e autenticità: soluzione 2 \label{fig:residuo_CBC_2}} 	
 \end{figure}
-In realtà neanche questa soluzione funziona, infatti: $c_{7} = res_{CBC}(m) = E(K, c_{6} \oplus c_{6}) = E(K, 000 … 0)$, cioè il residuo CBC è una stringa ottenuta cifrando con la chiave segreta una stringa di 64 bit a 0, quindi il residuo CBC non dipende da $m$ e non può offrire alcune protezione di integrità.\\ \\
-Come altra alternativa, supponiamo di calcolare un checksum non crittografico $CRC(m)$ (ad esempio, un CRC) del messaggio $m$ e di appenderlo alla fine di $m$, e di cifrare con CBC il tutto: $m| CRC(m)$, secondo lo schema in \figurename ~\ref{fig:residuo_CBC_3}
+In realtà \textbf{neanche questa soluzione funziona}. Infatti: 
+\begin{equation}
+c_{7} = res_{CBC}(m|res_{CBC}(m)) = E(K, c_{6} \oplus c_{6}) = E(K, 000 … 0)
+\end{equation}
+cioè il residuo CBC è una stringa ottenuta cifrando con la chiave segreta una stringa di 64 bit a 0, quindi il residuo CBC non dipende da $m$ e non può offrire alcune protezione di integrità.
+\newline \newline
+Come ultima alternativa, supponiamo di calcolare un checksum non crittografico (ad esempio un Cyclic Redundancy Check) $CRC(m)$ del messaggio $m$ e di cifrare con CBC la concatenazione $\{ m| CRC(m) \}$, secondo lo schema in \figurename ~\ref{fig:residuo_CBC_3}.
 \begin{figure}[htbp]
 	\centering%
 	\subfigure%
 	{\includegraphics[height=4cm, width=12cm, keepaspectratio]{Immagini/modalita_operative/residuo_CBC_3.png}}
 	\caption{Assicurare confidenzialità e autenticità: soluzione 3 \label{fig:residuo_CBC_3}} 	
 \end{figure}
-Questa soluzione "quasi" funziona: è vulnerabile ad attacchi molto sottili se il CRC è corto, d'altro canto checksum non crittografici più lunghi sono "sospetti". \\ 
+Questa soluzione "quasi" funziona: è vulnerabile ad attacchi molto sottili se il CRC è corto, ma d'altra parte checksum non crittografici più lunghi sono "sospetti". (\textbf{scusamainchessenso?}) 
 \subsubsection{Soluzione sicura}
 Viene considerata una soluzione sicura quella che riesce a proteggere la confidenzialità di un messaggio $m$ cifrandolo con CBC, e l'integrità di $m$ con un residuo CBC, a patto che vengano usate due chiavi distinte, $K$ e $K'$:
 \begin{itemize}
 \item confidenzialità: $E_{CBC}(K, IV, m)$
 \item integrità: $res_{CBC}(K', IV, m)$
 \end{itemize}
-Chiaramente ciò comporta una notevole perdita di efficienza, infatti il costo computazionale è duplicato rispetto al
-costo della sola cifratura CBC. \\
+Chiaramente ciò comporta una notevole perdita di efficienza, infatti il costo computazionale è duplicato rispetto al costo della sola cifratura CBC.
+\subsubsection{Soluzioni efficienti (Opzionale)}
 Sono state proposte tecniche più rapide, ma generalmente presentano sempre dei "sottili difetti" crittografici (se tali difetti siano seri o meno dipende dal tipo di applicazione e dall'intelligenza dell'avversario); alcune di queste tecniche sono:
 \begin{itemize}
 \item \textbf{CBC con un Checksum Crittografico Debole}: Visto che l'uso di checksum non crittografici in CBC risulta poco sicuro, e che checksum crittografici di qualità sono computazionalmente dispendiosi, è stato proposto di usare checksum crittografici "deboli". Complessivamente dovrebbe essere una soluzione sicura, infatti lo sforzo computazionale per violare il checksum debole va moltiplicato per le limitazioni derivanti dal fatto che è usato
@@ -309,12 +317,16 @@ Nel caso di DES, è universalmente ritenuta sicura la procedura nota come EDE.
 \item $c = E(K_{1},D(K_{2},E(K_{1},m))) = (E_{1} o D_{2} o E_{1})(m)$
 \item $m = D(K_{1},E(K_{2},D(K_{1},c))) = (D_{1} o E_{2} o D_{1})(c)$
 \end{itemize}
-La cifratura multipla EDE è di fatto un meccanismo per incrementare la lunghezza della chiave DES. Sebbene sia stata introdotta per arrivare ad uno standard sicuro basato su DES, in linea di principio è applicabile anche ad altri schemi
-di cifratura, ed esempio ad IDEA, ma è più importante nel caso di DES poiché la chiave DES è notoriamente considerata troppo corta.\\ \\
-Si è visto che uno schema di crittografia presenta sempre due funzioni, note come cifratura e decifratura; tali funzioni sono l'una l'inversa dell'altra, i.e.: ciascuna prende in input un blocco di dati $m$, e restituisce il corrispondente blocco offuscato $c$ tale che, applicando a $c$ l'altra funzione si ottiene $m$. Ha quindi senso applicare la "funzione di decifratura" $D(K, m)$ al testo in chiaro $m$ per cifrarlo e poi applicare la "funzione di cifratura" $E(K, D(K, m))$ per decifrare quanto ottenuto riottenendo il testo in chiaro $m$; ma in definitiva ha poco senso chiamare $E(K, m)$ "funzione di cifratura", e $D(K, m)$ "funzione di decifratura", poiché i ruoli di tali funzioni sono interscambiabili. Conviene chiamarle semplicemente \textbf{funzione $E()$} e \textbf{funzione $D()$} (tuttavia, spesso si continuerà a chiamarle funzione di cifratura e funzione di decifratura).\\ \\
-Realizzare una cifratura multipla non è banale, specie se si desidera anche ottenere un cifrario a flusso a partire da un cifrario a blocchi. \\
-Il metodo standard per usare EDE è il seguente: vengono usate due chiavi (e non tre), $K_{1}$ e $K_{2}$ e ogni blocco di testo in chiaro $m_{i}$ è sottoposto prima ad $E_{1}()$ (cioè viene eseguito $E(K_{1}, m)$), poi a $D_{2}()$ (cioè viene eseguito $D(K_{2}, E(K_{1}, m))$) e in fine ancora ad $E_{1}()$ (cioè viene eseguito $E(K_{1}, D(K_{2},
-E(K_{1}, m)))$).\\
+La cifratura multipla EDE è di fatto un meccanismo per incrementare la lunghezza della chiave DES. Sebbene sia stata introdotta per arrivare ad uno standard sicuro basato su DES, in linea di principio è applicabile anche ad altri schemi di cifratura, ed esempio ad IDEA, ma è più importante nel caso di DES poiché la chiave DES è notoriamente considerata troppo corta.
+\newline \newline
+Si è visto che uno schema di crittografia presenta sempre due funzioni, note come cifratura e decifratura; tali funzioni sono l'una l'inversa dell'altra. Ciascuna prende in input un blocco di dati $m$, e restituisce il corrispondente blocco offuscato $c$ tale che, applicando a $c$ l'altra funzione si ottiene $m$. Ha quindi senso applicare la "funzione di decifratura" $D(K, m)$ al testo in chiaro $m$ per cifrarlo e poi applicare la "funzione di cifratura" $E(K, D(K, m))$ per decifrare quanto ottenuto, riottenendo il testo in chiaro $m$. Chiamare $E(K, m)$ "funzione di cifratura" e $D(K, m)$ "funzione di decifratura" risulta pertanto una mera convenzione, poiché i ruoli di tali funzioni sono interscambiabili. Conviene chiamarle semplicemente \textbf{funzione $E()$} e \textbf{funzione $D()$} (tuttavia, spesso si continuerà a chiamarle funzione di cifratura e funzione di decifratura).
+\newline \newline
+Realizzare una cifratura multipla non è banale, specie se si desidera anche ottenere un cifrario a flusso a partire da un cifrario a blocchi. Il metodo standard per usare EDE è il seguente: vengono usate due chiavi (e non tre), $K_{1}$ e $K_{2}$ e ogni blocco di testo in chiaro $m_{i}$ è sottoposto:
+\begin{enumerate}
+	\item ad $E_{1}()$ (cioè viene eseguito $E(K_{1}, m)$)
+	\item a $D_{2}()$ (cioè viene eseguito $D(K_{2}, E(K_{1}, m))$)
+	\item in fine ancora ad $E_{1}()$ (cioè viene eseguito $E(K_{1}, D(K_{2},E(K_{1}, m)))$)
+\end{enumerate}
 Quanto ottenuto è di fatto un nuovo schema di cifratura a chiave segreta (\figurename ~\ref{fig:EDE}): un blocco di 64 bit in input è mappato in un altro blocco di 64 bit in output; il processo è invertibile se si conoscono le chiavi, altrimenti è di fatto impraticabile risalire dall'output all'input.
 \begin{figure}[htbp]
 	\centering%
@@ -334,7 +346,7 @@ Per ottenere un cifrario a flusso (i.e. la corrispondente modalità operativa di
 \begin{figure}[htbp]
 	\centering%
 	\subfigure%
-	{\includegraphics[height=4cm, width=12cm, keepaspectratio]{Immagini/modalita_operative/EDE_CBC_Out.png}}
+	{\includegraphics[height=3.5cm, width=10cm, keepaspectratio]{Immagini/modalita_operative/EDE_CBC_Out.png}}
 	\caption{EDE con CBC Outside \label{fig:EDE_CBC_Out}} 	
 \end{figure}
 Il cifrario a flusso è ottenibile anche con un concatenamento \textbf{CBC inside}, i.e. si considerano una cascata di tre concatenamenti CBC (semplificando alcuni passaggi): prima utilizzando $CBC-E_{1}()$, poi utilizzando $CBC-D_{2}()$ e infine utilizzando ancora $CBC-E_{1}()$ (\figurename ~\ref{fig:EDE_CBC_In}).
@@ -344,20 +356,19 @@ Il cifrario a flusso è ottenibile anche con un concatenamento \textbf{CBC insid
 	{\includegraphics[height=4cm, width=12cm, keepaspectratio]{Immagini/modalita_operative/EDE_CBC_In.png}}
 	\caption{EDE con CBC Inside \label{fig:EDE_CBC_In}} 	
 \end{figure}
-\subsubsection{CBC Outside vs Inside}
-Il 3DES comunemente usato nelle applicazioni esegue un concatenamento CBC esterno: ad ogni blocco viene applicata la cifratura tripla e il concatenamento CBC viene fatto una sola volta sui blocchi cifrati. L'alternativa sarebbe cifrare completamente il messaggio con $K_{1}$ e CBC, poi decifrare il risultato con $K_{2}$ e CBC, e in fine cifrare di nuovo quanto ottenuto con $K_{1}$ (CBC interno).\\
-Quali sono le implicazioni di queste scelte?\\ \\
-Si è visto che con CBC è possibile fare una modifica predittiva sul testo in chiaro $m_{n}$ (ad esempio invertire il bit $x$) invertendo il bit $x$ nel blocco cifrato $c_{n-1}$; ciò comporta però l'effetto collaterale di modificare
-in modo imprevedibile il blocco $m_{n-1}$, la possibilità di sfruttare questa debolezza dipende dal tipo di applicazione.\\ \\
-Con CBC esterno, un avversario può ancora sferrare questo tipo di attacco (il fatto che la cifratura è fatta con un triplo DES è del tutto ininfluente): un avversario che inverte il bit $x$ di un blocco cifrato $c_{n-1}$ modificherà completamente e in modo imprevedibile il blocco di testo in chiaro $m_{n-1}$ (il blocco di testo in chiaro $m_{n}$ avrà il bit $x$ invertito e tutti i blocchi di testo in chiaro diversi da $m_{n-1}$ e $m_{n}$ saranno invariati.\\ \\
-Con CBC interno, una modifica ad un blocco cifrato $c_{n}$ altera in modo imprevedibile tutti i blocchi di testo in
-chiaro dal blocco $m_{n}$ fino alla fine del messaggio. Per questo CBC interno è più sicuro di CBC esterno, e forse
-dovrebbe essere la scelta migliore; tuttavia, in alcuni casi è preferibile che la modifica di un blocco cifrato non si propaghi completamente nel resto del messaggio, i.e. sarebbe preferibile che lo schema di cifratura sia autosincronizzante (dopo un piccolo numero di blocchi corrotti, il testo in chiaro inizierà ad essere nuovamente decifrato correttamente). \\
+\subsubsection{CBC Outside vs Inside (Opzionale)}
+Il 3DES comunemente usato nelle applicazioni esegue un concatenamento CBC esterno: ad ogni blocco viene applicata la cifratura tripla e il concatenamento CBC viene fatto una sola volta sui blocchi cifrati. L'alternativa sarebbe cifrare completamente il messaggio con $K_{1}$ e CBC, poi decifrare il risultato con $K_{2}$ e CBC, e in fine cifrare di nuovo quanto ottenuto con $K_{1}$ (CBC interno). Quali sono le implicazioni di queste scelte?
+\newline \newline
+Si è visto che con CBC è possibile fare una modifica predittiva sul testo in chiaro $m_{n}$ (ad esempio invertire il bit $x$) invertendo il bit $x$ nel blocco cifrato $c_{n-1}$; ciò comporta però l'effetto collaterale di modificare in modo imprevedibile il blocco $m_{n-1}$. La possibilità di sfruttare questa debolezza dipende dal tipo di applicazione.
+\newline \newline
+Con CBC esterno, un avversario può ancora sferrare questo tipo di attacco (il fatto che la cifratura è fatta con un triplo DES è del tutto ininfluente): un avversario che inverte il bit $x$ di un blocco cifrato $c_{n-1}$ modificherà completamente e in modo imprevedibile il blocco di testo in chiaro $m_{n-1}$ (il blocco di testo in chiaro $m_{n}$ avrà il bit $x$ invertito e tutti i blocchi di testo in chiaro diversi da $m_{n-1}$ e $m_{n}$ saranno invariati.
+\newline \newline
+Con CBC interno, una modifica ad un blocco cifrato $c_{n}$ altera in modo imprevedibile tutti i blocchi di testo in chiaro dal blocco $m_{n}$ fino alla fine del messaggio. Per questo CBC interno è più sicuro di CBC esterno, e per alcune applicazioni potrebbe rappresentare scelta migliore. Tuttavia, in alcuni casi, è preferibile che la modifica di un blocco cifrato non si propaghi completamente nel resto del messaggio. Ciò avviene nei casi in cui è preferibile che lo schema di cifratura sia autosincronizzante (dopo un piccolo numero di blocchi corrotti, il testo in chiaro inizierà ad essere nuovamente decifrato correttamente). \\
 Un altro vantaggio di CBC interno riguarda l'efficienza: triplicando l'uso di hardware e pipeline per le cifrature si può ottenere complessivamente una velocità pari a quella di una singola cifratura (con CBC esterno ciò non è possibile).\\
-CBC interno presenta comunque delle sottili vulnerabilità se un avversario può esaminare l'output e fornire del testo in chiaro scelto e $IV$.\\ \\
+CBC interno presenta comunque delle sottili vulnerabilità, nel caso in cui un avversario possa esaminare l'output e fornire del testo in chiaro selezionato e $IV$.\\ \\
 Una ragione per la quale CBC esterno è più usato nonostante i suoi svantaggi è che la cifratura EDE può considerarsi a tutti gli effetti un nuovo schema di cifratura (a chiave segreta) a blocchi che usa una chiave di 112 bit, perciò può essere utilizzata con ciascun metodo di concatenamento (OFB, ECB, CFB, CTR e CBC).
 \subsection{Cifrature multiple}
-Ovviamente, più volte un blocco è cifrato più elevata è la sua sicurezza, ma ogni cifratura è computazionalmente costosa, perciò è fondamentale che una schema di cifratura sia efficiente oltre che efficace: l'obiettivo è garantire un livello di sicurezza elevato con il minimo sforzo computazionale. \\
+Ovviamente, più volte un blocco è cifrato più elevata è la sua sicurezza, ma ogni cifratura è computazionalmente costosa, perciò è fondamentale che una schema di cifratura sia efficiente oltre che efficace: l'obiettivo è garantire un livello di sicurezza adeguato all'applicazione con il minimo sforzo computazionale. \\
 Proviamo allora a valutare il rapporto sicurezza / costo computazionale nei seguenti casi:
 \begin{itemize}
 \item cifratura \textbf{doppia} con la \textbf{stessa chiave}
@@ -366,20 +377,20 @@ Proviamo allora a valutare il rapporto sicurezza / costo computazionale nei segu
 \item cifratura \textbf{tripla} con \textbf{tre chiavi diverse}
 \end{itemize}
 \subsubsection{Cifratura doppia con una stessa chiave}
-Supponiamo di non volere il disagio di leggere in due chiavi, secondo lo schema in \figurename ~\ref{fig:Cif_doppia_stessaK} (o in alternativa secondo uno degli schemi in \figurename ~\ref{fig:Cif_doppia_stessaK_alternative}), ma cifrare due volte consecutive con la stessa chiave aumenta la sicurezza?
+Supponiamo di voler evitare il disagio di utilizzare due chiavi, ed utilizzare quindi uno degli schemi a chiave singola illustrati in in \figurename ~\ref{fig:Cif_doppia_stessaK} (o in alternativa secondo uno degli schemi in \figurename ~\ref{fig:Cif_doppia_stessaK_alternative}). Vale la pena porsi la seguente domanda: cifrare due volte consecutive con la stessa chiave aumenta la sicurezza?
 \begin{figure}[htbp]
 	\centering%
 	\subfigure%
-	{\includegraphics[height=2cm, width=10cm, keepaspectratio]{Immagini/modalita_operative/Cif_doppia_stessaK.png}}
+	{\includegraphics[height=2cm, width=8cm, keepaspectratio]{Immagini/modalita_operative/Cif_doppia_stessaK.png}}
 	\caption{Schema di cifratura doppia con una stessa chiave \label{fig:Cif_doppia_stessaK}} 
 	\subfigure%
-	{\includegraphics[height=6cm, width=10cm, keepaspectratio]{Immagini/modalita_operative/Cif_doppia_stessaK_alternative.png}}
+	{\includegraphics[height=6cm, width=8cm, keepaspectratio]{Immagini/modalita_operative/Cif_doppia_stessaK_alternative.png}}
 	\caption{Schemi alternativi di cifratura doppia con una stessa chiave \label{fig:Cif_doppia_stessaK_alternative}} 
 \end{figure}
-Cifrare due volte con la stessa chiave $K$ risulta non essere molto più sicuro di eseguire una singola cifratura con $K$, poiché una ricerca esaustiva nello spazio della chiave richiede ancora, nel caso peggiore, $2^{56}$ tentativi, dove ogni tentativo ha un costo computazionale duplicato; perciò l'avversario deve eseguire una decifratura doppia, ma raddoppiare lo sforzo computazionale non è considerato in generale un aumento significativo della sicurezza, soprattutto tenendo conto che anche l'efficienza risulta essere dimezzata.
+Una ricerca esaustiva nello spazio della chiave richiede ancora, nel caso peggiore, $2^{56}$ tentativi, dove ogni  tentativo ha però un costo computazionale duplicato (dovuto all'esecuzione del test con una decifratura doppia); Tuttavia, raddoppiare lo sforzo computazionale non è considerato in generale un aumento significativo della sicurezza, soprattutto tenendo conto che anche l'efficienza risulta essere dimezzata.
 \subsubsection{Cifratura doppia con due chiavi}
-Se cifrare due volte consecutive, con due chiavi diverse $K_{1}$ e $K_{2}$, avesse l'effetto di raddoppiare la chiave (da 56
-a 112 bit), allora la cifratura doppia sarebbe sufficiente... (scopriremo che non è così)\\
+Se cifrare due volte consecutive, con due chiavi diverse $K_{1}$ e $K_{2}$, avesse l'effetto di raddoppiare la chiave (da 56 a 112 bit), allora la cifratura doppia sarebbe sufficiente- Dimostreremo, tuttavia, che così non è.
+\newline \newline
 Supponiamo di eseguire una cifratura doppia, con due chiavi $K_{1}$ e $K_{2}$ (secondo lo schema in \figurename ~\ref{fig:Cif_doppia_dueK}), su un singolo blocco da 64 bit (trascuriamo ogni schema di concatenamento e concentriamoci sui cifrari a blocchi); 
 \begin{figure}[htbp]
 	\centering%
@@ -387,32 +398,73 @@ Supponiamo di eseguire una cifratura doppia, con due chiavi $K_{1}$ e $K_{2}$ (s
 	{\includegraphics[height=2cm, width=10cm, keepaspectratio]{Immagini/modalita_operative/Cif_doppia_dueK.png}}
 	\caption{Schema di cifratura doppia con due chiavi diverse \label{fig:Cif_doppia_dueK}} 
 \end{figure}
-in apparenza, sembra che l'uso di due chiavi diverse equivalga a raddoppiare la lunghezza della chiave (infatti un attacco brute force deve indovinare sia $K_{1}$ che $K_{2}$ per ottenere il testo in chiaro da quello cifrato), tuttavia esiste un attacco più sofisticato che richiede approssimativamente soltanto un raddoppio del costo computazionale necessario a violare DES (singolo). Si tratta di un attacco difficilmente praticabile, ma il fatto che esista spinge a ricercare schemi di cifratura più sicuri: di fatto la cifratura DES con due chiavi non è considerata.
-sicura. (Vedremo più avanti l'attacco a DES doppio)
+In apparenza sembra che l'uso di due chiavi diverse equivalga a raddoppiare la lunghezza della chiave (infatti un attacco brute force deve indovinare sia $K_{1}$ che $K_{2}$ per ottenere il testo in chiaro da quello cifrato). Tuttavia esiste un attacco più sofisticato (Meet in the Middle, che vedremo nel dettaglio in \ref{par:meetinthe}) che richiede approssimativamente soltanto un raddoppio del costo computazionale necessario a violare DES (singolo). Si tratta di un attacco difficilmente praticabile, ma il fatto che esista spinge a ricercare schemi di cifratura più sicuri: di fatto la cifratura DES con due chiavi non è considerata sicura. 
 \subsection{Cifratura tripla con solo due chiavi}
-3DES effettua una cifratura tripla, ma usa solo due chiavi. \\
-Ovviamente con tre chiavi distinte si ha una maggiore, tuttavia, è ormai opinione comune che usare $K_{1}$ due
-volte è sufficientemente sicuro, perciò non è necessario generare, trasmettere e memorizzare una terza chiave. Inoltre 112 bit di chiave mettono al riparo da attacchi di tipo brute force e nessun attacco diverso da quello a forza bruta è noto per EDE. Si noti che alcuni sistemi implementano 3DES con tre chiavi indipendenti, ma questo non è lo standard.\\ \\
-Una ragione "esoterica" per l'uso di due sole chiavi è la seguente: in molte applicazioni (es. UNIX Password Hash) una proprietà importante di un sistema crittografico è che, data una coppia <plaintext, ciphertext>, deve essere impraticabile trovare qualche chiave che mappa il testo in chiaro in quello cifrato (con blocchi di 64 bit e chiavi di 112 bit ci saranno molte di queste chiavi); usando EDE con tre chiavi diverse, è semplice trovare una tripla di chiavi che mappa un dato testo in chiaro in un dato testo cifrato però, nel caso in cui $K_{1} = K_{3}$ il problema diventa impraticabile.\\
+3DES effettua una cifratura tripla, ma usa solo due chiavi. Ovviamente con tre chiavi distinte si ha una maggiore sicurezza, tuttavia è ormai opinione comune che usare $K_{1}$ due volte è sufficientemente sicuro, perciò non è necessario generare, trasmettere e memorizzare una terza chiave. Inoltre 112 bit di chiave mettono al riparo da attacchi di tipo brute force e nessun attacco diverso da quello a forza bruta è noto per EDE. Si noti che alcuni sistemi implementano 3DES con tre chiavi indipendenti, ma questo non è lo standard.
+\newline \newline
+Una ragione "esoterica" per l'uso di due sole chiavi è la seguente: in molte applicazioni (es. UNIX Password Hash) una proprietà importante di un sistema crittografico è che, data una coppia <plaintext, ciphertext>, deve essere impraticabile trovare qualche chiave che mappa il testo in chiaro in quello cifrato (con blocchi di 64 bit e chiavi di 112 bit ci saranno molte di queste chiavi); usando EDE con tre chiavi diverse, è semplice trovare una tripla di chiavi che mappa un dato testo in chiaro in un dato testo cifrato però, nel caso in cui $K_{1} = K_{3}$ il problema diventa impraticabile.
+\newline \newline
 Si noti infine che la chiave $K_{2}$ è usata in modalità di decifratura, cioè nella funzione di decifratura
 $D()$ di EDE. Tale scelta non serve ad aumentare il livello di sicurezza (si poteva usare $K_{2}$ in modalità di
 cifratura ottenendo uno schema di tipo EEE); una possibile ragione è che se $K_{1} = K_{2}$ allora EDE
 equivale ad un semplice DES, quindi è possibile interoperare con un sistema DES semplice.
-\section{Attacco a DES doppio}
+\section{Attacco a DES doppio: Meet in the Middle} \label{par:meetinthe}
 Si assuma che un avversario disponga di qualche coppia $<plaintext, ciphertext>$: $<m_{1},c_{1}> , <m_{2},c_{2}> , <m_{3},c_{3}> , ...$ dove $c_{i} = E(K_{2}, E(K_{1}, m_{i}))$ è ottenuto eseguendo una cifratura doppia di $m_{i}$ con $K_{1}$ e $K_{2}$ e desideri trovare le chiavi $K_{1}$ e $K_{2}$. \\
-Per farlo deve:
+Per farlo può:
 \begin{itemize}
 \item Costruire una tabella $A$ con $2^{56}$ entry, di cui ogni entry è una coppia $<K_{i}, r = E(K_{i}, m_{1})>$ e ordinarla in base al valore numerico di $r$;
 \item Costruire una tabella $B$ con $2^{56}$ entry, di cui ogni entry è una coppia $<K_{i}, r = D(K_{i}, c_{1})>$ e ordinarla in base al valore numerico di $r$;
-\item Ricercare nelle due tabelle (ordinate) le entry corrispondenti, cioè con lo stesso valore di $r$, e.g. $<K_{A},r>$ dalla tabella $A$ e $<K_{B},r>$ dalla tabella $B$ ($K_{A}$ è la candidata per $K_{1}$ e $K_{B}$ è la candidata per $K_{2}$); questo è necessario perché, essendo $r = E(K_{A}, m_{1})$ e $r = D(K_{i}, c_{1})$, allora $c_{1} = E(K_{B}, E(K_{A}, m_{1}))$;
+\item Ricercare nelle due tabelle (ordinate) le entry con lo stesso valore di $r$. Ad esempio, se ho un'entry $<K_{A},r_A>$ dalla tabella $A$ e una $<K_{B},r_B>$ dalla tabella $B$, tali che $r_A = r_B $, ($K_{A}$ è la candidata per $K_{1}$ e $K_{B}$ è la candidata per $K_{2}$). Ciò in virtù del fatto che, essendo $r = E(K_{A}, m_{1})$ e $r = D(K_{i}, c_{1})$, allora $c_{1} = E(K_{B}, E(K_{A}, m_{1}))$;
 \item Visto che, in generale, si otterrà più di una coppia candidata per $<m_{1},c_{1}>$, per ciascuna si esegue il test rispetto a $<m_{2},c_{2}>$ e, finchè ci sono più coppie candidate, si eseguono i test con le successive coppie $<m_{i},c_{i}>$: la coppia corretta è quella che passa tutti i test, mentre quelle errate ne dovranno fallire qualcuno (dimostreremo che sono sufficienti tre tentativi per trovare una coppia corretta). 
 \end{itemize} 
 L'attacco a DES doppio appena descritto è difficilmente praticabile (dover costruire una tabella di $2^{56}$ entry è sicuramente scoraggiante); tuttavia, l'esistenza di un attacco è una ragione sufficiente per decidere di usare DES triplo (DES doppio potrebbe essere sufficiente, ma DES triplo è più sicuro e non e molto più complesso da realizzare).
 \subsection{Stima dei tentativi}
-Vediamo quante coppie candidate ci saranno mediamente dopo la prima ricerca nelle due tabelle.\\
-Sia $cc_{1}$ il numero atteso di coppie candidate ottenute dopo la prima ricerca.
-Visto che i possibili blocchi di 64 bit sono $2^{64}$ e che le entry in ciascuna tabella sono $2^{56}$ la probabilità $P_{bt}$ che un blocco sia in una tabella è $P_{bt} = 2^{56} / 2^{64} = 2^{-8}$, mentre la probabilità $P_{c1}$ che un blocco sia in entrambe le tabelle (e che quindi identifichi una coppia candidata) è $P_{c1} = 2^{-8} \times 2^{-8} = 2^{-16}$. \\
-Ora, $cc1 \approx Pc1 \dot numero blocchi = 2^{64} / 2^{16} = 2^{48}$, vale a dire che ci sono $2^{48}$ coppie candidate errate.\\
-Consideriamo adesso la probabilità $P_{c2}$ che una coppia candidata soddisfi anche il secondo test: questa vale $P_{c2} \approx 2^{-64}$. \\
-La probabilità $P_{e2}$ di trovare un coppia candidata errata dopo il secondo test vale $P_{e2} = 2^{48} / 2^{64}$ e al terzo test si avrà $P_{e2} = 2^{48} / 2^{128} = 2^{-80}$: quindi la probabilità di trovare un falso positivo dopo tre test
-è di fatto nulla e dopo tre test si ottiene un'unica coppia candidata che è quella corretta.
+Analizziamo ora l'evoluzione della probabilità di trovare la coppia di chiavi giuste eseguendo i vari test come descritto. Denotiamo con $cc_i$ il numero di coppie candidate dopo il test i-esimo. Vediamo quante coppie candidate ci saranno - mediamente - dopo la prima ricerca nelle due tabelle (primo test).
+\newline \newline
+In generale una coppia di chiavi è definita da un blocco $r$, che è presente nelle due tabelle costruite. Il numero dei possibili blocchi $r$ di lunghezza 64 bit è $2^{64}$. Poiché una tabella contiene $2^{56}$ entry (e quindi i riferimenti a $2^{56}$ blocchi $r$), la probabilità che un dato blocco sia in una tabella è:
+\begin{equation}
+P_{bt} = \frac{2^{56}}{2^{64}} = \frac{1}{2^8}
+\end{equation}
+Affinché una coppia passi il primo test, essa deve essere associata ad un blocco presente in entrambe le tabelle. La probabilità che un blocco sia in entrambe le tabelle (e che quindi identifichi una coppia candidata) è:
+\begin{equation}
+P_{c1} = \frac{1}{2^8} \cdot \frac{1}{2^8} = \frac{1}{2^{16}}
+\end{equation}
+Quindi mediamente, il numero di coppie candidate dopo il primo test sarà:
+\begin{equation}
+cc_i = (numero \: \: possibili \: \: blocchi \: \: r \:) \cdot P_{c1} = 2^{64} \cdot \frac{1}{2^{16}} = 2^{48}
+\end{equation}
+Ciò sta a significare che in uscita al primo test avrò circa $2^{48}$ coppie candidate errate.
+\newline \newline
+Consideriamo adesso la probabilità $P_{c2}$ che una coppia candidata (denominata $\{ K_{c1,A},K_{c1,B} \}$) soddisfi anche il secondo test. Cioè equivale a calcolare la probabilità:
+\begin{equation}
+P_{c2} = \Pr\{E(K_{c1,A}, m_{2}) = D(K_{c1,B}, c_{2}) \mid E(K_{c1,A}, m_{1}) = D(K_{c1,B}, c_{1})\}
+\end{equation}
+Se i test sono statisticamente indipendenti avrò:
+\begin{equation}
+P_{c2} = \Pr\{E(K_{c1,A}, m_{2}) = D(K_{c1,B}, c_{2})\}
+\end{equation}
+Tale test consiste nel verificare che la coppia di blocchi $<r_a,r_b>$, tali che $r_a = E(K_{A}, m_{2})$ e $r_b = D(K_{b}, c_{2})$ coincida. Poiché le possibili coppie di blocchi sono $2^128$, e le possibili coppie di blocchi uguali sono $2^64$, la probabilità che questo avvenga è $\frac{1}{64}$. Quindi:
+\begin{equation}
+P_{c2} \approx \frac{1}{64}
+\end{equation}
+In cui l'approssimazione deriva dall'ipotesi di indipendenza statistica, che a rigore non può essere soddisfatta in maniera assoluta. Tale ipotesi equivale e supporre che non ci sia alcuna correlazione tra la riuscita del primo test e del secondo, ovvero che l'algoritmo di cifratura opera in modo totalmente randomico. Sappiamo che DES non da risultati randomici, ma pseudorandomici generati in modo deterministico.
+\newline \newline
+La probabilità $P_{e2}$ di trovare un coppia candidata errata dopo il secondo test vale quindi quanto il prodotto del numero di coppie candidate errate prima del test per la probabilità che una di tali coppie lo passi, ovvero:
+\begin{equation}
+P_{e2} = \frac{2^{48}}{2^{64}} = \frac{1}{2^{16}} 
+\end{equation} 
+Procedendo analogamente, dopo il terzo test si avrà probabilità di trovare un coppia candidata errata pari a:
+\begin{equation}
+P_{e3} = 2^{48} / 2^{128} = 2^{-80}
+\end{equation}
+Quindi la probabilità di trovare un \textbf{falso positivo} dopo tre test è di fatto nulla $\Rightarrow$ dopo tre test si ottiene un'unica coppia candidata che è quella corretta.
+
+\subsection{Meet in the middle su DES-EEE con tre chiavi distinte}
+Si noti che il tipo i attacco descritto può essere utilizzato anche per attaccare un cifrario DES triplo, con struttura EEE, nel quale si utilizzano tre chiavi distinte. Infatti, come evidenziato in \ref{fig:EEE}, se l'output al primo blocco E() viene considerato come completamente casuale (ciò può essere fatto in virtù del fatto che la chiave utilizzata in questo blocco non ha influenza nel reste processo di crittografia), un eventuale soggetto malevolo può attaccare la parte evidenziata in rosso come se fosse DES doppio (eseguendo meet in the middle a partire da m' e da c).
+\begin{figure}[htbp]
+	\centering%
+	\subfigure%
+	{\includegraphics[height=2cm, width=10cm, keepaspectratio]{Immagini/modalita_operative/EEE.png}}
+	\caption{Cifratura EEE con tre chiavi distinte \label{fig:EEE}} 	
+\end{figure}
+Per tale motivo non è consigliabile utilizzare una cifratura 3DES con tre blocchi E in cascata, specialmente con 3 chiavi distinte.

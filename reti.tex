@@ -1,6 +1,6 @@
 \chapter{Sicurezza delle reti}
 \section{Address Resolution Protocol Spoofing}
-The address resolution protocol (\textbf{ARP}) connects the network layer to the data layer by converting IP addresses to MAC addresses. \\
+The address resolution protocol (\textbf{ARP}) connects the network layer to the data link layer by converting IP addresses to MAC addresses. \\
 ARP works by broadcasting requests and caching responses for future use. The protocol begins with a computer broadcasting a message of the form: 
 \begin{lstlisting}
 who has <IP address1> tell <IP address2>
@@ -20,7 +20,7 @@ arp-a
 	{\includegraphics[height=2cm, width=10cm, keepaspectratio]{Immagini/reti/ARP_Caches.png}}
 	\caption{ARP Caches\label{fig:ARP_Caches}} 	
 \end{figure}
-The ARP table is updated whenever an ARP response is received. Notiche that requests are not tracked, ARP announcements are not authenticated and machines trust each other, so s rogue machine can spoof other machines.\begin{figure}[htbp]
+The ARP table is updated whenever an ARP response is received. Notice that requests are not tracked, ARP announcements are not authenticated and machines trust each other, so s rogue machine can spoof other machines.\begin{figure}[htbp]
 	\centering%
 	\subfigure%
 	{\includegraphics[height=3cm, width=10cm, keepaspectratio]{Immagini/reti/Poisoned_ARP_Caches.png}}
@@ -40,9 +40,9 @@ The DoS Attack (\figurename ~\ref{fig:DoS_Attack}) consists in sending large num
 	{\includegraphics[height=4cm, width=12cm, keepaspectratio]{Immagini/reti/DoS_Attack.png}}
 	\caption{DoS Attack\label{fig:DoS_Attack}} 	
 \end{figure}
-The attack starts at zombies, travels through tree of internet routers rooted and ends at victim.\\
+The attack starts at zombies, travels through tree of internet routers and ends at victim (tree root).\\
 The \textbf{IP source spoofing} hides attacker and scatters return traffic from victim.\\ \\
-An important problem is to identify leaves of DoS propagation tree (i.e. routers next to attacker). Notiche that there are more than 2M internet routers, attacker can spoof source address and knows that traceback is being performed.\\
+An important problem is to identify leaves of DoS propagation tree (i.e. routers next to attacker). Notice that there are more than 2M internet routers, attacker can spoof source address and knows that traceback is being performed.\\
 Some approaches to this problem could be:
 \begin{itemize}
 \item Filtering and tracing (immediate reaction)
@@ -59,6 +59,6 @@ In particular, probabilistic marketing performs random injection of information 
 \end{itemize}
 
 \subsection{SYN Flood}
-SYN Flood is typically DOS attack, though can be combined with other attack such as TCP hijacking.\\
+SYN Flood is typically a DOS attack, though can be combined with other attack such as TCP hijacking.\\
 Rely on sending TCP connection requests faster than the server can process them. Attacker creates a large number of packets with spoofed source addresses and setting the SYN flag on these. The server responds with a SYN/ACK for which it never gets a response (waits for about 3 minutes each); eventually the server stops accepting connection requests, thus triggering a denial of service.
 The problem of avoiding this attack can be solved in multiple ways: one of the common way to do this is to use SYN cookies.

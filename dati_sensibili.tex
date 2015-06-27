@@ -8,7 +8,7 @@ Ai fini pratici della sicurezza informatica definiremo dati sensibili quei dati 
 \item \underline{Nessun} dato sensibile (ad es. il catalogo di una biblioteca)
 \item \underline{Tutti} dati sensibili (ad es. un database della difesa militare)
 \end{itemize}
-Questi sono i casi più semplici da gestire, in quanto si \underline{garantisce} accesso a tutto il database o si \underline{nega} accesso a tutto il DB. In generale si ha che solo \textbf{alcuni dati sono sensibili} e che, inoltre, ognuno presenta un textbf{diverso livello di sensibilità} necessario da applicare.
+Questi sono i casi più semplici da gestire, in quanto si \underline{garantisce} accesso a tutto il database o si \underline{nega} accesso a tutto il DB. In generale si ha che solo \textbf{alcuni dati sono sensibili} e che, inoltre, ognuno presenta un \textbf{diverso livello di sensibilità} necessario da applicare.
 
 \begin{figure}[htbp]
 	\centering
@@ -59,7 +59,7 @@ Esistono diverse modalità di divulgazione di un dato o insieme di dati:
 \end{itemize}
 
 \section{Inferenza}
-L'\textbf{Inferenza} è un metodo per dedurre o derivare dati sensibili a partire dai dati non sensibili a disposizione. Ricordando la tabella di fig. \ref{fig:tabella_db}, la queri seguente rappresenta un \textbf{Attacco Diretto}, ovvero un tentativo diretto di accedere ad un dato sensibile:
+L'\textbf{Inferenza} è un metodo per dedurre o derivare dati sensibili a partire dai dati non sensibili a disposizione. Ricordando la tabella di fig. \ref{fig:tabella_db}, la query seguente rappresenta un \textbf{Attacco Diretto}, ovvero un tentativo diretto di accedere ad un dato sensibile:
 
 \begin{algorithm}
 \begin{lstlisting}[caption={Query che sfrutta inferenza per ottenere dati sensibili e viene bloccata}]
@@ -81,7 +81,7 @@ WHERE (Sesso = M AND Droghe = 1)
 \end{lstlisting}
 \end{algorithm}
 
-Per scovare l'accesso improprio ai dati, il DBMS dovrebbe capire che ci sono solo due valori ammessi per il campo Sesso e che non c'è alcuna tupla con valore Dormitorio uguale ad 'Ayres'. Per limitare gli Attacchi Diretti è applicata, alle volte, una regola \textit{n elementi sul k percento}, che consiste nel non restituire il risultato di una query se un piccolo numero di elementi divulgati costituisce una grande percentuale del valore restituito. (nel caso mostrato come esempio nel paragrafo relativo alla divulgazione per valore probabile, fare una query che richiede i residenti ad un dato indirizzo ed iscritti ad un partito da come risultato un unico elemento che rappresenta il 100\%).
+Per scovare l'accesso improprio ai dati, il DBMS dovrebbe capire che ci sono solo due valori ammessi per il campo Sesso e che non c'è alcuna tupla con valore Dormitorio uguale ad 'Ayres'. Per limitare gli Attacchi Diretti è applicata, alle volte, una regola \textit{n elementi sul k percento}, che consiste nel non restituire il risultato di una query se un piccolo numero di elementi divulgati costituisce una grande percentuale del valore restituito (nel caso mostrato come esempio nel paragrafo relativo alla divulgazione per valore probabile, fare una query che richiede i residenti ad un dato indirizzo ed iscritti ad un partito dà come risultato un unico elemento che rappresenta il 100\%).
 
 Un attacco inferenziale \textbf{Indiretto} si basa sulla deduzione di dati sensibile a partire da uno o più dati statistici intermedi (somme, medie o conteggi, spesso divulgate da organizzazioni che mirano alla diffusione di informazioni aggregate e detengono dati sensibili di molto soggetti). In seguito descriveremo diversi tipi di attacchi inferenziali indiretti.
 
@@ -168,7 +168,7 @@ A questo punto sappiamo che nel dormitorio Holmes risiedono 3 persone, due delle
 Tramite la procedura illustrata si trova che $ a_{3} = 5000 $, ovvero l'importo esatto dell'unico maschio che risiede nel dormitorio Holmes
 
 \subsection{Attacchi di Tracker}
-Abbiamo visto che una delle tecniche di protezione dall'inferenza consiste nel non divulgare i dati se un \textbf{piccolo numero di elementi fornisce molta informazione}; è possibile aggirare questa limitazione effettuando più query lecite e combinandole insieme. Vediamolo con un esempio: esaminiamo la query.
+Abbiamo visto che una delle tecniche di protezione dall'inferenza consiste nel non divulgare i dati se un \textbf{piccolo numero di elementi fornisce molta informazione}; è possibile aggirare questa limitazione effettuando più query lecite e combinandole insieme. Vediamolo con un esempio: esaminiamo la query \ref{query:tracker1}.
 
 \begin{algorithm}
 \begin{lstlisting}[caption={Esempio di query di tracker non lecita du DB \label{query:tracker1}}] 
@@ -180,7 +180,7 @@ WHERE Razza = 'C'
 \end{lstlisting}
 \end{algorithm}
 
-La query \ref{query:tracker1} è, ovviamente, bloccata dal DBMS in quanto va a richiedere un unico risultato sulla tabella del DB in fig. \ref{fig:tabella_db}. Il dato non viene divulgato in quanto \textbf{dominato da una sola tupla}, ma osserviamo che può essere calcolato contando le donne che \textbf{non sono di razza C} e sommandole a quelle che \textbf{non risiedono nel dormitorio Holmes}, e sottraendo questa somma al numero totale delle femmine. Tale calcolo deriva dalle leggi di DeMorgan. Infatti, ponendo:
+La query \ref{query:tracker1} è, ovviamente, bloccata dal DBMS in quanto va a richiedere un unico risultato sulla tabella del DB in fig. \ref{fig:tabella_db}. Il dato non viene divulgato in quanto \textbf{dominato da una sola tupla}, ma osserviamo che può essere calcolato contando le donne che \textbf{non sono di razza C}, sommando il risultato a quelle che \textbf{non risiedono nel dormitorio Holmes} e infine sottraendo questa somma al numero totale delle femmine. Tale calcolo deriva dalle leggi di De Morgan. Infatti, ponendo:
 
 \begin{itemize}
 \item R := (Razza='C')
@@ -191,17 +191,17 @@ La query \ref{query:tracker1} è, ovviamente, bloccata dal DBMS in quanto va a r
 Allora:
 
 \begin{equation}
-A \cdot D \cdot S = (A \cdot D) \cdot S =\overline{\overline{(A \cdot D)}} \cdot S
+R \cdot D \cdot S = (R \cdot D) \cdot S =\overline{\overline{(R \cdot D)}} \cdot S
 \end{equation}
 
-Per le leggi di DeMorgan:
+Per le leggi di De Morgan:
 \begin{equation}
-\overline{(A \cdot D)} = \overline{A} + \overline{D}
+\overline{(R \cdot D)} = \overline{R} + \overline{D}
 \end{equation}
 
 Allora:
 \begin{equation} \label{eq:tracker}
-\overline{\overline{(A \cdot D)}} \cdot S = \overline{(\overline{A} + \overline{D})} \cdot S
+\overline{\overline{(R \cdot D)}} \cdot S = \overline{(\overline{R} + \overline{D})} \cdot S
 \end{equation}
 
 Possiamo allora ricavare il risultato desiderato attraverso le query~\ref{query:tracker2}. In particolare il dato si può ricavare sottraendo il risultato della seconda query dal risultato della prima.
@@ -226,13 +226,14 @@ L'attacco di Tracker è un caso specifico di una vulnerabilità più generica in
 q = \parallel (Sesso \: = \: 'F') \wedge (Razza \: = \: 'C') \wedge (Dormitorio \: = \: 'Holmes') \parallel
 \end{equation}
 In base all'algebra, possiamo riscrivere la query nel seguente modo: 
+{\footnotesize
 \begin{equation}
-q = \parallel (Sesso = F) \parallel - \parallel (Sesso \: = \: 'F') \wedge \neg( (Razza \: = \: 'C') \vee (Dormitorio \: = \: 'Holmes')) \parallel
-\end{equation}
+q = \parallel (Sesso \: = \: 'F') \parallel - \parallel (Sesso \: = \: 'F') \wedge \neg( (Razza \: = \: 'C') \vee (Dormitorio \: = \: 'Holmes')) \parallel
+\end{equation}}
 Più in generale potremmo avere le seguenti query:
 \newline
 \newline
-$q_{1} = c_{1} + c_{2} + c_{3} + c_{42}$
+$q_{1} = c_{1} + c_{2} + c_{3} + c_{4} + c_{5}$
 \newline
 $q_{2} = c_{3} + c_{2} $
 \newline
@@ -246,7 +247,7 @@ $q_{5} = c_{8} + c_{3}$
 Nessuna delle query rivela un qualsiasi valore $c_{i}$ ma, risolvendo il sistema, possiamo conoscerli tutti.
 
 \subsection{Aggregazione}
-L'aggregazione è un altro particolare tipo di inferenza, in cui si cerca di ottenere dati sensibili mettendo insieme dati non sensibili (ad esempio il nome di un impiegato e il suo stipendio, divisi, non sono dati sensibili. La loro combinazione invece si). \\
+L'aggregazione è un altro particolare tipo di inferenza, in cui si cerca di ottenere dati sensibili mettendo insieme dati non sensibili (ad esempio il nome di un impiegato e il suo stipendio non sono dati sensibili se considerati separatamente. La loro combinazione invece si). \\
 
 Evitare l'aggregazione è difficile perché bisogna tenere conto delle informazioni già in possesso dell'utente. Se un utente conosce il nome di un dipendente non devo, ad esempio, comunicargli lo stipendio e viceversa. Purtroppo tenere traccia di tutte le informazioni in possesso ad ogni utente è proibitivo. Inoltre utenti diversi potrebbero condividere tutti le informazioni in loro possesso, aiutandosi a vicenda ad aggregare i dati al fine di ricavare informazioni sensibili.
 
@@ -300,17 +301,18 @@ Alternativamente la query può essere eseguita su di un \textbf{Campione Casuale
 
 \subsubsection{Perturbazione Casuale dei dati}
 
-A volte può essere utile perturbare i valori del database con un piccolo errore, per ogni $x_{i}$ che rappresenta il valore vero dell'attributo i si può generare un piccolo errore $e_{i}$ e aggiungerlo a $x_{i}$ per calcolare dati statistici.
+A volte può essere utile perturbare i valori del database con un piccolo errore: per ogni $x_{i}$ che rappresenta il valore vero dell'attributo \textit{i} si può generare un piccolo errore $e_{i}$ e aggiungerlo a $x_{i}$ per calcolare dati statistici.
 Valori di query aggregate, quali la somma o la media, produrranno valori vicini a quelli veri ma non esatti.
 
 \section{Esercitazione sull'inferenza}
-Con riferimento alla tabella dipendenti, in \figurename ~\ref{fig:Tabella_dipendenti}, trovare lo stipendio di Mister X con un attacco indiretto di tipo media. \newline
+Con riferimento alla tabella dipendenti, in \figurename ~\ref{fig:Tabella_dipendenti}, trovare lo stipendio di Mister X con un attacco indiretto di tipo media.
 \begin{figure}[htbp]
 	\centering%
 	\subfigure%
 	{\includegraphics[height=8cm, width=12cm, keepaspectratio]{Immagini/dati_sensibili/Tabella_dipendenti.png}}
 	\caption{Tabella dipendenti\label{fig:Tabella_dipendenti}} 	
 \end{figure}
+\\
 Si hanno a disposizione le seguenti informazioni:
 \begin{enumerate}
 \item [a.] Mister X è un uomo con più di 30 anni e non è di Roma;
@@ -320,7 +322,7 @@ Si hanno a disposizione le seguenti informazioni:
 Si tenga conto, inoltre, che viene applicata la seguente politica di protezione dei dati sensibili:
 \begin{enumerate}
 \item il campo stipendio non può essere divulgato direttamente e non può essere utilizzato come criterio di filtraggio;
-\item i criteri di filtraggio possono essere età, sesso, e città;
+\item i criteri di filtraggio possono essere \emph{età}, \emph{sesso}, e \emph{città};
 \item non possono essere utilizzati più di due criteri di filtraggio in una singola interrogazione;
 \item è consentita la divulgazione di medie e conteggi a patto che si riferiscano ad almeno tre tuple.
 \end{enumerate}
@@ -330,7 +332,7 @@ Una possibile strategia di attacco prevede l'individuazione di due insiemi di tu
 \begin{enumerate}
 \item [I.] ciascun insieme contiene singolarmente almeno tre tuple (vincolo 4.);
 \item [II.] ciascun insieme deve poter essere individuato usando al più due condizioni di filtraggio (vincolo 3.) basate sugli attributi eta, sesso, e città (vincolo 2.);
-\item [III.] la differenza insiemistica $U \ V$ deve contenere soltanto mister X; ovvero ${Mister X} = U \ V$;
+\item [III.] la differenza insiemistica $U \setminus V$ deve contenere soltanto mister X; ovvero ${Mister X} = U \setminus V$;
 \item [IV.] l'insieme $V$ deve essere un sottoinsieme di $U$, i.e. $V \subset U$
 \end{enumerate}
 Una volta individuati due insiemi $U$ e $V$, soddisfacenti le condizioni I, II, III e IV, ponendo:
@@ -340,17 +342,17 @@ Una volta individuati due insiemi $U$ e $V$, soddisfacenti le condizioni I, II, 
 \item $m_{V}$ = media degli stipendi dei dipendenti in $V$;
 \item $c_{V}$ = numero dei dipendenti in $V$;
 \end{itemize}
-si ottiene che: $stipendio_{Mister X} = m_{U} \times c_{U} – m_{V} \times c_{V}$.\\
+si ottiene che: $stipendio_{Mister X} = m_{U} \times c_{U} - m_{V} \times c_{V}$.\\
 \subsubsection{Individuazione di $U$ e $V$}
 A questo punto si considerino i seguenti insiemi:
 \begin{itemize}
 \item $A$: insieme dei dipendenti di sesso maschile (sesso = M);
 \item $B$: insieme dei dipendenti con più di 30 anni (eta > 30);
-\item $C$: insieme dei dipendenti romani (citta = Roma);
+\item $C$: insieme dei dipendenti romani (città = Roma);
 \end{itemize}
-Si osservi che dalla (a) e dalla (b) risulta che: ${Mister X} = (A \cap B) \ C = (A \cap B) \ (B \cap C)$\\
+Si osservi che dalla (a) e dalla (b) risulta che: ${Mister X} = (A \cap B) \setminus C = (A \cap B) \setminus (B \cap C)$\\
 mentre dalla (c) si ha che: $C \subset A$\\
-pertanto risulta che: ${Mister X} = (A \cap B) \ (B \cap C)$ e $(B \cap C) \subset (A \cap B)$\\
+pertanto risulta che: ${Mister X} = (A \cap B) \setminus (B \cap C)$ e $(B \cap C) \subset (A \cap B)$\\
 quindi gli insiemi $U$ e $V$ sono:
 \begin{itemize}
 \item $U = A \cap B$

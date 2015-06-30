@@ -14,11 +14,11 @@ La crittografia a chiave segreta è alla base di molti meccanismi di sicurezza, 
 \begin{itemize}
   \item protezione della \textbf{confidenzialità} (l'uso classico di queste tecniche è rappresentato dalle \textbf{comunicazioni su un canale insicuro}, uno degli usi più moderni invece dalla \textbf{memorizzazione sicura su supporto insicuro})
   \item protezione dell'\textbf{integrità}: tramite queste tecniche possono essere eseguiti test per rilevare eventuali modifiche non consentite.
-  \item autenticazione: tramite l'implementazione di protocolli per verificare l'identità di persone e/o processi.
+  \item \textbf{autenticazione}: tramite l'implementazione di protocolli per verificare l'identità di persone e/o processi.
 \end{itemize}
 
 \subsubsection{Comunicazioni su un canale insicuro}
-In molte circostanze, due entità devono comunicare attraverso un canale insicuro correndo il rischio di essere ascoltate da una terza parte. Questo contesto è molto comune: si pensi alle reti LAN, che trasmettono dati in broadcast. La crittografia a chiave segreta permette a due entità che condividono un segreto (la chiave) di comunicare attraverso un canale insicuro, ove non può essere garantita l’assenza di intercettazioni/ascoltatori (eavesdropper), avendo la garanzia che il contenuto della comunicazione rimarrà confidenziale.
+In molte circostanze, due entità devono comunicare attraverso un canale insicuro correndo il rischio di essere ascoltate da una terza parte. Questo contesto è molto comune: si pensi alle reti LAN, che trasmettono dati in broadcast. La crittografia a chiave segreta permette a due entità che condividono un segreto (la chiave) di comunicare attraverso un canale insicuro, ove non può essere garantita l'assenza di intercettazioni/ascoltatori (eavesdropper), avendo la garanzia che il contenuto della comunicazione rimarrà confidenziale.
 
 \subsubsection{Memorizzazione sicura}
 Si supponga di disporre di un supporto di memorizzazione non protetto (ad esempio accessibile a molti utenti). Se si desidera salvare i dati proteggendone la confidenzialità si può definire una chiave segreta, salvare i dati dopo averli crittografati con tale chiave e custodire la chiave segreta in un luogo protetto. Il rischio dell'uso di questa tecnica consiste nella possibilità di smarrimento della chiave. In tal caso i dati sarebbero irrevocabilmente persi.
@@ -26,11 +26,11 @@ Si supponga di disporre di un supporto di memorizzazione non protetto (ad esempi
 \subsubsection{Autenticazione forte}
 Per \textbf{autenticazione forte (strong authentication)} si intende il processo di dimostrazione della \textbf{conoscenza di un segreto}, che contraddistingue l'\textbf{identità} di una data entità, \textbf{senza rivelarlo}. L'autenticazione forte è ottenibile utilizzando la crittografia a chiave segreta, ed è particolarmente utile quando due processi devono comunicare su una rete insicura. A rigore il segreto che contraddistingue l'identità che si desidera autenticare dovrebbe essere noto solo a quest'ultima. Nella crittografia chiave segreta tale requisito non può essere soddisfatto (per soddisfarlo è necessario usare, ad esempio, la crittografia a chiave pubblica). Il segreto in questione è una chiave crittografica che deve essere nota anche all'entità autenticante. 
 
-\subsubsection{Esempio}
+\paragraph{Esempio}
 Si supponga che Alice e Bob condividano una chiave segreta $K_{AB}$ e che vogliano autenticarsi reciprocamente, cioè ciascuno vuole accertarsi dell'identità dell'altro. \newline \textbf{Ipotesi:} $K_{AB}$ è nota solo ad Alice e Bob. Alice deve dimostrare a Bob di conoscere $K_{AB}$ senza rivelarla e viceversa. \newline \textbf{Strategia a sfida e risposta:} ciascuno dimostra di conoscere $K_{AB}$ rispondendo ad una sfida posta dall'altro. La \textbf{sfida} è un numero/stringa random \textbf{r} non prevedibile e sempre diversa. La \textbf{risposta} alla sfida è la sfida stessa cifrata \textbf{$E(K_{AB},R)$}. In \figurename ~\ref{fig:strong_auth_sec} è riportato un possibile schema di autenticazione a sfida e risposta (challenge-response) a chiave segreta. La procedura segue i seguenti passi:
 \begin{itemize}
   \item Alice genera un numero random $r_{A}$ (la sfida) e la invia al presunto Bob
-  \item il presunto Bob critta la sfida con la sua chiave segreta $K'_{AB}$ e restituisce ad Alice la risposta $E(K'_{AB}, r_{A})$
+  \item il presunto Bob cifra la sfida con la sua chiave segreta $K'_{AB}$ e restituisce ad Alice la risposta $E(K'_{AB}, r_{A})$
   \item Alice riceve la risposta del presunto Bob e la decritta con la chiave $K_{AB}$, cioè calcola $D(K_{AB},E(K'_{AB}, r_{A}))$. Se ottiene $r_{A}$, allora il presunto Bob è realmente Bob poiché con elevatissima probabilità, se $D(K_{AB},E(K'_{AB}, r_{A})) = r_{A}$, allora $K'_{AB} = K_{AB}$. In caso negativo deduce invece che il presunto Bob è un impostore. In modo analogo Bob verifica l'identità di Alice.
 \end{itemize}
 \begin{figure}[htbp]
@@ -47,18 +47,18 @@ La sicurezza del precedente protocollo si fonda sulle seguenti condizioni che no
 \end{itemize}
 
 \subsubsection{Controllo di integrità}
-La verifica dell’integrità di un messaggio inviato o di un file è un problema ricorrente in telecomunicazioni e in informatica. Per rilevare eventuali modifiche accidentali si fa uso generalmente di codici (somme) di controllo, detti anche \textbf{checksum}. Un \textbf{checksum} associa ad un qualsiasi messaggio $\textbf{m} \in \{0,1\}^*$ un codice di lunghezza prefissato di $b$ bit (generalmente $b = 32,64,128$ bit): $ck(\textbf{m}) \in \{0,1\}^b$. Un buon \textbf{checksum} dovrebbe variare in modo significativo anche a fronte di iminime variazioni dell'input. \newline \newline 
+La verifica dell'integrità di un messaggio inviato o di un file è un problema ricorrente in telecomunicazioni e in informatica. Per rilevare eventuali modifiche accidentali si fa uso generalmente di codici (somme) di controllo, detti anche \textbf{checksum}. Un \textbf{checksum} associa ad un qualsiasi messaggio $\textbf{m} \in \{0,1\}^*$ un codice di lunghezza prefissato di $b$ bit (generalmente $b = 32,64,128$ bit): $ck(\textbf{m}) \in \{0,1\}^b$. Un buon \textbf{checksum} dovrebbe variare in modo significativo anche a fronte di minime variazioni dell'input. \newline \newline 
 La sorgente del messaggio $m_{s}$ rende pubblico/invia il corrispondente checksum $ck(m_{s})$. Chi riceve il messaggio $m_{r}$ calcola il checksum e verifica se vale l'uguaglianza $ck(m_{s}) = ck(m_{r})$. In caso affermativo, conclude che $m_{s} = m_{r}$. Si noti tuttavia che, seppur improbabile, è possibile ottenere dei falsi positivi, cioè $ck(m_{s}) = ck(m_{r} )$ anche se non è vero.
 
-\subsubsection{Checksum segreti e non segreti}
-I codici di controllo servono per proteggere l’hardware da difetti e da inevitabili errori/guasti. Esistono codici di controllo molto sofisticati come i \textbf{CRC (Cyclic Redundancy Check)} per i quali la probabilità di falsi positivi è estremamente ridotta. Esistono anche i codici \textbf{FEC (Forward Error Correction)} che permettono di correggere eventuali errori oltre che a rilevarli (aggiungendo ulteriore ridondanza). Tuttavia entrambe queste tecniche \textbf{non} sono utilizzabili per la protezione contro \textbf{attacchi intelligenti}. Essendo pubblici, infatti, un avversario intelligente che vuole cambiare un messagio potrebbe modificare anche il codice di controllo in maniera coerente.\newline \newline
+\paragraph{Checksum segreti e non segreti}
+I codici di controllo servono per proteggere l'hardware da difetti e da inevitabili errori/guasti. Esistono codici di controllo molto sofisticati come i \textbf{CRC (Cyclic Redundancy Check)} per i quali la probabilità di falsi positivi è estremamente ridotta. Esistono anche i codici \textbf{FEC (Forward Error Correction)} che permettono di correggere eventuali errori oltre che a rilevarli (aggiungendo ulteriore ridondanza). Tuttavia entrambe queste tecniche \textbf{non} sono utilizzabili per la protezione contro \textbf{attacchi intelligenti}. Essendo pubblici, infatti, un avversario intelligente che vuole cambiare un messaggio potrebbe modificare anche il codice di controllo in maniera coerente.\newline \newline
 Per la protezione contro modifiche maliziose ad un messaggio, è richiesto un codice di controllo (checksum) segreto. Se l'algoritmo non è noto, nessuno può calcolare il checksum corretto per il messaggio modificato. Chiaramente, come nel caso degli algoritmi di cifratura, anziché un
 algoritmo segreto conviene avere un algoritmo noto a tutti che richiede la conoscenza di una chiave segreta per il calcolo di un codice di controllo (Vedi pagina ~\pageref{sec:openStruct}, principio \textbf{Open Structure}). \newline \newline
 In ciò consiste appunto un checksum cifrato, detto anche \textbf{MIC (Message Integrity Code)}. Il funzionamento del MIC è il seguente:
 \begin{itemize}
   \item l'algoritmo produce un codice di autenticazione di lunghezza fissa $MIC(K,m)$, denominato anche \textbf{MAC (Message Authentication Code)}
   \item il codice $MIC(K,m)$ viene trasmesso insieme al messaggio \textbf{m} stesso
-  \item formalmente l’input è una coppia $(K,m) \in \{0, 1\}^k \times \{0, 1\}^*$, dove $k$ denota il numero di bit della chiave segreta K, mentre l'output è sempre una stringa binaria di lunghezza prefissata, cioè $MIC(K,m) \in \{0, 1\}^b$
+  \item formalmente l'input è una coppia $(K,m) \in \{0, 1\}^k \times \{0, 1\}^*$, dove $k$ denota il numero di bit della chiave segreta K, mentre l'output è sempre una stringa binaria di lunghezza prefissata, cioè $MIC(K,m) \in \{0, 1\}^b$
 \end{itemize}
 
 \subsection{Cifrari a blocchi e cifrari a flusso}
@@ -72,28 +72,31 @@ DES, IDEA e AES sono esempi di cifrari a blocchi simmetrici. Un \textbf{cifrario
 \section{Cifratura a blocchi}
 
 \subsection{Introduzione e concetti generali}
-L’algoritmo di cifratura converte un blocco di testo in chiaro in un blocco di testo cifrato. La chiave K non deve essere troppo corta (e.g. se K ha lunghezza 4 bit, sono sufficienti $2^4 = 16$ tentativi per individuarla). Analogamente la lunghezza (fissata) di un blocco non deve essere troppo piccola (e.g. se un blocco ha lunghezza 8 bit, ottenendo delle coppie $\langle plaintext, ciphertext \rangle$ si potrebbe costruire una tabella di $2^8 = 256$ coppie utilizzabile per la decifratura).\newline 
+L'algoritmo di cifratura converte un blocco di testo in chiaro in un blocco di testo cifrato. La chiave K non deve essere troppo corta (e.g. se K ha lunghezza 4 bit, sono sufficienti $2^4 = 16$ tentativi per individuarla). Analogamente la lunghezza (fissata) di un blocco non deve essere troppo piccola (e.g. se un blocco ha lunghezza 8 bit, ottenendo delle coppie $\langle plaintext, ciphertext \rangle$ si potrebbe costruire una tabella di $2^8 = 256$ coppie utilizzabile per la decifratura).\newline 
 D'altra parte, avere blocchi esageratamente lunghi oltre a non essere necessario dal punto di vista della sicurezza, comporta una gestione più complicata e può degradare le prestazioni. \textbf{64 bit è una lunghezza ragionevole per un blocco}: 
 
 \begin{itemize}
   \item è improbabile ottenere ordine di $2^{64}$ coppie $\langle plaintext, ciphertext \rangle$ per costruire una tabella di decifratura, e
   \item anche se fosse possibile, la sua memorizzazione richiederebbe una spazio enorme ($2^{64}$ record da 64 bit),
-  \item come pure l’ordinamento per consentire ricerche efficienti
+  \item come pure l'ordinamento per consentire ricerche efficienti
 \end{itemize}
 
 Il modo più generale per cifrare un blocco da 64 bit è definire una \textbf{biiezione} $\gamma :\{0,1\}^{64} \rightarrow \{0,1\}^{64}$. Tuttavia, memorizzare la definizione della \emph{biiezione} in una struttura dati è impraticabile: sarebbero richiesti $2^{64} \times 64 = 2^{70}$ bit. Per la precisione ne servono di meno, trattandosi di una \textbf{biiezione}: una volta memorizzata la relazione $ P \rightarrow C $ non serve memorizzare $ P' \rightarrow C' $ con $ P' = C $. Infatti, trattandosi di una biiezione:
-\begin{equation}
+
+\[
 (P' = C) \Rightarrow (C' = P)
-\end{equation} 
-Quindi in effetti bastano $\frac{2^{70}}{2} = 2^{69}$ bit. Inoltre, così facendo la chiave è incorporata nella biiezione: per renderla parametrica rispetto alla chiave è necessario memorizzare una biiezione per ogni possibile chiave.\newline \newline
+\]
+
+Quindi in effetti bastano $\frac{2^{70}}{2} = 2^{69}$ bit. Inoltre, così facendo la chiave è incorporata nella biiezione: per renderla parametrica rispetto alla chiave è necessario memorizzare una biiezione per ogni possibile chiave.\newline
+
 I sistemi di crittografia a chiave segreta sono concepiti per usare una chiave ragionevolmente lunga (ad esempio 64 bit) e generare una \textbf{biiezione} che appare, a chi non conosce la chiave, completamente \underline{random}. Se la biiezione fosse realmente random, due input $i$ e $i'$ nei quali cambia un solo bit (uno qualunque) sarebbero \textbf{statisticamente indipendenti}: non può succedere, ad esempio, che il terzo bit dell'output cambia \textbf{sempre} quando il dodicesimo bit dell'input cambia. Gli algoritmi crittografici sono pensati per \textbf{diffondere/spargere} in tutti i bit dell'output il valore di ogni bit dell'input: si cerca di fare in modo che ogni bit dell'output dipenda allo stesso modo da tutti i bit dell'input.
 
 \subsection{Sostituzione e Permutazione}
-Sostituzioni e permutazioni sono due trasformazioni base applicabili ad un blocco di dati.\newline \newline
+Sostituzioni e permutazioni sono due trasformazioni base applicabili ad un blocco di dati.\newline 
 
-Si assuma di dover cifrare un blocco di $k$ bit. Una \textbf{sostituzione} specifica, per ciascuno dei $2^k$ possibili valori dell'input, i $k$ bit dell'output. Per specificare una sostituzione \textbf{"completamente random"} sono necessari circa $k \cdot 2^k$ bit. E' quindi impraticabile implementare una sostituzione per blocchi di $64$ bit, mentre è fattibile per blocchi di lunghezza di $8$ bit. Esempio di crittografia per sostituzione è il \textbf{Cifrario di Cesare}.\newline \newline
+Si assuma di dover cifrare un blocco di $k$ bit. Una \textbf{sostituzione} specifica, per ciascuno dei $2^k$ possibili valori dell'input, i $k$ bit dell'output. Per specificare una sostituzione \textbf{"completamente random"} sono necessari circa $k \cdot 2^k$ bit. E' quindi impraticabile implementare una sostituzione per blocchi di $64$ bit, mentre è fattibile per blocchi di lunghezza di $8$ bit. Esempio di crittografia per sostituzione è il \textbf{Cifrario di Cesare}.\newline 
 
-Una \textbf{permutazione} specifica, per ciascuna delle $k$ posizioni dei bit in input, la posizione del corrispondente bit nell'output. Per specificare una permutazione \textbf{"completamente random"} per un blocco di lunghezza $k$ bit sono necessari $k\log_2 k$ bit. Infatti per ciascuno dei k bit va specificata la sua posizione nell'output; ogni posizione richiede $k\log_2 k$. Ad esempio: essendo $k = 64 = 2^6$, sono necessari $6 = \log_2 {64}$ bit per specificare la nuova posizione che l'i-esimo bit in input avrà in output. \newline \newline
+Una \textbf{permutazione} specifica, per ciascuna delle $k$ posizioni dei bit in input, la posizione del corrispondente bit nell'output. Per specificare una permutazione \textbf{"completamente random"} per un blocco di lunghezza $k$ bit sono necessari $k\log_2 k$ bit. Infatti per ciascuno dei k bit va specificata la sua posizione nell'output; ogni posizione richiede $k\log_2 k$. Ad esempio: essendo $k = 64 = 2^6$, sono necessari $6 = \log_2 {64}$ bit per specificare la nuova posizione che l'i-esimo bit in input avrà in output. \newline
 
 Si noti che una \textbf{permutazione} è un caso particolare di \textbf{sostituzione} in cui ogni bit dell'output ottiene il suo valore da esattamente un bit dell'input.
 
@@ -101,7 +104,7 @@ Si noti che una \textbf{permutazione} è un caso particolare di \textbf{sostituz
 Un algoritmo di cifratura a chiave segreta può funzionare come segue:
 \begin{itemize}
   \item scompone il blocco in input in pezzi più piccoli (e.g. blocchi da 8 bit)
-  \item applica una sostituzione (tramite una \textbf{rete combinatoria}) a ciascun pezzo da 8 bit (la sostituzione dipenderà dal valore della chiave) (fase di \textbf{confusion})
+  \item applica una sostituzione (tramite una \textbf{rete combinatoria}) a ciascun pezzo da 8 bit (\textbf{la sostituzione dipenderà dal valore della chiave}) (fase di \textbf{confusion})
   \item gli output delle sostituzioni vengono riuniti in un unico blocco (64 bit)
   \item tale blocco viene permutato in un permutatore a 64 bit (che ha il compito di diffondere le modifiche eseguite nelle sostituzioni) (fase di \textbf{diffusion})
   \item il processo viene ripetuto un certo numero di volte riportando l'output in ingresso
@@ -117,13 +120,15 @@ Ogni attraversamento del cifrario viene detto \textbf{round}. In riferimento all
 \end{figure}
 
 \section{Data Encryption Standard - DES}
-DES fu pubblicato nel 1977 dal \textbf{National Bureau of Standards}, ora rinominato \textbf{N}ational \textbf{I}nstitute of \textbf{S}tandards and \textbf{T}echnology (\textbf{NIST}), per usi commerciali e altre applicazioni del governo statunitense. Progettato da IBM, si basa sul precedente cifrario \textit{Lucifer} ed è frutto della collaborazione con consulenti della NSA. DES usa una chiave di 56 bit, e mappa un blocco di input da 64 bit in un blocco di output da 64 bit (l'algoritmo è quindi abbastanza rigido, al contrario di altri cifrari a blocchi). La \textbf{chiave} è in realtà costituita da una sequenza di 64 bit, ma un bit in ogni ottetto (il blocco da 64 bit è formato da 8 sequenze di 8 bit dette ottetti) è usato come \textbf{odd parity} su ciascun ottetto. Di fatto, soltanto 7 bit in ogni ottetto sono quindi veramente significativi come chiave. \newline \newline
+DES fu pubblicato nel 1977 dal \textbf{National Bureau of Standards}, ora rinominato \textbf{N}ational \textbf{I}nstitute of \textbf{S}tandards and \textbf{T}echnology (\textbf{NIST}), per usi commerciali e altre applicazioni del governo statunitense. Progettato da IBM, si basa sul precedente cifrario \textit{Lucifer} ed è frutto della collaborazione con consulenti della NSA. DES usa una chiave di 56 bit, e mappa un blocco di input da 64 bit in un blocco di output da 64 bit (l'algoritmo è quindi abbastanza rigido, al contrario di altri cifrari a blocchi). La \textbf{chiave} è in realtà costituita da una sequenza di 64 bit, ma un bit in ogni ottetto (il blocco da 64 bit è formato da 8 sequenze di 8 bit dette ottetti) è usato come \textbf{odd parity} su ciascun ottetto. Di fatto, soltanto 7 bit in ogni ottetto sono quindi veramente significativi come chiave. \newline
 
 DES è efficiente se realizzato hardware, ma relativamente lento se implementato software. Sebbene l'essere difficilmente implementabile come software non fosse un requisito specificato nel progetto, molti sostengono che in realtà questa mancanza fosse voluta, forse per limitarne l'uso ad organizzazioni in grado di realizzare sistemi hardware, o forse perché rese più facile controllare l'accesso alla tecnologia. Ad ogni modo, l'aumento delle capacità di calcolo delle CPU rese possibile realizzare una versione software di DES. Una 500-MIPS (\textit{Million Instruction Per Second}) CPU può infatti cifrare ad un tasso di circa 30 KB/s e forse più, a seconda dei dettagli architetturali della CPU e dell'intelligenza dell'implementazione. Un processore Intel Core i7 Extreme Edition i980EE ha una capacità di calcolo di circa 150 MIPS, quindi può cifrare ad un tasso t:
 
-\begin{equation}
+
+\[
 t \approx \frac{30 \: \frac{KB}{s}}{500 \: MIPS} \cdot 150 \: MIPS = 9 \: \frac{KB}{s}
-\end{equation}  
+\]
+
 Per cifrare 1 MB impiega circa 110 secondi. L’implementazione software è pertanto attualmente adeguata a molte applicazioni.\newline \newline
 
 
@@ -133,7 +138,9 @@ Per cifrare 1 MB impiega circa 110 secondi. L’implementazione software è pert
 La scelta di una chiave da 56 bit causò molte controversie. Prima che DES fu adottato, le persone al di fuori della \textit{intelligence community} lamentavano che 56 bit non offrivano una sicurezza adeguata. Perché solo 56 dei 64 bit di una chiave DES sono effettivamente usati nell'algoritmo? Lo svantaggio di usare 8 bit della chiave per un controllo di parità è che ciò rende DES molto meno sicuro (256 volte meno sicuro contro una ricerca esaustiva). Ma qual è il vantaggio di usare 8 bit per un controllo di parità? Una possibile risposta è che permette di verificare che la chiave non sia corrotta. Tuttavia questa spiegazione non regge. Se si considerassero infatti 64 bit a caso invece della chiave, c'è una probabilità su 256 che il controllo di parità dia esito positivo. La probabilità che la chiave sia comunque errata (nonostante il controllo di parità dia esito positivo) è troppo alta. Inoltre avere una chiave corrotta non comporta un problema di sicurezza, semplicemente la cifratura/decifratura non viene eseguita correttamente. Chiaramente è anche ridicolo sostenere che la scelta di 56 bit sia stata fatta per risparmiare memoria. \newline La risposta ormai condivisa è che il governo statunitense abbia deliberatamente indebolito la sicurezza di DES di una quantità appena sufficiente da consentire alla NSA di violarlo. \\
 
 Gli avanzamenti tecnologici dell'industria dei semiconduttori hanno reso ancora più critico il problema della lunghezza della chiave di DES. La velocità dei chip e un po' di furbizia permettono di violare (individuare) le chiavi DES con approcci a forza bruta in tempi ragionevoli. Il rapporto prestazioni/prezzo dell'hardware cresce del
-$40\%$ per anno. La lunghezza delle chiavi dovrebbe aumentare di 1 bit ogni 2 anni. Assumendo che 56 bit erano appena sufficienti nel 1979 (quando DES fu standardizzato), 64 bit erano adeguati nel 1995, e 128 bit dovrebbero essere sufficienti fino al 2123. \newline \newline Ragioniamo ora sulla sicurezza di DES. Se si dispone di un singolo blocco $\langle plaintext,ciphertext \rangle$ quanto è difficile trovare la chiave? Un approccio a forza bruta dovrebbe provare ordine di $2^{56} \approx 10^{17}$ chiavi. Se ogni tentativo richiede una singola istruzione sono necessarie ordine di 1000 MIPS-year istruzioni.
+$40\%$ per anno. La lunghezza delle chiavi dovrebbe aumentare di 1 bit ogni 2 anni. Assumendo che 56 bit erano appena sufficienti nel 1979 (quando DES fu standardizzato), 64 bit erano adeguati nel 1995, e 128 bit dovrebbero essere sufficienti fino al 2123. \newline
+
+Ragioniamo ora sulla sicurezza di DES. Se si dispone di un singolo blocco $\langle plaintext,ciphertext \rangle$ quanto è difficile trovare la chiave? Un approccio a forza bruta dovrebbe provare ordine di $2^{56} \approx 10^{17}$ chiavi. Se ogni tentativo richiede una singola istruzione sono necessarie ordine di 1000 MIPS-year istruzioni.
 \begin{itemize}
   \item 1 MIPS = 1 Milione di Istruzioni Per Secondo
   \item 1 MIPS-year = numero di istruzioni eseguite in un anno ad un tasso pari a 1 MIPS = 1 MIPS $\times(365 \times 86400)$ secondi in un anno = $3,1536 \times 10^{13}$ istruzioni
@@ -143,9 +150,9 @@ Questo vale tuttavia \textbf{solo} per effettuare una ricerca esaustiva. Dopo di
 
 \subsubsection{Violabilità DES - esempio}
 Anche nell'ipotesi più scomoda per l'avversario di disporre solo di testo cifrato (in ragionevole quantità), un attacco a forza bruta è ancora possibile. Se, ad esempio, l'avversario sa soltanto che il testo in chiaro è ASCII a 7 bit, ogni volta che prova una chiave deve verificare se sono nulli tutti i bit nelle posizioni $8, 16, 24, ..., n \times 8, ..., 64$. Per ogni blocco di 64 bit, vanno esaminati solo 8 bit; i bit in posizione 8, 16, 24, 32, 40, 48, 56, 64. Se almeno uno di questi bit vale 1 la chiave è sicuramente errata. In caso contrario nulla si può dire (stiamo effettuando, di fatto, una verifica di una \textbf{condizione necessaria} per la verosimiglianza). \textbf{La probabilità di errore è pertanto:}
-\begin{equation}
+\[
 p_e = \frac{1}{2^8} = \frac{1}{256}
-\end{equation}
+\]
 Ossia la probabilità che tutti i bit nelle posizioni elencate siano 0. Se l'avversario esamina diversi blocchi, ad esempio 10, e verifica che si tratta sempre di ASCII a 7 bit la probabilità che la chiave scelta sia errata si riduce a $\frac{1}{2560}$. Si noti che gli attuali chip commerciali che implementano DES non si prestano a ricerche esaustive della chiave: sono pensati per cifrare molti dati con una stessa chiave. Infatti il caricamento di una chiave è un'operazione lenta se confrontata con la velocità con la quale viene eseguita la cifratura dei dati. Tuttavia è sempre possibile costruire un chip ottimizzato ad eseguire ricerche esaustive della chiave.
 
 \subsubsection{Violabilità DES - cifratura multipla}
@@ -166,24 +173,24 @@ La struttura di base dell'algoritmo DES è descritta in \figurename ~\ref{fig:de
   \item Parallelamente, la chiave da 56 bit viene usata per generare 16 per-round chiavi da 48 bit; una chiave per ciascuno dei 16 round, prendendo 48 differenti sottoinsiemi dei 56 bit della chiave
   \item Ogni round riceve in input l'output di 64 bit del round precedente e la chiave da 48 bit di quel round
   \item Ogni round restituisce un output di 64 bit
-  \item Dopo il 16-esimo round, le due metà dell'output di 64 bit vengono scambiate e il risultato viene sottoposto ad un’altra permutazione (inversa a quella iniziale)
-  \item La decifratura consiste semplicemente nell’eseguire la cifratura DES all’indietro
-  \item Per decifrare un blocco è necessario applicare la permutazione iniziale (ciò annulla l’effetto della permutazione finale), generare le 16 chiavi di round, che andranno usate in ordine inverso (prima $K_{16}$, l'ultima chiave generata), seguire 16 round esattamente come nella cifratura, scambiare le due metà dell'output e sottoporle a un'altra permutazione (che annulla l'effetto della permutazione iniziale)
+  \item Dopo il 16-esimo round, le due metà dell'output di 64 bit vengono scambiate e il risultato viene sottoposto ad un'altra permutazione (inversa a quella iniziale)
+  \item La decifratura consiste semplicemente nell'eseguire la cifratura DES all'indietro
+  \item Per decifrare un blocco è necessario applicare la permutazione iniziale (ciò annulla l'effetto della permutazione finale), generare le 16 chiavi di round, che andranno usate in ordine inverso (prima $K_{16}$, l'ultima chiave generata), eseguire 16 round esattamente come nella cifratura, scambiare le due metà dell'output e sottoporle a un'altra permutazione (che annulla l'effetto della permutazione iniziale)
 \end{itemize}
 Per descrivere DES è quindi sufficiente discutere le permutazioni iniziale e finale, come le chiavi di round sono generate, e cosa succede durante un round.
 
 
 \subsubsection{Permutazioni dei dati}
-L'operazione di permutazione è molto importante in quanto diffonde la dipendenza dei bit in/out. Nel caso di DES però le permutazioni finale e iniziale non hanno effetto. Dimostriamo tale affermazione. \newline \newline
+L'operazione di permutazione è, in generale, molto importante in quanto diffonde la dipendenza dei bit in/out. Nel caso di DES però le permutazioni finale e iniziale non hanno effetto sulla sicurezza complessiva dell'algoritmo. Dimostriamo tale affermazione. \newline \newline
 \begin{figure}[htbp]
 	\centering%
 	\subfigure%
 	{\includegraphics[height=10cm, width=8cm, keepaspectratio]{Immagini/chiave_segreta/des_perm_3.png}}
 	\caption{Inutilità delle permutazioni iniziale e finale \label{fig:des_perm_3}} 	
 \end{figure}
-Supponiamo di non averle. Se assumiamo \textbf{per assurdo} che il cifrario cosi ottenuto sia facile da violare, vogliamo dimostrare che anche \textbf{DES} è facile da violare. Procedendo in questo modo, dimostriamo l'effettiva inutilità di tali permutazioni. 
-\newline \newline
-Chiamiamo il cifrario senza permutazione \textbf{EDS}. Se posso violare \textbf{EDS} (disponendo, ad esempio, di una coppia $\langle plaintext, ciphertext \rangle$), basta permutare ciò che ottengo e violo DES. Infatti, sia $\langle m, c \rangle$ una coppia $\langle plaintext, ciphertext \rangle$ di DES. Si consideri allora la coppia $\langle m', c' \rangle$, dove m' e c' sono ottenuti applicando la permutazione iniziale ad m e c. Allora, la chiave $K_{EDS}$ che si ottiene violando EDS per la
+
+Supponiamo \textbf{per assurdo} che siano fondamentali alla sicurezza; quindi eliminando tali permutazioni l'algoritmo ottenuto è più facile da violare rispetto a DES. Chiamiamo il cifrario senza permutazioni \textbf{EDS}. Vogliamo dimostrare che se \textbf{EDS} è facile da violare, anche \textbf{DES} lo è. Procedendo in questo modo, dimostriamo l'effettiva inutilità di tali permutazioni.\newline \newline
+Se posso violare \textbf{EDS} (disponendo, ad esempio, di una coppia $\langle plaintext, ciphertext \rangle$), basta permutare ciò che ottengo e violo DES. Infatti, sia $\langle m, c \rangle$ una coppia $\langle plaintext, ciphertext \rangle$ di DES. Si consideri allora la coppia $\langle m', c' \rangle$, dove $m'$ e $c'$ sono ottenuti applicando la permutazione iniziale ad $m$ e quella finale a $c$. Allora, la chiave $K_{EDS}$ che si ottiene violando EDS per la
 coppia $\langle m', c' \rangle$ coincide con la chiave $K_{DES}$ di DES per la
 coppia $\langle m, c \rangle$ (vedi \figurename ~\ref{fig:des_perm_3}). \\
 
@@ -194,7 +201,7 @@ L'ipotesi è che tali permutazioni siano state introdotte per rendere più compl
 	{\includegraphics[height=10cm, width=13cm, keepaspectratio]{Immagini/chiave_segreta/des_perm.png}}
 	\caption{Tabella permutazioni DES \label{fig:des_perm}} 	
 \end{figure}
-Come sono state definite quindi le permutazioni iniziale e finale? E' di fatto una permutazione regolare, come è mostrato in \figurename ~\ref{fig:des_perm}. Le tabelle vanno interpretate nel seguente modo: i numeri, da 1 a 64, riportati in tabella rappresentano le posizioni dei bit in input alla permutazione, mentre l’ordine (per righe da sx verso dx) dei numeri nella tabella rappresenta la corrispondente posizione dei bit in output. \\
+Come sono state definite quindi le permutazioni iniziale e finale? E' di fatto una permutazione regolare, come è mostrato in \figurename ~\ref{fig:des_perm}. Le tabelle vanno interpretate nel seguente modo: i numeri, da 1 a 64, riportati in tabella rappresentano le posizioni dei bit in input alla permutazione, mentre l'ordine (per righe da sx verso dx) dei numeri nella tabella rappresenta la corrispondente posizione dei bit in output. \\
 
 Ad esempio, la permutazione iniziale sposta il 58-esimo bit in input nel primo bit in output, e il 50-esimo bit in input nel secondo bit in output. Non si tratta di permutazioni generate in modo random, in quanto presenta delle evidenti regolarità, come è evidenziato in \figurename ~\ref{fig:des_perm_2}.
 
@@ -225,7 +232,7 @@ DES genera sedici chiavi di round da 48 bit a partire dalla chiave principale K 
 	{\includegraphics[height=10cm, width=10cm, keepaspectratio]{Immagini/chiave_segreta/des_perm_keys_2.png}}
 	\caption{Regolarità tabella permutazioni delle chiavi DES \label{fig:des_perm_keys_2}} 	
 \end{figure}
-La struttura della permutazione iniziale della chiave è illustrata in \figurename ~\ref{fig:des_perm}. Il valore numerico di un elemento della tabella rappresenta la posizione del bit in input, mentre l’ordine nella tabella rappresenta la posizione del bit in output (come per le permutazioni dei dati). Anche in questo caso non è random, in quanto presenta delle evidenti regolarità, come è evidenziato in \figurename ~\ref{fig:des_perm_keys_2}. Come nel caso delle permutazioni iniziale e finale dei dati, non apportano alcun miglioramento alla sicurezza.
+La struttura della permutazione iniziale della chiave è illustrata in \figurename ~\ref{fig:des_perm_keys}. Il valore numerico di un elemento della tabella rappresenta la posizione del bit in input, mentre l'ordine nella tabella rappresenta la posizione del bit in output (come per le permutazioni dei dati). Anche in questo caso non è random, in quanto presenta delle evidenti regolarità, come è evidenziato in \figurename ~\ref{fig:des_perm_keys_2}. Come nel caso delle permutazioni iniziale e finale dei dati, non apportano alcun miglioramento alla sicurezza.
 \subsubsection{Generazione $K_{i}$ nell'i-esimo round}
 \begin{figure}[htbp]
 	\centering%
@@ -235,11 +242,11 @@ La struttura della permutazione iniziale della chiave è illustrata in \figurena
 \end{figure}
 Trattiamo ora la generazione della chiave $K_{i}$ che avviene nell'i-esimo round. La procedura avviene seguendo questi passi (come mostrato in \figurename ~\ref{fig:round_i}):
 \begin{itemize}
-  \item i bit delle due metà $C_{i-1}$ e $D_{i-1}$ della (i-1)-esima chiave $K_{i-1}$ vengono ruotati (traslazione ciclica) a sinistra. L'entità della traslazione a dipende dal round: nei round 1, 2, 9 e 16 si ha una rotazione a sinistra di un solo bit (i.e. il primo bit diventa l’ultimo bit a destra), mentre negli altri round si ha una rotazione a sinistra di due bit.
+  \item i bit delle due metà $C_{i-1}$ e $D_{i-1}$ della (i-1)-esima chiave $K_{i-1}$ vengono ruotati (traslazione ciclica) a sinistra. L'entità della traslazione a dipende dal round: nei round 1, 2, 9 e 16 si ha una rotazione a sinistra di un solo bit (i.e. il primo bit diventa l'ultimo bit a destra), mentre negli altri round si ha una rotazione a sinistra di due bit.
   \item la permutazione di $C_{i}$ che produce la metà sinistra di $K_{i}$ è illustrata sotto. Si noti che i bit in posizione 9, 18, 22, e 25 sono scartati.
   	\begin{table}[h]
   	\centering
-	\begin{tabular}{llllll}
+	\begin{tabular}{rrrrrr}
 	14 & 17 & 11 & 24 & 1  & 5  \\
 	3  & 28 & 15 & 6  & 21 & 10 \\
 	23 & 19 & 12 & 4  & 26 & 8  \\
@@ -266,25 +273,25 @@ Trattiamo ora la generazione della chiave $K_{i}$ che avviene nell'i-esimo round
 \end{figure}
 La struttura di un round di DES è illustrata in \figurename~\ref{fig:round_des}. I 64 bit in input sono divisi in due metà da 32 bit: $L_{n}$, la metà sinistra dopo l'(n-1)-esimo round, e $R_{n}$, la metà destra dopo l'(n-1)-esimo round. L'output di 64 bit del round si ottiene concatenando le due metà: $L_{n + 1}$, la metà sinistra dopo l'n-esimo round, e $R_{n + 1}$, la metà destra dopo l'n-esimo round. $L_{n+1}$ è semplicemente $R_{n}$, mentre $R_{n + 1}$ è ottenuto come segue:
 \begin{itemize}
-  \item $R_{n}$ e $K_{n}$ sono posti in input alla mangler function; la mangler function viene anche detta funzione di Feistel
+  \item $R_{n}$ e $K_{n}$ sono posti in input alla \textbf{mangler function}; la mangler function viene anche detta funzione di Feistel
   \item l'output della mangler function, $mangler(R_{n}, K_{n})$, è una quantità di 32 bit; si noti che $R_{n}, K_{n}$ sono composti da
 32 e 48 bit rispettivamente
   \item l'output $mangler(R_{n}, K_{n})$ viene poi sommato (XOR) con $L_{n}$
   \item il risultato ottenuto è $R_{n+1} = mangler(R_{n}, K_{n}) \oplus L_{n}$
 \end{itemize}
 Si noti che ogni round di DES è facilmente invertibile: noti $L_{n+1}$ , $R_{n+1}$ e $K_{n}$ è facile ottenere $L_{n}$ e $R_{n}$. Infatti $R_{n} = L_{n+1}$ e, ricordando che:
-\begin{equation}
-x \oplus y \oplus y = x 
-\end{equation}
+\[
+x \oplus y \oplus y = x
+\]
 Ho che:
-\begin{equation}
+\[
 x  = z \oplus y \Rightarrow  x \oplus y = z \oplus y \oplus y \Rightarrow  x \oplus y = z
-\end{equation}
+\]
 Applicando tale proprietà dello XOR al caso in esame ottengo:
 \begin{equation}
 R_{n+1} = mangler(R_{n}, K_{n}) \oplus L_{n} \Rightarrow R_{n+1} \oplus mangler(R_{n}, K_{n}) = L_{n}
 \end{equation}
-La mangler function non è quindi mai utilizzata in senso inverso. DES è elegantemento progettato in modo da essere facilmente invertibile senza richiedere l'invertibilità della mangler function. Esaminando attentamente la \figurename ~\ref{fig:round_des}), si evince che la decifratura è di fatto identica alla cifratura, tranne per il fatto che le due metà da 32 bit sono invertite. In altre parole, fornendo $R_{n+1} \mid L_{n+1}$ in input al round n si ottiene $R_{n} \mid L_{n}$ in uscita
+La mangler function non è quindi mai utilizzata in senso inverso. DES è elegantemente progettato in modo da essere facilmente invertibile senza richiedere l'invertibilità della mangler function. Esaminando attentamente la \figurename ~\ref{fig:round_des}, si evince che la decifratura è di fatto identica alla cifratura, tranne per il fatto che le due metà da 32 bit sono invertite. In altre parole, fornendo $R_{n+1} \mid L_{n+1}$ in input al round n si ottiene $R_{n} \mid L_{n}$ in uscita.
 
 \subsubsection{Mangler Function}
 \begin{figure}[htbp]
@@ -294,7 +301,8 @@ La mangler function non è quindi mai utilizzata in senso inverso. DES è elegan
 	\caption{Mangler function \label{fig:mangler}} 	
 \end{figure}
 La mangler function prende in input i 32 bit di $R_{n}$, o R per semplificare, e i 48 bit della chiave $K_{n}$ , o K per semplificare. Produce un output da 32 bit che sommato (XOR) con $L_{n}$ permette di ottenere $R_{n+1}$ (il prossimo R).\newline
-La prima operazione è l’espansione di R, da 32 bit a 48 bit. R è scomposto in otto pezzi da 4 bit $R = \lbrace r_{1} , r_{2}, ..., r_{8} \rbrace$. L’i-esimo pezzo $r_{i}$ viene espanso a 6 bit aggiungendo in testa e in coda rispettivamente l’ultimo bit di $r_{i-1}$ e il primo bit di $r_{i+1}$. $r_{1}$ e $r_{8}$ sono considerati adiacenti, cioè $r_{0} = r_{8}$ e $r_{9} = r_{1}$. (Fare riferimento alla \figurename ~\ref{fig:mangler_exp})).
+
+La prima operazione è l'espansione di R, da 32 bit a 48 bit. R è scomposto in otto pezzi da 4 bit $R = \lbrace r_{1} , r_{2}, ..., r_{8} \rbrace$. L'i-esimo pezzo $r_{i}$ viene espanso a 6 bit aggiungendo in testa e in coda rispettivamente l'ultimo bit di $r_{i-1}$ e il primo bit di $r_{i+1}$. $r_{1}$ e $r_{8}$ sono considerati adiacenti, cioè $r_{0} = r_{8}$ e $r_{9} = r_{1}$ (fare riferimento alla \figurename ~\ref{fig:mangler_exp})).
 \begin{figure}[htbp]
 	\centering%
 	\subfigure%
@@ -302,15 +310,18 @@ La prima operazione è l’espansione di R, da 32 bit a 48 bit. R è scomposto i
 	\caption{Mangler function - espansione \label{fig:mangler_exp}} 	
 \end{figure}
 \newline
-la chiave K($K_{n}$) viene scomposta in otto chunk (pezzi) da 6 bit. L'i-esimo chunk di R($R_{n}$) espanso viene sommato (XOR) all’i-esimo chunk di K. L'output a 6 bit ottenuto viene sottoposto ad una sostituzione \textbf{S-box} che produce un output di 4 bit. Vi sono in tutto otto S-box distinte; l’i-esima S-box elabora la somma dell’i-esimo chunk di K e di R. Ogni S-box ha 64 possibili input e 16 possibili output. Ovviamente input diversi possono essere mappati nello stesso output (sto riducendo lo spazio). Le S-box sono definite in modo tale che esattamente quattro
-input distinti sono mappati in ciascun output possibile. Ogni S-box può riguardarsi come quattro S-box separate aventi 4 bit sia in input che in output: i quattro bit in input corrispondono ai bit interni (dal secondo al quinto) dell'input globale, e i due bit esterni (primo e sesto) dell’input globale servono a selezionare quale dei quattro output ottenuti rappresenta l'output globale.
+
+La chiave K($K_{n}$) viene scomposta in otto chunk (pezzi) da 6 bit. L'i-esimo chunk di R($R_{n}$) espanso viene sommato (XOR) all'i-esimo chunk di K. L'output a 6 bit ottenuto viene sottoposto ad una sostituzione \textbf{S-box} che produce un output di 4 bit. Vi sono in tutto otto S-box distinte; l'i-esima S-box elabora la somma dell'i-esimo chunk di K e di R. Ogni S-box ha 64 possibili input e 16 possibili output. Ovviamente input diversi possono essere mappati nello stesso output (sto riducendo lo spazio). Le S-box sono definite in modo tale che esattamente quattro
+input distinti sono mappati in ciascun output possibile. Ogni S-box può riguardarsi come quattro S-box separate aventi 4 bit sia in input che in output: i quattro bit in input corrispondono ai bit interni (dal secondo al quinto) dell'input globale, e i due bit esterni (primo e sesto) dell'input globale servono a selezionare quale dei quattro output ottenuti rappresenta l'output globale.
 \begin{figure}[htbp]
 	\centering%
 	\subfigure%
 	{\includegraphics[height=7cm, width=7cm, keepaspectratio]{Immagini/chiave_segreta/sbox.png}}
 	\caption{S-Box \label{fig:sbox}} 	
 \end{figure}
-Infine gli otto output, da 4 bit, delle otto S-box sono riuniti in un unico output a 32 bit che viene sottoposto ad una permutazione. Tale permutazione aumenta il livello di sicurezza perché le sostituzioni fatte in ciascuna S-box in un round di DES vengono diffuse negli input di più S-box nel round seguente. Senza tale permutazione, un bit nella parte sinistra dell'input influenzerebbe principalmente alcuni bit della parte sinistra dell'output. Tale permutazione è mostrata in \figurename ~\ref{fig:sbox_perm}).
+\newline
+
+Infine gli otto output, da 4 bit, delle otto S-box sono riuniti in un unico output a 32 bit che viene sottoposto ad una permutazione. Tale permutazione aumenta il livello di sicurezza perché le sostituzioni fatte in ciascuna S-box in un round di DES vengono diffuse negli input di più S-box nel round seguente. Senza tale permutazione, un bit nella parte sinistra dell'input influenzerebbe principalmente alcuni bit della parte sinistra dell'output. Tale permutazione è mostrata in \figurename ~\ref{fig:sbox_perm}.
 \begin{figure}[htbp]
 	\centering%
 	\subfigure%
@@ -319,7 +330,7 @@ Infine gli otto output, da 4 bit, delle otto S-box sono riuniti in un unico outp
 \end{figure}
 	
 \section{Advanced Encryption Standard - AES}
-AES fu introdotto perché DES aveva una chiave troppo corta, 3DES (triplo DES) era troppo lento e IDEA era protetto da un brevetto, ed era in parte sospetto e lento. Il NIST si impegnò quindi a sviluppare un nuovo standard. Non si trattava di un problema solo tecnico, ma anche di un problema politico, poiché alcuni rami del governo avevano ostacolato il più possibile la diffusione e l'esportazione della crittografia sicura, e il fatto che il governo appoggiasse il NIST era visto con scetticismo, e molti non si fidavano. Il NIST voleva realmente creare un nuovo standard di sicurezza eccellente, cioè efficiente, flessibile, sicuro e free (non protetto). \newline
+AES fu introdotto perché DES aveva una chiave troppo corta, 3DES (triplo DES) era troppo lento e IDEA era protetto da un brevetto, ed era in parte sospetto e lento. Il NIST si impegnò quindi a sviluppare un nuovo standard. Non si trattava di un problema solo tecnico, ma anche di un problema politico, poiché alcuni rami del governo avevano ostacolato il più possibile la diffusione e l'esportazione della crittografia sicura, e il fatto che il governo appoggiasse il NIST era visto con scetticismo, e molti non si fidavano. Il NIST voleva realmente creare un nuovo standard di sicurezza eccellente, cioè efficiente, flessibile, sicuro e free (non protetto).
 
 Nel 1997 il NIST annunciò una gara per la selezione di un nuovo standard di cifratura destinato a proteggere informazioni governative sensibili. Dopo molti anni di studio e discussioni, il NIST scelse l'algoritmo \textbf{Rijndael}, proposto da due crittografi belgi Joan Daemen e Vincet Rijmen. Rijndael prevede diverse lunghezze per i blocchi e
 per la chiave: 128, 160, 192, 224, e 256 bit. La lunghezza di un blocco e quella della chiave possono differire. Il 26 Novembre 2001, viene emanato \textbf{AES}, una standardizzazione di Rijndael. AES quindi consiste in \textbf{un'implementazione di Rijndael} con determinati parametri. Lo standard AES, infatti:
@@ -339,11 +350,11 @@ Rijndael ha una struttura flessibile grazie all'uso di due parametri indipendent
 \end{itemize}
   
 \subsubsection{Array di stato}
-Rijndael mantiene un array di stato rettangolare durante il funzionamento. Ogni elemento dell'array è un ottetto. Complessivamente ci sono $N_{b}$ colonne da 4 ottetti. Lo stato iniziale è ottenuto popolando l’array, colonna per colonna, mediante le $N_{b}$ colonne da 4 ottetti che costituiscono il blocco di input. \\
-\newline \newline
+Rijndael mantiene un array di stato rettangolare durante il funzionamento. Ogni elemento dell'array è un ottetto. Complessivamente ci sono $N_{b}$ colonne da 4 ottetti. Lo stato iniziale è ottenuto popolando l'array, colonna per colonna, mediante le $N_{b}$ colonne da 4 ottetti che costituiscono il blocco di input. \\
+\newline
 Durante gli $N_{r}$ round lo stato viene modificato e il blocco di output dell'algoritmo si ottiene leggendo colonna per colonna lo stato finale. 
 \newline \newline 
-La struttura base di Rijndael è mostrata in \figurename ~\ref{fig:Rij_struct}. Prima del primo round, tra i vari round, e dopo il round $N_{r}$ viene eseguito l'or-esclusivo ($\oplus$ XOR) del contenuto dell'array di stato, con i prossimi $4\cdot N_{b}$ ottetti della \textbf{chiave espansa}. Gli ottetti della chiave espansa vengono letti per colonna in modo da formare un matrice di $N_{b}$ colonne da 4 ottetti ciascuna. I primi $N_{r} - 1$ round comprendono una sequenza di operazioni identiche, mentre il round $N_{r}$ ne omette una.
+La struttura base di Rijndael è mostrata in \figurename~\ref{fig:Rij_struct}. Prima del primo round, tra i vari round, e dopo il round $N_{r}$ viene eseguito l'or-esclusivo ($\oplus$ XOR) del contenuto dell'array di stato, con i prossimi $4\cdot N_{b}$ ottetti della \textbf{chiave espansa}. Gli ottetti della chiave espansa vengono letti per colonna in modo da formare un matrice di $N_{b}$ colonne da 4 ottetti ciascuna. I primi $N_{r} - 1$ round comprendono una sequenza di operazioni identiche, mentre il round $N_{r}$ ne omette una.
 
 \begin{figure}[htbp]
 	\centering%
@@ -353,7 +364,7 @@ La struttura base di Rijndael è mostrata in \figurename ~\ref{fig:Rij_struct}. 
 \end{figure}
 
 \subsubsection{Espansione della chiave}
-La chiave segreta di Rijndael è un blocco formato da $4 \cdot N_{k}$ ottetti ($N_{k}$ word da 32 bit). L'algoritmo di espansione della chiave scandisce la chiave in modo da ottenere $N_{k}$ colonne da 4 ottetti, poi espande la matrice ottenuta introducendo delle colonne (da 4 ottetti) aggiuntive (avvalendosi dello stesso tipo di operazioni primitive usate durante i round, che verrano descritte in seguito). L'espansione si arresta quando si hanno complessivamente $(N_{r} + 1)N_{b}$ colonne, ovvero l'esatta quantità di chiavi espanse. Non tratteremo qui nel dettaglio come avviene l'espansione, per l'approfondimento si rimanda a testi dedicati.
+La chiave segreta di Rijndael è un blocco formato da $4 \cdot N_{k}$ ottetti ($N_{k}$ word da 32 bit). L'algoritmo di espansione della chiave scandisce la chiave in modo da ottenere $N_{k}$ colonne da 4 ottetti, poi espande la matrice ottenuta introducendo delle colonne (da 4 ottetti) aggiuntive (avvalendosi dello stesso tipo di operazioni primitive usate durante i round, che verranno descritte in seguito). L'espansione si arresta quando si hanno complessivamente $(N_{r} + 1)N_{b}$ colonne, ovvero l'esatta quantità di chiavi espanse. Non tratteremo qui nel dettaglio come avviene l'espansione, per l'approfondimento si rimanda a testi dedicati.
 \newline \newline
 \textbf{Numerazioni}: righe, colonne, e chiavi di round sono numerate a
 partire 0, mentre i round sono invece numerati a partire da 1.
@@ -364,7 +375,7 @@ Rijndael utilizza quattro operazioni primitive, sia nell'espansione della chiave
   \item \textbf{OR-esclusivo ($\oplus$ XOR)}, in cui sono coinvolte le chiavi espanse
   \item \textbf{sostituzione di byte}, chiamata \textbf{S-box}. Si tratta di una sostituzione ottetto-per-ottetto (byte-per- byte) definita da una specifica tabella, che specifica, per ciascuno dei possibili 256 byte in input il corrispondente byte in output tra i 256 possibili. Per la rappresentazione della tabella fa comodo usare la notazione esadecimale in cui, ad esempio, FC rappresenta il 252-esimo byte. Un esempio di S-box è riportato in figura \ref{fig:Rij_sbox}.
   \item \textbf{scorrimento circolare di ottetti (byte)} di una riga o di una colonna pari a un qualche numero di celle
-  \item mescolamento colonne, \textbf{MixColumn}. Consiste nella sostituzione di una colonna di 4 ottetti con un'altra colonna di 4 ottetti. \textbf{MixColumn} può essere implementata con una singola tabella contenente 256 colonne di 4 ottetti: ciascuno dei 4 ottetti in una colonna di input è usato come un indice per recuperare una colonna dalla tabella. Ogni colonna recuperata dalla tabella è ruotata (scorrimento verticale circolare dall'alto in basso) verticalmente in modo tale che il suo ottetto in cima sia posto nella stessa riga dell’ottetto di input, e le quattro colonne ruotate sono sommate XOR per produrre la colonna di output. Un esempio di quest'operazione è mostrata in \figurename ~\ref{fig:Rij_mixcol} e \figurename ~\ref{fig:Rij_mixcol_lookup}.
+  \item mescolamento colonne, \textbf{MixColumn}. Consiste nella sostituzione di una colonna di 4 ottetti con un'altra colonna di 4 ottetti. \textbf{MixColumn} può essere implementata con una singola tabella contenente 256 colonne di 4 ottetti: ciascuno dei 4 ottetti in una colonna di input è usato come un indice per recuperare una colonna dalla tabella. Ogni colonna recuperata dalla tabella è ruotata (scorrimento verticale circolare dall'alto in basso) verticalmente in modo tale che il suo ottetto in cima sia posto nella stessa riga dell'ottetto di input, e le quattro colonne ruotate sono sommate XOR per produrre la colonna di output. Un esempio di quest'operazione è mostrata in \figurename ~\ref{fig:Rij_mixcol} e \figurename ~\ref{fig:Rij_mixcol_lookup}.
 \end{itemize}
 
 \begin{figure}[htbp]
@@ -385,7 +396,7 @@ Rijndael utilizza quattro operazioni primitive, sia nell'espansione della chiave
 	\centering%
 	\subfigure%
 	{\includegraphics[height=13cm, width=13cm, keepaspectratio]{Immagini/chiave_segreta/rijndael_mixcol_lookup.png}}
-	\caption{Esempio tabella di lookup di MixColumn. All'ottetto "2b" corrisponde la colonna di 4 ottetti che si trova all’incrocio della riga "2" e della colonna "b", cioè la colonna ["56";"2b";"2b";"7d"] \label{fig:Rij_mixcol_lookup}} 	
+	\caption{Esempio tabella di lookup di MixColumn. All'ottetto "2b" corrisponde la colonna di 4 ottetti che si trova all'incrocio della riga "2" e della colonna "b", cioè la colonna ["56";"2b";"2b";"7d"] \label{fig:Rij_mixcol_lookup}} 	
 \end{figure}
 
 \subsubsection{Invertibilità delle operazioni primitive e decifratura di Rijndael}
@@ -399,7 +410,7 @@ Rijndael utilizza quattro operazioni primitive, sia nell'espansione della chiave
 Il cifrario inverso di Rijndael può pertanto implementarsi applicando le inverse delle operazioni primitive, eseguite in sequenza opposta rispetto quella di cifratura. Tuttavia si può mostrare che, grazie alle proprietà matematiche di cui gode Rijndael, il cifrario inverso ha una struttura molto simile al cifrario diretto, ma con operazioni invertite, e con le chiavi di round non soltanto in ordine inverso, ma con InvMixColumn applicato a tutte tranne la prima e l'ultima colonna.
 
 \subsubsection{Funzionamento di un Round}
-Ogni round di Rijndael è costituito da una sequenza identica di tre operazioni::
+Ogni round di Rijndael è costituito da una sequenza identica di tre operazioni:
 \begin{enumerate}
   \item Ogni ottetto della matrice di stato viene sottoposto alla S-box
   \item Vengono effettuati una serie di scorrimenti circolari:
@@ -416,7 +427,7 @@ Ogni round di Rijndael è costituito da una sequenza identica di tre operazioni:
 Essendo ogni operazione invertibile la decifratura può effettuarsi applicando in ordine inverso l'inversa (in senso matematico) di ogni operazione, e usando le chiavi di round in ordine inverso. Tuttavia la decifratura può avere la stessa struttura della cifratura: è necessario usare le chiavi di round in ordine opposto, e applicare InvMixColumn ad ogni colonna delle chiavi espanse tranne quelle del round iniziale e finale.
 
 \section{Cifrari a flusso e RC4}
-Sebbene i cifrari a blocchi siano molto più comuni, in alcune applicazioni i cifrari a flusso sono più adatti. Si pensi ad applicazioni che richiedono la cifratura/decifratura di un flusso di dati (come le trasmissioni di stream audio/video). Di seguito sarà esaminato il cifrario a flusso più popolare: \textbf{RC4} e  preliminarmente sarà discussa la struttura generale diun cifrario a flusso.
+Sebbene i cifrari a blocchi siano molto più comuni, in alcune applicazioni i cifrari a flusso sono più adatti. Si pensi ad applicazioni che richiedono la cifratura/decifratura di un flusso di dati (come le trasmissioni di stream audio/video). Di seguito sarà esaminato il cifrario a flusso più popolare (\textbf{RC4}) e  preliminarmente sarà discussa la struttura generale di un cifrario a flusso.
 
 \subsection{Struttura di un cifrario a flusso}
 \begin{figure}[htbp]
@@ -430,15 +441,15 @@ Un tipico cifrario a flusso cifra il testo in chiaro un byte per volta (sebbene 
 
 Il keystream è combinato un byte alla volta con il flusso del testo in chiaro mediante un or-esclusivo \textbf{bit a bit}, e il risultato di questo processo è il flusso cifrato. Ad esempio, se $p_{i} = 11001100$ è l'i-esimo byte del flusso del testo in chiaro, e $k_{i} = 01101100$ è l'i-esimo byte del keystream, allora l'i-esimo byte del flusso del testo cifrato è:
 
-\begin{equation}
-	c_{i} = p_{i} \oplus k_{i} = 10100000
-\end{equation}
+\[
+c_{i} = p_{i} \oplus k_{i} = 10100000
+\]
 
 La decifratura richiede l'uso della stessa sequenza pseudo-casuale (keystream) combinata un byte alla volta con il testo cifrato mediante or-esclusivo \textbf{bit a bit}. Ad esempio, se $c_{i} = p_{i} \oplus k_{i} = 10100000$ è l’i-esimo byte del flusso del testo cifrato, e $k_{i} = 01101100$ è l'i-esimo byte del keystream, allora l'i-esimo byte del flusso del testo in chiaro è: 
 
-\begin{equation}
-	p_{i} = c_{i} \oplus k_{i} = (p_{i} \oplus k_{i}) \oplus k_{i} = p_{i} \oplus (k_{i} \oplus k_{i}) = p_{i} = 11001100
-\end{equation}
+\[
+p_{i} = c_{i} \oplus k_{i} = (p_{i} \oplus k_{i}) \oplus k_{i} = p_{i} \oplus (k_{i} \oplus k_{i}) = p_{i} = 11001100
+\]
 
 Più è casuale l'aspetto del keystream, più è randomizzato il testo cifrato, rendendo la crittoanalisi più difficile. Pertanto il keystream dovrebbe avere un periodo grande (la funzione deterministica che genera il keystream, a partire dalla chiave segreta, è per forza di cose periodica), e dovrebbe approssimare il più possibile un flusso casuale. Ad esempio, 0 e 1 dovrebbero essere equamente presenti e riguardando il keystream come una sequenza di byte, tutti i 256 possibili byte dovrebbero apparire "disordinatamente" e con una frequenza uniforme. Come nei cifrari a blocchi, è necessario che la chiave sia sufficientemente lunga per proteggersi dagli attacchi a forza bruta (è preferibile una lunghezza della chiave di almeno 128 bit).
 
@@ -454,16 +465,16 @@ Se un cifrario a flusso è correttamente progettato, a parità di lunghezza dell
 Il vantaggio di un cifrario a blocchi è che la chiave segreta è riutilizzabile per più comunicazioni, mentre nei cifrari a flusso è sconsigliato. Infatti, se due testi in chiaro sono cifrati con la stessa chiave segreta, usando un cifrario a flusso, la crittoanalisi è spesso molto semplice: basta sommare XOR i due flussi di testo cifrato per ottenere la somma XOR dei due testi in chiaro. Se i testi in chiaro sono stringhe testuali, numeri di carta di credito o altri flussi di byte con proprietà note la crittoanalisi può aver successo.
 
 \subsection{RC4}
-RC4 è un cifrario a flusso progettato nel 1987 da Ron Rivest (RSA Security) con dimensione della chiave variabile e funzionamento orientato al byte. Si basa sull'uso di una permutazione casuale, e dagli studi svolti sembra che il periodo del cifrario sia superire a $10^{100}$. Viene usato negli standard \textbf{SSL/TLS} (\textit{Secure Socket Layer/Transport Layer Security}), nel protocollo \textbf{WEP} (\textit{Wired Equivalent Privacy}) e nel protocollo \textbf{WPA} (\textit{WiFi Protected Access}). L'algoritmo RC4 è molto semplice da spiegare: basta capire come viene generato il
+RC4 è un cifrario a flusso progettato nel 1987 da Ron Rivest (RSA Security) con dimensione della chiave variabile e funzionamento orientato al byte. Si basa sull'uso di una permutazione casuale, e dagli studi svolti sembra che il periodo del cifrario sia superiore a $10^{100}$. Viene usato negli standard \textbf{SSL/TLS} (\textit{Secure Socket Layer/Transport Layer Security}), nel protocollo \textbf{WEP} (\textit{Wired Equivalent Privacy}) e nel protocollo \textbf{WPA} (\textit{WiFi Protected Access}). L'algoritmo RC4 è molto semplice da spiegare: basta capire come viene generato il
 \textbf{keystream}. \\
 
-L’algoritmo mantiene un array di stato monodimensionale \textbf{S} contenente 256 byte. S[0], S[1], ..., S[255] sono i 256 byte, ciascuno dei quali rappresenta un numero da 0 a 255. Una chiave di lunghezza variabile da 1 a 256 byte (da 8 a 2048 bit) viene usata per inizializzare il contenuto dell'array di stato. Per come è gestita l'inizializzazione e l'evoluzione dello stato (che vedremo nel dettaglio in seguito) \textbf{S} contiene, in ogni momento, una delle $256!$ permutazioni dei numeri da 0 a 255. Per la cifratura/decifratura viene generato un byte \textbf{k} selezionando da \textbf{S} uno dei 255 elementi in maniera sistematica. Subito dopo la generazione del byte \textbf{k}, gli elementi di \textbf{S} vengono permutati, e l'algoritmo prosegue alternando le ultime due fasi (generazione di k e permutazione) finché il flusso in input non termina.\\
+L'algoritmo mantiene un array di stato monodimensionale \textbf{S} contenente 256 byte. S[0], S[1], ..., S[255] sono i 256 byte, ciascuno dei quali rappresenta un numero da 0 a 255. Una chiave di lunghezza variabile da 1 a 256 byte (da 8 a 2048 bit) viene usata per inizializzare il contenuto dell'array di stato. Per come è gestita l'inizializzazione e l'evoluzione dello stato (che vedremo nel dettaglio in seguito) \textbf{S} contiene, in ogni momento, una delle $256!$ permutazioni dei numeri da 0 a 255. Per la cifratura/decifratura viene generato un byte \textbf{k} selezionando da \textbf{S} uno dei 255 elementi in maniera sistematica. Subito dopo la generazione del byte \textbf{k}, gli elementi di \textbf{S} vengono permutati, e l'algoritmo prosegue alternando le ultime due fasi (generazione di k e permutazione) finché il flusso in input non termina.\\
 
 \subsubsection{Inizializzazione}
 Gli elementi di \textbf{S} vengono impostati uguali ai valori da 0 a 255 in ordine crescente:
-\begin{equation}
-	S[0] = 0, S[1] = 1, ..., S[255] = 255
-\end{equation}
+\[
+S[0] = 0, S[1] = 1, ..., S[255] = 255
+\]
 Un vettore temporaneo \textbf{T}, della stessa lunghezza di \textbf{S}, viene usato per memorizzare temporaneamente la chiave \textbf{K}. Se la lunghezza di \textbf{K} è 256 byte \textbf{K} viene trasferita in \textbf{T}. Altrimenti, \textbf{K} viene copiata più volte in \textbf{T} fino a riempirlo.
 
 \begin{algorithm}
@@ -476,7 +487,7 @@ for i = 0 to 255 do {
 \end{algorithm}
 
 \subsubsection{Permutazione iniziale}
-successivamente si userà T per produrre la \textit{permutazione iniziale}. Si scandisce \textbf{S} e per ciascun S[i], si scambia S[i] con un altro elemento di S scelto in modo sistematico in base, tra l'altro, al contenuto di T[i]. Poiché la sola operazione su \textbf{S} è lo scambio, il solo effetto è una permutazione (\textbf{S} contiene ancora tutti i numeri da 0 a 255).
+Successivamente si userà T per produrre la \textit{permutazione iniziale}. Si scandisce \textbf{S} e per ciascun S[i], si scambia S[i] con un altro elemento di S scelto in modo sistematico in base, tra l'altro, al contenuto di T[i]. Poiché la sola operazione su \textbf{S} è lo scambio, il solo effetto è una permutazione (\textbf{S} contiene ancora tutti i numeri da 0 a 255).
 
 \begin{algorithm}
 \begin{lstlisting}[caption={Permutazione iniziale RC4}]
@@ -490,7 +501,7 @@ for i = 0 to 255 do {
 
 \subsubsection{Generazione del flusso}
 Una volta che \textbf{S} è inizializzato, la chiave segreta \textbf{K} (quindi anche l'array \textbf{T}) non viene più utilizzata. Il keystream viene generato facendo una
-scansione ciclica di \textbf{S}. Ciascun elemento S[i] viene scambiato con un altro byte di \textbf{S} a secondo di uno schema che dipende dalla configurazione corrente di \textbf{S}, dopodiché viene generato un singolo byte \textbf{k} del keystream sempre in base alla configurazione corrente di \textbf{S}.
+scansione ciclica di \textbf{S}. Ciascun elemento S[i] viene scambiato con un altro byte di \textbf{S} secondo di uno schema che dipende dalla configurazione corrente di \textbf{S}, dopodiché viene generato un singolo byte \textbf{k} del keystream sempre in base alla configurazione corrente di \textbf{S}.
 
 \begin{algorithm}
 \begin{lstlisting}[caption={Generazione flusso}]

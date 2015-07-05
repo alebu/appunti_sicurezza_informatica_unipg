@@ -91,8 +91,8 @@ Facendo riferimento all'utilizzo dell'operazione per l'implementazione di un alg
 \newline \newline
 Si osservi inoltre che, se $k$ ammette un inverso moltiplicativo $mod \, n $, esiste un unico inverso moltiplicativo $k^{-1} < n$. La moltiplicazione $mod \, n$ di per sé non costituisce un cifrario sicuro,ma funziona, nel senso che la moltiplicazione per $k$ produce un mescolamento dell'input.
 \newline \newline
-Trovare un inverso moltiplicativo $k^{-1}$ nella aritmetica $mod \, n$, \textbf{non è affatto banale} se $n$ è molto grande. Esiste un modo efficiente per risolvere tale problema, noto come \textbf{algoritmo di Euclide}, la cui efficacia è garantita dal seguente Teorema:
-\begin{itemize}
+Trovare un inverso moltiplicativo $k^{-1}$ nella aritmetica $mod \, n$, \textbf{non è affatto banale} se $n$ è molto grande. Esiste un modo efficiente per risolvere tale problema, noto come \textbf{algoritmo di Euclide}, la cui efficacia è garantita dal seguente Teorema: 
+\begin{itemize} \label{eq:euclide}
 \item dati $x$ ed $n$, con $x<n$, l'algoritmo di Euclide trova il numero $y<n$ tale che $xy \, mod \, n = 1$, ammesso che un siffatto $y$ esista.
 \end{itemize} 
 
@@ -171,94 +171,199 @@ Tale risultato è sfruttato dall'algoritmo RSA.
 \section{RSA}
 
 RSA è un algoritmo di cifratura (a blocchi) a chiave pubblica, la cui lunghezza è variabile (solitamente si considerano chiavi di lunghezza pari ad almeno 512 bit). Anche la lunghezza dei blocchi è variabile: un blocco di testo in chiaro deve avere lunghezza minore di quella della chiave, mentre un blocco di testo cifrato è lungo come la chiave. \\
-RSA è computazionalmente molto più lento degli algoritmi a chiave segreta più popolari come DES, IDEA e AES, per cui difficilmente viene usato per cifrare messaggi lunghi. Generalmente viene usato per cifrare una chiave segreta $K$, utilizzata per cifrare un messaggio usando un algoritmo a chiave segreta. RSA può essere usato dunque sia per cifrare/decifrare messaggi sia per la firma digitale di messaggi. In entrambi i casi bisogna disporre della coppia $<chiave \, pubblica, \,  chiave \, privata>(<PU,PR>)$. \\
-I passi da seguire per generare la chiave pubblica e la chiave privata sono: \begin{enumerate}
-\item Scegliere due numeri primi $p$ e $q$ molto grandi (circa 256 bit ciascuno) tali che $n = pq$. E' fondamentale che $p$ e $q$ rimangano segreti, cosicché fattorizzare $n$ sia computazionalmente impraticabile. 
-\item Scegliere un numero $e$ che sia relativamente primo rispetto a $\phi(n) = (p-1)(q-1)$.
-\item Calcolare l'inverso moltiplicativo $d$ di $e \, mod \, \phi(n)$, cioè tale che sia $(d \cdot e ) \, mod \, \phi(n) \, = 1$.
+RSA è computazionalmente molto più lento degli algoritmi a chiave segreta più popolari come DES, IDEA e AES, per cui difficilmente viene usato per cifrare messaggi lunghi. Generalmente viene usato per cifrare una chiave segreta $K$, utilizzata per cifrare un messaggio usando un algoritmo a chiave segreta. RSA può essere usato dunque sia per cifrare/decifrare messaggi sia per la firma digitale di messaggi. In entrambi i casi bisogna disporre della coppia $<chiave \, pubblica, \,  chiave \, privata>(<PU,PR>)$. Nel seguito esamineremo:
+\begin{enumerate}
+\item generazione di una coppia $<PU,PR>$
+\item cifratura/decifratura RSA
+\item firma digitale RSA
+\end{enumerate}
+
+\subsection{Utilizzo di RSA} \label{sec:ut_rsa}
+
+\paragraph{Generazione coppia di chiavi RSA}
+I passi da seguire per generare la chiave pubblica e la chiave privata sono: 
+\begin{enumerate}
+\item Scegliere due numeri primi $p$ e $q$ molto grandi (circa 256 bit ciascuno) tali che $n = p \cdot q$. E' fondamentale che $p$ e $q$ rimangano segreti: fattorizzare $n$ è di fatto computazionalmente impraticabile. 
+\item Scegliere un numero $e$ che sia relativamente primo rispetto a $\varphi(n) = (p-1)(q-1)$.
+\item Calcolare l'inverso moltiplicativo $d$ di $e \, mod \, \varphi(n)$, cioè tale che sia $(d \cdot e ) \, mod \, \varphi(n) \, = 1$.
 \item La chiave pubblica è $PU = <e,n>$, mentre la chiave privata è $PR = <d,n>$.
 \end{enumerate}
-Per quanto riguarda la \textbf{cifratura}/\textbf{decifratura}, siano $PU$ e $PR$ la chiave pubblica e la chiave privata del destinatario, $m$ il messaggio da cifrare. La procedura da seguire è la seguente: \begin{itemize}
+
+\paragraph{Cifratura/Decifratura}
+Per quanto riguarda la \textbf{cifratura}/\textbf{decifratura}, siano $PU = \langle e,n \rangle$ e $PR = \langle d,n \rangle$ la chiave pubblica e la chiave privata del destinatario e $m < n$ il messaggio da cifrare. La procedura da seguire è la seguente: 
+\begin{itemize}
 \item il mittente, utilizzando la chiave pubblica $PU$ del destinatario, cifra il messaggio ottenendo $c = m^e \, mod \, n$
 \item il destinatario, usando la propria chiave privata $PR$, decifra $c$ calcolando $m = c^d \, mod \, n$. \end{itemize}
-\textbf{Dimostrazione.} Poste le seguenti proprietà: \begin{itemize}
-\item se $m<n$, $ \, m \, mod \, n\,=\,n$
-\item $(x^a \, mod \, n)^b \, mod \, n \, = \, x^{ab} \, mod \, n$
-\item $(e \cdot d) \, mod \, \phi(n) = 1$
-\end{itemize}
-Se $c=E(PU,m) = m^e \, mod \, n \, \Rightarrow m=D(PR,c) = c^d \, mod \, n = (m^e \, mod \, n)^d \, mod \, n = m^{ed} \, mod \, n = m^{1 \, mod \, \phi(n)} \, mod \, n = m \, mod \, n = m$. \\ \\
-Per la \textbf{firma digitale} invece sia $PR$ la chiave privata del firmatario del messaggio e sia $PU$ la sua chiave pubblica: \begin{itemize}
+
+\paragraph{Dimostrazione dell'efficacia del procedimento}
+Poste le seguenti proprietà: 
+\begin{equation}\label{eq:eff_1}
+m<n \Rightarrow \, m \, mod \, n\,=\,n
+\end{equation}
+\begin{equation} \label{eq:eff_2}
+(x^a \, mod \, n)^b \, mod \, n \, =  (x^{a})^b \, mod \, n =  \, x^{ab} \, mod \, n
+\end{equation}
+E, poiché $d$ è l'inverso moltiplicativo di $e$:
+\begin{equation} \label{eq:eff_3}
+(e \cdot d) \, mod \, \varphi(n) = 1
+\end{equation}
+Allora, poiché:
+\begin{equation}
+c=E(PU,m) = m^e \, mod \, n
+\end{equation}
+Posso esprimere m in questo modo:
+\begin{equation}
+m=D(PR,c) = c^d \, mod \, n = (m^e \, mod \, n)^d \, mod \, n
+\end{equation}
+che, per la \ref{eq:eff_2} e la \ref{eq:eff_3}, diventa:
+\begin{equation}
+m =  m^{ed} \, mod \, n = m^{1 \, mod \, \phi(n)} \, mod \, n = m \, mod \, n
+\end{equation}
+e, infine, utilizzando la \ref{eq:eff_1} si ottiene, come volevasi dimostrare:
+\begin{equation}
+m = m \, mod \, n = m
+\end{equation}
+
+\paragraph{Firma digitale}
+Per la \textbf{firma digitale} invece sia $PR$ la chiave privata del firmatario del messaggio e sia $PU$ la sua chiave pubblica: 
+\begin{itemize}
 \item il firmatario, usando la propria chiave privata $PR$, calcola la firma digitale $s = m^d \, mod \, n$;
 \item chiunque desideri verificare l'autenticità della firma, può farlo usando la chiave pubblica $PU$ del firmatario e calcolando $m = s^e \, mod \, n$.
 \end{itemize}
-La dimostrazione è per la firma è analoga alla cifratura. \\
+La dimostrazione dell'efficacia del procedimento è analoga a quella svolta per la cifratura/decifratura.
 
-La sicurezza di RSA deriva dal fatto che fattorizzare interi molto grandi è impraticabile. Infatti, identificando i numeri primi $p$ e $q$ tali che $n = pq$, si ottiene $\phi(n) = (p-1)(q-1)$ e quindi si può calcolare $d$ come l'inverso moltiplicativo di $e \, mod \, \phi(n)$, ottenendo la chiave privata $PR = <d,n>$ dalla chiave pubblica $PU = <e,n>$. \\ 
+\subsection{Sicurezza RSA}
+
+La sicurezza di RSA deriva dal fatto che fattorizzare interi molto grandi è impraticabile. Infatti, se esistesse un metodo per identificare i numeri primi $p$ e $q$ tali che $n = p \cdot q$ (fattorizzazione di n), si otterrebbe $\varphi(n) = (p-1)(q-1)$ e quindi si potrebbe calcolare $d$ come l'inverso moltiplicativo di $e \, mod \, \varphi(n)$, ottenendo la chiave privata $PR = <d,n>$ dalla chiave pubblica $PU = <e,n>$. 
+\newline \newline
 Tuttavia è possibile violare RSA senza ricorrere alla fattorizzazione, se lo si usa in modo improprio. \\
-In base al tipo di impiego, RSA svolge le seguenti operazioni molto frequentemente (ad ogni sessione di lavoro): \begin{itemize}
+In base al tipo di impiego, RSA svolge le seguenti operazioni\textbf{ molto frequentemente} (ad ogni sessione di lavoro): 
+\begin{itemize}
 \item cifratura/decifratura
 \item generazione/verifica di una firma digitale
 \end{itemize}
-E' necessario pertanto che tali operazioni siano svolte nel modo più efficiente possibile. Invece, l'operazione di generazione delle chiavi viene eseguita meno frequentemente e quindi si può tollerare una minore efficienza.\\
-Le operazioni di cifratura, decifratura, firma e verifica della firma richiedono tutte di dover considerare un intero molto grande, elevarlo ad un esponente (intero) molto grande e trovare il resto della divisione intera per un numero molto grande. Considerando la dimensione dei numeri interi per i quali RSA è ritenuto sicuro, tali operazioni
-risulterebbero proibitive se eseguite nel modo più ovvio. \\
+E' necessario pertanto che tali operazioni siano svolte nel modo \textbf{più efficiente possibile}. L'operazione di generazione delle chiavi viene invece eseguita meno frequentemente e quindi si può tollerare una minore efficienza.
+\newline \newline
+Le operazioni di cifratura, decifratura, firma e verifica della firma richiedono tutte di dover considerare un intero molto grande, elevarlo ad un esponente (intero) molto grande e trovare il resto della divisione intera per un numero molto grande. Considerando la dimensione dei numeri interi per i quali RSA è ritenuto sicuro, tali operazioni risulterebbero proibitive se eseguite nel modo più ovvio. Vanno quindi implementati algoritmi efficienti che svolgono tali operazioni.
+
 \subsection{Generazione delle chiavi RSA}
-La generazione delle chiavi RSA è un'operazione poco frequente: in gran parte delle applicazioni della tecnologia a chiave pubblica deve essere eseguita soltanto una volta e non è richiesta la stessa efficienza delle altre operazioni RSA; deve comunque essere garantita un'efficienza ragionevole. \\
-Per generare una coppia di chiavi $<PU,PR>$ è necessario trovare due numeri primi $p$ e $q$ molto grandi e trovare due interi $d$ ed $e$ con le proprietà precedentemente descritte. \\ \\
-\textbf{Trovare due numeri primi grandi p e q.} Esistono infiniti numeri primi, che diminuiscono all'aumentare di $n$: estraendo un numero a caso, si ha che $Pr \{\text{n primo}\} \approx 1/{ln \, n} \approx 1/N_{b}$, dove $N_{b}$ è il numero di bit utilizzato per rappresentare $n$. La densità dei numeri primi è inversamente proporzionale alla loro lunghezza in bit(o in cifre decimali). Ad esempio, per un numero $n$ a cento cifre decimali (dimensione usata in RSA), c'è una possibilità su 230 che esso sia primo. \\ Pertanto, i passi da seguire per generare $p$ e $q$ sono i seguenti: \begin{enumerate}
+La generazione delle chiavi RSA, la cui procedura è descritta nel primo paragrafo della sezione \ref{sec:ut_rsa}, è un'operazione poco frequente: in gran parte delle applicazioni della tecnologia a chiave pubblica deve essere eseguita soltanto una volta e non è richiesta la stessa efficienza delle altre operazioni RSA; deve comunque essere garantita un'efficienza ragionevole. 
+\newline \newline
+Per generare una coppia di chiavi $<PU,PR>$ è necessario trovare:
+\begin{enumerate}
+\item due numeri primi $p$ e $q$ molto grandi
+\item due interi $d$ ed $e$ con le proprietà precedentemente descritte
+\end{enumerate}
+
+\paragraph{Trovare due numeri primi grandi p e q}
+Esistono infiniti numeri primi, che tendono a diradarsi all'aumentare di $n$: estraendo un numero a caso, si ha che:
+\begin{equation}
+Pr \{\text{n primo}\} \approx \frac{1}{{\text{ln} \, n}} \approx \frac{1}{N_{b}}
+\end{equation}
+
+dove $N_{b}$ è il numero di bit utilizzato per rappresentare $n$. La densità dei numeri primi è inversamente proporzionale alla loro lunghezza in bit(o in cifre decimali). Ad esempio, per un numero $n$ a cento cifre decimali (dimensione usata in RSA), c'è una possibilità su 230 che esso sia primo. Pertanto, i passi da seguire per generare $p$ e $q$ sono i seguenti: 
+\begin{enumerate}
 \item estrai un numero dispari molto grande
 \item verifica se tale numero è primo, in caso negativo ritenta (in media, sono necessari 230 tentativi per ottenere un numero primo)
 \end{enumerate}
-Tale strategia va bene se si dispone di un test di primalità efficiente: come è possibile testare se un intero $n$ è primo? Un metodo banale consiste nel dividere $n$ per tutti gli interi $ \le n^{1/2}$ e verificare che non ci sono divisori $> 1$, ma ciò richiederebbe diverse vite dell'universo! \\ RSA utilizza un test di primalità probabilistico, cioè non si può affermare con certezza che l'esito del test sia corretto. Tuttavia, la probabilità di errore può essere resa
-arbitrariamente piccola aumentando il tempo di test. Il test si basa sul teorema di Fermat che fornisce una condizione necessaria affinché un intero $n$ sia primo: \begin{itemize}
-\item se $n$ è primo $ \Rightarrow$ per ogni intero $a$ risulta $a^{n-1} \, mod \, n  = 1 \, mod \, n $;
-\item non vale però il viceversa: esistono degli interi $a$ per i quali, l'uguaglianza è verificata anche se $n$ è non primo \end{itemize} 
-\textbf{Test di primalità probabilistico}. Dato un intero $n$, un possibile test di primalità può consistere dei seguenti passi: \begin{enumerate}
+Tale strategia va bene se si dispone di un \textbf{test di primalità efficiente}: come è possibile testare se un intero $n$ è primo? Un metodo banale consiste nel dividere $n$ per tutti gli interi $ \le n^{1/2}$ e verificare che non ci sono divisori $> 1$, ma ciò richiederebbe diverse vite dell'universo. Prima del 2002 non esisteva un test di primalità deterministico efficace in tempo polinomiale. Nel 2002 è stato pubblicato il test di primalità deterministico AKS.
+\newline \newline
+
+\paragraph{Test di primalità probabilistico di RSA}
+RSA utilizza tuttavia un test di primalità probabilistico: non si può affermare con certezza che l'esito del test sia corretto. Tuttavia, la probabilità di errore può essere resa arbitrariamente piccola aumentando il tempo di test. Il test si basa sul teorema di Fermat che fornisce una \textbf{condizione necessaria} affinché un intero $n$ sia primo: 
+\begin{equation}
+n \; \text{è primo} \Rightarrow \forall a \in \mathbb{Z}, a^{n-1} \, mod \, n  = 1 \, mod \, n
+\end{equation}
+Si noti con attenzione che non vale però il viceversa: esistono degli interi $a$ per i quali, l'uguaglianza è verificata anche se $n$ è non primo. In virtù di tale teorema, dato un intero $n$, un possibile test di primalità può consistere nei seguenti passi: 
+\begin{enumerate}
 \item scegliere un intero $a<n$;
 \item calcolare $a^{n-1} \, mod \,n$;
 \item \begin{enumerate} \item [a.] se il risultato è diverso da 1 $ \Rightarrow n$ è certamente non primo.
-\item [b.] se il risultato è pari a 1 $\Rightarrow $ $n$ potrebbe essere primo, anche se non è sicuro (è stato dimostrato che, se $n$ è un intero random di circa cento cifre decimali, la probabilità di un falso positivo è di circa $10^{-13}$).
+						\item [b.] se il risultato è pari a 1 $\Rightarrow $ $n$ potrebbe essere primo, anche se non è sicuro (è stato dimostrato che, se $n$ è un intero random di circa cento cifre decimali, la probabilità di un falso positivo è di circa $10^{-13}$).
+	  \end{enumerate}
 \end{enumerate}
-\end{enumerate}
-Si osservi che un errore nel test di primalità può  rendere impossibile la decifratura RSA di un messaggio, più facile l'identificazione della chiave privata. \\Se una probabilità di errore pari a $10^{-13}$ non è ritenuta sufficiente, si possono effettuare più test con diversi valori di $a$: si ha che la $Pr \{falso \, positivo \, dopo \, k \, test \} = (10^{-13})^k$. La probabilità di errore può essere resa arbitrariamente piccola, ma non sempre è facile! Infatti, ci possono essere dei casi veramente sfortunati non rilevabili dal test, ad esempio se $n$ è un numero di Carmichael: un numero $n$ è detto di Carmichael se non è primo e se per ogni $a \le n$ risulta $a^{n-1} = 1 \, mod \, n$. Tuttavia, i numeri di Carmichael sono sufficientemente rari che è estremamente improbabile estrarli a caso. \\ \\
-\textbf{Calcolo di d ed e}. Gli interi $d$ ed $e$ sono definiti nel seguente modo: \begin{itemize}
-\item $e$ è un qualunque numero relativamente primo rispetto all'intero $\phi(n) = (p-1)(q-1)$;
-\item $d$ è l'intero tale che $ed \, mod \, \phi(n) = 1 \Rightarrow$ noto $e$, $d$ si calcola con l'algoritmo di Euclide. 
+Si osservi che un errore nel test di primalità può  rendere \textbf{impossibile} la decifratura RSA di un messaggio e \textbf{più facile} l'identificazione della chiave privata. 
+\newline \newline
+Se una probabilità di errore pari a $10^{-13}$ non è ritenuta sufficiente, si possono effettuare più test con diversi valori di $a$. Si ha che:
+\begin{equation}
+Pr \{\text{falso positivo dopo k test} \} = (10^{-13})^k
+\end{equation}
+
+\paragraph{Numeri di Carmichael}
+La probabilità di errore può quindi essere resa arbitrariamente piccola aumentando il numero di test. Tuttavia esistono numeri particolari, per cui il test dà sempre un verdetto errato. Un numero $n$ è detto di Carmichael se \textbf{non è primo} e se per ogni $a \le n$ risulta $a^{n-1} = 1 \, mod \, n$. Va considerato che i numeri di Carmichael sono talmente rari che è estremamente improbabile estrarli a caso. Tuttavia, a fronte di un piccolo costo computazionale aggiuntivo, è possibile migliorare il test di primalità precedente introducendo altri controlli che permettono di rilevare con maggior probabilità se n è non primo. Un test molto efficace è il test di primalità di Miller e Rabin.
+
+\paragraph{Calcolo di d ed e}
+
+Gli interi $d$ ed $e$ sono definiti nel seguente modo: 
+\begin{itemize}
+\item $e$ è un qualunque numero relativamente primo rispetto all'intero $\varphi(n) = (p-1)(q-1)$;
+\item $d$ è l'intero tale che $e \cdot \, mod \, \varphi(n) = 1 \Rightarrow$ noto $e$, $d$ si calcola con l'algoritmo di Euclide (pagina \pageref{eq:euclide}). 
 \end{itemize}
 Esistono due strategie per il calcolo di $e$:
 \begin{enumerate}
 \item una volta ottenuti $p$ e $q$, si sceglie randomicamente $e$ e si testa se esso è relativamente primo con $(p-1)(q-1)$; in caso negativo si ritenta con un altro valore di $e$.
 \item Non selezionare prima $p$ e $q$, al contrario, si sceglie prima $e$, per poi scegliere $p$ e $q$ tali che la quantità $(p-1)(q-1)$ sia relativamente prima con $e$.
 \end{enumerate}
-La sicurezza di RSA non viene messa in crisi se $e$ è scelto sempre allo stesso modo: $d$ continua ad essere imprevedibile se $p$ e $q$ non sono noti. Se $e$ è un intero piccolo o facile da calcolare, le
-operazioni di cifratura e di verifica della firma diventano più efficienti, cioè le operazioni che richiedono l'uso della chiave pubblica $PU = <e,n>$ sono più veloci, mentre risulta invariata l'efficienza delle operazioni che richiedono la chiave privata $PR = <d,n>$. Chiaramente, diversamente da $e$, non si può assegnare
-a $d$ un valore piccolo, sebbene ciò renderebbe molto più veloci le operazioni che usano la chiave privata $PR$. Infatti, la sicurezza di RSA verrebbe meno: così si renderebbe l'informazione vulnerabile ad attacchi a forza bruta, poiché $d$ è l'esponente privato, a differenza di $e$ che è esponente pubblico. \\
+La sicurezza di RSA non viene messa in crisi se $e$ è scelto sempre allo stesso modo: $d$ continua ad essere imprevedibile se $p$ e $q$ non sono noti. Se $e$ è un intero piccolo o facile da calcolare, le operazioni di cifratura e di verifica della firma diventano più efficienti, cioè le operazioni che richiedono l'uso della chiave pubblica $PU = <e,n>$ sono più veloci, mentre risulta invariata l'efficienza delle operazioni che richiedono la chiave privata $PR = <d,n>$. Chiaramente, diversamente da $e$, non si può assegnare a $d$ un valore piccolo, sebbene ciò renderebbe molto più veloci le operazioni che usano la chiave privata $PR$. Infatti, la sicurezza di RSA verrebbe meno: così si renderebbe l'informazione vulnerabile ad attacchi a forza bruta, poiché $d$ è l'esponente privato, a differenza di $e$ che è esponente pubblico. 
 
-Di solito si usa $e=3$, poiché è comodo lavorare con esponenti piccoli, in modo che il calcolo di $m^e \, mod \, n$ non sia computazionalmente costoso (il calcolo di $ m^3 \, mod \, n$ richiede soltanto due moltiplicazioni) e la cifratura sia efficiente (così come la verifica della firma). Non si può scegliere $e=2$, in quanto non è relativamente primo con $(p-1)(q-1)$, che è un numero pari. \\
-La scelta $e=3$ comporta alcune vulnerabilità: \begin{itemize}
+\paragraph{e = 3}
+Di solito si usa $e=3$, poiché è comodo lavorare con esponenti piccoli, in modo che il calcolo di $m^e \, mod \, n$ non sia computazionalmente costoso (il calcolo di $ m^3 \, mod \, n$ richiede soltanto due moltiplicazioni) e la cifratura sia efficiente (così come la verifica della firma). Non si può scegliere $e=2$, in quanto non è relativamente primo con $(p-1)(q-1)$, che è un numero pari. 
+\newline \newline
+La scelta $e=3$ comporta alcune vulnerabilità: 
+\begin{itemize}
 \item se il messaggio $m$ da cifrare rappresenta un \textbf{intero piccolo}, in particolare se $m < n^{1/3} \Rightarrow  c = m^e \, mod \, n = m^3 \, mod \, n = m^3 \Rightarrow$ un avversario può decifrare $c$ senza conoscere la chiave privata semplicemente estraendo la radice
 cubica ordinaria di $c \Rightarrow m = c^{1/3}$. Tale vulnerabilità può essere rimossa eseguendo un padding random del messaggio tale che $m^3 > n$. Ciò garantisce che $m^3$ viene sempre ridotto $ mod \, n $.
 \item se uno \textbf{stesso messaggio} $m$ viene inviato cifrato a \textbf{tre o più destinatari} aventi un esponente pubblico $e=3$, il messaggio in chiaro $m$ può essere decifrato conoscendo soltanto i tre messaggi cifrati $c_{1}$, $c_{2}$ e $c_{3}$ e le tre chiavi pubbliche $<3,n_{1}>$, $<3,n_{2}>$ e $<3,n_{3}>$: si supponga infatti che un avversario intercetti tre cifrature dello stesso messaggio $m$, cioè $c_{1}$, $c_{2}$ e $c_{3}$. Conoscendo anche le tre chiavi pubbliche $<3,n_{1}>$, $<3,n_{2}>$ e $<3,n_{3}>$ e utilizzando il teorema cinese del resto, l'avversario può calcolare  $m^3 \, mod \, n_{1} \, n_{2} \, n_{3}$. Essendo $m<n_{i}$, per $i=1,2,3 \Rightarrow m^3<n_{1} \cdot n_{2} \cdot n_{3}$, da cui si ricava che $m^3 \, mod \, n_{1} \, n_{2} \, n_{3} = m^3 \Rightarrow$ l'avversario può risalire ad $m$ estraendo una radice cubica ordinaria. Anche questa vulnerabilità può essere rimossa mediante un padding random, così si evita che uno stesso messaggio cifrato venga inviato a piu destinatari. 
 \end{itemize}
-Si osservi che nelle applicazioni pratiche di RSA, il messaggio $m$ è generalmente una chiave di un algoritmo di cifratura a chiave segreta e in ogni caso $m$ è molto più piccolo di $n$, per cui è sempre possibile aggiungere dei bit di riempimento (padding) in modo tale che il messaggio risultante presenti delle caratteristiche desiderate. Se per ogni destinatario il padding scelto è random, la precedente vulnerabilità viene rimossa; la vulnerabilità può essere rimossa anche usando come padding gli identificatori univoci (ID) dei
-destinatari. \\
+Si osservi che nelle applicazioni pratiche di RSA, il messaggio $m$ è generalmente una chiave di un algoritmo di cifratura a chiave segreta e in ogni caso $m$ è molto più piccolo di $n$, per cui è sempre possibile aggiungere dei bit di riempimento (padding) in modo tale che il messaggio risultante presenti delle caratteristiche desiderate. Se per ogni destinatario il padding scelto è random, la precedente vulnerabilità viene rimossa; la vulnerabilità può essere rimossa anche usando come padding gli identificatori univoci (ID) dei destinatari. 
+\paragraph{e = 65537}
+Un'altra scelta possibile è $e=65537$. Infatti esso è pari a $2^{16}+1$, che è un numero primo, e rimuove o riduce del tutto le vulnerabilità viste nel caso $e=3$. La prima vulnerabilità con $e=3$ si ha se $m^3<n$ e nel caso $e=65537$ non ci sono molti valori di $m$ tali che $m^{65537} < n$, a meno che $n$ non sia molto più lungo di 512 bit, quindi l'estrazione della 65537-esima radice ordinaria di $m$ non costituisce una vulnerabilità seria. La seconda vulnerabilità con $e=3$ si ha se uno stesso messaggio $m$ cifrato è inviato a 3 destinatari e nel caso $e=65537$, lo stesso tipo di vulnerabilità si ha quando $m$ viene inviato a 65537 destinatari: non si può dire certo che si tratti di un messaggio segreto! Infine, la scelta di fissare a priori $e=3$ ha richiesto di scegliere $n$ in modo tale che $\varphi(n)$ e 3 fossero relativamente primi. Nel caso $e=65537$ conviene generare $p$ e $q$ come se $e$ non fosse prefissato e rigettare ogni valore di $p$ o $q$ che è uguale a $1 \, mod \: 65537$. Tale evento si verifica con una probabilità molto piccola, cioè $2^{-16}$. 
 
-Un'altra scelta possibile è $e=65537$. Infatti esso è pari a $2^{16}+1$, che è un numero primo, e rimuove o riduce del tutto le vulnerabilità viste nel caso $e=3$. La prima vulnerabilità con $e=3$ si ha se $m^3<n$ e nel caso $e=65537$ non ci sono molti valori di $m$ tali che $m^{65537} < n$, a meno che $n$ non sia molto più lungo di 512 bit, quindi l'estrazione della 65537-esima radice ordinaria di $m$ non costituisce una vulnerabilità seria. La seconda vulnerabilità con $e=3$ si ha se uno stesso messaggio $m$ cifrato è inviato a 3 destinatari e nel caso $e=65537$, lo stesso tipo di vulnerabilità si ha quando $m$ viene inviato a 65537 destinatari: non si può dire certo che si tratti di un messaggio segreto! Infine, la scelta di fissare a priori $e=3$ ha richiesto di scegliere $n$ in modo tale che $\phi(n)$ e 3 fossero relativamente primi. Nel caso $e=65537$ conviene generare $p$ e $q$ come se $e$ non fosse prefissato e rigettare ogni valore di $p$ o $q$ che è uguale a $1 \, mod \: 65537$. Tale evento si verifica con una probabilità molto piccola, cioè $2^{-16}$. \\
+\subsection{Vulnerabilità}
+In generale, sono presenti anche altri tipi di vulnerabilità: nel caso della firma digitale risulta che, per ogni numero $x < n$, $x$ è la firma digitale del messaggio:
+\newline
+\begin{equation}
+m_{x} = x^e \,  mod \, n
+\end{equation}
+\newline 
+Infatti, 
+\newline
+\begin{equation}
+m_{x}^d \, mod \, n = (x^e \, mod \, n)^d \, mod \, n = x^{ed} \, mod \, n
+\end{equation}
+\newline 
+\begin{equation}
+m_{x}^d \, mod \, n = x^{1 \, mod \, \varphi(n)} \, mod \, n
+\end{equation}
+\newline
+\begin{equation}
+m_{x}^d \, mod \, n = x \, mod \, n = x
+\end{equation}
+\newline 
+Quindi è banale falsificare la firma di qualcuno se il messaggio $m$ da firmare non interessa. La difficoltà sta però nel falsificare la firma di uno specifico messaggio. 
+\newline
+Generalmente, ciò che viene firmato (messaggio + padding) ha una struttura sufficientemente vincolata: vengono inseriti dei bit di riempimento organizzati in pattern regolari; la probabilità che un numero random costituisca un messaggio (padding incluso) valido è trascurabile, cioè è estremamente improbabile che un numero random contenga i pattern regolari di bit. Tuttavia, visto che i numeri in RSA sono molto grandi un avversario ha a disposizione molti tentativi, dunque i pattern di riempimento vanno scelti in modo opportuno.
 
-In generale, sono presenti anche altri tipi di vulnerabilità: nel caso della firma digitale risulta che, per ogni numero $x < n$, $x$ è la firma digitale del messaggio $m_{x} = x^e \,  mod \, n$. Infatti, $m_{x}^d \, mod \, n = (x^e \, mod \, n)^d \, mod \, n = x^{ed} \, mod \, n = x^{1 \, mod \, \phi(n)} \, mod \, n = x \, mod \, n = x \Rightarrow$ è banale falsificare la firma di qualcuno se il messaggio $m$ da firmare non interessa. La difficoltà sta però nel falsificare la firma di uno
-specifico messaggio. \\ Generalmente, ciò che viene firmato (messaggio + padding) ha una struttura sufficientemente vincolata: vengono inseriti dei bit di riempimento organizzati in pattern regolari; la probabilità che un numero random costituisca un messaggio (padding incluso) valido è trascurabile, cioè è estremamente improbabile che un numero random contenga i pattern regolari di bit. Tuttavia, visto che i numeri in RSA sono molto grandi un avversario ha a disposizione molti tentativi, dunque i pattern di riempimento vanno scelti in modo opportuno.
-
-Un altro problema presente nella cifratura a chiave pubblica è quello dei \textit{smooth numbers}. Intuitivamente, uno smooth number è un numero scomponibile nel prodotto di (molti) numeri primi ragionevolmente piccoli (non conviene usare una definizione assoluta, ovvero un numero è piccolo o grande in base alle capacità di calcolo dell'avversario). Ad esempio, il numero 6056820 è più smooth del numero 6567587, poiché $6056820 = 22 \cdot 32 \cdot 5 \cdot 7 \cdot 11 \cdot 19 \cdot 23$, mentre $ 6567587 = 13 \cdot 557 \cdot 907$. Si tratta di una vulnerabilità prevalentemente teorica, nella pratica difficilmente realizzabile, poiché richiede un'enorme capacità di calcolo, la raccolta di un numero elevato di messaggi firmati e molta fortuna (per l'avversario). \\ \\
+\paragraph{Smooth Numbers}
+Un altro problema presente nella cifratura a chiave pubblica è quello dei \textit{smooth numbers}. Intuitivamente, uno smooth number è un numero scomponibile nel prodotto di (molti) numeri primi \textbf{ragionevolmente piccoli} (non conviene usare una definizione assoluta, poiché un numero è piccolo o grande in base alle capacità di calcolo dell'avversario). Ad esempio, il numero 6056820 è più \textbf{smooth} del numero 6567587, poiché 
+\begin{equation}
+6056820 = 22 \cdot 32 \cdot 5 \cdot 7 \cdot 11 \cdot 19 \cdot 23
+\end{equation}
+mentre
+\begin{equation}
+6567587 = 13 \cdot 557 \cdot 907
+\end{equation}
+Si tratta di una vulnerabilità prevalentemente teorica, nella pratica difficilmente realizzabile, poiché richiede un'enorme capacità di calcolo, la raccolta di un numero elevato di messaggi firmati e molta fortuna (per l'avversario). \newline \newline
 \textbf{Idea base}: dalle firme $s_{1}$ e $s_{2}$ dei messaggi $m_{1}$ ed $m_{2}$, è possibile calcolare le firme dei messaggi $m_{1} \cdot m_{2}$, $m_{1}/m_{2}$, $m_{1}^j$, $m_{2}^k$ e $m_{1}^j \cdot m_{2}^k$. Ad esempio, conoscendo la firma $s_{1} = m_{1}^d \, mod \, n $, è possibile ottenere la firma di $m_{1}^2$ senza conoscere $d$ (chiave privata): infatti, $(m_{1}^2)^d \, mod \, n = (m_{1}^d)^2 \, mod \, n = (m_{1}^d \, mod \, n)^2 \, mod \, n $, ottenendo quindi la firma di $m_{1}^2$. Se un avversario riesce a collezionare molti messaggi firmati, può ottenere la firma di ogni messaggio $m$ esprimibile come prodotto e/o divisione di messaggi della collezione. In particolare, se ottiene le firme di due messaggi $m_{1}$ e $m_{2}$ tali che il rapporto $m_{1}/m_{2}=p$, dove $p$ è un numero primo, l'attaccante può calcolare la firma di $p$. Inoltre, se è abbastanza fortunato da raccogliere molte coppie di questo tipo, egli può calcolare la firma di molti numeri primi, quindi può falsificare la firma di ogni messaggio dato dal prodotto di ogni sottoinsieme di tali numeri primi ciascuno elevato ad una qualunque potenza. Con abbastanza coppie, può falsificare la firma di ogni messaggio rappresentato da uno smooth number. 
-
+\newline \newline
 Generalmente, ciò che si firma con RSA è un digest messaggio con padding $m^{*} = pad(h(m))$. Al digest del messaggio $m$ vengono aggiunti, in modo opportuno, dei bit di riempimento (padding) ottenendo $m^*$. Se i bit di riempimento sono degli zeri, anzichè essere random, è piu probabile che $m^*$ sia uno smooth number. Invece, è estremamente improbabile che un numero random $mod \, n$ sia smooth: \begin{itemize}
 \item con un padding a sinistra di soli zeri, l'intero da firmare $m_{p} = h(m)$ rimane piccolo, per cui il padding non riduce la probabilità che $m_{p}$ sia smooth;
 \item con un padding a destra di soli zeri, $m_{p} = h(m) \cdot 2^k $ è un intero molto più grande, ma è divisibile per una potenza di due, quindi, analogamente, il padding non riduce la probabilità che $m_{p}$ sia smooth;
 \item con un padding a destra random, l'intero da firmare $m_{p}$ è estremamente improbabile che sia smooth. 
 \end{itemize}
-Tuttavia, si espone RSA alla minaccia nota come il
-\textbf{problema della radice cubica}: si assuma che si è optato per padding a destra random per ridurre la probabilità che le firme prodotte siano smooth. Si ha l'inconveniente che, se l'esponente pubblico $e = 3$, allora un attaccante può virtualmente falsificare la
-firma di un qualsiasi messaggio. Infatti, supponiamo che un attaccante, Carol, voglia falsificare la firma di un qualche messaggio $m$ avente digest $h_{m}$. Allora Carol applica un padding a destra di $h_{m}$ di soli 0, ottenendo quindi $p_{m} = h_{m}00..00$. Poi calcola la radice cubica ordinaria e la arrotonda all'intero più vicino $r = round(p_{m}^{1/3})$, ottenendo la firma falsificata di $m$ (infatti, $r^e = r^3 = p_{m}$, ossia $h_{m}$ con un padding a destra che è apparentemente casuale).
+Tuttavia, si espone RSA alla minaccia nota come problema della radice cubica.
+
+\paragraph{problema della radice cubica}: si assuma che si è optato per padding a destra random per ridurre la probabilità che le firme prodotte siano smooth. Si ha l'inconveniente che, se l'esponente pubblico $e = 3$, allora un attaccante può virtualmente falsificare la firma di un qualsiasi messaggio. Infatti, supponiamo che un attaccante, Carol, voglia falsificare la firma di un qualche messaggio $m$ avente digest $h_{m}$. Allora Carol applica un padding a destra di $h_{m}$ di soli 0, ottenendo quindi $p_{m} = h_{m}00..00$. Poi calcola la radice cubica ordinaria e la arrotonda all'intero più vicino $r = round(p_{m}^{1/3})$, ottenendo la firma falsificata di $m$ (infatti, $r^e = r^3 = p_{m}$, ossia $h_{m}$ con un padding a destra che è apparentemente casuale).
 
 \section{PKCS}
 

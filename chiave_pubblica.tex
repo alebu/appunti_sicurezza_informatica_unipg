@@ -107,14 +107,66 @@ Se $n$ è un numero primo, tutti gli interi da 1 a $n-1$ sono relativamente prim
 Dato un intero \textbf{n} > 1, si definisce funzione $\varphi$ di Eulero, o \textbf{funzione totiente}, la funzione che associa ad \textbf{n} il numero $\varphi (n)$ degli interi positivi $i < n$ e relativamente
 primi con n, cioè:
 \begin{equation}
-\varphi (n): \mathbb{N} \Rightarrow \mathbb{N} \mid \quad \varphi (n) = \mid \{ i \in Z, 0 < i < n: MCD(i,n) = 1 \} \mid
+\varphi (n): \mathbb{N} \Rightarrow \mathbb{N} \mid \quad \varphi (n) = \mid \{ i \in \mathbb{N}, 0 < i < n: MCD(i,n) = 1 \} \mid
 \end{equation}
 
-Se $n$ è primo, tutti gli interi da 1 a $n-1$ sono relativamente primi con $n$, per cui $\phi(x) = n - 1$. Se $n = pq$, dove p e q sono numeri primi maggiori di 1, allora $\phi(n) = (p-1)(q-1)$. \\
+Se $n$ è primo, tutti gli interi da 1 a $n-1$ sono relativamente primi con $n$. Ne segue che $\varphi(x) = n - 1$. Se $n = p \cdot q$, dove p e q sono numeri primi maggiori di 1, allora $\varphi(n) = (p-1)(q-1)$. Dimostriamo questa affermazione.
 
-Sia adesso $n > 1$ un intero privo di quadrati (cioè dove non compaiono fattori al quadrato nella sua scomposizione in fattori primi), detto anche square free, allora per ogni $y > 0$, si ha: \begin{center}
-$x^y \, mod \, n = x^{(y + \phi(n) )} \, mod \, n$
-\end{center} Ne segue che, se $ y \, mod \, \phi(n) = 1 \, mod \, \phi(n) $, ovvero se $y = 1 + k \phi(n) $, con $k \in Z$, si ha $x^y \, mod \, n = x \, mod \, n $. Tale risultato è sfruttato dall'algoritmo RSA.
+\paragraph{Dimostrazione} Adottiamo la seguente notazione:
+\begin{itemize}
+\item $N_{<n}$ :\{ 1, 2, ..., n-1\}
+\item $M_p$: \{ $p \cdot 1$, $p \cdot 2$, ..., $p \cdot (q-1)$\} $\subset N_{<n}$ (multipli di p minori di n)
+\item $M_q$: \{ $q \cdot 1$, $q \cdot 2$, ..., $(p-1) \cdot q$\} $\subset N_{<n}$ (multipli di q minori di n)
+\end{itemize}
+Allora posso esprimere il risultato della funzione totiente come la totalità dei numeri minori di n, tranne quelli che sono multipli di p o q:
+\begin{equation}
+\varphi (n) = \mid N_{<n} - M_p \cup M_q \mid
+\end{equation}
+Ne segue:
+\begin{equation} \label{eq:tot1}
+\varphi (n) = \mid N_{<n} \mid - \mid M_p \mid - \mid M_q \mid + \mid M_q \cap M_p \mid
+\end{equation}
+Poiché p e q sono numeri primi, il loro minimo comune multiplo sarà proprio $p \cdot q = n$, quindi:
+\begin{equation}
+M_q \cap M_p = \varnothing \Rightarrow \mid M_q \cap M_p \mid = 0
+\end{equation}
+Allora la \ref{eq:tot1} diventa:
+\begin{equation}
+\varphi (n) = \mid N_{<n} \mid - \mid M_p \mid - \mid M_q \mid 
+\end{equation}
+\begin{equation}
+\varphi (n) = n-1 - (q -1) - (p - 1) =  p \cdot q - p - (q - 1) =  p \cdot (q - 1) - (q - 1)
+\end{equation}
+E diventa, come volevasi dimostrare:
+\begin{equation}
+\varphi (n) = (p - 1)(q - 1)
+\end{equation}
+
+\paragraph{Esponenziazione modulare}
+L'esponenziazione modulare, o elevamento a potenza modulare, è simile a quella ordinaria: si esegue l'esponenziazione ordinaria e si considera il resto della divisione per n (ad esempio, $4^6 \; mod \; 10 = 6 \; mod \; 10$ poiché $4^6 = 4096$ e $4096 \; mod \; 10 = 6$
+\newline \newline 
+Analogamente a quanto visto per addizione e moltiplicazione modulare, quando l'esponenziazione è iniettiva, essa può essere utilizzata come algoritmo di cifratura. La decifratura può ottenersi ricorrendo al logaritmo discreto
+(inverso dell'esponenziazione). Come nel caso della moltiplicazione, nell'esponenziazione modulare non tutti i numeri ammettono un logaritmo discreto.
+\begin{figure}[htbp]
+	\centering%
+	\subfigure%
+	{\includegraphics[height=7cm, width=7cm, keepaspectratio]{Immagini/chiave_pubblica/exp_mod.png}}
+	\caption{Tabella esponenziazione modulo 10. E' facile vedere come l'esponenziazione per 3 (quarta colonna) possa considerarsi una cifratura, poiché determina un mescolamento dell’input. L'esponenziazione per 2, invece, no: alcuni input scompaiono (non è iniettiva) \label{fig:exp_mod}} 	
+\end{figure}
+\newline \newline
+Esaminando la tabella di esponenziazione mod 10 in figura \ref{fig:exp_mod} si nota un periodicità: per ogni i > 0, le colonne i e i + 4 coincidono, cioè:
+\begin{equation}
+x^i \; mod \; 10 = x^{i + 4} \; mod \; 10, \quad \forall i>0
+\end{equation}
+In effetti, si può dimostrare il seguente risultato: sia $n > 1$ un intero privo di quadrati (cioè dove non compaiono fattori al quadrato nella sua scomposizione in fattori primi), detto anche \textbf{square free}, allora per ogni $y > 0$, si ha: 
+\begin{equation}
+x^y \, mod \, n = x^{(y + \varphi(n) )} \, mod \, n
+\end{equation} 
+Dal precedente risultato segue che, se $ y \, mod \, \varphi(n) = 1 \, mod \, \varphi(n) $, ovvero se $y = 1 + k \varphi(n) $, con $k \in \mathbb{Z}$, si ha:
+\begin{equation}
+x^y \, mod \, n = x \, mod \, n
+\end{equation}
+Tale risultato è sfruttato dall'algoritmo RSA.
 
 \section{RSA}
 

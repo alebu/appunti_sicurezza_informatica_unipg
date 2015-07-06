@@ -245,6 +245,12 @@ In base al tipo di impiego, RSA svolge le seguenti operazioni\textbf{ molto freq
 E' necessario pertanto che tali operazioni siano svolte nel modo \textbf{più efficiente possibile}. L'operazione di generazione delle chiavi viene invece eseguita meno frequentemente e quindi si può tollerare una minore efficienza.
 \newline \newline
 Le operazioni di cifratura, decifratura, firma e verifica della firma richiedono tutte di dover considerare un intero molto grande, elevarlo ad un esponente (intero) molto grande e trovare il resto della divisione intera per un numero molto grande. Considerando la dimensione dei numeri interi per i quali RSA è ritenuto sicuro, tali operazioni risulterebbero proibitive se eseguite nel modo più ovvio. Vanno quindi implementati algoritmi efficienti che svolgono tali operazioni.
+\newline \newline
+Va considerato però che problematiche di sicurezza possono insorgere anche da usi impropri dell'algoritmo. In altre parole vanno considerate le violazioni che non affrontano il problema della fattorizzazione. Si consideri, come esempio, un'applicazione di RSA con chiavi a 256 bit.
+\newline \newline
+Si supponga che Carol mandi un messaggio ad Alice contenente un il nome del suo amante. Il fidanzato di Carol, Bob, sapende del messaggio di Carol ad Alice, e sapendo che l'amante di Carol è uno dei 15 studenti del corso di sicurezza informatica, potrebbe sferrare un attacco. Infatti, pur non potendo decifrare il messaggio, potrebbe cifrare il nome di ogni ragazzo del corso con la chiave pubblica di Alice ed effettuare un confronto.
+\newline \newline
+Com'è possibile prevenire quest'attacco? In seguito descriveremo degli standard per utilizzare RSA in modo appropriato (sezione: \ref{sec:pkcs}). Per il momento una possibile risposta alla precedente domanda è la seguente: Carol può concatenare il nome del suo fidanzato con un numero random molto grande, diciamo a 64 bit. A questo punto Bob, anziché 15 tentativi, deve fare $15 \cdot 2^{64}$ tentativi. L'attacco diventa computazionalmente impraticabile.
 
 \subsection{Generazione delle chiavi RSA}
 La generazione delle chiavi RSA, la cui procedura è descritta nel primo paragrafo della sezione \ref{sec:ut_rsa}, è un'operazione poco frequente: in gran parte delle applicazioni della tecnologia a chiave pubblica deve essere eseguita soltanto una volta e non è richiesta la stessa efficienza delle altre operazioni RSA; deve comunque essere garantita un'efficienza ragionevole. 
@@ -345,7 +351,7 @@ Quindi è banale falsificare la firma di qualcuno se il messaggio $m$ da firmare
 Generalmente, ciò che viene firmato (messaggio + padding) ha una struttura sufficientemente vincolata: vengono inseriti dei bit di riempimento organizzati in pattern regolari; la probabilità che un numero random costituisca un messaggio (padding incluso) valido è trascurabile, cioè è estremamente improbabile che un numero random contenga i pattern regolari di bit. Tuttavia, visto che i numeri in RSA sono molto grandi un avversario ha a disposizione molti tentativi, dunque i pattern di riempimento vanno scelti in modo opportuno.
 
 \paragraph{Smooth Numbers}
-Un altro problema presente nella cifratura a chiave pubblica è quello dei \textit{smooth numbers}. Intuitivamente, uno smooth number è un numero scomponibile nel prodotto di (molti) numeri primi \textbf{ragionevolmente piccoli} (non conviene usare una definizione assoluta, poiché un numero è piccolo o grande in base alle capacità di calcolo dell'avversario). Ad esempio, il numero 6056820 è più \textbf{smooth} del numero 6567587, poiché 
+Un altro problema presente nella cifratura a chiave pubblica è quello dei \textit{smooth numbers}. Intuitivamente, uno smooth number è un numero scomponibile nel prodotto di molti numeri primi \textbf{ragionevolmente piccoli} (non conviene usare una definizione assoluta, poiché un numero è piccolo o grande in base alle capacità di calcolo dell'avversario). Ad esempio, il numero 6056820 è più \textbf{smooth} del numero 6567587, poiché 
 \begin{equation}
 6056820 = 22 \cdot 32 \cdot 5 \cdot 7 \cdot 11 \cdot 19 \cdot 23
 \end{equation}
@@ -353,21 +359,60 @@ mentre
 \begin{equation}
 6567587 = 13 \cdot 557 \cdot 907
 \end{equation}
-Si tratta di una vulnerabilità prevalentemente teorica, nella pratica difficilmente realizzabile, poiché richiede un'enorme capacità di calcolo, la raccolta di un numero elevato di messaggi firmati e molta fortuna (per l'avversario). \newline \newline
-\textbf{Idea base}: dalle firme $s_{1}$ e $s_{2}$ dei messaggi $m_{1}$ ed $m_{2}$, è possibile calcolare le firme dei messaggi $m_{1} \cdot m_{2}$, $m_{1}/m_{2}$, $m_{1}^j$, $m_{2}^k$ e $m_{1}^j \cdot m_{2}^k$. Ad esempio, conoscendo la firma $s_{1} = m_{1}^d \, mod \, n $, è possibile ottenere la firma di $m_{1}^2$ senza conoscere $d$ (chiave privata): infatti, $(m_{1}^2)^d \, mod \, n = (m_{1}^d)^2 \, mod \, n = (m_{1}^d \, mod \, n)^2 \, mod \, n $, ottenendo quindi la firma di $m_{1}^2$. Se un avversario riesce a collezionare molti messaggi firmati, può ottenere la firma di ogni messaggio $m$ esprimibile come prodotto e/o divisione di messaggi della collezione. In particolare, se ottiene le firme di due messaggi $m_{1}$ e $m_{2}$ tali che il rapporto $m_{1}/m_{2}=p$, dove $p$ è un numero primo, l'attaccante può calcolare la firma di $p$. Inoltre, se è abbastanza fortunato da raccogliere molte coppie di questo tipo, egli può calcolare la firma di molti numeri primi, quindi può falsificare la firma di ogni messaggio dato dal prodotto di ogni sottoinsieme di tali numeri primi ciascuno elevato ad una qualunque potenza. Con abbastanza coppie, può falsificare la firma di ogni messaggio rappresentato da uno smooth number. 
+Si tratta di una vulnerabilità prevalentemente teorica, nella pratica difficilmente realizzabile, poiché richiede un'enorme capacità di calcolo, la raccolta di un numero elevato di messaggi firmati e molta fortuna (per l'avversario). 
 \newline \newline
-Generalmente, ciò che si firma con RSA è un digest messaggio con padding $m^{*} = pad(h(m))$. Al digest del messaggio $m$ vengono aggiunti, in modo opportuno, dei bit di riempimento (padding) ottenendo $m^*$. Se i bit di riempimento sono degli zeri, anzichè essere random, è piu probabile che $m^*$ sia uno smooth number. Invece, è estremamente improbabile che un numero random $mod \, n$ sia smooth: \begin{itemize}
+\textbf{Idea base}: dalle firme $s_{1}$ e $s_{2}$ dei messaggi $m_{1}$ ed $m_{2}$, è possibile calcolare le firme dei messaggi:
+\begin{itemize}
+\item $m_{1} \cdot m_{2}$
+\item $m_{1}/m_{2}$
+\item $m_{1}^j$
+\item $m_{2}^k$ 
+\item $m_{1}^j \cdot m_{2}^k$
+\end{itemize} 
+Ad esempio, conoscendo la firma $s_{1} = m_{1}^d \, mod \, n $, è possibile ottenere la firma di $m_{1}^2$ senza conoscere $d$ (ovvero senza conoscere la chiave privata). Infatti:
+\begin{equation}
+(m_{1}^2)^d \, mod \, n = (m_{1}^d)^2 \, mod \, n = (m_{1}^d \, mod \, n)^2 \, mod \, n
+\end{equation} 
+Se un avversario riesce a collezionare molti messaggi firmati, può ottenere la firma di ogni messaggio $m$ esprimibile come prodotto e/o divisione di messaggi della collezione. In particolare, se ottiene le firme di due messaggi $m_{1}$ e $m_{2}$ tali che il rapporto $m_{1}/m_{2}=p$, dove $p$ è un numero primo, l'attaccante può calcolare la firma di $p$. Inoltre, se è abbastanza fortunato da raccogliere molte coppie di questo tipo, egli può calcolare la firma di molti numeri primi, quindi può falsificare la firma di ogni messaggio dato dal prodotto di ogni sottoinsieme di tali numeri primi ciascuno elevato ad una qualunque potenza. Con abbastanza coppie, può falsificare la firma di ogni messaggio rappresentato da uno \textbf{smooth number}. 
+\newline \newline
+Generalmente, ciò che si firma con RSA è un digest di messaggio, a cui si aggiungono bit tramite padding:
+\begin{equation}
+m^{*} = pad(h(m))
+\end{equation} 
+Se i bit di riempimento sono degli zeri, anzichè essere random, è piu probabile che $m^*$ sia uno smooth number. Invece, è estremamente improbabile che un numero random $mod \, n$ sia smooth: 
+\begin{itemize}
 \item con un padding a sinistra di soli zeri, l'intero da firmare $m_{p} = h(m)$ rimane piccolo, per cui il padding non riduce la probabilità che $m_{p}$ sia smooth;
 \item con un padding a destra di soli zeri, $m_{p} = h(m) \cdot 2^k $ è un intero molto più grande, ma è divisibile per una potenza di due, quindi, analogamente, il padding non riduce la probabilità che $m_{p}$ sia smooth;
 \item con un padding a destra random, l'intero da firmare $m_{p}$ è estremamente improbabile che sia smooth. 
 \end{itemize}
 Tuttavia, si espone RSA alla minaccia nota come problema della radice cubica.
 
-\paragraph{problema della radice cubica}: si assuma che si è optato per padding a destra random per ridurre la probabilità che le firme prodotte siano smooth. Si ha l'inconveniente che, se l'esponente pubblico $e = 3$, allora un attaccante può virtualmente falsificare la firma di un qualsiasi messaggio. Infatti, supponiamo che un attaccante, Carol, voglia falsificare la firma di un qualche messaggio $m$ avente digest $h_{m}$. Allora Carol applica un padding a destra di $h_{m}$ di soli 0, ottenendo quindi $p_{m} = h_{m}00..00$. Poi calcola la radice cubica ordinaria e la arrotonda all'intero più vicino $r = round(p_{m}^{1/3})$, ottenendo la firma falsificata di $m$ (infatti, $r^e = r^3 = p_{m}$, ossia $h_{m}$ con un padding a destra che è apparentemente casuale).
+\paragraph{Problema della radice cubica}
+Si assuma che si è optato per padding a destra random per ridurre la probabilità che le firme prodotte siano smooth. Si ha l'inconveniente che, se l'esponente pubblico è $e = 3$, allora un attaccante può \textbf{virtualmente falsificare la firma di un qualsiasi messaggio}. Proviamo quest'affermazione.
+\newline \newline
+Supponiamo che un attaccante, Carol, voglia falsificare la firma di un qualche messaggio $m$ avente digest $h_{m}$. Allora Carol applica un padding a destra di $h_{m}$ di soli 0, ottenendo quindi:
+\begin{equation}
+p_{m} = <h_{m} \mid 00..00>
+\end{equation}
+Poi calcola la radice cubica ordinaria e la arrotonda all'intero più vicino:
+\begin{equation}
+r = round(p_{m}^{1/3})
+\end{equation} 
+ottenendo la firma falsificata di $m$. Infatti:
+\begin{equation}
+r^e = r^3 = p_{m}
+\end{equation} 
+ossia $h_{m}$ con un padding a destra che è apparentemente casuale.
 
-\section{PKCS}
-
-Ogni applicazione di RSA, cifratura, decifratura e firma, può essere soggetta a diversi tipi di attacchi, che possono essere sventati con opportune contromisure, basate sulla scelta di un'opportuna codifica/formato(quindi padding) del messaggio da cifrare/firmare. A tal fine è stato definito uno standard, \textbf{PKCS} (Public-Key Cryptography Standard), che stabilisce le codifiche per la chiave pubblica RSA, chiave privata RSA, firma RSA, cifratura RSA di messaggi corti(cioè chiavi segrete), firma RSA di messaggi corti (tipicamente digest). \\
+\subsection{PKCS} \label{sec:pkcs}
+Ogni applicazione di RSA (cifratura, decifratura e firma) può essere soggetta a diversi tipi di attacchi, che possono essere sventati con opportune contromisure, basate sulla scelta di un'opportuna codifica/formato (quindi padding) del messaggio da cifrare/firmare. A tal fine è stato definito uno standard, \textbf{PKCS} (Public-Key Cryptography Standard), che stabilisce le codifiche per:
+\begin{itemize}
+\item chiave pubblica RSA
+\item chiave privata RSA
+\item firma RSA
+\item cifratura RSA di messaggi corti(tipicamente chiavi segrete)
+\item firma RSA di messaggi corti (tipicamente digest)
+\end{itemize}
 Esistono 15 standard PKCS per le diverse situazioni in cui la cifratura a chiave pubblica viene utilizzata. Noi esamineremo solo PKCS1. Esso è stato concepito per far fronte alle seguenti minacce:
 \begin{itemize}
 \item cifratura di messaggi prevedibili;
@@ -376,40 +421,48 @@ Esistono 15 standard PKCS per le diverse situazioni in cui la cifratura a chiave
 \item cifratura di messaggi di lunghezza inferiore ad un terzo della lunghezza di $n$ quando $e=3$;
 \item firma di messaggi dove l'informazione è posta nei bit più significativi ed $e = 3$.
 \end{itemize}
-PKCS definisce uno standard per la formattazione di un messaggio da cifrare con RSA. \\
-PKCS definisce uno standard per la formattazione di un messaggio da firmare con RSA.
+PKCS definisce, tra le altre cose, uno standard per la formattazione di un messaggio da cifrare (e da firmare) con RSA, anche se questo non è l'impiego tipico dell'algoritmo (come già detto, di solito vengono cifrate chiavi segrete e firmati digest). 
 
 \section{Diffie-Hellman}
 
-Diffie-Hellman è il primo sistema a chiave pubblica utilizzato. Meno generale di RSA, non serve né a cifrare/decifrare né a firmare messaggi ma permette lo scambio di chiavi, in chiaro e su una rete pubblica insicura, tra due entità (che chiameremo Alice e Bob) e quindi di accordarsi su un segreto (chiave) condiviso, senza rivelarlo. Intercettando tutti i messaggi scambiati non si è in grado di risalire al segreto condiviso. Tale segreto non viene generato da una delle due entità, ma è il risultato dello scambio dei messaggi. In particolare, dopo essersi scambiati complessivamente due messaggi (in chiaro), che tutto il mondo può conoscere, Alice e Bob conosceranno il segreto condiviso $K_{AB}$, il quale verrà poi usato per proteggere la confidenzialità con tecniche di cifratura convenzionali. \\ Diffie-Hellman è realmente usato per stabilire una chiave segreta condivisa in alcune applicazioni, ad esempio nell'ambito della cifratura dei dati inviati in una LAN. Si osservi comunque che Diffie-Hellman non
-incorpora alcuna forma di autenticazione, senza la quale si rischia di condividere il segreto con un impostore.  \\ \\
-\textbf{Algoritmo}: \\
+Diffie-Hellman è il primo sistema a chiave pubblica utilizzato. Meno generale di RSA, non serve né a cifrare/decifrare né a firmare messaggi, ma permette lo scambio di chiavi, in chiaro e su una rete pubblica insicura, tra due entità (che chiameremo Alice e Bob) e quindi di accordarsi su un segreto (chiave) condiviso, senza rivelarlo. Intercettando tutti i messaggi scambiati non si è quindi in grado di risalire al segreto condiviso. Tale segreto non viene generato da una delle due entità, ma è il risultato dello scambio dei messaggi. In particolare, dopo essersi scambiati complessivamente due messaggi (in chiaro), che tutto il mondo può conoscere, Alice e Bob conosceranno il segreto condiviso $K_{AB}$, il quale verrà poi usato per proteggere la confidenzialità con tecniche di cifratura convenzionali.
+\newline \newline
+Diffie-Hellman è realmente usato per stabilire una chiave segreta condivisa in alcune applicazioni, ad esempio nell'ambito della cifratura dei dati inviati in una LAN. Si osservi comunque che Diffie-Hellman non incorpora alcuna forma di autenticazione, senza la quale si rischia di condividere il segreto con un impostore.  
 
-PRECONDIZIONE: 
-\begin{itemize}
-\item Alice e Bob condividono due numeri $p$ e $g$, dove $p$ è un numero primo grande e $g<p$ con $g$ radice primitiva di $p$
-\item $p$ e $g$ sono noti in anticipo e possono essere resi di dominio pubblico in una repository accessibile sia da Alice che da Bob, oppure possono essere generati dall'iniziatore della comunicazione,
-diciamo Alice, e trasmessi a Bob nel messaggio che gli invierà;
-\end{itemize}
-La fase 0, viene eseguita dall'iniziatore della comunicazione qualora i numeri $p$ e $g$ non siano pubblici: Alice genera (o estrae da un suo archivio) una coppia di numeri $p$ e $g$ tali da soddisfare le proprietà sopra elencate; $p$ e $g$ possono essere subito inviati a Bob oppure possono essere trasmessi nella fase 3a.
+\subsection{Algoritmo} 
+\paragraph{Precondizione}
+Alice e Bob condividono due numeri $p$ e $g$, dove $p$ è un numero primo grande e $g$ radice primitiva di $p$. $p$ e $g$ sono noti in anticipo e possono essere resi di dominio pubblico in una repository accessibile sia da Alice che da Bob, oppure possono essere generati dall'iniziatore della comunicazione, diciamo Alice, e trasmessi a Bob nel messaggio che gli invierà;
+\paragraph{Fase 0}
+La fase 0 viene eseguita dall'iniziatore della comunicazione qualora i numeri $p$ e $g$ non siano pubblici: Alice genera (o estrae da un suo archivio) una coppia di numeri $p$ e $g$ tali da soddisfare le proprietà sopra elencate; $p$ e $g$ possono essere subito inviati a Bob oppure possono essere trasmessi nella fase 3a.
+\paragraph{Fasi 1 - 2 - 3}
 \begin{enumerate}
-\item \begin{enumerate}
-\item [a.] Generazione del segreto privato $s_{A}$: Alice (iniziatore comunicazione) genera un numero random $s_{A}<p$ di 512 bit, che non verrà mai inviato a Bob, quindi calcola $T_{A}=g^{s_{A}} \, mod \,p$ e lo invia (su una rete insicura) a Bob;
-\item [b.] Generazione del segreto privato $s_{B}$: Bob genera $s_{B}<p$ di 512 bit, che non verrà mai inviato ad Alice, quindi calcola $T_{B}=g^{s_{B}} \, mod \, p$ e lo invia in rete ad Alice;
+\item [1A.] Generazione del segreto privato $s_{A}$: Alice (iniziatore comunicazione) genera un numero random $s_{A}<p$ di 512 bit, che non verrà mai inviato a Bob ($s_A$ \textbf{non} è la chiave condivisa). Successivamente calcola $T_{A}=g^{s_{A}} \, mod \,p$ (Fase 2A) e lo invia (su una rete insicura) a Bob (Fase 3A).
+\item [2B.] Generazione del segreto privato $s_{B}$: Bob genera $s_{B}<p$ di 512 bit, che non verrà mai inviato ad Alice ($s_B$ \textbf{non} è la chiave condivisa). Successivamente calcola $T_{B}=g^{s_{B}} \, mod \, p$ (Fase 2B) e lo invia in rete ad Alice (Fase 3B).
 \end{enumerate}
-\item \begin{enumerate}
-\item [a.] Alice calcola $K_{AB}=T_{B}^{s_{A}} \, mod \,p$;
-\item [b.] Bob calcola $K_{BA}=T_{B}^{s_{B}} \, mod \, p$;
+Si noti che $T_A$ e $T_B$ possono essere rivelati a tutto il mondo senza inficiare la sicurezza dell'algoritmo.
+\paragraph{Fase 4}
+\begin{enumerate}
+\item [4A.] Alice calcola $K_{AB}=T_{B}^{s_{A}} \, mod \,p$;
+\item [4B.] Bob calcola $K_{BA}=T_{B}^{s_{B}} \, mod \, p$;
 \end{enumerate}
-\item L'aritmetica modulare garantisce che $K_{AB}=K_{BA}$. Infatti si ha $ K_{AB} = T_{B}^{s_{A}} \, mod \,p = ({g^{s_{B}} \, mod \, p})^{s_{A}} \, mod \,p = g^{s_{B}s_{A}} \, mod \, p = g^{s_{A}s_{B}} \, mod \, p = ({g^{s_{A}} \, mod \, p})^{s_{B}} \, mod \,p = T_{A}^{s_{B}} \, mod \, p = K_{BA}$.
-\end{enumerate}
+L'aritmetica modulare garantisce che $K_{AB}=K_{BA}$. Infatti si ha:
+\begin{equation}
+K_{AB} = T_{B}^{s_{A}} \, mod \,p = ({g^{s_{B}} \, mod \, p})^{s_{A}} \, mod \,p
+\end{equation}
+\begin{equation}
+K_{AB} = g^{s_{B}s_{A}} \, mod \, p = g^{s_{A}s_{B}} \, mod \, p
+\end{equation} 
+\begin{equation}
+K_{AB} = ({g^{s_{A}} \, mod \, p})^{s_{B}} \, mod \,p = T_{A}^{s_{B}} \, mod \, p = K_{BA}
+\end{equation}
 \begin{figure}[htbp]
 	\centering%
 	\subfigure%
 	{\includegraphics[scale=0.5, keepaspectratio]{Immagini/chiave_pubblica/DiffieHellman_schema.png}}
 	\caption{Diffie-Hellman: schema}
-	\end{figure}
+\end{figure}
 
+\paragraph{Sicurezza}
 Tuttavia, dati $p$, $g$, $T_{A}$ e $T_{B}$, è possibile calcolare $s_{A}$, $s_{B}$ oppure $g^{s_{A}s_{B}}$? Si può ottenere $s_{A}$ da $g^{s_{A}}$ tramite logaritmo discreto $dlog_{g} \, g^{s_{A}}$, ma al momento non sono note tecniche per calcolare tale quantità in un tempo ragionevole, anche conoscendo $g^{s_{A}}$ e $g^{s_{B}}$.
 
 La vulnerabilità di Diffie-Hellman è che tale algoritmo non fornisce alcuna prova di autenticazione: Alice non può essere certa che $T_{B}$ sia stato inviato da Bob e non da un impostore; allo stesso modo, Bob non può essere certa che $T_{A}$ sia stato inviato da Alice e non da

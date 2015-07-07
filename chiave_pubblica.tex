@@ -463,15 +463,23 @@ K_{AB} = ({g^{s_{A}} \, mod \, p})^{s_{B}} \, mod \,p = T_{A}^{s_{B}} \, mod \, 
 \end{figure}
 
 \paragraph{Sicurezza}
-Tuttavia, dati $p$, $g$, $T_{A}$ e $T_{B}$, è possibile calcolare $s_{A}$, $s_{B}$ oppure $g^{s_{A}s_{B}}$? Si può ottenere $s_{A}$ da $g^{s_{A}}$ tramite logaritmo discreto $dlog_{g} \, g^{s_{A}}$, ma al momento non sono note tecniche per calcolare tale quantità in un tempo ragionevole, anche conoscendo $g^{s_{A}}$ e $g^{s_{B}}$.
+L'algoritmo non sarebbe sicuro se, dati $p$, $g$, $T_{A}$ e $T_{B}$ (trasmessi in chiaro), fosse possibile calcolare $s_{A}$, $s_{B}$ oppure $g^{s_{A}s_{B}}$. Al momento non sono note tecniche per calcolare $g^{s_{A}s_{B}}$ in tempo ragionevole, anche conoscendo $g^{s_{A}}$ e $g^{s_{B}}$. Di fatto si può ottenere $s_{A}$ da $g^{s_{A}}$ tramite logaritmo discreto:
+\begin{equation}
+dlog_{g} \, g^{s_{A}}, \quad dlog_{g}: \mathbb{Z} \rightarrow \mathbb{N}
+\end{equation} 
+Tuttavia il calcolo di logaritmi discreti non è fattibile in tempi ragionevoli.
+\subsection{Man in the middle}
+La vulnerabilità di Diffie-Hellman è che tale algoritmo non fornisce alcuna prova di autenticazione: Alice non può essere certa che $T_{B}$ sia stato inviato da Bob e non da un impostore; allo stesso modo, Bob non può essere certo che $T_{A}$ sia stato inviato da Alice e non daun impostore. 
 
-La vulnerabilità di Diffie-Hellman è che tale algoritmo non fornisce alcuna prova di autenticazione: Alice non può essere certa che $T_{B}$ sia stato inviato da Bob e non da un impostore; allo stesso modo, Bob non può essere certa che $T_{A}$ sia stato inviato da Alice e non da
-un impostore. E' quindi possibile che un impostore, Mr. X, intercetti e modifichi i messaggi facendo credere a Bob di comunicare con Alice e
-viceversa. Alice e Bob non hanno modo di rendersi conto dell'attacco in atto. Un attacco di questo tipo viene detto Man-in-the-Middle (o Bucket Brigade Attack): Alice pensa che $K_{AX}$ sia la chiave segreta $K_{AB}$ che condivide con Bob; Bob pensa che $K_{BX}$ sia la chiave segreta $K_{BA}$ che condivide con Alice; invece, Mr. X ha due chiavi segrete: \begin{itemize}
+\paragraph{Man in the middle} 
+E' quindi possibile che un impostore, Mr. X, intercetti e modifichi i messaggi facendo credere a Bob di comunicare con Alice e viceversa. Alice e Bob non hanno modo di rendersi conto dell'attacco in atto. 
+\newline \newline
+Un attacco di questo tipo viene detto Man-in-the-Middle (o \textbf{Bucket Brigade Attack}): Alice pensa che $K_{AX}$ sia la chiave segreta $K_{AB}$ che condivide con Bob; Bob pensa che $K_{BX}$ sia la chiave segreta $K_{BA}$ che condivide con Alice; invece, Mr. X ha due chiavi segrete: 
+\begin{itemize}
 \item $K_{XA}$ per comunicare con Alice;
 \item $K_{XB}$ per comunicare con Bob.
 \end{itemize}
-Questo perché Mr. X conosce $g$ e $p$, quindi si calcola $s_{x}<p$ e $T_{x}=g^{s_{x}} \, mod \, p$ e li invia sia ad Alice che a Bob. Tale attacco è un attacco all'integrità.
+Questo perché Mr. X conosce $g$ e $p$, quindi si calcola $s_{x}<p$ e $T_{x}=g^{s_{x}} \, mod \, p$ e li invia sia ad Alice che a Bob. Tale attacco è un attacco all'integrità, alla confidenzialità e all'autenticità.
 \begin{figure}[htbp]
 	\centering%
 	\subfigure%
@@ -479,36 +487,44 @@ Questo perché Mr. X conosce $g$ e $p$, quindi si calcola $s_{x}<p$ e $T_{x}=g^{
 	\caption{Man-in-the-Middle Attack}
 \end{figure}
 
-Come risolvere tale problema? 
-\begin{itemize}
-\item \textbf{Autenticazione via password}: \\ Ipotesi: Alice e Bob si sono preliminarmente accordate su una coppia di password ($pwd_{A}$, password che Alice invia a Bob; $pwd_{B}$, password che Bob invia ad Alice). Si consideri allora la seguente procedura di autenticazione mostrata in \figurename~\ref{fig:aut_via_pwd}, dove $K_{AB}$ è la chiave segreta condivisa ottenuta con Diffie-Hellman: \begin{enumerate}
+\subsection{Possibili soluzioni}
+\paragraph{Autenticazione via password}
+Assumiamo che Alice e Bob si siano preliminarmente accordati su una coppia di password ($pwd_{A}$, password che Alice invia a Bob, e $pwd_{B}$, password che Bob invia ad Alice). Si consideri allora la seguente procedura di autenticazione mostrata in \figurename~\ref{fig:aut_via_pwd}, dove $K_{AB}$ è la chiave segreta condivisa ottenuta con Diffie-Hellman: 
+\begin{enumerate}
 \item scambio chiavi Diffie-Hellman;
 \item Alice invia un messaggio cifrato con $K_{AB}$ e $pwd_{A}$;
 \item Bob invia un messaggio cifrato con $K_{BA}$ e $pwd_{B}$.
 \end{enumerate}
-Il problema è che l'autenticazione via password, se è in corso un attacco Man-in-the-Middle, non funziona: Mr. X può decifrare tutte i messaggi che riceve da Alice con $K_{AX}$, cifrarli con $K_{XB}$ e inviarli a Bob. Viceversa, può decifrare tutte i messaggi che riceve da Bob con $K_{XB}$, cifrarli con $K_{AX}$ e inviarli ad Alice.
+\begin{figure}[htbp]
+	\centering%
+	\subfigure%
+	{\includegraphics[scale=0.5, keepaspectratio]{Immagini/chiave_pubblica/DiffieHellman_auth0.png}}
+	\caption{Autenticazione via password}
+	\label{fig:aut_via_pwd}
+\end{figure}
+Il problema è che l'autenticazione via password, se è in corso un attacco Man-in-the-Middle, non funziona: Mr. X può decifrare tutte i messaggi che riceve da Alice con $K_{AX}$, cifrarli con $K_{XB}$ e inviarli a Bob. Viceversa, può decifrare tutte i messaggi che riceve da Bob con $K_{XB}$, cifrarli con $K_{AX}$ e inviarli ad Alice. In questo modo può anche venire a conoscenza delle password su cui Alice e Bob si erano preliminarmente accordati.
 \begin{figure}[htbp]
 	\centering%
 	\subfigure%
 	{\includegraphics[scale=0.5, keepaspectratio]{Immagini/chiave_pubblica/DiffieHellman_passauth.png}}
-	\caption{Autenticazione via password}
+	\caption{Autenticazione via password - Vulnerabilità}
 	\label{fig:aut_via_pwd}
-	\end{figure}
-\item Anche altri tipi di proposte sono insufficienti (timestamp, domande personali, ecc.). Il problema è che Diffie-Hellman effettua delle operazioni invertibili (cifratura/decifratura) ed è sicuro solo nel caso di attacchi passivi (un intruso intercetta i messaggi, ma non li modifica). E' necessario proteggere l'integrità, per cui si adottano due strategie generali: Diffie-Hellman con Numeri Pubblici e Scambio Diffie-Hellman Autenticato.	
-\end{itemize}
+\end{figure}
+Anche altri tipi di proposte sono insufficienti (timestamp, domande personali, ecc.). Il problema è che Diffie-Hellman effettua delle operazioni invertibili (cifratura/decifratura) ed è sicuro solo nel caso di attacchi passivi (un intruso intercetta i messaggi, ma non li modifica). E' necessario proteggere l'integrità, per cui si adottano due strategie generali: Diffie-Hellman con Numeri Pubblici e Scambio Diffie-Hellman Autenticato.	
 
-\textbf{Diffie-Hellman con Numeri Pubblici}. Un possibile modo per sventare attacchi attivi è evitare che $p$, $g$, $s_{A}$, $s_{B}$, $T_{A}$ e $T_{B}$ vengano generati/calcolati ad ogni scambio. $p$, $g$, $T_{A}$ e $T_{B}$ potrebbero essere resi pubblici in una repository fidata, con $p$ e $g$ uguali per tutti gli utenti, mentre ogni utente U pubblica il proprio valore $T_{U}$, mantenendo privato il segreto $s_{U}$. Ne consegue che, se un avversario non è in grado di accedere alla repository e di modificare i valori pubblici, allora Diffie-Hellman diventa sicuro anche nel caso di attacchi attivi. Inoltre, non è più necessario lo scambio dei valori $T_{A}$ e $T_{B}$: consultando la repository ogni utente A può ottenere la chiave $K_{AB}$ che condividerebbe con l'utente B. \\
 
-\textbf{Scambio Diffie-Hellman Autenticato}. Alice e Bob conoscono un qualche tipo di informazione che permette loro di autenticarsi reciprocamente, ovvero una chiave segreta condivisa $K^{AB}$, da non confondere con la chiave concordata con Diffie-Hellman $K_{AB}$, la propria coppia <chiave privata, chiave pubblica> e la chiave
+\paragraph{Diffie-Hellman con Numeri Pubblici} Un possibile modo per sventare attacchi attivi è evitare che $p$, $g$, $s_{A}$, $s_{B}$, $T_{A}$ e $T_{B}$ vengano generati/calcolati ad ogni scambio. $p$, $g$, $T_{A}$ e $T_{B}$ potrebbero essere resi pubblici in una repository fidata, con $p$ e $g$ uguali per tutti gli utenti, mentre ogni utente U pubblica il proprio valore $T_{U}$, mantenendo privato il segreto $s_{U}$. Ne consegue che, se un avversario non è in grado di accedere alla repository e di modificare i valori pubblici, allora Diffie-Hellman diventa sicuro anche nel caso di attacchi attivi. Inoltre, non è più necessario lo scambio dei valori $T_{A}$ e $T_{B}$: consultando la repository ogni utente A può ottenere la chiave $K_{AB}$ che condividerebbe con l'utente B. \\
+
+\paragraph{Scambio Diffie-Hellman Autenticato}
+La precondizione per l'attuazione di questo protocollo è la conoscenza, da parte di Alice e Bob, di un qualche tipo di informazione che permette loro di autenticarsi reciprocamente, ovvero una chiave segreta condivisa $K^{AB}$, da non confondere con la chiave concordata con Diffie-Hellman $K_{AB}$, la propria coppia <chiave privata, chiave pubblica> e la chiave
 pubblica dell'altro. Si possono usare tale(i) informazione(i) per provare che sono realmente loro, e non un impostore, coloro che generano i valori di Diffie-Hellman $g$, $p$, $T_{A}$ e $T_{B}$. Tale prova può avvenire sia contestualmente che dopo lo scambio Diffie-Hellman esaminato in precedenza. 
-
+\newline \newline
 Notazione adottata: \begin{itemize}
 \item $K^{AB}$: chiave segreta condivisa tra Alice e Bob prima di effettuare lo scambio Diffie-Hellman.
 \item $K_{AB}$: chiave concordata con Diffie-Hellman.
 \item $K^{AB}$ \{msg\} : cifratura di msg con la chiave segreta $K^{AB}$, cioè $E(K^{AB}, msg)$.
 \item $\{msg\}_{Bob}$ : cifratura di msg con la chiave pubblica di Bob, cioè $E(PU_{Bob}, msg)$.
-\item $[msg]_{Bob}$ : firma di msg con la chiave privata di Bob, cioè
-$E(PR_{Bob}, msg)$.
+\item $[msg]_{Bob}$ : firma di msg con la chiave privata di Bob, cioè $E(PR_{Bob}, msg)$.
 \end{itemize}
 Di seguito sono indicate alcune possibili soluzioni per lo scambio Diffie-Hellman autenticato:
 \begin{itemize}
@@ -554,12 +570,10 @@ Diffie-Hellman trasmesso e della chiave segreta $K^{AB}$.
 	{\includegraphics[scale=0.5, keepaspectratio]{Immagini/chiave_pubblica/DiffieHellman_auth5.png}}
 	\caption{Autenticazione successiva allo scambio Diffie-Hellman.}
 	\label{fig:auth45}
-	\end{figure}
+\end{figure}
 
-Oltre alla mancanza di autenticazione, Diffie-Hellman classico presenta anche lo svantaggio che, la comunicazione cifrata con la chiave concordata, può avvenire soltanto dopo l'esecuzione di uno scambio attivo. In pratica, Alice non può inviare un messaggio cifrato a Bob prima di ricevere $T_{B}$. Tale problema puo essere ovviato
-introducendo le chiavi pubbliche Diffie-Hellman: una chiave pubblica D-H è una tripla $<p, g, T>$, dove $T = g^s \, mod \, p$, dove $s$ è la corrispondente chiave privata. Le chiavi pubbliche vanno custodite in un luogo fidato e accessibile da tutti in modo sicuro. La chiave pubblica di Bob è $<p_{B}, g_{B}, T_{B}>$. \\
-
-Di seguito (\figurename~\ref{fig:authex}), mostriamo un esempio di procedura che consenta ad Alice di inviare un messaggio cifrato a Bob, con la chiave concordata $K_{AB}$, anche se Bob risulta essere inattivo, cioè Alice deve essere in grado di cifrare senza dover attendere alcuna risposta da Bob, il quale, una volta attivo, dovrà poter calcolare $K_{AB}$ e decifrare il messaggio:
+Oltre alla mancanza di autenticazione, Diffie-Hellman classico presenta anche lo svantaggio che la comunicazione cifrata con la chiave concordata può avvenire soltanto dopo l'esecuzione di uno scambio attivo. In pratica, Alice non può inviare un messaggio cifrato a Bob prima di ricevere $T_{B}$. Tale problema puo essere ovviato introducendo le chiavi pubbliche Diffie-Hellman: una chiave pubblica D-H è una tripla $<p, g, T>$, dove $T = g^s \, mod \, p$, dove $s$ è la corrispondente chiave privata. Le chiavi pubbliche vanno custodite in un luogo fidato e accessibile da tutti in modo sicuro. La chiave pubblica di Bob è $<p_{B}, g_{B}, T_{B}>$. \newline \newline
+Di seguito (\figurename~\ref{fig:authex}), mostriamo un esempio di procedura che consente ad Alice di inviare un messaggio cifrato a Bob, con la chiave concordata $K_{AB}$, anche se Bob risulta essere inattivo, cioè Alice deve essere in grado di cifrare senza dover attendere alcuna risposta da Bob. Bob, una volta attivo, dovrà poter calcolare $K_{AB}$ e decifrare il messaggio.
 \begin{enumerate}
 \item Alice genera $s_{A}<p_{B}$, calcola $T_{A}^{*}=g_{B}^{s_{A}} \, mod \, p_{B}$ e $K_{AB}=T_{B}^{S_{A}} \, mod \, p_{B}$.
 \item Poi cifra il messaggio $msg=E(K_{AB},msg)$ e lo invia a Bob assieme a $T_{A}^{*}$.
@@ -576,19 +590,53 @@ Di seguito (\figurename~\ref{fig:authex}), mostriamo un esempio di procedura che
 
 \section{Zero Knowledge Proof System}
 
-La dimostrazione della conoscenza di un segreto è alla base di molte tecniche di autenticazione. Nelle tecniche di autenticazione a chiave segreta, il segreto è appunto la chiave condivisa tra i due principal. Nei protocolli a chiave pubblica il segreto è noto solo ad un principal, il quale deve dimostrare all'altro che detiene il segreto senza fornire delle informazioni che possano consentire ad un impostore di eseguire la prova. \\
-Una dimostrazione quindi è a \textit{conoscenza zero} (\textbf{Zero Knowledge Proof, ZKP}) se permette di provare la conoscenza di un segreto, che deve essere associato alla chiave pubblica, senza fornire delle informazioni che permettano ad un impostore di eseguire la prova: \begin{itemize}
+La dimostrazione della conoscenza di un segreto è alla base di molte tecniche di autenticazione. Nelle tecniche di autenticazione a chiave segreta, il segreto è appunto la chiave condivisa tra i due principal. Nei protocolli a chiave pubblica il segreto è noto solo ad un principal, il quale deve dimostrare all'altro che detiene il segreto senza fornire delle informazioni che possano consentire ad un impostore di eseguire la prova. 
+\newline \newline
+Una dimostrazione quindi è a \textit{conoscenza zero} (\textbf{Zero Knowledge Proof, ZKP}) se permette di provare la conoscenza di un segreto, che deve essere associato alla chiave pubblica, senza fornire delle informazioni che permettano ad un impostore di eseguire la prova: 
+\begin{itemize}
 \item la prova non deve rivelare il segreto;
 \item la prova non deve rivelare eventuali informazioni, che pur non essendo il segreto, consentano comunque ad un impostore di effettuare la prova.
 \end{itemize}
-Le dimostrazioni a conoscenza zero sono impiegate nei protocolli/sistemi di autenticazione (detti \textbf{Zero Knowledge Proof Systems, ZKPS}). RSA è un esempio di ZKPS: è possibile provare la conoscenza di un segreto associato alla chiave pubblica (si pensi alla firma di una sfida), senza rivelare la chiave privata o altre informazioni che
-permettano ad un impostore di impersonare il proprietario
-della chiave privata. Tuttavia, esistono ZKPS molto più efficienti di RSA, anche se non permettono di cifrare e/o di firmare. \\
+Le dimostrazioni a conoscenza zero sono impiegate nei protocolli/sistemi di autenticazione (detti \textbf{Zero Knowledge Proof Systems, ZKPS}). RSA è un esempio di ZKPS: è possibile provare la conoscenza di un segreto associato alla chiave pubblica (si pensi alla firma di una sfida), senza rivelare la chiave privata o altre informazioni che permettano ad un impostore di impersonare il proprietario della chiave privata. Tuttavia, esistono ZKPS molto più efficienti di RSA, anche se non permettono di cifrare e/o di firmare. 
 
-Uno schema di autenticazione a conoscenza zero (\textbf{Zero Knowledge Authenication Scheme, ZKAS}) consiste in un'autenticazione che sfrutta una \textit{ZKP}. Non si tratta di una tecnica deterministica, ma
-probabilistica (anche RSA in fondo è probabilistica). Deve poter essere resa arbitrariamente piccola la probabilità che un dimostratore onesto fornisca una prova errata; un verificatore onesto fornisca una verifica errata quando il dimostratore è onesto; un dimostratore disonesto fornisca una prova corretta. 
-
-Uno schema di autenticazione a conoscenza zero deve soddisfare i seguenti \textbf{requisiti}: \begin{itemize}
+\paragraph{La storia di Peggy e Victor}
+In una dimostrazione a conoscenza zero sono sempre coinvolte due parti:
+\begin{itemize}
+\item il dimostratore \textbf{Peggy}: l'entità che dimostra di possedere il segreto
+\item il verificatore \textbf{Victor}: l'entità che verifica la correttezza della prova
+\end{itemize}
+Peggy conosce la parola segreta per aprire la porta magica di una caverna, che si richiude automaticamente. La caverna ha la forma di un cerchio, con l'entrata su un lato e la porta magica che blocca l'altro lato (\ref{fig:peggy_victor_1}). Victor dice che la pagherà per il segreto, ma non fino a quando sarà sicuro che lei lo conosca veramente. Peggy dice che gli dirà il segreto, ma non prima di ricevere i soldi. Peggy deve dare quindi una dimostrazione a conoscenza zero. Pianificano quindi uno schema con il quale Peggy può provare di conoscere la parola senza dichiararla a Victor.
+\begin{figure}[htbp]
+	\centering%
+	\subfigure%
+	{\includegraphics[height=5cm, width=5cm, keepaspectratio]{Immagini/chiave_pubblica/peggy_victor_1.png}}
+	\caption{Storia di peggy e Victor\label{fig:peggy_victor_1}}
+\end{figure}
+Prima, Victor aspetta fuori dalla caverna mentre Peggy entra. Etichettiamo il sentiero sinistro e quello destro partendo dall'entrata con A e B. Peggy sceglie a caso uno dei due sentieri. Quindi, Victor entra nella caverna e grida il nome del sentiero che Peggy dovrà utilizzare per ritornare indietro, preso a caso. Se si ipotizza che lei conosca veramente
+la parola magica, è facile: apre la porta, se necessario, e ritorna attraverso il sentiero desiderato .È da notare che Victor non conosce il sentiero per il quale Peggy è entrata.
+\begin{figure}[htbp]
+	\centering%
+	\subfigure%
+	{\includegraphics[height=5cm, width=5cm, keepaspectratio]{Immagini/chiave_pubblica/peggy_victor_2.png}}
+	\caption{Storia di peggy e Victor\label{fig:peggy_victor_2}}
+\end{figure}
+\begin{figure}[htbp]
+	\centering%
+	\subfigure%
+	{\includegraphics[height=5cm, width=5cm, keepaspectratio]{Immagini/chiave_pubblica/peggy_victor_3.png}}
+	\caption{Storia di peggy e Victor\label{fig:peggy_victor_3}}
+\end{figure}
+Supponiamo che Peggy non conosca la parola. In questo scenario sarebbe in grado di tornare attraverso il sentiero chiamato se Victor avesse scelto il nome dello stesso sentiero per cui lei era entrata. Poiché Victor ha scelto A o B a caso, avrebbe il 50\% di probabilità di indovinare correttamente. Se i due ripetessero questo trucco molte volte, diciamo venti volte, una dopo l'altra, l'opportunità per Peggy di anticipare correttamente tutte le richieste di Victor diventerebbe statisticamente molto piccola (in virtù della probabilità di eventi indipendenti). Perciò, se Peggy appare in modo “affidabile” all'uscita
+chiamata da Victor, questo può concludere che molto probabilmente conosca davvero la parola segreta.
+\newline \newline
+Uno schema di autenticazione a conoscenza zero (\textbf{Zero Knowledge Authenication Scheme, ZKAS}) consiste in un'autenticazione che sfrutta una \textbf{ZKP}. Non si tratta di una tecnica deterministica, ma \textbf{probabilistica} (anche RSA in fondo è probabilistica). Devono poter essere rese arbitrariamente piccole le probabilità che:
+\begin{itemize}
+\item un dimostratore onesto fornisca una prova errata
+\item un verificatore onesto fornisca una verifica errata quando il dimostratore è onesto
+\item un dimostratore disonesto fornisca una prova corretta
+\end{itemize} 
+Uno schema di autenticazione a conoscenza zero deve soddisfare i seguenti \textbf{requisiti}: 
+\begin{itemize}
 \item[a.] ad ogni entità è associato un segreto privato $s$ e
 una chiave pubblica $k_{s}$, cioè una coppia $<s, k_{s}>$. Ovviamente, $k_{s}$ non deve esporre $s$;
 \item[b.] l'autenticazione consiste nel provare la conoscenza del segreto $s$;
@@ -599,12 +647,11 @@ una chiave pubblica $k_{s}$, cioè una coppia $<s, k_{s}>$. Ovviamente, $k_{s}$ 
 
 \subsection{ZKAS basato su MSR}
 
-Di seguito mostriamo un protocollo di autenticazione, estremamente efficiente, che sfrutta un problema difficile nell'ambito dell'aritmetica modulare. A rigore tale schema di autenticazione non è
-completamente a conoscenza zero, anche se nella pratica può considerarsi tale. \\
-Il problema che viene sfruttato è il problema della radice quadrata modulare (\textbf{Modular Square Root, MSR}): dati un numero intero semiprimo grande $n=pq$, con $p$ e $q$ numeri primi grandi, $m<n$ intero assegnato (avente una radice quadrata ordinaria non intera), trovare un numero intero $s$ tale che $s^2 \, mod \, n=m$ è un problema difficile almeno quanto fattorizzare un numero intero.
-Dunque, tale protocollo consiste dei seguenti passi: 
+Di seguito mostriamo un protocollo di autenticazione, estremamente efficiente, che sfrutta un problema difficile nell'ambito dell'aritmetica modulare. A rigore tale schema di autenticazione non è completamente a conoscenza zero, anche se nella pratica può considerarsi tale. 
+\newline \newline
+Il problema che viene sfruttato è il problema della \textbf{radice quadrata modulare} (\textbf{Modular Square Root, MSR}): dati un numero intero semiprimo grande $n=p \cdot q$, con $p$ e $q$ numeri primi grandi, $m<n$ intero assegnato (avente una radice quadrata ordinaria non intera), trovare un numero intero $s$ tale che $s^2 \, mod \, n=m$ è un problema difficile almeno quanto fattorizzare un numero intero. Dunque, tale protocollo consiste dei seguenti passi: 
 \begin{enumerate}
-\item \textbf{Generazione delle chiavi}. Peggy (il dimostratore) calcola la chiave pubblica $<n,v>$, dove $n=pq$ come in RSA, $v$ è un numero di cui Peggy conosce la radice quadrata modulare (ottenere $v$ è semplice, basta scegliere un numero random $s$ e porre $v = s^2 \, mod \, n$); $s$ è la chiave privata di Peggy da non rivelare; $<n,v>$ va divulgata a tutto il mondo.
+\item \textbf{Generazione delle chiavi}. Peggy (il dimostratore) calcola la chiave pubblica $<n,v>$, dove $n=p \cdot q$ come in RSA, $v$ è un numero di cui Peggy conosce la radice quadrata modulare (ottenere $v$ è semplice, basta scegliere un numero random $s$ e porre $v = s^2 \, mod \, n$); $s$ è la chiave privata di Peggy da non rivelare; $<n,v>$ va divulgata a tutto il mondo.
 \item \textbf{Autenticazione}. \begin{itemize}
 \item Peggy sceglie $k$ numeri random $r_{1},r_{2},..,r_{k}$;
 \item Per ogni $r_{i}$ invia a Victor $r_{i}^2 \, mod \, n$;
@@ -620,6 +667,6 @@ Dunque, tale protocollo consiste dei seguenti passi:
 	\caption{}
 \end{figure}
 
-Supponiamo che Fred voglia impersonare Peggy. Allora egli è in grado di rispondere in modo corretto agli $r_{i}^2$ che Victor etichetta con 0 (Fred può scegliere a suo piacimento gli $r_{i}$), ma non è in grado di rispondere agli $r_{i}^2$ etichettati con 1. In assenza di etichette 0, infatti, il protocollo si semplificherebbe: Peggy si limiterebbe ad inviare delle coppie $<r_{i}^2, sr_{i} \, mod \, n>$, tuttavia non si avrebbe più un protocollo a conoscenza zero, poiché Fred potrebbe usare una precedente sequenza inviata di Peggy ed impersonarla con successo. Invece, l'etichettatura scelta in modo casuale da Victor implica che Fred ha una probabilità del 50\% di
-rispondere in modo corretto ad ogni $r_{i}^2$. Fred potrebbe generarsi autonomamente gli $r_{i}$, ma in tal caso non saprebbe rispondere agli $r_{i}^2$ con etichetta 1 oppure potrebbe usare un insieme di $r_{i}^2$ etichettati in passato con 1 in una precedente autenticazione, ma allora non conoscerebbe i corrispondenti $r_{i}$ e non saprebbe rispondere nel caso in cui l'etichetta è 0. Se $k$ è sufficientemente grande la probabilità che Fred impersoni correttamente Peggy tende a 0. \\
+Supponiamo che Fred voglia impersonare Peggy. Allora egli è in grado di rispondere in modo corretto agli $r_{i}^2$ che Victor etichetta con 0 (Fred può scegliere a suo piacimento gli $r_{i}$), ma non è in grado di rispondere agli $r_{i}^2$ etichettati con 1. In assenza di etichette 0, infatti, il protocollo si semplificherebbe: Peggy si limiterebbe ad inviare delle coppie $<r_{i}^2, sr_{i} \, mod \, n>$, tuttavia non si avrebbe più un protocollo a conoscenza zero, poiché Fred potrebbe usare una precedente sequenza inviata di Peggy ed impersonarla con successo. Invece, l'etichettatura scelta in modo casuale da Victor implica che Fred ha una probabilità del 50\% di rispondere in modo corretto ad ogni $r_{i}^2$. Fred potrebbe generarsi autonomamente gli $r_{i}$, ma in tal caso non saprebbe rispondere agli $r_{i}^2$ con etichetta 1 oppure potrebbe usare un insieme di $r_{i}^2$ etichettati in passato con 1 in una precedente autenticazione, ma allora non conoscerebbe i corrispondenti $r_{i}$ e non saprebbe rispondere nel caso in cui l'etichetta è 0. Se $k$ è sufficientemente grande la probabilità che Fred impersoni correttamente Peggy tende a 0. 
+\newline \newline
 ZKAS basato su MSR è molto più efficiente di RSA. Infatti, assumendo $k = 30$, Peggy deve effettuare 45 operazioni modulari (30 quadrati più una media di 15 moltiplicazioni per $s$) e Victor deve effettuare lo stesso numero di operazioni di Peggy; usando RSA Peggy deve eseguire una esponenziazione modulare che consiste in una media di 768 moltiplicazioni modulari mentre Victor se la cava con 3 moltiplicazioni nel caso in cui $e = 3$.

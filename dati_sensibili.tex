@@ -3,7 +3,7 @@
 \section{Introduzione}
 Molti Database contengono \textbf{dati sensibili}. La definizione di dato sensibile, e la distinzione dal dato \textbf{personale}, in senso \textbf{giuridico}, è complessa, e dipende dal contesto legislativo in cui si valuta. In particolare in Italia il dato personale viene indicato come un'informazione che permette di identificare un individuo (anagrafica), mentre un dato sensibile rappresenta un'informazione su aspetti della vita privata dell'individuo (orientamento sessuale, opinione politica, credo religioso, etc.). \\
 
-Ai fini pratici della sicurezza informatica definiremo dati sensibili quei dati che \textbf{non dovrebbero essere resi pubblici}. L'identificazione dei dati sensibili dipende molto dal \textbf{database} e dalla sua specifica \underline{applicazione}. I due casi estremi di questa categorizzazione sono : 
+Ai fini pratici della sicurezza informatica definiremo dati sensibili quei dati che \textbf{non dovrebbero essere resi pubblici}. L'identificazione dei dati sensibili dipende molto dal \textbf{database} e dalla sua specifica \underline{applicazione}. I due casi estremi di questa categorizzazione sono: 
 \begin{itemize}
 \item \underline{Nessun} dato sensibile (ad es. il catalogo di una biblioteca)
 \item \underline{Tutti} dati sensibili (ad es. un database della difesa militare)
@@ -12,7 +12,7 @@ Questi sono i casi più semplici da gestire, in quanto si \underline{garantisce}
 
 \begin{figure}[htbp]
 	\centering
-	{\includegraphics[height=8cm, width=8cm, keepaspectratio]{Immagini/dati_sensibili/prot_dati_01.JPG}}
+	{\includegraphics[height=8cm, width=10cm, keepaspectratio]{Immagini/dati_sensibili/prot_dati_01.JPG}}
 	\caption{Esempio di una tabella Studente che contiene informazioni sugli studenti di una facoltà\label{fig:tabella_db}}
 \end{figure}
 
@@ -21,7 +21,7 @@ Prendiamo come esempio la tabella \textbf{Studente} di fig: \ref{fig:tabella_db}
 \begin{itemize}
 	\item \textbf{Sensibili per Contenuto}, in cui è il valore dell'attributo ad essere sensibile.
 	\item \textbf{Sensibili per Provenienza}, in questo caso è la fonte dei dati a necessitare riservatezza (e.g. messaggi di un informatore la cui identità segreta verrebbe compromessa se i dati venissero divulgati).
-	\item \textbf{Dichiarati Sensibili}, è lo stesso amministratore del sistema a dichiarare che i dati sono sensibili. (e.g.  donatore anonimo)
+	\item \textbf{Dichiarati Sensibili}, è lo stesso amministratore del sistema a dichiarare che i dati sono sensibili (e.g. donatore anonimo).
 \end{itemize}
 
 Le parti sensibili di un dato possono essere un singolo \textbf{attributo} di un record o un intero \textbf{record}. Inoltre la sensibilità di una parte potrebbe essere tale in senso assoluto o dipendere dal resto dei dati: ad esempio, la latitudine di una postazione segreta diventa sensibile se si conosce anche la longitudine, mentre lo stipendio di un dipendente è un dato sensibile a prescindere dal resto delle informazioni divulgate. \\
@@ -55,11 +55,17 @@ Esistono diverse modalità di divulgazione di un dato o insieme di dati:
 	\item \textbf{Limiti}: si rendono noti gli estremi tra cui varia un dato sensibile (superiore, \textbf{H}, e inferiore, \textbf{L}). Con una ricerca dicotomica si potrebbe arrivare a dedurre un valore molto prossimo a quello esatto. In certi casi, comunque, la semplice conoscenza del fatto che un valore superi o meno una certa soglia rappresenta una violazione alla sicurezza.
 	\item \textbf{Risultato Negativo}: a volte l'informazione risiede più che nel valore assoluto di un attributo, nel suo confronto con un altro valore. Sapere che un attributo è diverso da zero, ad esempio, potrebbe di per sé rappresentare una discreta quantità di informazione (se il numero di condanne di una persona non è zero, si sa che quest'ultima è stata condannata almeno una volta).
 	\item \textbf{Esistenza}: anche la sola conoscenza di esistenza di un attributo è sensibile (un responsabile del personale potrebbe desiderare che non si sappia che la durata delle interurbane dei dipendenti viene monitorata, quindi la scoperta del campo interurbane in una tabella con i dati del personale rivelerebbe dati sensibili)
-	\item \textbf{Valore Probabile}: tramite l'utilizzo di diverse query e incrociando i dati ottenuti si possono inferire informazioni non precise, ma attendibili, riguardo i valori di alcuni dati sensibili. Ad esempio, se conosciamo l'indirizzo di residenza di tizio, sappiamo che 4 persone risiedono nello stesso indirizzo, e che una persona che risiede in quell'indirizzo è iscritta al partito X possiamo dire che tizio è iscritto al partito X con una probabilità del 25 $\%$.
+	\item \label{par:val_prob} \textbf{Valore Probabile}: tramite l'utilizzo di diverse query e incrociando i dati ottenuti si possono inferire informazioni non precise, ma attendibili, riguardo i valori di alcuni dati sensibili. Ad esempio, se conosciamo l'indirizzo di residenza di tizio, sappiamo che 4 persone risiedono nello stesso indirizzo, e che una persona che risiede in quell'indirizzo è iscritta al partito X possiamo dire che tizio è iscritto al partito X con una probabilità del 25 $\%$.
 \end{itemize}
 
 \section{Inferenza}
-L'\textbf{Inferenza} è un metodo per dedurre o derivare dati sensibili a partire dai dati non sensibili a disposizione. Ricordando la tabella di fig. \ref{fig:tabella_db}, la query seguente rappresenta un \textbf{Attacco Diretto}, ovvero un tentativo diretto di accedere ad un dato sensibile:
+L'\textbf{Inferenza} è un metodo per dedurre o derivare dati sensibili a partire dai dati non sensibili a disposizione. Esistono due principali categorie di attacchi inferenziali:
+\begin{itemize}
+	\item Attacchi diretti
+	\item Attacchi indiretti
+\end{itemize}
+\subsection{Attacchi diretti}
+Ricordando la tabella di fig. \ref{fig:tabella_db}, la query seguente rappresenta un attacco diretto, ovvero un tentativo diretto di accedere ad un dato sensibile:
 
 \begin{algorithm}
 \begin{lstlisting}[caption={Query che sfrutta inferenza per ottenere dati sensibili e viene bloccata}]
@@ -81,11 +87,12 @@ WHERE (Sesso = M AND Droghe = 1)
 \end{lstlisting}
 \end{algorithm}
 
-Per scovare l'accesso improprio ai dati, il DBMS dovrebbe capire che ci sono solo due valori ammessi per il campo Sesso e che non c'è alcuna tupla con valore Dormitorio uguale ad 'Ayres'. Per limitare gli Attacchi Diretti è applicata, alle volte, una regola \textit{n elementi sul k percento}, che consiste nel non restituire il risultato di una query se un piccolo numero di elementi divulgati costituisce una grande percentuale del valore restituito (nel caso mostrato come esempio nel paragrafo relativo alla divulgazione per valore probabile, fare una query che richiede i residenti ad un dato indirizzo ed iscritti ad un partito dà come risultato un unico elemento che rappresenta il 100\%).
+Per scovare l'accesso improprio ai dati, il DBMS dovrebbe capire che ci sono solo due valori ammessi per il campo Sesso e che non c'è alcuna tupla con valore Dormitorio uguale ad 'Ayres'. Per limitare gli Attacchi Diretti è applicata, alle volte, una regola \textit{n elementi sul k percento}, che consiste nel non restituire il risultato di una query se un piccolo numero di elementi divulgati costituisce una grande percentuale del valore restituito (nel caso mostrato come esempio nel paragrafo \ref{par:val_prob} relativo alla divulgazione per valore probabile, fare una query che richiede i residenti ad un dato indirizzo ed iscritti ad un partito dà come risultato un unico elemento che rappresenta il 100\%).
 
-Un attacco inferenziale \textbf{Indiretto} si basa sulla deduzione di dati sensibile a partire da uno o più dati statistici intermedi (somme, medie o conteggi, spesso divulgate da organizzazioni che mirano alla diffusione di informazioni aggregate e detengono dati sensibili di molto soggetti). In seguito descriveremo diversi tipi di attacchi inferenziali indiretti.
+\subsection{Attacchi Indiretti}
+Un attacco inferenziale indiretto si basa sulla deduzione di dati sensibile a partire da uno o più dati statistici intermedi (somme, medie o conteggi, spesso divulgate da organizzazioni che mirano alla diffusione di informazioni aggregate e detengono dati sensibili di molto soggetti). In seguito descriveremo diversi tipi di attacchi inferenziali indiretti.
 
-\subsection{Somma e Conteggio}
+\subsubsection{Somma e Conteggio}
 
 Una query del genere \ref{query:neg} potrebbe sembrare innocua dato che restituisce solo valori aggregati, ma il risultato è una \textbf{Divulgazione di Tipo Negativo}, in quanto è possibile dedurre dal valore nullo nel dormitorio Holmes che le donne in quel dormitorio non ricevono aiuti finanziari (che è un dato decretato sensibile). 
 
@@ -119,9 +126,9 @@ GROUP BY Sesso,Dormitorio
 
 Inoltre, il conteggio può essere combinato con la somma per produrre risultati ancora più rivelatori. Il risultato della query di \textbf{Attacco di Somma} \ref{query:neg} combinata con la query di \textbf{Attacco di Conteggio} \ref{query:count} rivela che i due uomini nel dormitorio Holmes e West ricevono un aiuto finanziario di 5000 e 4000.
 
-\subsection{Media}
+\subsubsection{Media}
 
-La media può permettere di ottenere informazioni esatte se utilizzate in combinazione con il conteggio: se riesco ad ottenere la media su un insieme formato da un solo elemento, riesco a conoscere il valore esatto per quell’elemento. Per ovviare a questa minaccia a volte i DBMS implementano meccanismi di sicurezza che impediscono di dilvugare la media calcolata su un numero di elementi al di sotto di una certa soglia. Tuttavia, usati in modo opportuno, gli attacchi con media riescono anche ad aggirare eventuali controlli sulla numerosità dell'insieme su cui viene calcolata. Ad esempio, supponiamo che la media non venga divulgata se la somma degli elementi su cui è calcolata è pari ad 1 (legge interna del DBMS). 
+La media può permettere di ottenere informazioni esatte se utilizzate in combinazione con il conteggio: se riesco ad ottenere la media su un insieme formato da un solo elemento, riesco a conoscere il valore esatto per quell'elemento. Per ovviare a questa minaccia a volte i DBMS implementano meccanismi di sicurezza che impediscono di dilvugare la media calcolata su un numero di elementi al di sotto di una certa soglia. Tuttavia, usati in modo opportuno, gli attacchi con media riescono anche ad aggirare eventuali controlli sulla numerosità dell'insieme su cui viene calcolata. Ad esempio, supponiamo che la media non venga divulgata se la somma degli elementi su cui è calcolata è pari ad 1 (legge interna del DBMS). 
 
 \begin{algorithm}
 \begin{lstlisting}[caption={Query di Media per ottenere informazioni sugli studenti del dormitorio Holmes \label{query:avg2}}] 
@@ -167,7 +174,7 @@ A questo punto sappiamo che nel dormitorio Holmes risiedono 3 persone, due delle
 
 Tramite la procedura illustrata si trova che $ a_{3} = 5000 $, ovvero l'importo esatto dell'unico maschio che risiede nel dormitorio Holmes
 
-\subsection{Attacchi di Tracker}
+\subsubsection{Attacchi di Tracker}
 Abbiamo visto che una delle tecniche di protezione dall'inferenza consiste nel non divulgare i dati se un \textbf{piccolo numero di elementi fornisce molta informazione}; è possibile aggirare questa limitazione effettuando più query lecite e combinandole insieme. Vediamolo con un esempio: esaminiamo la query \ref{query:tracker1}.
 
 \begin{algorithm}
@@ -219,7 +226,7 @@ WHERE Sesso = 'F'
 \end{lstlisting}
 \end{algorithm}
 
-\subsection{Vulnerabilità del Sistema Lineare}
+\subsubsection{Vulnerabilità del Sistema Lineare}
 L'attacco di Tracker è un caso specifico di una vulnerabilità più generica in cui sfruttando l'algebra, la logica e un po' di fortuna si riesce ad ottenere tramite diverse query dei valori protetti. Nell'esempio~\ref{query:tracker1} la query protetta è del tipo:
 
 \begin{equation}
@@ -246,7 +253,7 @@ $q_{5} = c_{8} + c_{3}$
 \\
 Nessuna delle query rivela un qualsiasi valore $c_{i}$ ma, risolvendo il sistema, possiamo conoscerli tutti.
 
-\subsection{Aggregazione}
+\subsubsection{Aggregazione}
 L'aggregazione è un altro particolare tipo di inferenza, in cui si cerca di ottenere dati sensibili mettendo insieme dati non sensibili (ad esempio il nome di un impiegato e il suo stipendio non sono dati sensibili se considerati separatamente. La loro combinazione invece si). \\
 
 Evitare l'aggregazione è difficile perché bisogna tenere conto delle informazioni già in possesso dell'utente. Se un utente conosce il nome di un dipendente non devo, ad esempio, comunicargli lo stipendio e viceversa. Purtroppo tenere traccia di tutte le informazioni in possesso ad ogni utente è proibitivo. Inoltre utenti diversi potrebbero condividere tutti le informazioni in loro possesso, aiutandosi a vicenda ad aggregare i dati al fine di ricavare informazioni sensibili.
@@ -342,7 +349,7 @@ Una volta individuati due insiemi $U$ e $V$, soddisfacenti le condizioni I, II, 
 \item $m_{V}$ = media degli stipendi dei dipendenti in $V$;
 \item $c_{V}$ = numero dei dipendenti in $V$;
 \end{itemize}
-si ottiene che: $stipendio_{Mister X} = m_{U} \times c_{U} - m_{V} \times c_{V}$.\\
+si ottiene che: $stipendio_{Mister X} = m_{U} \cdot c_{U} - m_{V} \cdot c_{V}$.\\
 \subsubsection{Individuazione di $U$ e $V$}
 A questo punto si considerino i seguenti insiemi:
 \begin{itemize}

@@ -589,10 +589,8 @@ Di seguito (\figurename~\ref{fig:authex}), mostriamo un esempio di procedura che
 \end{figure} 
 
 \section{Zero Knowledge Proof System}
-
-La dimostrazione della conoscenza di un segreto è alla base di molte tecniche di autenticazione. Nelle tecniche di autenticazione a chiave segreta, il segreto è appunto la chiave condivisa tra i due principal. Nei protocolli a chiave pubblica il segreto è noto solo ad un principal, il quale deve dimostrare all'altro che detiene il segreto senza fornire delle informazioni che possano consentire ad un impostore di eseguire la prova. 
-\newline \newline
-Una dimostrazione quindi è a \textit{conoscenza zero} (\textbf{Zero Knowledge Proof, ZKP}) se permette di provare la conoscenza di un segreto, che deve essere associato alla chiave pubblica, senza fornire delle informazioni che permettano ad un impostore di eseguire la prova: 
+La dimostrazione della conoscenza di un segreto è alla base di molte tecniche di autenticazione. Nelle tecniche di autenticazione a chiave segreta, il segreto è appunto la chiave condivisa tra i due principal. Nei protocolli a chiave pubblica il segreto è la chiave privata (associata alla chiave pubblica) nota solo ad un principal. \\
+Una dimostrazione quindi è a \textit{conoscenza zero} (\textbf{Zero Knowledge Proof, ZKP}) se permette di provare la conoscenza di un segreto senza fornire delle informazioni che permettano ad un impostore di eseguire la prova: 
 \begin{itemize}
 \item la prova non deve rivelare il segreto;
 \item la prova non deve rivelare eventuali informazioni, che pur non essendo il segreto, consentano comunque ad un impostore di effettuare la prova.
@@ -667,6 +665,6 @@ Il problema che viene sfruttato è il problema della \textbf{radice quadrata mod
 	\caption{}
 \end{figure}
 
-Supponiamo che Fred voglia impersonare Peggy. Allora egli è in grado di rispondere in modo corretto agli $r_{i}^2$ che Victor etichetta con 0 (Fred può scegliere a suo piacimento gli $r_{i}$), ma non è in grado di rispondere agli $r_{i}^2$ etichettati con 1. In assenza di etichette 0, infatti, il protocollo si semplificherebbe: Peggy si limiterebbe ad inviare delle coppie $<r_{i}^2, sr_{i} \, mod \, n>$, tuttavia non si avrebbe più un protocollo a conoscenza zero, poiché Fred potrebbe usare una precedente sequenza inviata di Peggy ed impersonarla con successo. Invece, l'etichettatura scelta in modo casuale da Victor implica che Fred ha una probabilità del 50\% di rispondere in modo corretto ad ogni $r_{i}^2$. Fred potrebbe generarsi autonomamente gli $r_{i}$, ma in tal caso non saprebbe rispondere agli $r_{i}^2$ con etichetta 1 oppure potrebbe usare un insieme di $r_{i}^2$ etichettati in passato con 1 in una precedente autenticazione, ma allora non conoscerebbe i corrispondenti $r_{i}$ e non saprebbe rispondere nel caso in cui l'etichetta è 0. Se $k$ è sufficientemente grande la probabilità che Fred impersoni correttamente Peggy tende a 0. 
-\newline \newline
+Supponiamo che Fred voglia impersonare Peggy. L'etichettatura scelta in modo casuale da Victor implica che Fred ha una probabilità del 50\% di rispondere in modo corretto ad ogni $r_{i}^2$. Fred potrebbe generarsi autonomamente gli $r_{i}$, ma in tal caso non saprebbe rispondere agli $r_{i}^2$ con etichetta 1 oppure potrebbe usare un insieme di $r_{i}^2$ etichettati in passato con 1 in una precedente autenticazione, ma allora non conoscerebbe i corrispondenti $r_{i}$ e non saprebbe rispondere nel caso in cui l'etichetta è 0. Se $k$ è sufficientemente grande la probabilità che Fred impersoni correttamente Peggy tende a 0. \\
+In assenza di etichette 0 il protocollo si semplificherebbe: Peggy si limiterebbe ad inviare delle coppie $<r_{i}^2, sr_{i} \, mod \, n>$, tuttavia non si avrebbe più un protocollo a conoscenza zero, poiché Fred potrebbe usare una precedente sequenza inviata di Peggy ed impersonarla con successo. \\ \\
 ZKAS basato su MSR è molto più efficiente di RSA. Infatti, assumendo $k = 30$, Peggy deve effettuare 45 operazioni modulari (30 quadrati più una media di 15 moltiplicazioni per $s$) e Victor deve effettuare lo stesso numero di operazioni di Peggy; usando RSA Peggy deve eseguire una esponenziazione modulare che consiste in una media di 768 moltiplicazioni modulari mentre Victor se la cava con 3 moltiplicazioni nel caso in cui $e = 3$.

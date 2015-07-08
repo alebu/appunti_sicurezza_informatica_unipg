@@ -28,7 +28,7 @@ specifically in a blacklist. This type of configuration is more flexible in ensu
 \begin{itemize}
 \item \textbf{packet filters (stateless)}: If a packet matches the packet filter's set of rules, the packet filter will drop or accept it. 
 \item \textbf{"stateful" filters}: It maintains records of all connections passing through it and can determine if a packet is either the start of a new connection, a part of an existing connection, or is an invalid packet.
-\item \textbf{application layer}: It works like a proxy it can “understand” certain applications and protocols. It may inspect the contents of the traffic, blocking what it views as inappropriate content (i.e. websites, viruses, vulnerabilities, ...).
+\item \textbf{application layer}: It works like a proxy so it can “understand” certain applications and protocols. It may inspect the contents of the traffic, blocking what it views as inappropriate content (i.e. websites, viruses, vulnerabilities, ...).
 \end{itemize}
 \subsubsection{Stateless firewalls (Packet filters)}
 A stateless firewall doesn’t maintain any remembered context (or “state”) with respect to the packets it is processing. Instead, it treats each packet attempting to travel through it in isolation without considering packets that it has processed previously. \\
@@ -50,7 +50,7 @@ Some definition:
 \item \textbf{Intrusion prevention}: The process of both detecting intrusion activities and managing automatic responsive actions throughout the network
 \end{itemize}
 \subsection{IDS Components}
-The IDS manager compiles data from the IDS sensors to determine if an intrusion has occurred. This determination is based on a set of site policies, which are rules and conditions that define probable intrusions. If an IDS manager detects an intrusion, then it sounds an alarm.
+The \textbf{IDS manager} compiles data from the \textbf{IDS sensors} to determine if an intrusion has occurred. This determination is based on a set of site policies, which are rules and conditions that define probable intrusions. If an IDS manager detects an intrusion, then it sounds an alarm.
 \begin{figure}[htbp]
 	\centering
 	\includegraphics[width=0.5\linewidth]{Immagini/firewalls/IDS.png}
@@ -90,7 +90,7 @@ suspected.
 A profile is built, which is a statistical representation of the typical ways that a user acts or a host is used; hence, it can be used to determine when a user or host is acting in highly unusual, anomalous ways.
 Once a user profile is in place, the IDS manager can determine thresholds for anomalous behaviors and then sound an alarm any time a user or host deviates significantly from the stored profile for that person or machine.
 \section{Cross Site Scripting (XSS)}
-Cross-site scripting is a type of computer security vulnerability typically found in Web applications. XSS enables attackers to inject client-side script into Web pages viewed by other users. It can be used for many types of attack: phishing, hijacking, changing of user settings, cookie theft/poisoning, false advertising , execution of code on the client, etc. \\
+Cross-site scripting is a type of computer security vulnerability typically found in Web applications. XSS enables attackers to \textbf{inject client-side script} into Web pages viewed by other users. It can be used for many types of attack: phishing, hijacking, changing of user settings, cookie theft/poisoning, false advertising , execution of code on the client, etc. \\
 Methods for injecting malicious code are of three types:
 \begin{itemize}
 	\item \textbf{DOM-based (“type 0”)}: The attacker stores the malicious code locally in a standard object model for representing HTML or XML called the Document Object Model or DOM for short.

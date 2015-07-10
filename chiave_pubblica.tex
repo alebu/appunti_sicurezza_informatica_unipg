@@ -54,7 +54,7 @@ Sia m (< 10) un qualche messaggio. L'addizione di una costante k mod 10 può ess
 \item ogni cifra decimale \textbf{m} viene mappata in una diversa cifra decimale \textbf{c = (m + k) mod 10} in modo \textbf{reversibile}.
 \item \textbf{k} è la \textbf{chiave segreta}; chiaramente si tratta di un pessimo cifrario (è il cifrario di Cesare)
 \item la decifratura consiste nel sottrarre k mod 10, ovvero va sottratto k e se il risultato è minore di 0 va aggiunto 10
-\item come nell’aritmetica ordinaria, sottrarre k equivale a sommare -k, cioè l’inverso additivo di k
+\item come nell'aritmetica ordinaria, sottrarre k equivale a sommare -k, cioè l'inverso additivo di k
 \end{itemize}
 
 \paragraph{Inverso additivo modulo n}
@@ -62,7 +62,7 @@ Un inverso additivo di k è un numero che sommato modulo n a k dà 0; formalment
 \begin{equation}
 -k \mid -k \in \mathbb{N},\; -k < n,\; (k + (-k)) \, mod \, n = 0 \, mod \, n
 \end{equation}
-Ad esempio, l’inverso additivo di 4 è 6, perché 4 + 6 = 0 nell'aritmetica modulo 10.
+Ad esempio, l'inverso additivo di 4 è 6, perché 4 + 6 = 0 nell'aritmetica modulo 10.
 
 \paragraph{Moltiplicazione modulare}
 Per quanto riguarda la moltiplicazione, consideriamo anche in questo caso l'aritmetica modulo 10, facendo riferimento alla tabella \ref{fig:molt_mod}. Anche in questo caso l'operazione di moltiplicazione per una costante (come vedremo, per determinate costanti) può essere utilizzata per implementare una cifratura a chiave segreta.
@@ -76,7 +76,7 @@ Il problema, in questo caso, consiste nella possibilità di rendere invertibile 
 \newline \newline
 In altre parole, poiché la decifratura può essere eseguita moltiplicando per l'inverso moltiplicativo di k, la possibilità di decifrare dipende dall'esistenza di tale inverso. Mentre l'inverso additivo di un numero k esiste sempre, stesso discorso non può essere fatto per l'inverso moltiplicativo. Approfondiamo questo concetto. 
 \newline \newline
-Si noti che nell’aritmetica ordinaria l'inverso moltiplicativo di $k$ è $\frac{1}{k}$, che in generale è una quantità frazionaria. Nell'aritmetica modulare si considerano solo numeri interi.
+Si noti che nell'aritmetica ordinaria l'inverso moltiplicativo di $k$ è $\frac{1}{k}$, che in generale è una quantità frazionaria. Nell'aritmetica modulare si considerano solo numeri interi.
 
 \paragraph{Inverso moltiplicativo modulo n}
 Definiamo l'inverso moltiplicativo di $k$, indicato con $k^{-1}$, come quel numero che moltiplicato per $k$ dà 1, cioè:
@@ -151,7 +151,7 @@ Analogamente a quanto visto per addizione e moltiplicazione modulare, quando l'e
 	\centering%
 	\subfigure%
 	{\includegraphics[height=7cm, width=7cm, keepaspectratio]{Immagini/chiave_pubblica/exp_mod.png}}
-	\caption{Tabella esponenziazione modulo 10. E' facile vedere come l'esponenziazione per 3 (quarta colonna) possa considerarsi una cifratura, poiché determina un mescolamento dell’input. L'esponenziazione per 2, invece, no: alcuni input scompaiono (non è iniettiva) \label{fig:exp_mod}} 	
+	\caption{Tabella esponenziazione modulo 10. E' facile vedere come l'esponenziazione per 3 (quarta colonna) possa considerarsi una cifratura, poiché determina un mescolamento dell'input. L'esponenziazione per 2, invece, no: alcuni input scompaiono (non è iniettiva) \label{fig:exp_mod}} 	
 \end{figure}
 \newline \newline
 Esaminando la tabella di esponenziazione mod 10 in figura \ref{fig:exp_mod} si nota un periodicità: per ogni i > 0, le colonne i e i + 4 coincidono, cioè:
@@ -160,11 +160,15 @@ x^i \; mod \; 10 = x^{i + 4} \; mod \; 10, \quad \forall i>0
 \end{equation}
 In effetti, si può dimostrare il seguente risultato: sia $n > 1$ un intero privo di quadrati (cioè dove non compaiono fattori al quadrato nella sua scomposizione in fattori primi), detto anche \textbf{square free}, allora per ogni $y > 0$, si ha: 
 \begin{equation}
-x^y \, mod \, n = x^{(y + \varphi(n) )} \, mod \, n
+x^y \, mod \, n = x^{(y + k\varphi(n) )} \, mod \, n
 \end{equation} 
-Dal precedente risultato segue che, se $ y \, mod \, \varphi(n) = 1 \, mod \, \varphi(n) $, ovvero se $y = 1 + k \varphi(n) $, con $k \in \mathbb{Z}$, si ha:
+Dal precedente risultato segue che dato un numero $b = y + k\varphi(n)$ vale la seguente catena di uguaglianze:
+\[
+x^{b} \, mod \, n = x^{y} \, mod \, n = x^{b \, mod \, \varphi(n)} \, mod \, n
+\]
+Nel caso in cui $ b \, mod \, \varphi(n) = 1 \, mod \, \varphi(n) $, ovvero se $b = 1 + k \varphi(n) $, con $k \in \mathbb{Z}$, si ha:
 \begin{equation}
-x^y \, mod \, n = x \, mod \, n
+x^b \, mod \, n = x \, mod \, n
 \end{equation}
 Tale risultato è sfruttato dall'algoritmo RSA.
 
@@ -203,8 +207,12 @@ m<n \Rightarrow \, m \, mod \, n\,=\,n
 \begin{equation} \label{eq:eff_2}
 (x^a \, mod \, n)^b \, mod \, n \, =  (x^{a})^b \, mod \, n =  \, x^{ab} \, mod \, n
 \end{equation}
-E, poiché $d$ è l'inverso moltiplicativo di $e$:
 \begin{equation} \label{eq:eff_3}
+	x^{b} \, mod \, n = x^{b \, mod \, \varphi(n)} \, mod \, n
+\end{equation}
+
+E, poiché $d$ è l'inverso moltiplicativo di $e$:
+\begin{equation} \label{eq:eff_4}
 (e \cdot d) \, mod \, \varphi(n) = 1
 \end{equation}
 Allora, poiché:
@@ -215,9 +223,9 @@ Posso esprimere m in questo modo:
 \begin{equation}
 m=D(PR,c) = c^d \, mod \, n = (m^e \, mod \, n)^d \, mod \, n
 \end{equation}
-che, per la \ref{eq:eff_2} e la \ref{eq:eff_3}, diventa:
+che, per la \ref{eq:eff_2}, la \ref{eq:eff_3} e la \ref{eq:eff_4}, diventa:
 \begin{equation}
-m =  m^{ed} \, mod \, n = m^{1 \, mod \, \phi(n)} \, mod \, n = m \, mod \, n
+m =  m^{ed} \, mod \, n = x^{ed \, mod \, \varphi(n)} \, mod \, n = m^{1 \, mod \, \phi(n)} \, mod \, n = m \, mod \, n
 \end{equation}
 e, infine, utilizzando la \ref{eq:eff_1} si ottiene, come volevasi dimostrare:
 \begin{equation}
@@ -433,17 +441,17 @@ Diffie-Hellman è realmente usato per stabilire una chiave segreta condivisa in 
 \paragraph{Precondizione}
 Alice e Bob condividono due numeri $p$ e $g$, dove $p$ è un numero primo grande e $g$ radice primitiva di $p$. $p$ e $g$ sono noti in anticipo e possono essere resi di dominio pubblico in una repository accessibile sia da Alice che da Bob, oppure possono essere generati dall'iniziatore della comunicazione, diciamo Alice, e trasmessi a Bob nel messaggio che gli invierà;
 \paragraph{Fase 0}
-La fase 0 viene eseguita dall'iniziatore della comunicazione qualora i numeri $p$ e $g$ non siano pubblici: Alice genera (o estrae da un suo archivio) una coppia di numeri $p$ e $g$ tali da soddisfare le proprietà sopra elencate; $p$ e $g$ possono essere subito inviati a Bob oppure possono essere trasmessi nella fase 3a.
+La fase 0 viene eseguita dall'iniziatore della comunicazione qualora i numeri $p$ e $g$ non siano pubblici: Alice genera (o estrae da un suo archivio) una coppia di numeri $p$ e $g$ tali da soddisfare le proprietà sopra elencate; $p$ e $g$ possono essere subito inviati a Bob oppure possono essere trasmessi nella Fase 3A.
 \paragraph{Fasi 1 - 2 - 3}
 \begin{enumerate}
-\item [1A.] Generazione del segreto privato $s_{A}$: Alice (iniziatore comunicazione) genera un numero random $s_{A}<p$ di 512 bit, che non verrà mai inviato a Bob ($s_A$ \textbf{non} è la chiave condivisa). Successivamente calcola $T_{A}=g^{s_{A}} \, mod \,p$ (Fase 2A) e lo invia (su una rete insicura) a Bob (Fase 3A).
-\item [2B.] Generazione del segreto privato $s_{B}$: Bob genera $s_{B}<p$ di 512 bit, che non verrà mai inviato ad Alice ($s_B$ \textbf{non} è la chiave condivisa). Successivamente calcola $T_{B}=g^{s_{B}} \, mod \, p$ (Fase 2B) e lo invia in rete ad Alice (Fase 3B).
+\item [A.] Generazione del segreto privato $s_{A}$: Alice (iniziatore comunicazione) genera un numero random $s_{A}<p$ di 512 bit, che non verrà mai inviato a Bob (Fase 1, N.B. $s_A$ \textbf{non} è la chiave condivisa). Successivamente calcola $T_{A}=g^{s_{A}} \, mod \,p$ (Fase 2) e lo invia (su una rete insicura) a Bob (Fase 3).
+\item [B.] Generazione del segreto privato $s_{B}$: Bob genera $s_{B}<p$ di 512 bit, che non verrà mai inviato ad Alice (Fase 1, N.B. $s_B$ \textbf{non} è la chiave condivisa). Successivamente calcola $T_{B}=g^{s_{B}} \, mod \, p$ (Fase 2) e lo invia in rete ad Alice (Fase 3).
 \end{enumerate}
 Si noti che $T_A$ e $T_B$ possono essere rivelati a tutto il mondo senza inficiare la sicurezza dell'algoritmo.
 \paragraph{Fase 4}
 \begin{enumerate}
-\item [4A.] Alice calcola $K_{AB}=T_{B}^{s_{A}} \, mod \,p$;
-\item [4B.] Bob calcola $K_{BA}=T_{B}^{s_{B}} \, mod \, p$;
+\item [A.] Alice calcola $K_{AB}=T_{B}^{s_{A}} \, mod \,p$;
+\item [B.] Bob calcola $K_{BA}=T_{B}^{s_{B}} \, mod \, p$;
 \end{enumerate}
 L'aritmetica modulare garantisce che $K_{AB}=K_{BA}$. Infatti si ha:
 \begin{equation}

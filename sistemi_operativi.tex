@@ -38,7 +38,7 @@ Per la definizione di password robuste a tali attacchi vanno seguite delle ben d
 \end{itemize}
 Un esempio di password robusta è: "Voglio compr@re 11 Cani!": per scoprire questa password con un attacco brute-force in 60 giorni dovrei disporre di un computer in grado di generare circa $3,86 \cdot 10^{44} PW/sec$. Per rendere la struttura ancora più sicura si può impostare una scadenza alla password.
 \subsection{Password Salt}
-Il \textbf{Salt} consiste nell'aggiunta di bit random all'input di una funzione hash (o di un algoritmo di crittografia) al fine di aumentare la randomicità dell'output. Nel caso dell'autenticazione è possibile associare un numero random all'userID dell'utente, seguendo la forma: \newline \newline
+Il \textbf{Salt} consiste in una stringa di bit random da concatenare all'input di una funzione hash (o di un algoritmo di crittografia) al fine di aumentare la randomicità dell'output. Nel caso dell'autenticazione è possibile associare un numero random all'userID dell'utente, seguendo la forma: \newline \newline
 \textbf{salt = numero random + userID} \newline \newline
 \begin{figure}[htbp]
 	\centering%

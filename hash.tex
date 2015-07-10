@@ -140,14 +140,14 @@ Una terza stima ancor più corretta si può ottenere utilizzando la modalità di
 \end{itemize}
 Poiché:
 \begin{equation}
-P_{i^{*}} = \frac{\text{numero di hash diversi da } h(m_i)}{\text{numero di hash}} = \frac{k - (i - 1)}{k} \quad \forall i = 1,2,...,N
+P_{i^{*}} = \frac{\text{numero di valori che può assumere } h(m_i)}{\text{numero di (valori) hash}} = \frac{k - (i - 1)}{k} \quad \forall i = 1,2,...,N
 \end{equation}
 Allora:
 \begin{equation}
 P^{*}= \prod_{i=2}^N P_{i^{*}} = \prod_{i=2}^N \frac{k - (i - 1)}{k} = \frac{1}{k^{N - 1}} \cdot \prod_{i=2}^N (k - (i - 1)) = \frac{1}{k^{N - 1}} \cdot \frac{(k - 1)!}{(k - N)!} 
 \end{equation}
 \begin{equation}
-P^{*} =  \frac{1}{k^{N}} \cdot \frac{k!}{(k - N)!} =  \frac{N!}{k!} \cdot \binom {k}{N}
+P^{*} =  \frac{1}{k^{N}} \cdot \frac{k!}{(k - N)!} =  \frac{N!}{k^{N}} \cdot \binom {k}{N}
 \end{equation}
 L'ultimo valore trovato rappresenta la stima esatta di $P^{*}$. Si osservi che tale valore può essere approssimato:
 \begin{equation}
@@ -166,7 +166,7 @@ Considerando un gruppo di N persone, qual è la probabilità che ci siano due pe
 \end{itemize}
 Allora:
 \begin{equation}
-P = \frac{N!}{k!} \cdot \binom {k}{N}
+P = 1 - \frac{N!}{k^{N}} \cdot \binom {k}{N}
 \end{equation}
 
 \section{Resistenza alle collisioni} \label{par:collisioni}

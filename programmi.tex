@@ -42,6 +42,7 @@ Di seguito sono riportate alcune di queste classi (saranno trattate solo quelle 
 \end{itemize}
 
 \subsection{Mediazione Incompleta}
+Si ha una mediazione incompleta quando un programma espone alcuni dati sensibili in maniera incontrollata. Tale vulnerabilità si verifica principalmente nel caso degli URL web che espongono i dati sensibili al loro interno. \\ \\
 Prendiamo ad esempio un sito Web, il cui indirizzo è:
  http://www.somesite.com/subpage/
   userinput.asp?param1=(808)555-1212\&parm2=2009Jan17.
@@ -60,9 +61,10 @@ Cosa accadrebbe se fosse specificata un altra data? Potrei inserire dei comandi 
 \subsection{Scarto fra tempo di controllo e tempo di utilizzo}
 Per migliorare l'efficienza i processori e sistemi operativi moderni possono cambiare l'ordine di esecuzioni di istruzioni e procedure. Ad esempio l'esecuzione di istruzioni consecutive di una procedura possono essere inframezzate da istruzioni di altre procedure (multi-tasking).
 \newline
-La falla \textbf{TOCTTOU}(Time Of Check To Time Of Use) è dovuta allo scarto di tempo tra la verifica dell'autorizzazione a compiere un azione e l'esecuzione dell'azione stessa. Se i dati di autorizzazione non vengono utilizzati direttamente e, nell'attesa di essere utilizzati, sono disponibili per la modifica, allora si verifica la falla.
-\paragraph{Esempio} 
+La falla \textbf{TOCTTOU}(Time Of Check To Time Of Use) è dovuta allo scarto di tempo tra la verifica dell'autorizzazione a compiere un azione e l'esecuzione dell'azione stessa. Se i dati di autorizzazione non vengono utilizzati immediatamente e, nell'attesa di essere utilizzati, sono disponibili per la modifica, allora si verifica la falla.
+\paragraph{Esempio 1} 
 Se una persona compra una statua che costa 100 \officialeuro, l'acquirente estrae 5 banconote da 20 \officialeuro, le conta davanti al venditore e le lascia sul tavolo. Quando il venditore si gira e prende la statua l'acquirente riprende una banconota, i due finiscono la transazione e l'acquirente esce dal negozio.
+\paragraph{Esempio 2}
 Lo stesso, sostanzialmente, può accadere con la richiesta e il rilascio di permessi di accesso ai file. Nel mentre che un permesso viene accordato può essere cambiato dall'entità che lo ha generato, permettendo operazioni negate. Per evitare la falla sarebbe necessario utilizzare i dati di permesso immediatamente o evitare di esporli durante l'attesa dell'utilizzo, se ciò non fosse possibile si potrebbe aggiungere un checksum ai dati di permesso che l'entità emittente possa verificare in modo da poter rilevare modifiche. \\ \\
 Ognuna delle tre falle precedenti è abbastanza grave singolarmente, tuttavia l'aggressore intelligente utilizza le falle come mattoni per la costruzione di un attacco complesso.
 Per questo motivo occorre conoscere e proteggersi anche dalle falle più semplici, anche le più innocue.

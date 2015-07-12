@@ -4,6 +4,13 @@ Istruzioni collaborazione appunti:
 
 Precisazioni:
 
+Per tutti:
+
+- Modalità operative (cap. 3): ho aggiunto una seconda versione della stima dei tentativi 
+  per l'attacco a DES doppio. Questa nuova stima è completamente personale (o meglio, 
+  l'abbiamo elaborata insieme io ed Elisa) quindi vi pregherei di darmi un feedback al 
+  riguardo.
+
 Per enrico:
 
  - Crittografia a chiave pubblica:

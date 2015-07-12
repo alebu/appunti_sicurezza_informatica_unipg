@@ -140,14 +140,14 @@ Una terza stima ancor più corretta si può ottenere utilizzando la modalità di
 \end{itemize}
 Poiché:
 \begin{equation}
-P_{i^{*}} = \frac{\text{numero di hash diversi da } h(m_i)}{\text{numero di hash}} = \frac{k - (i - 1)}{k} \quad \forall i = 1,2,...,N
+P_{i^{*}} = \frac{\text{numero di valori che può assumere } h(m_i)}{\text{numero di (valori) hash}} = \frac{k - (i - 1)}{k} \quad \forall i = 1,2,...,N
 \end{equation}
 Allora:
 \begin{equation}
 P^{*}= \prod_{i=2}^N P_{i^{*}} = \prod_{i=2}^N \frac{k - (i - 1)}{k} = \frac{1}{k^{N - 1}} \cdot \prod_{i=2}^N (k - (i - 1)) = \frac{1}{k^{N - 1}} \cdot \frac{(k - 1)!}{(k - N)!} 
 \end{equation}
 \begin{equation}
-P^{*} =  \frac{1}{k^{N}} \cdot \frac{k!}{(k - N)!} =  \frac{N!}{k!} \cdot \binom {k}{N}
+P^{*} =  \frac{1}{k^{N}} \cdot \frac{k!}{(k - N)!} =  \frac{N!}{k^{N}} \cdot \binom {k}{N}
 \end{equation}
 L'ultimo valore trovato rappresenta la stima esatta di $P^{*}$. Si osservi che tale valore può essere approssimato:
 \begin{equation}
@@ -166,7 +166,7 @@ Considerando un gruppo di N persone, qual è la probabilità che ci siano due pe
 \end{itemize}
 Allora:
 \begin{equation}
-P = \frac{N!}{k!} \cdot \binom {k}{N}
+P = 1 - \frac{N!}{k^{N}} \cdot \binom {k}{N}
 \end{equation}
 
 \section{Resistenza alle collisioni} \label{par:collisioni}
@@ -192,11 +192,10 @@ Alice genera una informazione $x_{A}$ e incarica Bob di calcolare un messaggio $
 Se la funzione \textbf{non è resistente alla collisioni}, Bob potrebbe realizzare il seguente attacco:
 \begin{enumerate}
 \item calcola un messaggio $m'_{A} \mid h(m_{A}) = h(m'_{A})$
-\item sottopone ad Alice $m'_{A}$
+\item sottopone ad Alice $m_{A}$
 \item quando Alice invia il messaggio a Trudy, Bob lo intercetta e sostituisce $m'_{A}$ a $m_{A}$
 \item La verifica della firma di Trudy va a buon fine anche se l'autenticità è stata violata
 \end{enumerate}
-
 L'attacco è mostrato in \figurename~\ref{fig:esempio_res_coll_attack}.
 \begin{figure}
 	\begin{center}

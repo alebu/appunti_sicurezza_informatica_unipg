@@ -440,9 +440,9 @@ Se i test sono statisticamente indipendenti avrò:
 \begin{equation}
 P_{c2} = \Pr\{E(K_{c1,A}, m_{2}) = D(K_{c1,B}, c_{2})\}
 \end{equation}
-Tale test consiste nel verificare che la coppia di blocchi $<r_a,r_b>$, tali che $r_a = E(K_{A}, m_{2})$ e $r_b = D(K_{b}, c_{2})$ coincida. Poiché le possibili coppie di blocchi sono $2^128$, e le possibili coppie di blocchi uguali sono $2^64$, la probabilità che questo avvenga è $\frac{1}{64}$. Quindi:
+Tale test consiste nel verificare che la coppia di blocchi $<r_a,r_b>$, tali che $r_a = E(K_{A}, m_{2})$ e $r_b = D(K_{b}, c_{2})$ coincidano. Poiché le possibili coppie di blocchi sono $2^{128}$, e le possibili coppie di blocchi uguali sono $2^{64}$, la probabilità che questo avvenga è $\frac{1}{2^{64}}$. Quindi:
 \begin{equation}
-P_{c2} \approx \frac{1}{64}
+P_{c2} \approx \frac{1}{2^{64}}
 \end{equation}
 In cui l'approssimazione deriva dall'ipotesi di indipendenza statistica, che a rigore non può essere soddisfatta in maniera assoluta. Tale ipotesi equivale e supporre che non ci sia alcuna correlazione tra la riuscita del primo test e del secondo, ovvero che l'algoritmo di cifratura opera in modo totalmente randomico. Sappiamo che DES non da risultati randomici, ma pseudorandomici generati in modo deterministico.
 \newline \newline
@@ -455,6 +455,48 @@ Procedendo analogamente, dopo il terzo test si avrà probabilità di trovare un 
 P_{e3} = 2^{48} / 2^{128} = 2^{-80}
 \end{equation}
 Quindi la probabilità di trovare un \textbf{falso positivo} dopo tre test è di fatto nulla $\Rightarrow$ dopo tre test si ottiene un'unica coppia candidata che è quella corretta.
+
+\subsubsection{Stima dei tentativi 2$^{\circ}$ versione}
+L'obiettivo è quello di stimare il numero di coppie candidate $cc_i$ dopo il test i-esimo . Definendo $c_{tot}$ come il numero delle coppie totali iniziali, tale valore è dato dalla seguente espressione:
+\[
+cc_{i} = c_{tot} \cdot \Pr\{\text{una coppia superi tutti i test fino all'i-simo compreso}\} 
+\]
+Essendo:
+\[
+\begin{split}
+&\Pr\{\text{una coppia superi tutti i test fino all'i-esimo compreso}\} = \\  = &\Pr\{\text{una coppia superi il 1$^{\circ}$ test AND ... AND la stessa coppia superi l'i-esimo test}\}
+\end{split}
+\]
+Poiché tali eventi possono essere considerati statisticamente indipendenti, si ottiene:
+\[
+\begin{split}
+&\Pr\{\text{una coppia superi il 1$^{\circ}$ test AND ... AND la stessa coppia superi l'i-esimo test}\} = \\
+= &[\Pr\{\text{una coppia superi il test}\}]^{i}
+\end{split}
+\]
+Quindi riassumendo:
+\[
+cc_{i} = c_{tot} \cdot [\Pr\{\text{una coppia superi il test}\}]^{i}
+\]
+Superare il test significa prendere due stringhe random di 64 bit e constatare che sono uguali. La probabilità che tale evento si verifichi è pari a:
+\[
+\Pr\{\text{una coppia superi il test}\} = \frac{\text{\#coppie uguali}}{\text{\#numero di coppie totali}} = \frac{2^{64}}{2^{128}} = \frac{1}{2^{64}}
+\]
+In conclusione, il numero di coppie candidate dopo il test i-esimo è pari a:
+\[
+cc_{i} = c_{tot} \cdot \frac{1}{(2^{64})^{i}}
+\]
+Nell'attacco a DES doppio si ha che il numero delle coppie totali iniziali $c_{tot} = 2^{56} \cdot 2^{56} = 2^{112}$, la precedente espressione risulta quindi pari a:
+\[
+cc_{i} =\frac{2^{112}}{(2^{64})^{i}}
+\]
+Mediamente, dopo 3 test il numero di coppie candidate sarà quindi pari a:
+\[
+cc_{3} =\frac{2^{112}}{(2^{64})^{3}} = \frac{2^{112}}{2^{192}} = \frac{1}{2^{80}}
+\]
+
+
+
 
 \subsection{Meet in the middle su DES-EEE con tre chiavi distinte}
 Si noti che il tipo i attacco descritto può essere utilizzato anche per attaccare un cifrario DES triplo, con struttura EEE, nel quale si utilizzano tre chiavi distinte. Infatti, come evidenziato in \ref{fig:EEE}, se l'output al primo blocco E() viene considerato come completamente casuale (ciò può essere fatto in virtù del fatto che la chiave utilizzata in questo blocco non ha influenza nel reste processo di crittografia), un eventuale soggetto malevolo può attaccare la parte evidenziata in rosso come se fosse DES doppio (eseguendo meet in the middle a partire da m' e da c).

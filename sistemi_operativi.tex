@@ -17,7 +17,7 @@ Un OS fornisce un'interfaccia semplificata e consistente a utenti e applicazioni
 \section{Meccanismi di Autenticazione}
 Un OS deve poter identificare i propri utenti in modo sicuro, i.e. utenti diversi potrebbero avere permessi di accesso alle risorse diversi. Un meccanismo di autenticazione standard ampiamente usato consiste nell'inserimento di un username e di una password: se la password inserita coincide con la password memorizzata dall'OS per il dato username allora l'utente viene autenticato. Un OS deve dunque memorizzare la password di ogni utente che può accedere al sistema. Generalmente gli OS memorizzano le password criptate attraverso funzioni hash in un file o in un apposito database. Grazie alla proprietà one-way delle funzioni hash, un attaccante che riesce ad accedere al file dove sono memorizzate le password non può ricostruire facilmente il loro valore. Tali file si trovano:
 \begin{itemize} 
-  \item per Windows in $C:\textbackslash WINDOWS \textbackslash system32 \textbackslash config \textbackslash SAM$
+	  \item per Windows in \textit{C:\textbackslash WINDOWS \textbackslash system32 \textbackslash config \textbackslash SAM}
   \item per Linux in $/etc/passwd$ e in $/etc/shadow$ (solo l'utente root può leggerle)
 \end{itemize}
 
@@ -38,7 +38,7 @@ Per la definizione di password robuste a tali attacchi vanno seguite delle ben d
 \end{itemize}
 Un esempio di password robusta è: "Voglio compr@re 11 Cani!": per scoprire questa password con un attacco brute-force in 60 giorni dovrei disporre di un computer in grado di generare circa $3,86 \cdot 10^{44} PW/sec$. Per rendere la struttura ancora più sicura si può impostare una scadenza alla password.
 \subsection{Password Salt}
-Il \textbf{Salt} consiste nell'aggiunta di bit random all'input di una funzione hash (o di un algoritmo di crittografia) al fine di aumentare la randomicità dell'output. Nel caso dell'autenticazione è possibile associare un numero random all'userID dell'utente, seguendo la forma: \newline \newline
+Il \textbf{Salt} consiste in una stringa di bit random da concatenare all'input di una funzione hash (o di un algoritmo di crittografia) al fine di aumentare la randomicità dell'output. Nel caso dell'autenticazione è possibile associare un numero random all'userID dell'utente, seguendo la forma: \newline \newline
 \textbf{salt = numero random + userID} \newline \newline
 \begin{figure}[htbp]
 	\centering%
@@ -145,7 +145,7 @@ Una \textbf{Access Control Entry, ACE,} è una terna $\langle principal, type, p
 Una \textbf{Access Control List} è invece una lista ordinata di terne \textbf{ACE}. Una possibile gestione per la sicurezza del filesystem prevede l'associazione di una ACL ad ogni file e directory in modo da definire la politica di accesso alla risorsa.
 
 \subsubsection{Discretionary Access Control}
-Il \textbf{DAC (Discretionary Access Control)} è un modello di assegnazione dei permissi in cui il creatore (owner) di un file o directory ha il potere di modificare i permessi ad esso associati (ACE). Sono disponibili due tipi di politiche di assegnazione dei permessi:
+Il \textbf{DAC (Discretionary Access Control)} è un modello di assegnazione dei permessi in cui il creatore (owner) di un file o directory ha il potere di modificare i permessi ad esso associati (ACE). Sono disponibili due tipi di politiche di assegnazione dei permessi:
 \begin{itemize}
   \item \textbf{Closed policy o default sicuro}: solo ACE di tipo allow, tutti i permessi non esplicitamente concessi sono automaticamente negati
   \item \textbf{Open policy}: ACE tipo sia ALLOW che DENY
@@ -199,7 +199,7 @@ Nei sistemi Linux i bit di permessi sono espressi in notazione ottale (con 3 o 4
 \end{itemize}
 
 \subsection{Sicurezza del filesystem Windows}
-Per la gestione dei permessi Windows utilizza una politica \textbf{DAC} con \textbf{closed policy}. Se non c'è una regola per un particolare principal o permesso allora l'accesso è negato di default. A differenza di Linux, al fine di accedere ad un file o ad una directory, è sufficiente avere i permessi per l'azione richiesta sul dato file o directory. In questo modo è possibile negare l'accesso ad una data directory pur consentendo l'accesso alle directory figlie.\newline 
+Per la gestione dei permessi Windows utilizza una politica \textbf{DAC} con \textbf{open policy}. Se non c'è una regola per un particolare principal o permesso allora l'accesso è negato di default. A differenza di Linux, al fine di accedere ad un file o ad una directory, è sufficiente avere i permessi per l'azione richiesta sul dato file o directory. In questo modo è possibile negare l'accesso ad una data directory pur consentendo l'accesso alle directory figlie.\newline 
 
 Vi sono due tipi di permessi: espliciti ed ereditati. Il concetto di \textbf{permessi ereditati} deriva dalla possibilità di estendere ogni permesso applicato ad una directory alle directory figlie. I \textbf{permessi espliciti} standard sono: \emph{modify, read and execute, read, write, full control}. E' possibile comporre più \textbf{permessi standard} creando \textbf{permessi avanzati}. \\ \\
 Per quanto riguarda il controllo dei permessi va notato che:

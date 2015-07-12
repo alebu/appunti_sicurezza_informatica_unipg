@@ -43,12 +43,47 @@ La crittografia a chiave pubblica si basa su alcuni risultati nell'ambito della 
 L'unico aspetto comune a tutti gli algoritmi di crittografia a chiave pubblica è la presenza di due quantità correlate, una chiave segreta e una chiave pubblica, associate a ciascuna entità che partecipa ad una comunicazione cifrata. Spesso si usa il termine \textbf{principal} per fare riferimento a siffatta entità, che può essere un calcolatore o una persona.
 
 \section{Aritmetica modulare}
-La maggior parte degli algoritmi a chiave pubblica si basano sull'aritmetica modulare: fissato un intero $ n>1 $, l'aritmetica modulare considera l'insieme degli interi non negativi minori di
-$n: $\{$0, 1, 2,..., n-1$\}, effettua operazioni ordinarie come l'addizione e la moltiplicazione, e sostituisce il risultato $x$ con il resto $r$ della divisione intera di $x$ per $n$. Il risultato finale viene detto modulo n o $mod \, n$. \\
+La maggior parte degli algoritmi a chiave pubblica si basano sull'aritmetica modulare. Prima di affrontare tali algoritmi conviene quindi rivedere alcune definizioni.
+\newline \newline
+Supponiamo che $a$ e $b$ siano interi ($a,b \in \mathbb{Z}$), e $n$ sia un intero positivo ($n \in \mathbb{N}$). Allora 
+\begin{defin}
+Scriviamo: $a \equiv b(mod \; n)$, leggendo tale espressione \textit{"\textbf{a} è \textbf{congruente} a \textbf{b} modulo \textbf{n}"} se $n$ divide $b-a$
+\end{defin}
+Supponiamo di dividere \textit{a} e \textit{b} per \textit{n}, ottenendo quozienti interi e resti (con i resti tra \textit{0} e \textit{n - 1}). Avrò quindi:
+\begin{equation}
+a = q_a n + r_a
+\end{equation}
+\begin{equation}
+b = q_b n + r_b
+\end{equation}
+Allora è facile mostrare che:
+\begin{equation}
+a \equiv b(mod \; n) \Leftrightarrow r_a = r_b
+\end{equation}
+Useremo quindi l'espressione $a$ mod $n$ per indicare il resto della divisione tra $a$ e $n$. Allora:
+\begin{equation}
+a \equiv b(mod \; n) \Leftrightarrow a(mod \; n) = b(mod \; n)
+\end{equation}
+Possiamo ora dare la seguente:
+\begin{defin}
+Un'aritmetica modulo n, denotata con $\mathbb{Z}_n$ è l'insieme {0,1,...,n-1}, dotato di due operazioni: l'addizione, denotata con il simbolo +, e la moltiplicazione, denotata con il simbolo x.
+\end{defin}
+In termini pratici, fissato un intero $ n>1 $, l'aritmetica modulare considera l'insieme degli interi non negativi minori di $n: $\{$0, 1, 2,..., n-1$\}, effettua operazioni ordinarie come l'addizione e la moltiplicazione, e sostituisce il risultato $x$ con il resto $r$ della divisione intera di $x$ per $n$. Il risultato finale viene detto modulo n o $mod \, n$. \\
 
 \paragraph{Addizione}
-Consideriamo l'addizione mod 10. Siano a e b due numeri minori di 10. $(a + b)mod10$ si ottiene effettuando l'addizione ordinaria, e considerando come risultato finale la cifra meno significativa (cioè il resto della divisione per 10). 
-\newline \newline
+Consideriamo l'addizione mod 10. Siano a e b due numeri minori di 10. $(a + b)mod10$ si ottiene effettuando l'addizione ordinaria, e considerando come risultato finale la cifra meno significativa (cioè il resto della divisione per 10). L'addizione gode delle seguenti:
+\begin{prop}[(Chiusura dell'addizione)]
+$\forall a,b \in \mathbb{Z}$, $a + b \in \mathbb{Z}_n$ 
+\end{prop}
+\begin{prop}[(Commutativa)]
+$\forall a,b \in \mathbb{Z}$, $a + b = b + a$ 
+\end{prop}
+\begin{prop}[(Associativa)]
+$\forall a,b,c \in \mathbb{Z}$, $(a + b) + c = a + (b + c)$ 
+\end{prop}
+\begin{prop}[(Elemento neutro)]
+$\forall a \in \mathbb{Z}$, $a + 0 = 0 + a = a$ 
+\end{prop}
 Sia m (< 10) un qualche messaggio. L'addizione di una costante k mod 10 può essere interpretata come una cifratura a chiave segreta, in cui:
 \begin{itemize}
 \item ogni cifra decimale \textbf{m} viene mappata in una diversa cifra decimale \textbf{c = (m + k) mod 10} in modo \textbf{reversibile}.
@@ -65,7 +100,23 @@ Un inverso additivo di k è un numero che sommato modulo n a k dà 0; formalment
 Ad esempio, l’inverso additivo di 4 è 6, perché 4 + 6 = 0 nell'aritmetica modulo 10.
 
 \paragraph{Moltiplicazione modulare}
-Per quanto riguarda la moltiplicazione, consideriamo anche in questo caso l'aritmetica modulo 10, facendo riferimento alla tabella \ref{fig:molt_mod}. Anche in questo caso l'operazione di moltiplicazione per una costante (come vedremo, per determinate costanti) può essere utilizzata per implementare una cifratura a chiave segreta.
+La moltiplicazione gode delle seguenti:
+\begin{prop}[(Chiusura della moltiplicazione)]
+$\forall a,b \in \mathbb{Z}$, $ab \in \mathbb{Z}_n$ 
+\end{prop}
+\begin{prop}[(Commutativa)]
+$\forall a,b \in \mathbb{Z}$, $ab = ba$ 
+\end{prop}
+\begin{prop}[(Associativa)]
+$\forall a,b,c \in \mathbb{Z}$, $(ab)c = a(bc)$ 
+\end{prop}
+\begin{prop}[(Elemento neutro)]
+$\forall a \in \mathbb{Z}$, $a \times 1 = 1 \times a = a$ 
+\end{prop}
+\begin{prop}[(Distributiva)]
+$\forall a,b,c \in \mathbb{Z}$, $(a + b)c = ac + bc$ 
+\end{prop}
+Anche in questo caso consideriamo anche in questo caso l'aritmetica modulo 10, facendo riferimento alla tabella \ref{fig:molt_mod}. Anche in questo caso l'operazione di moltiplicazione per una costante (come vedremo, per determinate costanti) può essere utilizzata per implementare una cifratura a chiave segreta.
 \begin{figure}[htbp]
 	\centering%
 	\subfigure%
@@ -92,9 +143,9 @@ Facendo riferimento all'utilizzo dell'operazione per l'implementazione di un alg
 Si osservi inoltre che, se $k$ ammette un inverso moltiplicativo $mod \, n $, esiste un unico inverso moltiplicativo $k^{-1} < n$. La moltiplicazione $mod \, n$ di per sé non costituisce un cifrario sicuro,ma funziona, nel senso che la moltiplicazione per $k$ produce un mescolamento dell'input.
 \newline \newline
 Trovare un inverso moltiplicativo $k^{-1}$ nella aritmetica $mod \, n$, \textbf{non è affatto banale} se $n$ è molto grande. Esiste un modo efficiente per risolvere tale problema, noto come \textbf{algoritmo di Euclide}, la cui efficacia è garantita dal seguente Teorema: 
-\begin{itemize} \label{eq:euclide}
-\item dati $x$ ed $n$, con $x<n$, l'algoritmo di Euclide trova il numero $y<n$ tale che $xy \, mod \, n = 1$, ammesso che un siffatto $y$ esista.
-\end{itemize} 
+\begin{thm}[di Euclide] \label{eq:euclide}
+Dati $x$ ed $n$, con $x<n$, l'algoritmo di Euclide trova il numero $y<n$ tale che $xy \, mod \, n = 1$, ammesso che un siffatto $y$ esista.
+\end{thm} 
 
 Ha senso allora chiedersi quali sono dunque i numeri che hanno un inverso moltiplicativo $mod \, n$. Un numero x < n detiene un inverso moltiplicativo se e solo se x è relativamente primo con n. Formalmente:
 \begin{equation}
@@ -145,6 +196,10 @@ E diventa, come volevasi dimostrare:
 \paragraph{Esponenziazione modulare}
 L'esponenziazione modulare, o elevamento a potenza modulare, è simile a quella ordinaria: si esegue l'esponenziazione ordinaria e si considera il resto della divisione per n (ad esempio, $4^6 \; mod \; 10 = 6 \; mod \; 10$ poiché $4^6 = 4096$ e $4096 \; mod \; 10 = 6$
 \newline \newline 
+L'esponenziazione modulare gode della seguente:
+\begin{prop} \label{prop:exp1}
+$(x^a \, mod \, n)^b \, mod \, n \, =  (x^{a})^b \, mod \, n =  \, x^{ab} \, mod \, n$
+\end{prop}
 Analogamente a quanto visto per addizione e moltiplicazione modulare, quando l'esponenziazione è iniettiva, essa può essere utilizzata come algoritmo di cifratura. La decifratura può ottenersi ricorrendo al logaritmo discreto
 (inverso dell'esponenziazione). Come nel caso della moltiplicazione, nell'esponenziazione modulare non tutti i numeri ammettono un logaritmo discreto.
 \begin{figure}[htbp]
@@ -196,12 +251,9 @@ Per quanto riguarda la \textbf{cifratura}/\textbf{decifratura}, siano $PU = \lan
 \item il destinatario, usando la propria chiave privata $PR$, decifra $c$ calcolando $m = c^d \, mod \, n$. \end{itemize}
 
 \paragraph{Dimostrazione dell'efficacia del procedimento}
-Poste le seguenti proprietà: 
+Assunta come vera la seguente proprietà: 
 \begin{equation}\label{eq:eff_1}
 m<n \Rightarrow \, m \, mod \, n\,=\,n
-\end{equation}
-\begin{equation} \label{eq:eff_2}
-(x^a \, mod \, n)^b \, mod \, n \, =  (x^{a})^b \, mod \, n =  \, x^{ab} \, mod \, n
 \end{equation}
 E, poiché $d$ è l'inverso moltiplicativo di $e$:
 \begin{equation} \label{eq:eff_3}
@@ -215,7 +267,7 @@ Posso esprimere m in questo modo:
 \begin{equation}
 m=D(PR,c) = c^d \, mod \, n = (m^e \, mod \, n)^d \, mod \, n
 \end{equation}
-che, per la \ref{eq:eff_2} e la \ref{eq:eff_3}, diventa:
+che, per la proprietà \ref{prop:exp1} dell'esponenziazione modulare (pag. \pageref{prop:exp1}) e la \ref{eq:eff_3}, diventa:
 \begin{equation}
 m =  m^{ed} \, mod \, n = m^{1 \, mod \, \phi(n)} \, mod \, n = m \, mod \, n
 \end{equation}
@@ -369,10 +421,16 @@ Si tratta di una vulnerabilità prevalentemente teorica, nella pratica difficilm
 \item $m_{2}^k$ 
 \item $m_{1}^j \cdot m_{2}^k$
 \end{itemize} 
-Ad esempio, conoscendo la firma $s_{1} = m_{1}^d \, mod \, n $, è possibile ottenere la firma di $m_{1}^2$ senza conoscere $d$ (ovvero senza conoscere la chiave privata). Infatti:
+Ad esempio, conoscendo la firma $s_{1} = [m_{1}] = m_{1}^d \, mod \, n $, è possibile ottenere la firma di $m_{1}^j$ senza conoscere $d$ (ovvero senza conoscere la chiave privata). Infatti:
 \begin{equation}
-(m_{1}^2)^d \, mod \, n = (m_{1}^d)^2 \, mod \, n = (m_{1}^d \, mod \, n)^2 \, mod \, n
+[m_1^j] = (m_{1}^j)^d \, mod \, n = (m_{1}^d)^j \, mod \, n = (m_{1}^d \, mod \, n)^j \, mod \, n
 \end{equation} 
+La dimostrazione per $m_{2}^k$  è ovviamente analoga, mentre per $[m_{1} \cdot m_{2}]$, conoscendo $[m_{1}]$ e $[m_{2}]$ e utilizzando la proprietà associativa della moltiplicazione:
+\begin{equation}
+[m_{1} \cdot m_{2}] = (m_{1}^d \cdot m_{2}^d) \, mod \, n = m_{1}^d \, mod \, n \cdot m_{2}^d \, mod \, n
+\end{equation}
+La prova per la divisione è analoga, mentre l'ultima proprietà deriva della precedenti.
+\newline \newline 
 Se un avversario riesce a collezionare molti messaggi firmati, può ottenere la firma di ogni messaggio $m$ esprimibile come prodotto e/o divisione di messaggi della collezione. In particolare, se ottiene le firme di due messaggi $m_{1}$ e $m_{2}$ tali che il rapporto $m_{1}/m_{2}=p$, dove $p$ è un numero primo, l'attaccante può calcolare la firma di $p$. Inoltre, se è abbastanza fortunato da raccogliere molte coppie di questo tipo, egli può calcolare la firma di molti numeri primi, quindi può falsificare la firma di ogni messaggio dato dal prodotto di ogni sottoinsieme di tali numeri primi ciascuno elevato ad una qualunque potenza. Con abbastanza coppie, può falsificare la firma di ogni messaggio rappresentato da uno \textbf{smooth number}. 
 \newline \newline
 Generalmente, ciò che si firma con RSA è un digest di messaggio, a cui si aggiungono bit tramite padding:
@@ -425,7 +483,7 @@ PKCS definisce, tra le altre cose, uno standard per la formattazione di un messa
 
 \section{Diffie-Hellman}
 
-Diffie-Hellman è il primo sistema a chiave pubblica utilizzato. Meno generale di RSA, non serve né a cifrare/decifrare né a firmare messaggi, ma permette lo scambio di chiavi, in chiaro e su una rete pubblica insicura, tra due entità (che chiameremo Alice e Bob) e quindi di accordarsi su un segreto (chiave) condiviso, senza rivelarlo. Intercettando tutti i messaggi scambiati non si è quindi in grado di risalire al segreto condiviso. Tale segreto non viene generato da una delle due entità, ma è il risultato dello scambio dei messaggi. In particolare, dopo essersi scambiati complessivamente due messaggi (in chiaro), che tutto il mondo può conoscere, Alice e Bob conosceranno il segreto condiviso $K_{AB}$, il quale verrà poi usato per proteggere la confidenzialità con tecniche di cifratura convenzionali.
+Diffie-Hellman è il primo sistema a chiave pubblica utilizzato. Meno generale di RSA, non serve né a cifrare/decifrare né a firmare messaggi, ma permette lo scambio di chiavi, in chiaro e su una rete pubblica insicura, tra due entità (che chiameremo Alice e Bob) e quindi di accordarsi su un segreto (chiave) condiviso, \textbf{senza rivelarlo}. \textbf{Intercettando tutti i messaggi scambiati non si è quindi in grado di risalire al segreto condiviso}. Tale segreto non viene generato da una delle due entità, ma è il risultato dello scambio dei messaggi. In particolare, dopo essersi scambiati complessivamente due messaggi (in chiaro), che tutto il mondo può conoscere, Alice e Bob conosceranno il segreto condiviso $K_{AB}$, il quale verrà poi usato per proteggere la confidenzialità con tecniche di cifratura convenzionali.
 \newline \newline
 Diffie-Hellman è realmente usato per stabilire una chiave segreta condivisa in alcune applicazioni, ad esempio nell'ambito della cifratura dei dati inviati in una LAN. Si osservi comunque che Diffie-Hellman non incorpora alcuna forma di autenticazione, senza la quale si rischia di condividere il segreto con un impostore.  
 
@@ -443,7 +501,7 @@ Si noti che $T_A$ e $T_B$ possono essere rivelati a tutto il mondo senza inficia
 \paragraph{Fase 4}
 \begin{enumerate}
 \item [4A.] Alice calcola $K_{AB}=T_{B}^{s_{A}} \, mod \,p$;
-\item [4B.] Bob calcola $K_{BA}=T_{B}^{s_{B}} \, mod \, p$;
+\item [4B.] Bob calcola $K_{BA}=T_{A}^{s_{B}} \, mod \, p$;
 \end{enumerate}
 L'aritmetica modulare garantisce che $K_{AB}=K_{BA}$. Infatti si ha:
 \begin{equation}

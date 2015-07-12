@@ -5,7 +5,7 @@ La sicurezza dei programmi è al cuore della sicurezza informatica, in quanto i 
 \item Come è possibile proteggere le risorse informatiche da programmi che contengono difetti?
 \end{itemize}
 
-Un programma (insieme di istruzioni per il calcolatore) è detto \textbf{sicuro} se abbiamo un certo grado di fiducia nel fatto che il programma garantisca la \underline{riservatezza}, l'\underline{integrità} e la \underline{disponibilità} che ci si aspetta.
+Un programma (insieme di istruzioni per il calcolatore) è detto \textbf{sicuro} se abbiamo un certo grado di fiducia nel fatto che il programma garantisca la \textbf{riservatezza}, l'\textbf{integrità} e la \textbf{disponibilità} che ci si aspetta.
 Valutare la sicurezza di un software è un procedimento analogo a valutarne la qualità in generale.
 \paragraph{Terminologia}
 \begin{itemize}
@@ -13,9 +13,10 @@ Valutare la sicurezza di un software è un procedimento analogo a valutarne la q
 \item \textbf{Malfunzionamento}: deviazione dal comportamento richiesto del sistema
 \end{itemize}
 
-Quindi un difetto è un errore dal punto di vista interno, quello del programmatore; mentre un malfunzionamento è un errore dal punto di vista esterno, dell'utente. Perciò un difetto è una causa, il malfunzionamento è un effetto. \textbf{N.B.} non sempre un difetto si traduce in uno o più malfunzionamenti (il codice difettoso potrebbe non venire mai eseguito). \\
-La qualità di un software dipende dal punto di vista di chi sta analizzando il programma, per questo motivo è possibile avere divergenze nelle accezioni! \\ \\
-Un programma può essere sicuro perché:
+Quindi un difetto è un errore dal punto di vista interno, quello del programmatore, mentre un malfunzionamento è un errore dal punto di vista esterno, dell'utente. Perciò un difetto è una causa, il malfunzionamento è un effetto. \textbf{N.B.} non sempre un difetto si traduce in uno o più malfunzionamenti (il codice difettoso potrebbe non venire mai eseguito). \\
+La qualità di un software dipende dal punto di vista di chi sta analizzando il programma, per questo motivo è possibile avere divergenze nelle accezioni! 
+\newline \newline
+Un programma può essere definito sicuro in base al fatto che:
 
 \begin{itemize}
 \item è necessario troppo tempo per la violazione dei protocolli di protezione
@@ -32,8 +33,7 @@ La complessità nel trattare la sicurezza dei programmi è data da:
 \end{itemize}
 
 \section{Errori di Programma Non Malevoli}
-Programmatori e analisti commettono errori, spesso né intenzionali né malevoli. Molti di essi provocano malfunzionamenti, ma non portano a vulnerabilità serie. Alcune classi di errori hanno costituito un grosso problema per la sicurezza e continueranno a costituirlo. 
-Di seguito sono riportate alcune di queste classi (saranno trattate solo quelle che non sono state incontrate nei capitoli precedenti):
+Programmatori e analisti commettono errori, spesso né intenzionali né malevoli. Molti di essi provocano malfunzionamenti, ma non portano a vulnerabilità serie. Alcune classi di errori hanno costituito un grosso problema per la sicurezza e continueranno a costituirlo. Di seguito sono riportate alcune di queste classi (saranno trattate solo quelle che non sono state incontrate nei capitoli precedenti):
 
 \begin{itemize}
 \item \textbf{Buffer Overflow}
@@ -43,54 +43,61 @@ Di seguito sono riportate alcune di queste classi (saranno trattate solo quelle 
 
 \subsection{Mediazione Incompleta}
 Prendiamo ad esempio un sito Web, il cui indirizzo è:
- http://www.somesite.com/subpage/
-  userinput.asp?param1=(808)555-1212\&parm2=2009Jan17.
-  \newline
-Cosa accadrebbe se fosse specificata un altra data? Potrei inserire dei comandi  lato client per impedire il buffer overflow. Ad esempio la data potrebbe essere specificata solo selezionando controlli predefiniti, ciò non impedisce di realizzare una richiesta HTTP manuale e in questo caso si dice che i valori dei dati non sono stati completamente mediati; i dati critici si trovano in una condizione esposta, non controllata. Per meglio comprendere le implicazioni per la sicurezza consideriamo il seguente esempio:
-\begin{itemize}
-	\item Supponiamo che la richiesta HTTP per la conferma di pagamento sia la seguente:
-	\newline
-	http://www.things.com/order.asp?part=555\&price=10\&quantity=5\&total=50
-	\item Normalmente un utente utilizza il sito di e-commerce dell'azienda e non genera una richiesta manuale, ciò però non impedisce di confezionare una richiesta malevola come:
-	\newline
-	http://www.things.com/order.asp?part=555\&price=10\&quantity=5\&total=\textcolor{red}{20}
-	\item Come si risolve? \`{E} sufficiente avere il codice del prodotto e la quantità, e non il prezzo unitario nè il totale!
-\end{itemize}
+\begin{center}
+\textcolor{blue}{http://www.somesite.com/subpage/userinput.asp?param1=(808)555-1212parm2} \textcolor{red}{=2009Jan17}
+\end{center}
+Cosa accadrebbe se fosse specificata un altra data al posto del testo in rosso (specificando, ad esempio, 1800Feb30 o  2048 Min32)? Potrei inserire dei controlli lato client (il browser) per impedire il buffer overflow, ad esempio forzando la scelta della data attraverso dei controlli predefiniti, ma ciò non impedisce di realizzare una richiesta HTTP manuale, digitando l'indirizzo direttamente nel browser. In questo caso si dice che \textbf{i valori dei dati non sono stati completamente mediati}. I dati critici si trovano in una condizione esposta, non controllata. Per meglio comprendere le implicazioni per la sicurezza consideriamo il seguente esempio.
+
+\paragraph{Esempio} 
+Supponiamo di trovarci nel contesto di un sito di e-commerce, dove la richiesta HTTP per la conferma e il pagamento di un ordine sia la seguente:
+\begin{center}
+\textcolor{blue}{http://www.things.com/order.asp?part=555\&price=10\&quantity=5\&total=50}
+\end{center}
+Normalmente un utente utilizza il sito di e-commerce dell'azienda e non genera una richiesta manuale. Ciò però non impedisce di confezionare una richiesta malevola, del tipo:
+\begin{center}
+\textcolor{blue}{http://www.things.com/order.asp?part=555\&price=10\&quantity=5\&total=}\textcolor{red}{20}
+\end{center}
+Tale esempio fa riferimento ad un attacco realmente sferrato. Per evitare questo tipo di vulnerabilità basta fare in modo che nella richiesta HTTP non debba venir specificato il prezzo unitario o il totale, ma solo il codice del prodotto e la quantità da acquistare, delegando il calcolo dell'importo alla web application.
 
 \subsection{Scarto fra tempo di controllo e tempo di utilizzo}
 Per migliorare l'efficienza i processori e sistemi operativi moderni possono cambiare l'ordine di esecuzioni di istruzioni e procedure. Ad esempio l'esecuzione di istruzioni consecutive di una procedura possono essere inframezzate da istruzioni di altre procedure (multi-tasking).
 \newline
-La falla \textbf{TOCTTOU}(Time Of Check To Time Of Use) è dovuta allo scarto di tempo tra la verifica dell'autorizzazione a compiere un azione e l'esecuzione dell'azione stessa. Se i dati di autorizzazione non vengono utilizzati direttamente e, nell'attesa di essere utilizzati, sono disponibili per la modifica, allora si verifica la falla.
+La falla \textbf{TOCTTOU}(Time Of Check To Time Of Use) è dovuta allo scarto di tempo tra la verifica dell'autorizzazione a compiere un azione e l'esecuzione dell'azione stessa. Se i dati di autorizzazione non vengono utilizzati direttamente e, nell'attesa di essere utilizzati sono disponibili per la modifica, allora si verifica la falla.
 \paragraph{Esempio} 
-Se una persona compra una statua che costa 100 \officialeuro, l'acquirente estrae 5 banconote da 20 \officialeuro, le conta davanti al venditore e le lascia sul tavolo. Quando il venditore si gira e prende la statua l'acquirente riprende una banconota, i due finiscono la transazione e l'acquirente esce dal negozio.
-Lo stesso, sostanzialmente, può accadere con la richiesta e il rilascio di permessi di accesso ai file. Nel mentre che un permesso viene accordato può essere cambiato dall'entità che lo ha generato, permettendo operazioni negate. Per evitare la falla sarebbe necessario utilizzare i dati di permesso immediatamente o evitare di esporli durante l'attesa dell'utilizzo, se ciò non fosse possibile si potrebbe aggiungere un checksum ai dati di permesso che l'entità emittente possa verificare in modo da poter rilevare modifiche. \\ \\
-Ognuna delle tre falle precedenti è abbastanza grave singolarmente, tuttavia l'aggressore intelligente utilizza le falle come mattoni per la costruzione di un attacco complesso.
-Per questo motivo occorre conoscere e proteggersi anche dalle falle più semplici, anche le più innocue.
+Una persona compra una statua che costa 100 \officialeuro, l'acquirente estrae 5 banconote da 20 \officialeuro, le conta davanti al venditore e le lascia sul tavolo. Quando il venditore si gira e prende la statua l'acquirente riprende una banconota, i due finiscono la transazione e l'acquirente esce dal negozio.
+\newline \newline
+Lo stesso, sostanzialmente, può accadere con la richiesta e il rilascio di permessi di accesso ai file. Nel mentre che un permesso viene accordato può essere cambiato dall'entità che lo ha generato, permettendo operazioni negate. Ad esempio:
+\begin{enumerate}
+\item L'utente X vuole leggere il file $file_X$
+\item Viene confezionata una richiesta di accesso [X, $file_X$, lettura, ?] e sottoposta a controllo
+\item L'accesso viene permesso [X, $file_X$, lettura, OK]
+\item Prima di essere utilizzata, la richiesta di accesso viene modificata [X, $file_{nascosto}$, modifica, OK]
+\end{enumerate}
+In questo modo la richiesta di accesso viene utilizzata nella versione modificata, permettendo operazioni negate.
+\newline \newline
+Per evitare la falla sarebbe necessario utilizzare i dati di permesso immediatamente o evitare di esporli durante l'attesa dell'utilizzo, se ciò non fosse possibile si potrebbe aggiungere un checksum ai dati di permesso che l'entità emittente possa verificare in modo da poter rilevare modifiche. 
+\newline \newline
+Per quanto ognuna delle tre falle precedenti sia abbastanza grave singolarmente, l'aggressore intelligente potrebbe utilizzarle come mattoni per la costruzione di un attacco complesso. Per questo motivo occorre conoscere e proteggersi anche dalle falle più semplici, per quanto possano sembrare innocue.
 
 \section{Virus e altro codice malevolo}
-La maggior parte del lavoro svolta da un programma è invisibile agli utenti; per questa ragione, poiché l'utente non vede direttamente i dati utilizzati dal computer, gli eventuali aggressori informatici possono utilizzare programmi come veicoli per la modifica di dati o di altri programmi.
-\subsection{Installazione e descrizione del codice malevolo}
-Quindi, quando si installa un pacchetto software si esegue un comando \textbf{Install} o \textbf{Setup}; da qui in poi il programma di installazione prende il controllo e crea, modifica, elimina e rinomina i file che gli sono necessari.
-\newline
-A parte la documentazione di installazione fornita, l'utente non ha idea di quali regalini abbia ricevuto in seguito alla installazione. Si spera che siano tutti buoni, ma tra essi è possibile nascondere del codice malevolo che viene installato senza che l'utente ne abbia percezione, per questo è importante conoscere la fonte del software che installiamo!
+La maggior parte del lavoro svolta da un programma è eseguita in background, ovvero è invisibile agli utenti. Durante l'elaborazione di un testo, ad esempio, l'editor crea, modifica e distrugge diversi file nel filesystem, oltre che elaborare diversi dati in memoria principale. Per questa ragione gli eventuali aggressori informatici possono utilizzare programmi come veicoli per la modifica di dati o di altri programmi all'interno del computer.
 
-\subsubsection{Cosa può fare il codice malevolo}
-Il codice malevolo è di fatto un programma e può quindi fare qualsiasi cosa è in grado di fare un software (scrivere messaggi a schermo, terminare esecuzione di un altro programma, modifica/cancellare dati, etc.).
-Può anche insidiarsi e rimanere inattivo fino a che non si verifica una condizione di innesco (un orario, data, eventi interni, conteggio, etc.).
-Il codice malevolo viene eseguito sotto l'autorità dell'utente corrente e può venire a contatto con tutto ciò con cui è a contatto l'utente stesso e nello medesimo modo (sebbene non ne sia a conoscenza).
-\subsubsection{Da quando esiste il codice malevolo?}
-I primi riferimenti ai comportamenti dei virus risalgono al 1970, lo studio di Ware e quello di Anderson per l'aeronautica militare statunitense descrivono in maniera accurata minacce, vulnerabilità e falle di protezione dei programmi.
-La novità oggigiorno è il numero di istanze distinte e di copie di virus che sono comparse e scomparse, nonchè la velocità con cui nasce il codice per il loro sfruttamento.
+\paragraph{Installazione e descrizione del codice malevolo}
+Quando si installa un pacchetto software si esegue un comando \textbf{Install} o \textbf{Setup}, e da quel punto in poi il programma di installazione prende il controllo e crea, modifica, elimina e rinomina i file che gli sono necessari. A parte la documentazione di installazione fornita, l'utente non ha idea di quale sia la funzione di tutto il materiale installato. Entra quindi in gioco la fiducia nei confronti del fornitore del software: poiché al momento dell'istallazione garantiamo al software pieno controllo del sistema, è bene fidarsi di chi ha scritto tale software.
+
+\paragraph{Cosa può fare il codice malevolo}
+Il codice malevolo è di fatto un programma e può quindi fare qualsiasi cosa è in grado di fare un software (scrivere messaggi a schermo, terminare esecuzione di un altro programma, modificare/cancellare dati, etc.).
+Può anche insidiarsi e rimanere inattivo fino a che non si verifica una condizione di innesco (un orario, data, eventi interni, conteggio, etc.). Il codice malevolo viene eseguito sotto l'autorità dell'utente corrente e può venire a contatto con tutto ciò con cui è a contatto l'utente stesso e nel medesimo modo. Una volta avviato (momento in cui l'utente "garantisce" al software gli stessi suoi diritti) può quindi aggiungere, modificare o eliminare qualsiasidato dell’utente, senza che sia necessario il suo esplicito consenso.
 
 \subsection{Protezione da codice malevolo}
 Il rilascio di una patch per tappare una vulnerabilità avviene secondo le seguenti fasi:
-\begin{itemize}
+\begin{enumerate}
 \item Una nuova vulnerabilità viene scoperta
 \item Il produttore ne viene a conoscenza
 \item Viene sviluppata la prova di concetto per dimostrare la vulnerabilità in una situazione controllata
 \item Il produttore sviluppa e distribuisce un rimedio (patch)
 \item Gli utenti implementano la difesa
-\end{itemize}
+\end{enumerate}
 Qualcuno può sferrare un attacco effettivo estendendo la prova di concetto o la definizione della vulnerabilità. Fintanto che gli utenti implementano la difesa prima dell'attacco effettivo, non si registra alcun danno.
 Viene definito \textbf{Giorno Zero} la data in cui il produttore viene a conoscenza della vulnerabilità.
 Un attacco che avvenga prima che il produttore conosca la vulnerabilità è detto \textbf{zero day attack} ma, in senso più generale, uno zero day attack avviene prima della disponibilità della patch relativa.
@@ -98,7 +105,6 @@ Un attacco che avvenga prima che il produttore conosca la vulnerabilità è dett
 \subsection{Tipi di codice malevolo}
 Segue un elenco di definizioni e descrizioni dei tipi di codice malevolo
 \begin{itemize}
-
 	\item \textbf{Virus}: si unisce ad un programma e propaga copia di se stesso in altri programmi. Può essere di tipo \emph{transitorio} se viene eseguito solamente in associazione al programma ospite, oppure \emph{residente} se rimane sempre attivo e può essere attivato come programma autonomo dopo il termine del programma ospite.
 	\item \textbf{Cavallo di Troia}: codice che oltre al suo effetto primario presenta un secondo effetto malevolo non evidente, ad esempio uno script di login che conserva una copia di nome utente e password per un utilizzo successivo
 	\item \textbf{Bomba logica}: codice malevolo che scatta al verificarsi di una particolare situazione

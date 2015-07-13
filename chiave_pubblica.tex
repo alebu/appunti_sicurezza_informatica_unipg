@@ -1,6 +1,6 @@
 \chapter{Crittografia a chiave pubblica} \label{ch:publickey}
 \section{Introduzione}
-La crittografia a chiave pubblica (\textbf{public key cryptography}) (talvolta detta anche crittografia asimmetrica (\textbf{asymmetric cryptography}) fu pubblicamente introdotta nel 1975, anche se alcune voci sostengono che l'NSA già la utilizzasse da diverso tempo. Diversamente dalla crittografia a chiave segreta non prevede la \textbf{condivisione di un segreto}. Ogni entità ha due chiavi:
+La crittografia a chiave pubblica (\textbf{public key cryptography}), talvolta detta anche crittografia asimmetrica (\textbf{asymmetric cryptography}), fu pubblicamente introdotta nel 1975, anche se alcune voci sostengono che l'NSA già la utilizzasse da diverso tempo. Diversamente dalla crittografia a chiave segreta non prevede la \textbf{condivisione di un segreto}. Ogni entità ha due chiavi:
 
 \begin{itemize}
 	\item una chiave privata da \textbf{non rivelare} a nessuno
@@ -68,7 +68,7 @@ Possiamo ora dare la seguente:
 \begin{defin}
 Un'aritmetica modulo n, denotata con $\mathbb{Z}_n$ è l'insieme {0,1,...,n-1}, dotato di due operazioni: l'addizione, denotata con il simbolo +, e la moltiplicazione, denotata con il simbolo x.
 \end{defin}
-In termini pratici, fissato un intero $ n>1 $, l'aritmetica modulare considera l'insieme degli interi non negativi minori di $n: $\{$0, 1, 2,..., n-1$\}, effettua operazioni ordinarie come l'addizione e la moltiplicazione, e sostituisce il risultato $x$ con il resto $r$ della divisione intera di $x$ per $n$. Il risultato finale viene detto modulo n o $mod \, n$. \\
+In termini pratici, fissato un intero $ n>1 $, l'aritmetica modulare considera l'insieme degli interi non negativi minori di $n: $\{$0, 1, 2,..., n-1$\}, effettua operazioni ordinarie come l'addizione e la moltiplicazione, e sostituisce il risultato $x$ con il resto $r$ della divisione intera di $x$ per $n$. Il risultato finale viene detto modulo n o $mod \, n$. 
 
 \paragraph{Addizione}
 Consideriamo l'addizione mod 10. Siano a e b due numeri minori di 10. $(a + b)mod10$ si ottiene effettuando l'addizione ordinaria, e considerando come risultato finale la cifra meno significativa (cioè il resto della divisione per 10). L'addizione gode delle seguenti:
@@ -134,13 +134,13 @@ Definiamo l'inverso moltiplicativo di $k$, indicato con $k^{-1}$, come quel nume
 \begin{equation}
 k^{-1} \mid k^{-1} \in \mathbb{N}, \; k^{-1} < n,\; kk^{-1} \, mod \, n = 1 \, mod \, n
 \end{equation}
-Fissato n, non tutti i numeri hanno un inverso moltiplicativo $mod \, n$. Si prenda come esempio $n = 10$. Solo i numeri $\{1,3,7,9\}$ hanno un inverso moltiplicativo. Ad esempio:
+Fissato $n$, non tutti i numeri hanno un inverso moltiplicativo $mod \, n$. Si prenda come esempio $n = 10$. Solo i numeri $\{1,3,7,9\}$ hanno un inverso moltiplicativo. Ad esempio:
 \begin{equation}
 7 \cdot 3 \, mod \,n = 1 \, mod \, n \Rightarrow 7^{-1} = 3
 \end{equation}
 Facendo riferimento all'utilizzo dell'operazione per l'implementazione di un algoritmo di cifratura, la cifratura potrebbe essere rappresentata dalla moltiplicazione per 7, e la decifratura dalla moltiplicazione per 3.
 \newline \newline
-Si osservi inoltre che, se $k$ ammette un inverso moltiplicativo $mod \, n $, esiste un unico inverso moltiplicativo $k^{-1} < n$. La moltiplicazione $mod \, n$ di per sé non costituisce un cifrario sicuro,ma funziona, nel senso che la moltiplicazione per $k$ produce un mescolamento dell'input.
+Si osservi inoltre che, se $k$ ammette un inverso moltiplicativo $mod \, n $, esiste un unico inverso moltiplicativo $k^{-1} < n$. La moltiplicazione $mod \, n$ di per sé non costituisce un cifrario sicuro, ma funziona, nel senso che la moltiplicazione per $k$ produce un mescolamento dell'input.
 \newline \newline
 Trovare un inverso moltiplicativo $k^{-1}$ nella aritmetica $mod \, n$, \textbf{non è affatto banale} se $n$ è molto grande. Esiste un modo efficiente per risolvere tale problema, noto come \textbf{algoritmo di Euclide}, la cui efficacia è garantita dal seguente Teorema: 
 \begin{thm}[di Euclide] \label{eq:euclide}
@@ -242,7 +242,7 @@ RSA è computazionalmente molto più lento degli algoritmi a chiave segreta più
 \paragraph{Generazione coppia di chiavi RSA}
 I passi da seguire per generare la chiave pubblica e la chiave privata sono: 
 \begin{enumerate}
-\item Scegliere due numeri primi $p$ e $q$ molto grandi (circa 256 bit ciascuno) tali che $n = p \cdot q$. E' fondamentale che $p$ e $q$ rimangano segreti: fattorizzare $n$ è di fatto computazionalmente impraticabile. 
+\item Scegliere due numeri primi $p$ e $q$ molto grandi (circa 256 bit ciascuno) e porre $n = p \cdot q$. E' fondamentale che $p$ e $q$ rimangano segreti: fattorizzare $n$ è di fatto computazionalmente impraticabile. 
 \item Scegliere un numero $e$ che sia relativamente primo rispetto a $\varphi(n) = (p-1)(q-1)$.
 \item Calcolare l'inverso moltiplicativo $d$ di $e \, mod \, \varphi(n)$, cioè tale che sia $(d \cdot e ) \, mod \, \varphi(n) \, = 1$.
 \item La chiave pubblica è $PU = <e,n>$, mentre la chiave privata è $PR = <d,n>$.
@@ -275,7 +275,6 @@ Posso esprimere m in questo modo:
 \begin{equation}
 m=D(PR,c) = c^d \, mod \, n = (m^e \, mod \, n)^d \, mod \, n
 \end{equation}
-<<<<<<< HEAD
 che, per la proprietà \ref{prop:exp1} dell'esponenziazione modulare (pag. \pageref{prop:exp1}), la \ref{eq:eff_3} e la \ref{eq:eff_3}, diventa:
 \begin{equation}
 m =  m^{ed} \, mod \, n = x^{ed \, mod \, \varphi(n)} \, mod \, n = m^{1 \, mod \, \phi(n)} \, mod \, n = m \, mod \, n
@@ -309,7 +308,7 @@ Le operazioni di cifratura, decifratura, firma e verifica della firma richiedono
 \newline \newline
 Va considerato però che problematiche di sicurezza possono insorgere anche da usi impropri dell'algoritmo. In altre parole vanno considerate le violazioni che non affrontano il problema della fattorizzazione. Si consideri, come esempio, un'applicazione di RSA con chiavi a 256 bit.
 \newline \newline
-Si supponga che Carol mandi un messaggio ad Alice contenente un il nome del suo amante. Il fidanzato di Carol, Bob, sapende del messaggio di Carol ad Alice, e sapendo che l'amante di Carol è uno dei 15 studenti del corso di sicurezza informatica, potrebbe sferrare un attacco. Infatti, pur non potendo decifrare il messaggio, potrebbe cifrare il nome di ogni ragazzo del corso con la chiave pubblica di Alice ed effettuare un confronto.
+Si supponga che Carol mandi un messaggio ad Alice contenente un il nome del suo amante. Il fidanzato di Carol, Bob, sapendo del messaggio di Carol ad Alice, e sapendo che l'amante di Carol è uno dei 15 studenti del corso di sicurezza informatica, potrebbe sferrare un attacco. Infatti, pur non potendo decifrare il messaggio, potrebbe cifrare il nome di ogni ragazzo del corso con la chiave pubblica di Alice ed effettuare un confronto.
 \newline \newline
 Com'è possibile prevenire quest'attacco? In seguito descriveremo degli standard per utilizzare RSA in modo appropriato (sezione: \ref{sec:pkcs}). Per il momento una possibile risposta alla precedente domanda è la seguente: Carol può concatenare il nome del suo fidanzato con un numero random molto grande, diciamo a 64 bit. A questo punto Bob, anziché 15 tentativi, deve fare $15 \cdot 2^{64}$ tentativi. L'attacco diventa computazionalmente impraticabile.
 
@@ -328,13 +327,12 @@ Esistono infiniti numeri primi, che tendono a diradarsi all'aumentare di $n$: es
 Pr \{\text{n primo}\} \approx \frac{1}{{\text{ln} \, n}} \approx \frac{1}{N_{b}}
 \end{equation}
 
-dove $N_{b}$ è il numero di bit utilizzato per rappresentare $n$. La densità dei numeri primi è inversamente proporzionale alla loro lunghezza in bit(o in cifre decimali). Ad esempio, per un numero $n$ a cento cifre decimali (dimensione usata in RSA), c'è una possibilità su 230 che esso sia primo. Pertanto, i passi da seguire per generare $p$ e $q$ sono i seguenti: 
+dove $N_{b}$ è il numero di bit utilizzato per rappresentare $n$. La densità dei numeri primi è inversamente proporzionale alla loro lunghezza in bit (o in cifre decimali). Ad esempio, per un numero $n$ a cento cifre decimali (dimensione usata in RSA), c'è una possibilità su 230 che esso sia primo. Pertanto, i passi da seguire per generare $p$ e $q$ sono i seguenti: 
 \begin{enumerate}
 \item estrai un numero dispari molto grande
 \item verifica se tale numero è primo, in caso negativo ritenta (in media, sono necessari 230 tentativi per ottenere un numero primo)
 \end{enumerate}
 Tale strategia va bene se si dispone di un \textbf{test di primalità efficiente}: come è possibile testare se un intero $n$ è primo? Un metodo banale consiste nel dividere $n$ per tutti gli interi $ \le n^{1/2}$ e verificare che non ci sono divisori $> 1$, ma ciò richiederebbe diverse vite dell'universo. Prima del 2002 non esisteva un test di primalità deterministico efficace in tempo polinomiale. Nel 2002 è stato pubblicato il test di primalità deterministico AKS.
-\newline \newline
 
 \paragraph{Test di primalità probabilistico di RSA}
 RSA utilizza tuttavia un test di primalità probabilistico: non si può affermare con certezza che l'esito del test sia corretto. Tuttavia, la probabilità di errore può essere resa arbitrariamente piccola aumentando il tempo di test. Il test si basa sul teorema di Fermat che fornisce una \textbf{condizione necessaria} affinché un intero $n$ sia primo: 
@@ -414,7 +412,7 @@ Generalmente, ciò che viene firmato (messaggio + padding) ha una struttura suff
 \paragraph{Smooth Numbers}
 Un altro problema presente nella cifratura a chiave pubblica è quello dei \textit{smooth numbers}. Intuitivamente, uno smooth number è un numero scomponibile nel prodotto di molti numeri primi \textbf{ragionevolmente piccoli} (non conviene usare una definizione assoluta, poiché un numero è piccolo o grande in base alle capacità di calcolo dell'avversario). Ad esempio, il numero 6056820 è più \textbf{smooth} del numero 6567587, poiché 
 \begin{equation}
-6056820 = 22 \cdot 32 \cdot 5 \cdot 7 \cdot 11 \cdot 19 \cdot 23
+6056820 = 2^2 \cdot 3^2 \cdot 5 \cdot 7 \cdot 11 \cdot 19 \cdot 23
 \end{equation}
 mentre
 \begin{equation}
@@ -477,7 +475,7 @@ Ogni applicazione di RSA (cifratura, decifratura e firma) può essere soggetta a
 \item chiave pubblica RSA
 \item chiave privata RSA
 \item firma RSA
-\item cifratura RSA di messaggi corti(tipicamente chiavi segrete)
+\item cifratura RSA di messaggi corti (tipicamente chiavi segrete)
 \item firma RSA di messaggi corti (tipicamente digest)
 \end{itemize}
 Esistono 15 standard PKCS per le diverse situazioni in cui la cifratura a chiave pubblica viene utilizzata. Noi esamineremo solo PKCS1. Esso è stato concepito per far fronte alle seguenti minacce:
@@ -536,7 +534,7 @@ dlog_{g} \, g^{s_{A}}, \quad dlog_{g}: \mathbb{Z} \rightarrow \mathbb{N}
 \end{equation} 
 Tuttavia il calcolo di logaritmi discreti non è fattibile in tempi ragionevoli.
 \subsection{Man in the middle}
-La vulnerabilità di Diffie-Hellman è che tale algoritmo non fornisce alcuna prova di autenticazione: Alice non può essere certa che $T_{B}$ sia stato inviato da Bob e non da un impostore; allo stesso modo, Bob non può essere certo che $T_{A}$ sia stato inviato da Alice e non daun impostore. 
+La vulnerabilità di Diffie-Hellman è che tale algoritmo non fornisce alcuna prova di autenticazione: Alice non può essere certa che $T_{B}$ sia stato inviato da Bob e non da un impostore; allo stesso modo, Bob non può essere certo che $T_{A}$ sia stato inviato da Alice e non da un impostore. 
 
 \paragraph{Man in the middle} 
 E' quindi possibile che un impostore, Mr. X, intercetti e modifichi i messaggi facendo credere a Bob di comunicare con Alice e viceversa. Alice e Bob non hanno modo di rendersi conto dell'attacco in atto. 
@@ -580,7 +578,7 @@ Il problema è che l'autenticazione via password, se è in corso un attacco Man-
 Anche altri tipi di proposte sono insufficienti (timestamp, domande personali, ecc.). Il problema è che Diffie-Hellman effettua delle operazioni invertibili (cifratura/decifratura) ed è sicuro solo nel caso di attacchi passivi (un intruso intercetta i messaggi, ma non li modifica). E' necessario proteggere l'integrità, per cui si adottano due strategie generali: Diffie-Hellman con Numeri Pubblici e Scambio Diffie-Hellman Autenticato.	
 
 
-\paragraph{Diffie-Hellman con Numeri Pubblici} Un possibile modo per sventare attacchi attivi è evitare che $p$, $g$, $s_{A}$, $s_{B}$, $T_{A}$ e $T_{B}$ vengano generati/calcolati ad ogni scambio. $p$, $g$, $T_{A}$ e $T_{B}$ potrebbero essere resi pubblici in una repository fidata, con $p$ e $g$ uguali per tutti gli utenti, mentre ogni utente U pubblica il proprio valore $T_{U}$, mantenendo privato il segreto $s_{U}$. Ne consegue che, se un avversario non è in grado di accedere alla repository e di modificare i valori pubblici, allora Diffie-Hellman diventa sicuro anche nel caso di attacchi attivi. Inoltre, non è più necessario lo scambio dei valori $T_{A}$ e $T_{B}$: consultando la repository ogni utente A può ottenere la chiave $K_{AB}$ che condividerebbe con l'utente B. \\
+\paragraph{Diffie-Hellman con Numeri Pubblici} Un possibile modo per sventare attacchi attivi è evitare che $p$, $g$, $s_{A}$, $s_{B}$, $T_{A}$ e $T_{B}$ vengano generati/calcolati ad ogni scambio. $p$, $g$, $T_{A}$ e $T_{B}$ potrebbero essere resi pubblici in una repository fidata, con $p$ e $g$ uguali per tutti gli utenti, mentre ogni utente U pubblica il proprio valore $T_{U}$, mantenendo privato il segreto $s_{U}$. Ne consegue che, se un avversario non è in grado di accedere alla repository e di modificare i valori pubblici, allora Diffie-Hellman diventa sicuro anche nel caso di attacchi attivi. Inoltre, non è più necessario lo scambio dei valori $T_{A}$ e $T_{B}$: consultando la repository ogni utente A può ottenere la chiave $K_{AB}$ che condividerebbe con l'utente B. 
 
 \paragraph{Scambio Diffie-Hellman Autenticato}
 La precondizione per l'attuazione di questo protocollo è la conoscenza, da parte di Alice e Bob, di un qualche tipo di informazione che permette loro di autenticarsi reciprocamente, ovvero una chiave segreta condivisa $K^{AB}$, da non confondere con la chiave concordata con Diffie-Hellman $K_{AB}$, la propria coppia <chiave privata, chiave pubblica> e la chiave
@@ -642,9 +640,9 @@ Diffie-Hellman trasmesso e della chiave segreta $K^{AB}$.
 Oltre alla mancanza di autenticazione, Diffie-Hellman classico presenta anche lo svantaggio che la comunicazione cifrata con la chiave concordata può avvenire soltanto dopo l'esecuzione di uno scambio attivo. In pratica, Alice non può inviare un messaggio cifrato a Bob prima di ricevere $T_{B}$. Tale problema puo essere ovviato introducendo le chiavi pubbliche Diffie-Hellman: una chiave pubblica D-H è una tripla $<p, g, T>$, dove $T = g^s \, mod \, p$, dove $s$ è la corrispondente chiave privata. Le chiavi pubbliche vanno custodite in un luogo fidato e accessibile da tutti in modo sicuro. La chiave pubblica di Bob è $<p_{B}, g_{B}, T_{B}>$. \newline \newline
 Di seguito (\figurename~\ref{fig:authex}), mostriamo un esempio di procedura che consente ad Alice di inviare un messaggio cifrato a Bob, con la chiave concordata $K_{AB}$, anche se Bob risulta essere inattivo, cioè Alice deve essere in grado di cifrare senza dover attendere alcuna risposta da Bob. Bob, una volta attivo, dovrà poter calcolare $K_{AB}$ e decifrare il messaggio.
 \begin{enumerate}
-\item Alice genera $s_{A}<p_{B}$, calcola $T_{A}^{*}=g_{B}^{s_{A}} \, mod \, p_{B}$ e $K_{AB}=T_{B}^{S_{A}} \, mod \, p_{B}$.
+\item Alice genera $s_{A}<p_{B}$, calcola $T_{A}^{*}=g_{B}^{s_{A}} \, mod \, p_{B}$ e $K_{AB}=T_{B}^{s_{A}} \, mod \, p_{B}$.
 \item Poi cifra il messaggio $msg=E(K_{AB},msg)$ e lo invia a Bob assieme a $T_{A}^{*}$.
-\item Bob, una volta attivo, calcola  $K_{BA}=(T_{A}^*)^{S_{B}} \, mod \, p_{B}$.
+\item Bob, una volta attivo, calcola  $K_{BA}=(T_{A}^*)^{s_{B}} \, mod \, p_{B}$.
 \item Decifra $E(K_{AB},msg)$, ottenendo $msg=D(K_{BA},E(K_{AB},msg))$.
 \end{enumerate}
 \begin{figure}[htbp]
@@ -678,7 +676,7 @@ Peggy conosce la parola segreta per aprire la porta magica di una caverna, che s
 	\caption{Storia di peggy e Victor\label{fig:peggy_victor_1}}
 \end{figure}
 Prima, Victor aspetta fuori dalla caverna mentre Peggy entra. Etichettiamo il sentiero sinistro e quello destro partendo dall'entrata con A e B. Peggy sceglie a caso uno dei due sentieri. Quindi, Victor entra nella caverna e grida il nome del sentiero che Peggy dovrà utilizzare per ritornare indietro, preso a caso. Se si ipotizza che lei conosca veramente
-la parola magica, è facile: apre la porta, se necessario, e ritorna attraverso il sentiero desiderato .È da notare che Victor non conosce il sentiero per il quale Peggy è entrata.
+la parola magica, è facile: apre la porta, se necessario, e ritorna attraverso il sentiero desiderato. È da notare che Victor non conosce il sentiero per il quale Peggy è entrata.
 \begin{figure}[htbp]
 	\centering%
 	\subfigure%
@@ -710,7 +708,7 @@ una chiave pubblica $k_{s}$, cioè una coppia $<s, k_{s}>$. Ovviamente, $k_{s}$ 
 \item[e.] chi non conosce il segreto $s$ deve poter verificare la correttezza della prova utilizzando la chiave pubblica $k_{s}$ dell'entità che si sta autenticando (senza la chiave pubblica non deve essere possibile verificare la correttezza della prova).
 \end{itemize}
 
-\subsection{ZKAS basato su MSR}
+\subsection{ZKAS basato su MSR - Fiat-Shamir}
 
 Di seguito mostriamo un protocollo di autenticazione, estremamente efficiente, che sfrutta un problema difficile nell'ambito dell'aritmetica modulare. A rigore tale schema di autenticazione non è completamente a conoscenza zero, anche se nella pratica può considerarsi tale. 
 \newline \newline
@@ -731,7 +729,6 @@ Il problema che viene sfruttato è il problema della \textbf{radice quadrata mod
 	{\includegraphics[scale=0.6, keepaspectratio]{Immagini/chiave_pubblica/zkasmsr_auth.png}}
 	\caption{}
 \end{figure}
-
-Supponiamo che Fred voglia impersonare Peggy. L'etichettatura scelta in modo casuale da Victor implica che Fred ha una probabilità del 50\% di rispondere in modo corretto ad ogni $r_{i}^2$. Fred potrebbe generarsi autonomamente gli $r_{i}$, ma in tal caso non saprebbe rispondere agli $r_{i}^2$ con etichetta 1 oppure potrebbe usare un insieme di $r_{i}^2$ etichettati in passato con 1 in una precedente autenticazione, ma allora non conoscerebbe i corrispondenti $r_{i}$ e non saprebbe rispondere nel caso in cui l'etichetta è 0. Se $k$ è sufficientemente grande la probabilità che Fred impersoni correttamente Peggy tende a 0. \\
+Supponiamo che Fred voglia impersonare Peggy. L'etichettatura scelta in modo casuale da Victor implica che Fred ha una probabilità del 50\% di rispondere in modo corretto ad ogni $r_{i}^2$. Fred potrebbe generarsi autonomamente gli $r_{i}$, ma in tal caso non saprebbe rispondere agli $r_{i}^2$ con etichetta 1 oppure potrebbe usare un insieme di $r_{i}^2$ etichettati in passato con 1 in una precedente autenticazione, ma allora non conoscerebbe i corrispondenti $r_{i}$ e non saprebbe rispondere nel caso in cui l'etichetta è 0. Se $k$ è sufficientemente grande la probabilità che Fred impersoni correttamente Peggy tende a 0. \\ \\
 In assenza di etichette 0 il protocollo si semplificherebbe: Peggy si limiterebbe ad inviare delle coppie $<r_{i}^2, sr_{i} \, mod \, n>$, tuttavia non si avrebbe più un protocollo a conoscenza zero, poiché Fred potrebbe usare una precedente sequenza inviata di Peggy ed impersonarla con successo. \\ \\
 ZKAS basato su MSR è molto più efficiente di RSA. Infatti, assumendo $k = 30$, Peggy deve effettuare 45 operazioni modulari (30 quadrati più una media di 15 moltiplicazioni per $s$) e Victor deve effettuare lo stesso numero di operazioni di Peggy; usando RSA Peggy deve eseguire una esponenziazione modulare che consiste in una media di 768 moltiplicazioni modulari mentre Victor se la cava con 3 moltiplicazioni nel caso in cui $e = 3$.

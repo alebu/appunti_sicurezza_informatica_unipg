@@ -40,7 +40,7 @@ Anziché memorizzare una password $pwd$ in chiaro, si memorizza il suo hash $h(p
 Come vedremo in seguito, le funzioni di hash possono essere utilizzate per la generazione di MAC. In linea di principio si genera il MAC come output di una una funzione di hash il cui input dipende dal messaggio da trasmettere e da un segreto condiviso con l'altra parte della comunicazione.
 
 \section{Probabilità di collisione}
-Sia $h:\{0, 1\}^{*} \rightarrow \{0, 1\}^{b}$ una funzione di hash e siano $\{m_{1}, m_{2}, ..., m_{N}\}$ \textbf{N} messaggi arbitrariamente scelti in $\{0, 1\}^{*}$. Quanto deve valere N affinché si abbia una probabilità di 0.5 che due messaggi $m_{i}, m_{j}$ abbiano lo stesso hash?
+Sia $h:\{0, 1\}^{*} \rightarrow \{0, 1\}^{b}$ una funzione di hash e siano $\{m_{1}, m_{2}, ..., m_{N}\}$ \textbf{N} messaggi arbitrariamente scelti in $\{0, 1\}^{*}$. Quanto deve valere N affinché si abbia una probabilità di 0.5 che (almeno) due messaggi $m_{i}, m_{j}$ abbiano lo stesso hash?
 
 \subsubsection{Stima approssimata per difetto} \label{par:stima_difetto}
 
@@ -85,7 +85,7 @@ Analizziamo ora l'ipotesi di mutua esclusione degli eventi. A rigore tale ipotes
 Una seconda stima di N, più accurata, è la seguente. Posto:
 \begin{itemize}
 \item $P$: probabilità che \textbf{almeno una coppia} di messaggi collida
-\item $P^{*}$: probabilità che tutte le coppie di messaggi abbiano digest diversi, quindi $P = 1 - P^{*}$
+\item $P^{*}$: probabilità che tutti i messaggi abbiano digest diversi, quindi $P = 1 - P^{*}$
 \end{itemize}
 Allora:
 \begin{equation}
@@ -103,7 +103,7 @@ Ricordando che:
 \begin{equation}
  \lim_{k\to \infty}{(1 - \frac{1}{k})^k} = \frac{1}{e} 
 \end{equation}
-Se $k \gg 1$, si ottiene:
+Se $k\to \infty$ ($k$ molto grande), si ottiene:
 \begin{equation}
 P^{*} \approx e^{-\frac{N(N-1)}{2k}}
 \end{equation}
@@ -353,7 +353,7 @@ Ogni volta che una password \textbf{pwd} d'utente viene impostata viene generato
 \newline \newline
 Questo schema funziona bene, però, solamente per la cifratura di messaggi corti. Com'è possibile calcolare l'hash di un messaggio di lunghezza arbitraria utilizzando un algoritmo di cifratura a chiave segreta?
 \subsection{Hash di grandi messaggi tramite algoritmi di cifratura}
-Una possibile soluzione consiste nel suddividere il messaggio $m = m_{1},m_{2},m_{3},...,m_{n}$, e utilizzare ogni $m_{i}$ come input a un blocco in cascata. L'hash h(m) sarà l'output della cascata. Tale schema è mostrato in figura \ref{fig:hash_lung_ar}.
+Una possibile soluzione consiste nel suddividere il messaggio $m = m_{1},m_{2},m_{3},...,m_{n}$, e utilizzare ogni $m_{i}$ come input a un blocco in cascata. L'hash $h(m)$ sarà l'output della cascata. Tale schema è mostrato in figura \ref{fig:hash_lung_ar}.
 \begin{figure}
 	\begin{center}
 	{\includegraphics[height=5cm, width=5cm, keepaspectratio]{Immagini/hash/schema_des_come_hash_1.JPG}}

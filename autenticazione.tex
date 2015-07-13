@@ -27,7 +27,8 @@ Nel caso di autenticazione basata su password l'identità equivale alla conoscen
 \end{figure}
 
 Un'autenticazione che richiede l'inserimento di una password non è detto che ricada nella categoria autenticazione basata su password: se infatti le informazioni inviate risultano cifrate (magari con una chiave derivata dalla password), allora si parlerà di autenticazione crittografica.
-
+\newline \newline
+Questo tipo di autenticazione viene solitamente utilizzata quando chi è che deve essere autenticato è un essere umano (ad esempio per operare in una workstation), che solitamente fatica a memorizzare chiavi crittografiche. Tuttavia è possibile trovare questo tipo di autenticazione anche per interazioni macchina/macchina, spesso a causa della presenza di sistemi legacy che in passato prevedevano la presenza di un umano, di requisiti di efficienza che impediscono l'utilizzo di sistemi crittografici o di vincoli legali.
 \subsection{Attacchi alle password}
 Gli attacchi alle password possono essere di tipo on-line o off-line.\\
 
@@ -138,19 +139,32 @@ Bob si otterrebbe il segreto $K_{AB}$.
 Se si desidera soddisfare a pieno i requisiti (R1) e (R2) conviene evitare l'uso di password ed è necessario ricorrere alla crittografia a chiave pubblica. Senza la crittografia a chiave pubblica, infatti diventa
 molto complicato, se non impossibile, soddisfare contemporaneamente (R1) e (R2), mentre è facile soddisfare o solo (R1) o solo (R2).
 
-\subsubsection{Protocolli a sfida e risposta unidirezionali ("login only")}
-Si approfondiranno ora i protocolli di autenticazione unidirezionali, nei quali solo uno dei due principal si autentica all'altro.
-Si è visto nell'introduzione a questa sezione (vedi \ref{subsec:uso_chiavi_crittografiche}) come l'utilizzo di chiavi crittografiche migliori la sicurezza del protocollo di autenticazione rispetto all'utilizzo di password. Verranno presentati ora alcuni protocolli crittografici a sfida e risposta basati, quindi, sulla conoscenza di un segreto condiviso (usando sia algoritmi di cifratura a chiave segreta sia algoritmi di digest) e successivamente, si discuteranno protocolli simili
-utilizzando la tecnologia a chiave pubblica. \\
-Nel seguito si userà la seguente notazione:
+\section{Protocolli di autenticazione}
+Le comunicazioni sicure quasi sempre richiedono una fase di handshake preliminare per autenticare le parti comunicanti. Tale handshake serve sia ad autenticare i partecipanti che a scambiarsi eventuali segreti condivisi con il fine di proteggere integrità e confidenzialità della conversazione. Progettare protocolli di autenticazione (crittografici) sicuri nasconde molte insidie, poiché variazioni minime ad un protocollo sicuro possono introdurre delle falle molto pericolose. Per questo motivo molti protocolli in uso presentano delle falle di sicurezza. Va quindi posta molta attenzione nell'effettuare modifiche a protocolli esistenti, e all'ambiente in cui un eventuale protocollo viene usato.
+\newline \newline 
+Nel progettare un protocollo, oltre alla sicurezza, vanno considerate anche le prestazioni, ovvero l’efficienza dello stesso. L’efficienza è data da:
+\begin{itemize}
+\item numero di messaggi
+\item costo computazionale
+\item compattezza dei messaggi
+\item risorse di calcolo richieste
+\end{itemize}
+In generale, non esiste il protocollo migliore in senso assoluto. Alcune minacce sono più frequenti e/o pericolose in un dato contesto, mentre in un altro possono anche non esistere. E' necessario tener conto delle risorse disponibili (CPU, memoria, hardware specializzato, spese per i diritti di utilizzo di brevetti, ecc.), dei vincoli progettuali relativi all’ambiente di uso e del comportamento degli utenti.
+\paragraph{Meccanismo sfida/risposta}
+Molti protocolli di autenticazione esistenti furono progettati per ambienti in cui le intercettazioni non erano un problema, ed eventuali utenti malevoli erano considerati poco esperti.In questo contesto furono introdotti protocolli di autenticazione basati su password, che non prevedevano alcun meccanismo di cifratura o controllo di integrità crittografico.
+\newline \newline
+Un miglioramento significativo della sicurezza si è avuto sostituendo la trasmissione della password in chiaro con il meccanismo a \textbf{sfida/risposta crittografico} (cryptographic challenge/response). In seguito si esamineranno protocolli crittografici a sfida e risposta basati sulla conoscenza di un segreto condiviso, usando sia algoritmi di cifratura a chiave segreta sia algoritmi di digest. Successivamente, si discuteranno protocolli simili utilizzando la tecnologia a chiave pubblica.
+
+\subsection{Protocolli a sfida e risposta unidirezionali ("login only")}
+Si approfondiranno ora i protocolli di autenticazione unidirezionali, nei quali solo uno dei due principal si autentica all'altro. Nel seguito si userà la seguente notazione:
 \begin{itemize}
 	\item $R$: sfida, numero casuale e non prevedibile
 	\item $K_{Alice-Bob}\lbrace R\rbrace$: cifratura di $R$ con un algoritmo a chiave segreta (DES, AES), dove $K_{Alice-Bob}$ è la chiave di cifratura
 	\item $h(K_{Alice-Bob}, R)$: hash di $R$ dipendente dal segreto $K_{Alice-Bob}$ (e.g. la sfida $R$ può essere concatenata con $K_{Alice-Bob}$)
 	\item $f(K_{Alice-Bob}, R)$: quantità ottenuta applicando ad $R$ una trasformazione crittografica dipendente dal segreto (i.e. $f(K_{Alice-Bob}, R)$ può essere sia $K_{Alice-Bob}\lbrace R\rbrace$ sia $h(K_{Alice-Bob}, R)$)
 \end{itemize}
-\paragraph{Protocolli a chiave segreta}
-\subparagraph{(P1) Protocollo 1}
+\subsubsection{Protocolli a chiave segreta}
+\paragraph{(P1) Protocollo 1}
 Si consideri il protocollo di tipo "login only" in \figurename~\ref{fig:ImgS11bis}.
 \begin{figure}[htbp]
 	\centering%
@@ -168,7 +182,7 @@ Si noti che il protocollo (P1) presenta le seguenti debolezze:
 	Bob. Proteggere il database implica proteggere tutti i suoi backup impedendone l'accesso fisico o cifrando il contenuto e proteggendo in qualche modo la chiave di cifratura.
 \end{itemize}
 Nonostante i precedenti svantaggi, se le risorse per aumentare la sicurezza sono molto limitate, il protocollo (P1) costituisce un'alternativa molto più sicura rispetto ad inviare password in chiaro anche se $K_{Alice-Bob}$ viene derivata dalla password.
-\subparagraph{(P2) Protocollo 2}
+\paragraph{(P2) Protocollo 2}
 Una piccola variante del protocollo (P1) è riportata in \figurename~\ref{fig:ImgS17bis}.
 \begin{figure}[htbp]
 	\centering%
@@ -181,7 +195,7 @@ Si noti che (P2) richiede l'uso di operazioni crittografiche invertibili, mentre
 Si noti anche che se $K_{Alice-Bob}$ è derivata da una password (ed è pertanto vulnerabile ad attacchi dictionary) e se inoltre $R$ è una quantità riconoscibile (e.g. 32 bit random + 32 bit nulli di padding), allora Trudy può eseguire un attacco dictionary senza dover essere in grado di intercettare i messaggi (cosa non sempre facile). Ovviamente, se Trudy può intercettare i messaggi scambiati tra le parti, allora può eseguire un attacco dictionary in entrambi i
 protocolli (P1) e (P2).\\
 Si noti infine che se $R$ e una quantità riconoscibile con tempo di vita limitato (e.g. $R = random||timestamp$), allora anche Alice può autenticare Bob (autenticazione mutua); infatti, soltanto chi conosce $K_{Alice-Bob}$ può generare $K_{Alice-Bob}\lbrace R = random||timestamp\rbrace$, perciò è essenziale che $R$ abbia una durata temporale molto limitata per evitare che $K_{Alice-Bob}\lbrace R\rbrace$ possa essere riciclato da un falso Bob.
-\subparagraph{(P3) Protocollo 3}
+\paragraph{(P3) Protocollo 3}
 Quella in \figurename~\ref{fig:ImgS20bis} è un'altra variante di (P1) che utilizza un timestamp invece di una sfida random $R$, perciò è sufficiente un solo messaggio per l'handshake.
 \begin{figure}[htbp]
 	\centering%
@@ -197,7 +211,7 @@ Si ha un'altra potenziale debolezza se Alice usa lo stesso segreto $K_{Alice-Bob
 server con il timestamp, i.e. al posto di $K_{Alice-Bob}\lbrace timestamp\rbrace$ va inviato $K_{Alice-Bob}\lbrace "Bob"||timestamp\rbrace$ (ma (P3) rimane vulnerabile ad eventuali modifiche all'orologio di sistema del server Bob, a causa delle quali timestamp scaduti possono essere riusati). Alla luce di questo, se la sicurezza dipende dall'ora, allora la configurazione dell'ora richiederà un handshake sicuro: un handshake basato sull'istante corrente potrebbe fallire se i due orologi non sono sincronizzati, quindi è necessaria un'autenticazione basata su un handshake di tipo challenge/response per la sincronizzazione degli orologi.\\
 Si ricordi che in (P1), calcolare $f(K_{Alice-Bob}, R)$ voleva dire calcolare $K_{Alice-Bob}\lbrace R\rbrace$ oppure calcolare l'hash $h(R||K_{Alice-Bob})$; ciò continua a valere nel caso del (P3), ma con piccole complicazioni aggiuntive se si usa l'hash: in particolare Bob deve eseguire un certo numero di tentativi per verificare che $h(timestamp||K_{Alice-Bob})$ sia stato generato da Alice (e.g. se si accettano 10 minuti di differenza tra i due orologi e il timestamp è espresso in minuti, allora 20 tentativi sono sufficienti, ma per timestamp in microsecondi sono necessari più di un miliardo di tentativi!).
 
-\subparagraph{(P4) Protocollo 4}
+\paragraph{(P4) Protocollo 4}
 Assumendo che si voglia utilizzare un timestamp in microsecondi e una funzione di hash anziché una funzione crittografica invertibile, una possibile soluzione è che Alice trasmetta anche il timestamp non cifrato (\figurename~\ref{fig:ImgS25bis}).
 \begin{figure}[htbp]
 	\centering%
@@ -205,8 +219,9 @@ Assumendo che si voglia utilizzare un timestamp in microsecondi e una funzione d
 	{\includegraphics[height=4cm, width=12cm, keepaspectratio]{Immagini/autenticazione/ImgS25bis.png}}
 	\caption{Bob autentica Alice calcolando l’hash di un timestamp ad alta risoluzione e sfruttando e un segreto condiviso $K_{Alice-Bob}$\label{fig:ImgS25bis}} 	
 \end{figure}
-\paragraph{Protocolli a chiave pubblica}
-\subparagraph{(P5) Protocollo 5}
+
+\subsubsection{Protocolli a chiave pubblica}
+\paragraph{(P5) Protocollo 5}
 Tutti i precedenti protocolli, a chiave segreta, consentono a Trudy di impersonare Alice se può leggere il database del server; utilizzando la tecnologia a chiave pubblica questa vulnerabilità può essere evitata (\figurename~\ref{fig:ImgS26bis}).
 \begin{figure}[htbp]
 	\centering%
@@ -216,7 +231,7 @@ Tutti i precedenti protocolli, a chiave segreta, consentono a Trudy di impersona
 \end{figure}
 Si noti che $[R]_{Alice}$ è $R$ firmato da Alice, cioè cifrato con la sua chiave privata $PR_{Alice}$; Bob verifica la firma $[R]_{Alice}$ usando la chiave pubblica di Alice $PU_{Alice}$ ed accetta il login se il risultato è $R$. Il vantaggio di questo protocollo è che il database di Bob non è più vulnerabile agli accessi in lettura non
 autorizzati, tuttavia il database di Bob va comunque protetto da modifiche non autorizzate (qualcuno potrebbe modificare la chiave pubblica di Alice!), ma non da accessi non autorizzati in lettura.
-\subparagraph{(P6) Protocollo 6}
+\paragraph{(P6) Protocollo 6}
 Una variante al (P5) è quella riportata in \figurename~\ref{fig:ImgS28bis}:
 \begin{figure}[htbp]
 	\centering%
@@ -228,18 +243,19 @@ In questo schema Bob sceglie $R$ e la cifra con $PU_{Alice}$, Alice dimostra di 
 Un problema di questa variante è che molte tecnologie a chiave pubblica (si pensi a DSS) permettono solo di firmare
 e non di decifrare.
 
-\subsubsection{Protocolli a sfida e risposta, mutua autenticazione} \label{par:aut_prot_mut_aut}
-\paragraph{Protocolli a chiave segreta}
-\subparagraph{(P7) Protocollo 7}
+\subsection{Protocolli a sfida e risposta, mutua autenticazione} \label{par:aut_prot_mut_aut}
+Tutti i protocolli visti fino a questo momento consentono l'autenticazione unidirezionale. Vediamo ora com'è possibile invece ottenere la mutua autenticazione, procedendo ancora una volta separando le tecnologie usate (crittografia a chiave segreta, crittografia a chiave pubblica).
+\subsubsection{Protocolli a chiave segreta}
+\paragraph{(P7) Protocollo 7}
 Se si desidera autenticare reciprocamente ambo le parti è sufficiente eseguire uno scambio di autenticazione in
-entrambe le direzioni (\figurename~\ref{fig:ImgS35bis}).
+entrambe le direzioni (\figurename~\ref{fig:ImgS35bis}). Si noti che rispetto ai protocolli precedenti si ha un notevole aumento dei messaggi, con conseguente calo dell'efficienza.
 \begin{figure}[htbp]
 	\centering%
 	\subfigure%
 	{\includegraphics[height=4cm, width=12cm, keepaspectratio]{Immagini/autenticazione/ImgS35bis.png}}
 	\caption{Mutua autenticazione basata su un segreto condiviso $K_{Alice-Bob}$}\label{fig:ImgS35bis} 	
 \end{figure}
-\subparagraph{(P8) Protocollo 8}
+\paragraph{(P8) Protocollo 8}
 Il protocollo (P7) richiede lo scambio di cinque messaggi complessivi, quindi è poco efficiente. Sembra immediato poter ridurre a tre il numero di messaggi caricando in ogni messaggio più informazioni (\figurename~\ref{fig:ImgS36bis}).
 \begin{figure}[htbp]
 	\centering%
@@ -247,7 +263,9 @@ Il protocollo (P7) richiede lo scambio di cinque messaggi complessivi, quindi è
 	{\includegraphics[height=4cm, width=12cm, keepaspectratio]{Immagini/autenticazione/ImgS36bis.png}}
 	\caption{Mutua autenticazione ottimizzata basata su un segreto condiviso $K_{Alice-Bob}$}\label{fig:ImgS36bis} 	
 \end{figure}
-Il protocollo (P8), più compatto del (P7), è però vulnerabile ad un attacco di tipo \textbf{reflection} (\figurename~\ref{fig:ImgS39bis}). \\
+Il protocollo (P8), più compatto del (P7), è però vulnerabile ad un attacco di tipo \textbf{reflection} (\figurename~\ref{fig:ImgS39bis}). 
+
+\paragraph{Reflection Attack}
 Si supponga che Trudy voglia impersonare Alice: Trudy inizia il protocollo (P8), ma quando riceve la sfida di Bob non può proseguire non potendo cifrare $R_{1}$. Tuttavia, Trudy può interrompere temporaneamente la sessione corrente e può iniziarne una nuova usando $R_{1}$ quale sfida per Bob. A questo punto comunque Trudy non può completare la seconda sessione poiché non può cifrare $R_{3}$, ma ora conosce $f(K_{Alice-Bob},R_{1})$ e può completare la prima sessione rimasta appesa.
 \begin{figure}[htbp]
 	\centering%
@@ -256,7 +274,8 @@ Si supponga che Trudy voglia impersonare Alice: Trudy inizia il protocollo (P8),
 	\caption{Attacco di tipo reflection}\label{fig:ImgS39bis} 	
 \end{figure}
 Un attacco di tipo reflection è facile da sferrare se è possibile aprire simultaneamente più connessioni con lo
-stesso server, oppure esistono più server che condividono uno stesso segreto con Alice.\\
+stesso server, oppure esistono più server che condividono uno stesso segreto con Alice.
+\newline \newline
 Tale attacco può essere sventato con un po' di attenzione e comprendendo bene la debolezza che sfrutta: Alice e Bob sono perfettamente interscambiabili, visto che la risposta ad una stessa sfida è identica.\\
 Alla luce di questo, l'idea è quella di differenziare in qualche modo la risposta di Alice e quella di Bob ad una stessa sfida. Seguono alcune possibili soluzioni:
 \begin{itemize}
@@ -264,9 +283,9 @@ Alla luce di questo, l'idea è quella di differenziare in qualche modo la rispos
 	\item Usare \textbf{sfide strutturalmente differenti}: garantire cioè che la sfida dell'iniziatore abbia una struttura diversa da quella di chi risponde (e.g. l'iniziatore potrebbe usare un numero dispari mentre il risponditore un numero pari)
 	\item Usare \textbf{risposte dipendenti dal risponditore}: cioè la risposta non deve consistere nella cifratura della sola sfida, ma viene aggiunta un'informazione associata in modo univoco al risponditore (e.g. la risposta ad una sfida $R$ non è semplicemente $f(K, R)$ ma $f(K, R||\text{"nome/id risponditore"}$)
 \end{itemize}
-Si noti che il protocollo (P7) non è vulnerabile ad un attacco di tipo reflection, poiché segue un altro importante principio generale: idealmente, l'iniziatore dovrebbe essere il primo a provare la sua identità.
-\subparagraph{(P9) Protocollo 9}
-Aggiungendo un messaggio al protocollo (P8) è possibile renderlo molto più robusto ad attacchi off-line sulla password (\figurename~\ref{fig:ImgS45bis}).
+Si noti che il protocollo (P7) non è vulnerabile ad un attacco di tipo reflection, poiché segue un altro importante principio generale: idealmente, \textbf{l'iniziatore dovrebbe essere il primo a provare la sua identità}.
+\paragraph{(P9) Protocollo 9}
+Applicando il principio sopra citato, e quindi aggiungendo un messaggio al protocollo (P8) è possibile renderlo molto più robusto ad attacchi off-line sulla password (\figurename~\ref{fig:ImgS45bis}).
 \begin{figure}[htbp]
 	\centering%
 	\subfigure%
@@ -274,8 +293,8 @@ Aggiungendo un messaggio al protocollo (P8) è possibile renderlo molto più rob
 	\caption{Mutua autenticazione parzialmente ottimizzata basata su un segreto condiviso $K_{Alice-Bob}$}\label{fig:ImgS45bis} 	
 \end{figure}
 Si noti che il nuovo protocollo è chiaramente meno efficiente. Si noti anche che ora Trudy non può più effettuare un attacco off-line sulla password semplicemente spacciandosi per Alice, i.e. senza dover intercettare i messaggi. Tuttavia, impersonando l'indirizzo di Bob può tentare di ingannare Alice facendogli stabilire una connessione con lei (tale vulnerabilità non va ignorata, ma è comunque molto più difficile da sfruttare per un attaccante).
-\paragraph{Protocolli a chiave pubblica}
-\subparagraph{(P10) Protocollo 10}
+\subsubsection{Protocolli a chiave pubblica}
+\paragraph{(P10) Protocollo 10}
 Assumendo che Alice e Bob conoscano ognuno la chiave pubblica dell'altro, utilizzando la tecnologia a chiave pubblica, possono autenticarsi reciprocamente scambiandosi tre messaggi (\figurename~\ref{fig:ImgS47bis}).
 \begin{figure}[htbp]
 	\centering%
@@ -283,14 +302,15 @@ Assumendo che Alice e Bob conoscano ognuno la chiave pubblica dell'altro, utiliz
 	{\includegraphics[height=4cm, width=12cm, keepaspectratio]{Immagini/autenticazione/ImgS47bis.png}}
 	\caption{Mutua autenticazione a chiave pubblica (basata sulla cifratura/decifratura)}\label{fig:ImgS47bis} 	
 \end{figure}
-\subparagraph{(P11) Protocollo 11}
-Una variante del protocollo (P10) e che fa uso della firma digitale è riportata in \figurename~\ref{fig:ImgS48bis}.
+\paragraph{(P11) Protocollo 11}
+Una variante del protocollo (P10) e che fa uso della firma digitale è riportata in \figurename~\ref{fig:ImgS48bis}. \newline \newline
 \begin{figure}[htbp]
 	\centering%
 	\subfigure%
 	{\includegraphics[height=4cm, width=12cm, keepaspectratio]{Immagini/autenticazione/ImgS48bis.png}}
 	\caption{Mutua autenticazione a chiave pubblica (basata sulla firma digitale)}\label{fig:ImgS48bis} 	
 \end{figure}
+\paragraph{(P11*) Protocollo 11 con timestamp}
 Utilizzando dei timestamp, anziché sfide random, è possibile ottenere un protocollo di mutua autenticazione di due soli messaggi: tale soluzione è molto utile e può essere facilmente aggiunta ai protocolli a richiesta/risposta (HTTP) senza dover aggiungere un ulteriore messaggio (\figurename~\ref{fig:ImgS53bis}).
 \begin{figure}[htbp]
 	\centering%
@@ -301,7 +321,9 @@ Utilizzando dei timestamp, anziché sfide random, è possibile ottenere un proto
 Per evitare che Trudy possa impersonare Bob riusando $f(K_{Alice-Bob}, timestamp)$ (i.e. copiando la quantità crittografica di Alice e restituendogliela), nella risposta viene richiesto un $timestamp$ diverso, cioè $timestamp + 1$.\\
 Ovviamente sono possibili altre soluzioni, e.g. usare chiavi diverse per cifrare il $timestamp$, concatenare il proprio nome al $timestamp$ prima di applicare $f()$ o in generale, rendere la risposta dell'iniziatore e del
 risponditore non interscambiabili (\figurename~\ref{fig:ImgS56bis}).\\
-Chiaramente, tutte le questioni viste nel caso unidirezionale e riguardanti gli orologi continuano ad essere valide. L'idea di usare $timestamp + 1$ è stata introdotta nel protocollo Needham-Schroeder e ripresa in Kerberos V4, ma non si tratta della scelta migliore. Infatti Trudy, intercettando la risposta di Bob, potrebbe riusarla per impersonare subito dopo Alice. Per risolvere tale problema, Bob potrebbe mantenere in cache tutte le coppie $timestamp$, $timestamp + 1$ incontrate, ma tale soluzione non è elegante: se esistono più repliche di Bob aventi la stessa chiave, sarebbe necessario sincronizzare le loro cache oppure concatenare il $timestamp$ con un identificatore univoco di ogni replica (una scelta migliore potrebbe essere concatenare al $timestamp$ un flag che specifica se il messaggio è inviato dall'iniziatore o dal risponditore).
+Chiaramente, tutte le questioni viste nel caso unidirezionale e riguardanti gli orologi continuano ad essere valide. 
+\paragraph{(P11**) Protocollo 11 con timestamp e principal flag}
+L'idea di usare $timestamp + 1$ è stata introdotta nel protocollo Needham-Schroeder e ripresa in Kerberos V4, ma non si tratta della scelta migliore. Infatti Trudy, intercettando la risposta di Bob, potrebbe riusarla per impersonare subito dopo Alice. Per risolvere tale problema, Bob potrebbe mantenere in cache tutte le coppie $timestamp$, $timestamp + 1$ incontrate, ma tale soluzione non è elegante: se esistono più repliche di Bob aventi la stessa chiave, sarebbe necessario sincronizzare le loro cache oppure concatenare il $timestamp$ con un identificatore univoco di ogni replica (una scelta migliore potrebbe essere concatenare al $timestamp$ un flag che specifica se il messaggio è inviato dall'iniziatore o dal risponditore).
 \begin{figure}[htbp]
 	\centering%
 	\subfigure%
@@ -309,7 +331,7 @@ Chiaramente, tutte le questioni viste nel caso unidirezionale e riguardanti gli 
 	\caption{Mutua autenticazione basata sulla sincronizzazione degli orologi e su un segreto condiviso $K_{Alice-Bob}$}\label{fig:ImgS56bis} 	
 \end{figure}
 
-\subsubsection{Cifratura e integrità dei dati}
+\section{Cifratura e integrità dei dati}
 Al fine di fornire protezione dell'integrità e della confidenzialità dei dati da trasmettere dopo lo scambio di autenticazione, Alice e Bob devono necessariamente usare la crittografia a chiave segreta per cifrare e/o aggiungere dei controlli di integrità crittografici.\\
 L'esecuzione di tali operazioni richiede preliminarmente che le parti stabiliscano una chiave segreta di sessione (session key) anche se già condividono dei segreti a lungo termine che permetterebbero di cifrare o di eseguire dei controlli di integrità.\\
 Tipicamente, una chiave di sessione viene stabilita modificando lo scambio di autenticazione in modo tale che, terminato l'handshake, le due parti condividano una chiave segreta. Esamineremo come procedere in relazione ai seguenti scambi di autenticazione:
@@ -319,7 +341,7 @@ Tipicamente, una chiave di sessione viene stabilita modificando lo scambio di au
 	\item Chiave pubblica unidirezionale: soltanto una parte ha una coppia $<PU,PR>$, quindi l'autenticazione è unidirezionale.
 \end{itemize}
 Ovviamente, un intercettatore non deve essere in grado di ottenere la chiave di sessione.
-\paragraph{Autenticazione a chiave segreta}
+\subsection{Chiave di sessione nell'autenticazione a chiave segreta}
 Sia $K_{Alice-Bob}$ il segreto a lungo termine condiviso tra Alice e Bob, si consideri lo schema di autenticazione riportato in \figurename~\ref{fig:ImgS61bis}. In tal caso c'è sufficiente informazione per stabilire una chiave di sessione condivisa. \\
 \textbf{Nota:} Quanto detto potrà applicarsi al caso di mutua autenticazione (anziché $R$ ci saranno $R_{1}$ e $R_{2}$) e autenticazione mediante $timestamp$ (anziché sfide random $R$).  \\
 \begin{figure}[htbp]
@@ -329,8 +351,16 @@ Sia $K_{Alice-Bob}$ il segreto a lungo termine condiviso tra Alice e Bob, si con
 	\caption{Autenticazione con chiave segreta $K_{Alice-Bob}$}\label{fig:ImgS61bis} 	
 \end{figure}
 
-Una possibile chiave di sessione è $K_{s} = (K_{Alice-Bob}+1)\lbrace R\rbrace$; in generale, una chiave di sessione può ottenersi modificando $K_{Alice-Bob}$ in qualche modo ($K_{modified} = f(K_{Alice-Bob})$) e cifrando la sfida $R$ con la chiave modificata: il risultato è la chiave di sessione $K_{modified} = K_{s} = (f(K_{Alice-Bob})\lbrace R\rbrace$\\
+Una possibile chiave di sessione è infatti:
+\begin{equation}
+K_{s} = (K_{Alice-Bob}+1)\lbrace R\rbrace
+\end{equation}
+In generale, una chiave di sessione può ottenersi modificando $K_{Alice-Bob}$ in qualche modo ($K_{modified} = f(K_{Alice-Bob})$) e cifrando la sfida $R$ con la chiave modificata. Il risultato è la chiave di sessione:
+\begin{equation}
+K_{modified} = K_{s} = (f(K_{Alice-Bob})\lbrace R\rbrace
+\end{equation}
 Si noti che $K_{Alice-Bob}\lbrace R\rbrace$ non può utilizzarsi come chiave di sessione perché è trasmessa da Alice nel terzo messaggio dell'handshake.
+\newline \newline
 Si noti anche che $K_{Alice-Bob}\lbrace R+1\rbrace$ non è sicura per una ragione molto sottile (\figurename~\ref{fig:ImgS65bis}).
 \begin{figure}[htbp]
 	\centering%
@@ -340,8 +370,8 @@ Si noti anche che $K_{Alice-Bob}\lbrace R+1\rbrace$ non è sicura per una ragion
 \end{figure}
 Si supponga che Alice e Bob abbiano iniziato una conversazione e Bob abbia inviato $R$ come sfida; Trudy potrebbe aver registrato l'intera conversazione, cifrata con $K_{s} = K_{Alice-Bob}\lbrace R\rbrace$. In seguito, Trudy potrebbe impersonare l'indirizzo di rete di Bob in una successiva comunicazione con Alice e dichiarandosi Bob, potrebbe inviare $R+1$ come sfida, alla quale Alice risponderebbe con $K_{Alice-Bob}\lbrace R+1\rbrace$. A questo punto Trudy sarebbe in grado di decifrare la precedente conversazione (registrata) tra Alice e Bob.\\ \\
 In definitiva, Alice e Bob, dopo lo scambio di autenticazione, conoscono, oltre $K_{Alice-Bob}$, anche $R$: molte combinazioni di tali quantità permettono di ottenere una chiave di sessione sicura, ma ci sono anche combinazioni non accettabili, infatti si noti che una buona chiave di sessione deve variare da sessione a sessione, non essere indovinabile da un intercettatore e non deve ottenersi cifrando con $K_{Alice-Bob}$ una quantità $X$, dove $X$ è un valore che può essere predetto o estratto da un intruso (e.g. $X = R + 1$).
-\paragraph{Autenticazione a chiave pubblica}
-\subparagraph{(1) \textit{K\ped{S} = R} - Alice invia \textit{{R}\ped{Bob}}}
+\subsection{Chiave di sessione nell'autenticazione a chiave pubblica}
+\paragraph{(1) \textit{K\ped{S} = R} - Alice invia \textit{{R}\ped{Bob}}}
 \label{subsec:caso1}
 Nel caso di autenticazione a chiave pubblica bidirezionale Alice e Bob conoscono la propria chiave privata e la chiave pubblica dell'altro. Per definire una chiave (segreta) di sessione condivisa $K_{s}$ esistono varie possibilità.\\ \\
 Nello schema in \figurename~\ref{fig:ImgS67bis} una parte, diciamo Alice, sceglie un numero random $R$ (che sarebbe la chiave di sessione), lo cifra con la chiave pubblica di Bob ed invia a Bob $\lbrace R\rbrace_{Bob}$.
@@ -352,7 +382,7 @@ Nello schema in \figurename~\ref{fig:ImgS67bis} una parte, diciamo Alice, scegli
 	\caption{Autenticazione a chiave pubblica bidirezionale, $K_{s} = R$ e Alice invia $\lbrace R\rbrace_{Bob}$}\label{fig:ImgS67bis} 	
 \end{figure}
 Questo schema presenta la seguente vulnerabilità: un intruso, Trudy, può dirottare la conversazione scegliendo un suo $R$, cifrandolo con la chiave pubblica di Bob e inviando il risultato a Bob al posto della chiave cifrata fornita da Alice; contestualmente dovrebbe impersonare l'indirizzo di rete di Alice.
-\subparagraph{(2) \textit{K\ped{S}} = R - Alice invia \textit{[\{R\}\ped{Bob}]\ped{Alice}}}
+\paragraph{(2) \textit{K\ped{S}} = R - Alice invia \textit{[\{R\}\ped{Bob}]\ped{Alice}}}
 In riferimento allo schema in \figurename~\ref{fig:ImgS69bis}, rispetto a prima Alice firma la quantità $\lbrace R\rbrace_{Bob}$ e invia a Bob $[\lbrace R\rbrace_{Bob}]_{Alice}$; Bob verifica prima la firma di Alice usando $PU_{Alice}$ e poi decifra con la propria chiave privata $\lbrace R\rbrace_{Bob}$ riottenendo $R$.
 \begin{figure}[htbp]
 	\centering%
@@ -363,7 +393,7 @@ In riferimento allo schema in \figurename~\ref{fig:ImgS69bis}, rispetto a prima 
 L'attacco visto per il caso precedente (in cui Trudy sceglie un proprio $R$, in luogo di quello di Alice, e lo invia a Bob crittografato) ora non può funzionare perché Trudy non è in grado di forgiare la firma di Alice; tuttavia, se si vuole essere paranoici, c'è ancora una "piccola" vulnerabilità che può essere ridotta parzialmente (vedi caso (3)) o del tutto (vedi caso (4)). \\
 La vulnerabilità è la seguente: si supponga che Trudy registri una intera conversazione tra Alice e Bob, inclusi i dati cifrati con la chiave di sessione; si supponga inoltre che "successivamente" (dopo un minuto/giorno/mese) Trudy riesca a violare il server Bob e ad ottenere tutti i suoi segreti (quindi anche $PR_{Bob}$); ottenendo $PR_{Bob}$ Trudy può recuperare la chiave di sessione dalle informazioni trasmesse: in particolare da $[\lbrace R\rbrace_{Bob}]_{Alice}$ può ottenere $K_{s} = R$. A questo punto Trudy può decifrare la conversazione cifrata tra Alice e Bob, precedentemente registrata.\\
 In altri termini la soluzione (2) permette di sferrare degli attacchi alla confidenzialità "retroattivi" se nel futuro un avversario riuscisse a violare Bob.
-\subparagraph{(3) \textit{K\ped{S} = R $\oplus$ P}  - R e P non vengono inviate in chiaro}
+\paragraph{(3) \textit{K\ped{S} = R $\oplus$ P}  - R e P non vengono inviate in chiaro}
 Nello schema in \figurename~\ref{fig:ImgS74bis} Alice genera una quantità random $R$ e invia $\lbrace R\rbrace_{Bob}$ a Bob; Bob genera una quantità random $P$ e invia $\lbrace P\rbrace_{Alice}$ a Alice; terminata la conversazione Alice e Bob dimenticheranno $R$ e $P$.
 \begin{figure}[htbp]
 	\centering%
@@ -372,7 +402,7 @@ Nello schema in \figurename~\ref{fig:ImgS74bis} Alice genera una quantità rando
 	\caption{$K_{s} = R \oplus P$}\label{fig:ImgS74bis} 	
 \end{figure}
 Definendo $K_{s} = R \oplus P$, per ottenere la chiave di sessione, Trudy deve registrare lo scambio tra Alice e Bob,  violare Bob per ottenere $PR_{Bob}$ e quindi $R$, ma deve anche violare Alice per ottenere $PR_{Alice}$ e quindi $P$, (i.e. per ottenere $K_{s}$ Trudy dovrebbe violare entrambi).
-\subparagraph{(4) Usare Diffie-Hellman}
+\paragraph{(4) Usare Diffie-Hellman}
 Alice e Bob possono effettuare uno scambio Diffie-Hellman autenticato (\figurename~\ref{fig:ImgS77bis}), in cui ognuno firma la quantità da inviare all'altro (si supponga che le quantità $g$ e $p$ siano pubbliche).
 \begin{figure}[htbp]
 	\centering%
@@ -381,18 +411,18 @@ Alice e Bob possono effettuare uno scambio Diffie-Hellman autenticato (\figurena
 	\caption{Autenticazione a chiave pubblica bidirezionale, uso di D-H con $K_{s} = K_{AB} = T_{B}^{s_{A}}modp = T_{A}^{s_{B}}modp = K_{BA}$}\label{fig:ImgS77bis} 	
 \end{figure}
 Usando Diffie-Hellman autenticato anche se Trudy riesce a violare sia Alice che Bob, ma non potrà comunque essere in grado di decifrare delle conversazioni registrate perché non è in grado di dedurre né $S_{A}$ né $S_{B}$.
-\paragraph{Autenticazione a chiave pubblica unidirezionale}
+\subsection{Chiave di sessione nell'autenticazione unidirezionale}
 In alcuni casi solo una delle parti ha una coppia $<PU, PR>$. In particolare spesso si assume, come nel caso di SSL, che i server abbiano le chiavi pubbliche certificate, mentre i client no, pertanto l'autenticazione crittografica è unidirezionale. In questi casi il protocollo assicura il client (Alice) che sta contattando il server Bob giusto, ma terminato la scambio di autenticazione, che permette tra l'altro di definire una chiave di sessione, il server non ha ancora autenticato il client. Quest'ultimo si autentica dopo lo scambio di autenticazione inviando username e password, cifrati con la chiave di sessione $K_{s}$.\\ 
 Vediamo ora due possibili modi per stabilire una chiave di sessione condivisa $K_{s}$ durante lo scambio di autenticazione a chiave pubblica unidirezionale.\\ \\
-\textbf{(a) \textit{K\ped{s}} = R e Alice invia \textit{\{R\}\ped{Bob}}} (\figurename~\ref{fig:ImgS81bis}): 
+\paragraph{(a) \textit{K\ped{s}} = R e Alice invia \textit{\{R\}\ped{Bob}}} (\figurename~\ref{fig:ImgS81bis}): 
 \begin{figure}[htbp]
 	\centering%
 	\subfigure%
-	{\includegraphics[height=4cm, width=12cm, keepaspectratio]{Immagini/autenticazione/ImgS81bis.png}}
+	{\includegraphics[height=4cm, width=10cm, keepaspectratio]{Immagini/autenticazione/ImgS81bis.png}}
 	\caption{Autenticazione a chiave pubblica unidirezionale, $K_{s} = R$ e Alice invia $\lbrace R\rbrace_{Bob}$}\label{fig:ImgS81bis} 	
 \end{figure}
 Alice sceglie un numero random $R$, lo cifra con la chiave pubblica di Bob ed invia $\lbrace R\rbrace_{Bob}$. Si noti che tale schema presenta le debolezze viste nel caso (1) (vedi sezione \ref{subsec:caso1}), i.e. Trudy potrebbe sostituire un suo $\lbrace R\rbrace_{Bob}$ e dirottare la conversazione seguente. Oppure Trudy può registrare l'intera conversazione e in futuro decifrarla qualora riuscisse a violare Bob. Tale debolezza è meno critica in un contesto dove non è necessaria una mutua autenticazione.\\ \\
-\textbf{(b) scambio Diffie-Hellman} \\
+\paragraph{(b) scambio Diffie-Hellman} 
 Bob e Alice possono effettuare uno scambio Diffie-Hellman dove Bob firma la sua quantità $T_{B}$ (\figurename~\ref{fig:ImgS82bis}).
 \begin{figure}[htbp]
 	\centering%
@@ -402,7 +432,7 @@ Bob e Alice possono effettuare uno scambio Diffie-Hellman dove Bob firma la sua 
 \end{figure}
 Si noti che Alice non può firmare nulla non disponendo di una coppia $<PU, PR>$. Si noti anche che il caso (b) rispetto al caso (a) è un po' più sicuro, infatti Trudy non può ottenere la chiave di sessione $K_{s}$ usata in una precedente conversazione neanche violando Bob (si assuma che Bob dimentichi $K_{s}$ non appena la conversazione con Alice termina).\\ \\
 Si noti che nessuno degli schemi (a) e (b) assicura a Bob di comunicare con la vera Alice,  ma in entrambi i casi Bob è sicuro che l'intera conversazione sia con una singola persona.
-\paragraph{Confidenzialità e integrità}
+\subsection{Garantire confidenzialità e integrità}
 Tipicamente, la conversazione che segue lo scambio di autenticazione viene cifrata con la chiave di sessione per proteggere la confidenzialità, inoltre viene applicato un controllo di integrità ai vari messaggi trasmessi (MIC o MAC), ottenuto con tecniche crittografiche a chiave segreta oppure sfruttando degli algoritmi di digest.\\
 Si è visto che non esiste un algoritmo standard per proteggere contemporaneamente confidenzialità e integrità disponendo di una sola chiave (la chiave di sessione $K_{s}$) ed effettuando una singola operazione crittografica. Pertanto si applicano alcune delle seguenti soluzioni che proteggono confidenzialità ed integrità in due fasi:
 \begin{itemize}
@@ -412,18 +442,17 @@ Si è visto che non esiste un algoritmo standard per proteggere contemporaneamen
 	\item includere un checksum debole per l'integrità all'interno di un algoritmo robusto per la protezione della confidenzialità: una volta stabilità una (o più) chiave di sessione, la conversazione, generalmente, consiste nello scambio di messaggi singolarmente cifrati e dei relativi MAC, quindi ogni volta che una parte riceve un messaggio lo decifra ed esegue il controllo di autenticità, poi, eventualmente, può proseguire la conversazione
 \end{itemize}
 
-\subsection{Uso di intermediari fidati}
-\subsubsection{Distribuzione delle chiavi segrete}
-Si assuma che la sicurezza di una rete si basi sulla tecnologia a chiave segreta. Se la rete ha \textit{n} nodi, e
-ogni computer \textit{c} deve poter autenticare ogni altro nodo, allora \textit{c} deve memorizzare \textit{n – 1} chiavi (una per ogni altro sistema della rete): se un nuovo nodo viene aggiunto alla rete dovrebbero essere generate \textit{n} nuove chiavi per avere una chiave segreta condivisa con tutti gli \textit{n} nodi pre-esistenti. \\
-Sarebbe pertanto necessario distribuire tali \textit{n} chiavi in modo sicuro a tutti gli altri nodi della rete, ma tale strategia di gestione delle chiavi può aver senso solo per reti molto piccole (\figurename~\ref{fig:ImgS50}). 
+\section{Uso di intermediari fidati}
+\subsection{Distribuzione delle chiavi segrete - KDC}
+Si assuma che la sicurezza di una rete si basi sulla tecnologia a chiave segreta. Se la rete ha \textit{n} nodi, e ogni computer \textit{c} deve poter autenticare ogni altro nodo, allora \textit{c} deve memorizzare \textit{n – 1} chiavi (una per ogni altro sistema della rete): se un nuovo nodo viene aggiunto alla rete dovrebbero essere generate \textit{n} nuove chiavi per avere una chiave segreta condivisa con tutti gli \textit{n} nodi pre-esistenti. \\
+Sarebbe pertanto necessario distribuire tali \textit{n} chiavi in modo sicuro a tutti gli altri nodi della rete, ma tale strategia di gestione delle chiavi può aver senso solo per reti molto piccole (\figurename~\ref{fig:ImgS50}). \newline \newline
 \begin{figure}[htbp]
 	\centering%
 	\subfigure%
 	{\includegraphics[height=4cm, width=12cm, keepaspectratio]{Immagini/autenticazione/ImgS50.png}}
 	\caption{Distribuzione delle chiavi\label{fig:ImgS50}} 	
 \end{figure}
-Un centro di distribuzione delle chiavi, \textbf{K}ey \textbf{D}istribution \textbf{C}enter (KDC), agevola la gestione/distribuzione delle chiavi segrete: conosce le chiavi di tutti i nodi e se un nuovo nodo si aggiunge alla rete, sola una chiave segreta, condivisa tra quel nodo e il KDC, deve essere generata (\figurename~\ref{fig:ImgS52}). 
+Un \textbf{centro di distribuzione delle chiavi}, \textbf{K}ey \textbf{D}istribution \textbf{C}enter (KDC), agevola la gestione/distribuzione delle chiavi segrete: conosce le chiavi di tutti i nodi e se un nuovo nodo si aggiunge alla rete, sola una chiave segreta, condivisa tra quel nodo e il KDC, deve essere generata (\figurename~\ref{fig:ImgS52}). 
 \begin{figure}[htbp]
 	\centering%
 	\subfigure%
@@ -431,7 +460,6 @@ Un centro di distribuzione delle chiavi, \textbf{K}ey \textbf{D}istribution \tex
 	\caption{Distribuzione delle chiavi con KDC\label{fig:ImgS52}} 	
 \end{figure}
 
-\subsubsection{Autenticazione mediata con KDC}
 Se il nodo Alice deve comunicare con il nodo Bob, Alice comunica con il KDC in modo sicuro, e usando la loro chiave segreta condivisa $K_{Alice}$ gli chiede di inviargli una chiave per comunicare con Bob. Il KDC autentica Alice, sceglie un numero random $K_{AB}$ da usare come chiave segreta condivisa tra Alice e Bob; cifra $K_{AB}$ con la chiave segreta $K_{Bob}$ che condivide con Bob, e trasmette $K_{AB}$ a Bob cifrata insieme alle istruzioni che Bob deve usare per comunicare con Alice. Lo scambio appena descritto è riportato in \figurename~\ref{fig:ImgS94bis}. Il KDC non sa se l'utente che ha chiesto di comunicare con Bob è realmente Alice, quindi Trudy potrebbe spacciarsi per Alice, ma poi non riuscirebbe ad ottenere $K_{AB}$ e non sarebbe in grado di decifrare il messaggio $K_{Alice}\lbrace \text{use } K_{AB} \text{ for Bob} \rbrace$; Trudy al massimo può indurre il KDC ad inviare ad Alice un messaggio da lei non richiesto.
 \begin{figure}[htbp]
 	\centering%
@@ -441,7 +469,7 @@ Se il nodo Alice deve comunicare con il nodo Bob, Alice comunica con il KDC in m
 \end{figure}
 Le uniche parti che conoscono $K_{AB}$ dopo questo scambio sono Alice, Bob e il KDC, pertanto, dopo lo scambio Alice e Bob possono autenticarsi reciprocamente utilizzando il segreto condiviso $K_{AB}$. \\
 Il protocollo precedente però non è quello utilizzato nella pratica, poiché se Alice invia immediatamente un messaggio a Bob, per i ritardi nella rete, è possibile che questo arrivi prima del messaggio che il KDC ha inviato a Bob. Inoltre, il fatto che un utente qualsiasi, senza autenticarsi presso il KDC, possa indurre quest'ultimo ad aprire connessioni verso un suo qualsiasi utente comporta una serie di pericoli (attacchi DoS) che dovrebbero poi essere gestiti. Siccome è Alice che desidera comunicare con Bob, la cosa più ragionevole è che il KDC fornisca ad Alice tutte le informazioni che egli avrebbe fornito a Bob per instaurare una connessione sicura con Alice: l'informazione cifrata che il KDC invia ad Alice da passare a Bob è detta \textbf{ticket}.
-\subparagraph{(P12) Protocollo 12 - Mediazione del KDC}
+\paragraph{(P12) Protocollo 12 - Mediazione del KDC}
 Nella pratica la mediazione del KDC avviene in modo simile a come illustrato in \figurename~\ref{fig:ImgS97bis}.
 \begin{figure}[htbp]
 	\centering%
@@ -484,7 +512,7 @@ Il protocollo (P12.3), riportato in \figurename~\ref{fig:ImgS109bis}, include an
 	{\includegraphics[height=4cm, width=12cm, keepaspectratio]{Immagini/autenticazione/ImgS109bis.png}}
 	\caption{Protocollo (P12.3)}\label{fig:ImgS109bis} 	
 \end{figure}
-\subparagraph{Protocollo di Needham-Schroeder}
+\paragraph{Protocollo di Needham-Schroeder}
 Il protocollo di Needham-Schroeder (\figurename~\ref{fig:ImgS111bis}) in pratica coincide con il protocollo (P12.3),  tranne per il fatto che il KDC include il ticket per Bob tra le informazioni da cifrare con $K_{Alice}$. Si osservi che ciò non migliora la sicurezza, in quanto il ticket per Bob è qualcosa di indecifrabile per Alice (tale ulteriore cifratura poteva pertanto omettersi).
 \begin{figure}[htbp]
 	\centering%
@@ -493,7 +521,7 @@ Il protocollo di Needham-Schroeder (\figurename~\ref{fig:ImgS111bis}) in pratica
 	\caption{Protocollo di Needham-Schroeder}\label{fig:ImgS111bis} 	
 \end{figure}
 
-\subparagraph{KDC: vantaggi e svantaggi}
+\paragraph{KDC: vantaggi e svantaggi}
 L'uso dei KDC presenta il seguente \textbf{vantaggio}: la gestione delle chiavi viene semplificata. In particolare, quando un nuovo utente deve essere aggiunto alla rete, o quando si sospetta che una chiave d'utente sia stata compromessa, c'è un singolo punto della rete, il KDC, la cui configurazione deve essere aggiornata. L'alternativa al KDC è installare le informazioni di un utente in ciascun server ove potrebbe accedere. \\ \\
 L'uso dei KDC comporta però i seguenti \textbf{svantaggi}: 
 \begin{itemize}
@@ -503,7 +531,7 @@ L'uso dei KDC comporta però i seguenti \textbf{svantaggi}:
 	\item può costituire un collo di bottiglia (in questa caso, avere più di un KDC può alleviare tale problema)
 \end{itemize}  
 
-\subsubsection{Autorità di certificazione}
+\subsection{Autorità di certificazione}
 La distribuzione delle chiavi è più facile con la crittografia a chiave pubblica: ogni nodo deve custodire soltanto la propria chiave privata e tutte le chiavi pubbliche possono essere accessibili in un unico punto. Anche in questo caso continuano ad esserci dei problemi: chi garantisce che le chiavi pubbliche disponibili in un dato punto siano corrette (corrispondano realmente alle entità a cui sono associate)? Per evitare la falsificazione delle chiavi pubbliche si ricorre alle Autorità di Certificazione. \\
 
 Una Autorità di Certificazione (\textbf{C}ertification \textbf{A}uthority CA) è un intermediario fidato che genera i certificati, cioè dei messaggi firmati dalla CA contenenti il nome, la chiave pubblica ed altre informazioni di uno specifico nodo. Tutti i nodi dovranno essere pre-configurati con la chiave pubblica della CA, in modo tale da poter verificare la sua firma sui certificati rilasciati: si tratta dell'unica (in questo specifico esempio) chiave pubblica che devono conoscere a priori. \\ \\

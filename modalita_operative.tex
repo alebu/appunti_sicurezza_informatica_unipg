@@ -1,7 +1,7 @@
 \chapter{Modalità operative dei cifrari a blocchi} \label{ch:modes}
 
 \section{Introduzione}
-Il seguente capitolo è dedicato all'impiego effettivo degli algoritmi di cifratura a simmetriche. Si illustrerà come usare tali algoritmi - in particolare DES, IDEA e AES - in applicazioni reali: è stato visto come usarli per cifrare blocchi di lunghezza prefissata (64 bit per DES e IDEA, 128 bit per AES), ma come si procede se è necessario cifrare dei messaggi di lunghezza arbitraria? \newline \newline
+Il seguente capitolo è dedicato all'impiego effettivo degli algoritmi di cifratura a chiave simmetrica. Si illustrerà come usare tali algoritmi - in particolare DES, IDEA e AES - in applicazioni reali: è stato visto come usarli per cifrare blocchi di lunghezza prefissata (64 bit per DES e IDEA, 128 bit per AES), ma come si procede se è necessario cifrare dei messaggi di lunghezza arbitraria? \newline \newline
 Si vedrà inoltre come si generano dei MAC (\textbf{M}essage \textbf{A}uthentication \textbf{C}ode) sfruttando la crittografia a chiave segreta.
 
 \section{Cifrare messaggi di grandi dimensioni}
@@ -121,7 +121,7 @@ Supponiamo che un avversario (Trudy) sappia che una data sequenza di blocchi cif
 \newline \newline
 Ricapitolando: Trudy è stato in grado di modificare un blocco in modo predittivo con l'effetto collaterale di modificare il blocco precedente senza poter prevedere il risultato finale.
 \subsubsection{CBC minaccia 2 – Riarrangiamento blocchi cifrati}
-Con riferimento alla \figurename~\ref{fig:riarrangiamento_blk_cifrati}, si supponga che Trudy conosca il testo in chiaro e, il corrispondente testo cifrato di qualche messaggio, cioè $m_{1}$, $m_{2}$, ..., $m_{n}$ e $IV$, $c_{1}$, $c_{2}$, ..., $c_{n}$; in questo modo Trudy conosce automaticamente anche il blocco decifrato di ciascun $c_{i}$, da $D(K, c_{1}) = c_{i-1} \oplus m_{i}$.
+Con riferimento alla \figurename~\ref{fig:riarrangiamento_blk_cifrati}, si supponga che Trudy conosca il testo in chiaro e, il corrispondente testo cifrato di qualche messaggio, cioè $m_{1}$, $m_{2}$, ..., $m_{n}$ e $IV$, $c_{1}$, $c_{2}$, ..., $c_{n}$; in questo modo Trudy conosce automaticamente anche il blocco decifrato di ciascun $c_{i}$, da $D(K, c_{i}) = c_{i-1} \oplus m_{i}$.
 \begin{figure}[htbp]
 	\centering%
 	\subfigure%
@@ -145,7 +145,7 @@ L'OFB è un cifrario a flusso: la cifratura consiste nel sommare ($\oplus$ XOR) 
 	\item il primo blocco del keystream coincide con $IV$: $b_{0} = IV$
 	\item i blocchi seguenti $b_{i}$ si ottengono cifrando $b_{i-1}$ con la chiave segreta: $b_{i} = E(K,b_{i-1})$
 \end{itemize}
-Il one-time pad (keystream) risultante è dato dalla sequenza $OTP = OTP(K, IV) = \{b_{0}|b_{1}|b_{2}|...|b_{i}|b_{i+1}|...\}$. La cifratura con \textbf{OFB} (\figurename ~\ref{fig:OFB_enc}) consiste nel sommare ($\oplus$ XOR) il messaggio $m$ con OTP: denotata con $l_{m}$ la lunghezza in bit $m$ ha  $l_{m}$, si considereranno soltanto $l_{m}$ bit di OTP.
+Il one-time pad (keystream) risultante è dato dalla sequenza $OTP = OTP(K, IV) = \{b_{0}|b_{1}|b_{2}|...|b_{i}|b_{i+1}|...\}$. La cifratura con \textbf{OFB} (\figurename ~\ref{fig:OFB_enc}) consiste nel sommare ($\oplus$ XOR) il messaggio $m$ con OTP: denotata con $l_{m}$ la lunghezza in bit di $m$, si considereranno soltanto $l_{m}$ bit di OTP.
 \begin{figure}[htbp]
 	\centering%
 	\subfigure%
@@ -198,19 +198,20 @@ La modalità CFB è molto simile a OFB, con riferimento alla \figurename ~\ref{f
 \item viene prodotto un one-time pad generando, uno alla volta, singoli pezzi di $k$ bit
 \item il one-time pad viene sommato ($\oplus$ XOR) con pezzi di $k$ bit del messaggio
 \end{itemize}
-Si noti che in OFB i $k$ bit meno significativi dell'input $I_{i}$ del modulo di cifratura DES sono i $k$ bit di $b_{i-1}$ (sono parte dell'output $O_{i-1}$ della cifratura DES del blocco precedente; invece, in CFB i $k$ bit di $I_{i}$ sono i $k$ bit di testo cifrato del blocco precedente, cioè i $k$ bit di $c_{i-1}$ (in CFB il one-time pad non può essere generato prima che il messaggio e noto, a differenza di OFB), nella modalità a k-bit è ragionevole assegnare a $k$ un valore diverso da 64 bit (una scelta sensata è $k$ = 8 bit).
+Si noti che in OFB i $k$ bit meno significativi dell'input $I_{i}$ del modulo di cifratura DES sono i $k$ bit di $b_{i-1}$ (sono parte dell'output $O_{i-1}$ della cifratura DES del blocco precedente); invece, in CFB i $k$ bit di $I_{i}$ sono i $k$ bit di testo cifrato del blocco precedente, cioè i $k$ bit di $c_{i-1}$ (in CFB il one-time pad non può essere generato prima che il messaggio sia noto, a differenza di OFB), nella modalità a k-bit è ragionevole assegnare a $k$ un valore diverso da 64 bit (una scelta sensata è $k$ = 8 bit).
 \subsubsection{Vantaggi e svantaggi  di CFB}
 CBF presenta i seguenti vantaggi:
 \begin{itemize}
 \item Con OFB o CBC, se si ha una perdita di caratteri in trasmissione (testo cifrato), i.e. se nel flusso cifrato $c_{1}, c_{2}, c_{3}, ... , c_{n}, ...$ si perde il carattere $c_{k}$, allora a destinazione si ottiene la sequenza $c_{1}, c_{2}, c_{3}, ... , c_{k'}, ... , c_{n-1'}$ ove $c_{k'} = c_{k+1}, c_{k+1'} = c_{k+2}, ... , c_{k+i'} = c_{k+i+1}$; oppure, con OFB o CBC, se extra caratteri sono aggiunti al flusso cifrato, i.e. se nel flusso cifrato $c_{1}, c_{2}, c_{3}, ... , c_{n}, ...$ si aggiunge il carattere $c^{*}$ dopo di $c_{k-1}$, allora a destinazione si ottiene la sequenza $c_{1}, c_{2}, c_{3}, ... , c_{k'}, ... , c_{n+1'}$ ove $c_{k'} = c^{*}$, $c_{k+1'} = c_{k}$, $...$ , $c_{k+i'} = c_{k+i-1}$. Quindi l'intera parte restante della trasmissione risulta indecifrabile poiché $m_{i’} = c_{i’} \oplus b_{i}$ e $b_{i} = b_{i}(K, IV)$ cioè $b_{i}$ non dipende dalla sequenza cifrata. \\
-Invece, con 8-bit CFB, si ha un effetto risincronizzante: se un byte ci è perso in trasmissione allora il corrispondente testo in chiaro mi è perso, e i successivi 8 byte $m_{i+1}, …, m_{i+8}$ risulteranno indecifrabili, ma dal byte $m_{i+9}$ in poi il testo in chiaro sarà corretto, questo perché $b_{i} = b_{i}(K, c_{i-1})$, cioè $b_{i}$ è derivato dalla sequenza di caratteri cifrati. Discorsi analoghi valgono nel caso dell'aggiunta di un byte al flusso cifrato.
+Invece, con 8-bit CFB, si ha un effetto risincronizzante: se un byte ci è perso in trasmissione allora il corrispondente testo in chiaro è perso, e i successivi 8 byte $m_{i+1}, …, m_{i+8}$ risulteranno indecifrabili, ma dal byte $m_{i+9}$ in poi il testo in chiaro sarà corretto, questo perché $b_{i} = b_{i}(K, c_{i-1})$, cioè $b_{i}$ è derivato dalla sequenza di caratteri cifrati. Discorsi analoghi valgono nel caso dell'aggiunta di un byte al flusso cifrato.
 \item i messaggi cifrati con CFB offrono più protezione di CBC e di OFB rispetto ad eventuali manomissioni; infatti, nel caso di 8-bit CFB un avversario può modificare ogni singolo byte in modo predittivo, ma con l'effetto collaterale di non poter prevedere/controllare i successivi 8 byte; discorsi simili valgono per 64-bit CFB.
 \item a differenza di CBC, non sono possibili attacchi basati sul riarrangiamento di blocchi; tuttavia intere sezioni del messaggio possono essere riarrangiate rendendo indecifrabili le parti corrispondenti ai "punti di giuntura".
 \end{itemize}
 CFB ha anche i seguenti svantaggi:
 \begin{itemize}
 \item 8-bit CFB ha lo svantaggio che ogni byte di input richiede un'operazione DES. Inizialmente CFB fu concepito per essere utilizzato con un numero arbitrario $k$ di bit per "pezzo", con $k$ minore della dimensione di un blocco completo (64 bit per DES); nella pratica tuttavia $k$ è pari a 1 byte oppure coincide con la dimensione piena (full-block) dei blocchi del modulo di cifratura. Quando utilizzato in modalità full-block le prestazioni di CFB sono comparabili a quelle di ECB, CBC, e OFB.
-\item come OFB consente di cifrare ed inviare ciascun byte del messaggio non appena è noto tuttavia, a differenza di OFB non è in grado di anticipare il calcolo del one-time pad in fine, è in grado di rilevare delle alterazioni meglio di OFB, ma non bene quanto CBC.
+\item come OFB, consente di cifrare ed inviare ciascun byte del messaggio non appena è noto tuttavia, a differenza di OFB non è in grado di anticipare il calcolo del one-time pad. 
+\item è in grado di rilevare delle alterazioni meglio di OFB, ma non bene quanto CBC.
 \end{itemize}
 \subsection{CounTeR Mode (CTR) (Opzionale)}
 CTR (\figurename ~\ref{fig:CTR}) è simile a OFB perché un one-time pad viene generato e sommato ($\oplus$ XOR) con i dati; tuttavia differisce da OFB perché non concatena ciascun blocco di one-time-pad con il precedente, ma incrementa $IV$ e poi cifra quanto ottenuto per ottenere il prossimo blocco di one-time pad. 
@@ -358,7 +359,7 @@ Il 3DES comunemente usato nelle applicazioni esegue un concatenamento CBC estern
 \newline \newline
 Si è visto che con CBC è possibile fare una modifica predittiva sul testo in chiaro $m_{n}$ (ad esempio invertire il bit $x$) invertendo il bit $x$ nel blocco cifrato $c_{n-1}$; ciò comporta però l'effetto collaterale di modificare in modo imprevedibile il blocco $m_{n-1}$. La possibilità di sfruttare questa debolezza dipende dal tipo di applicazione.
 \newline \newline
-Con CBC esterno, un avversario può ancora sferrare questo tipo di attacco (il fatto che la cifratura è fatta con un triplo DES è del tutto ininfluente): un avversario che inverte il bit $x$ di un blocco cifrato $c_{n-1}$ modificherà completamente e in modo imprevedibile il blocco di testo in chiaro $m_{n-1}$ (il blocco di testo in chiaro $m_{n}$ avrà il bit $x$ invertito e tutti i blocchi di testo in chiaro diversi da $m_{n-1}$ e $m_{n}$ saranno invariati.
+Con CBC esterno, un avversario può ancora sferrare questo tipo di attacco (il fatto che la cifratura è fatta con un triplo DES è del tutto ininfluente): un avversario che inverte il bit $x$ di un blocco cifrato $c_{n-1}$ modificherà completamente e in modo imprevedibile il blocco di testo in chiaro $m_{n-1}$ (il blocco di testo in chiaro $m_{n}$ avrà il bit $x$ invertito e tutti i blocchi di testo in chiaro diversi da $m_{n-1}$ e $m_{n}$ saranno invariati).
 \newline \newline
 Con CBC interno, una modifica ad un blocco cifrato $c_{n}$ altera in modo imprevedibile tutti i blocchi di testo in chiaro dal blocco $m_{n}$ fino alla fine del messaggio. Per questo CBC interno è più sicuro di CBC esterno, e per alcune applicazioni potrebbe rappresentare scelta migliore. Tuttavia, in alcuni casi, è preferibile che la modifica di un blocco cifrato non si propaghi completamente nel resto del messaggio. Ciò avviene nei casi in cui è preferibile che lo schema di cifratura sia autosincronizzante (dopo un piccolo numero di blocchi corrotti, il testo in chiaro inizierà ad essere nuovamente decifrato correttamente). \\
 Un altro vantaggio di CBC interno riguarda l'efficienza: triplicando l'uso di hardware e pipeline per le cifrature si può ottenere complessivamente una velocità pari a quella di una singola cifratura (con CBC esterno ciò non è possibile).\\

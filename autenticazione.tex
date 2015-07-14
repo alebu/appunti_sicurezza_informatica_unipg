@@ -70,7 +70,7 @@ Si noti però che con tale soluzione...
 \begin{itemize}
 	\item il requisito (R1) non è soddisfatto, poiché un impostore potrebbe riusare il messaggio inviato da Alice ed
 	impersonarla, inoltre potrebbe ottenere la password con un attacco dictionary se non viene applicato lo standard $\symbol{35}PKCS1$
-	\item (R2) è parzialmente soddisfatto, infatti violando il server Bob si potrebbe ricavare la chiave privata $PR_{Bob}$ (se la password non è robusta un attacco off-line di tipo dictionary permetterebbe di ricavarla)
+	\item (R2) è parzialmente soddisfatto, infatti violando il server Bob si potrebbe ricavare la chiave privata $PR_{Bob}$. Inoltre se la password di Alice non è robusta, un attacco off-line di tipo dictionary permetterebbe di ricavarla a partire dall'hash memorizzato sul server Bob.
 \end{itemize}
 Modifichiamo allora lo schema proposto, come mostrato in \figurename~\ref{fig:ImgS39}. Siano:
 \begin{itemize}
@@ -217,7 +217,7 @@ Tutti i precedenti protocolli, a chiave segreta, consentono a Trudy di impersona
 Si noti che $[R]_{Alice}$ è $R$ firmato da Alice, cioè cifrato con la sua chiave privata $PR_{Alice}$; Bob verifica la firma $[R]_{Alice}$ usando la chiave pubblica di Alice $PU_{Alice}$ ed accetta il login se il risultato è $R$. Il vantaggio di questo protocollo è che il database di Bob non è più vulnerabile agli accessi in lettura non
 autorizzati, tuttavia il database di Bob va comunque protetto da modifiche non autorizzate (qualcuno potrebbe modificare la chiave pubblica di Alice!), ma non da accessi non autorizzati in lettura.
 \subparagraph{(P6) Protocollo 6}
-Una variante al (P5) è quella riportata in \figurename~\ref{fig:ImgS28bis}:
+Una variante al protocollo (P5) è quella riportata in \figurename~\ref{fig:ImgS28bis}.
 \begin{figure}[htbp]
 	\centering%
 	\subfigure%
@@ -330,7 +330,7 @@ Sia $K_{Alice-Bob}$ il segreto a lungo termine condiviso tra Alice e Bob, si con
 \end{figure}
 
 Una possibile chiave di sessione è $K_{s} = (K_{Alice-Bob}+1)\lbrace R\rbrace$; in generale, una chiave di sessione può ottenersi modificando $K_{Alice-Bob}$ in qualche modo ($K_{modified} = f(K_{Alice-Bob})$) e cifrando la sfida $R$ con la chiave modificata: il risultato è la chiave di sessione $K_{modified} = K_{s} = (f(K_{Alice-Bob})\lbrace R\rbrace$\\
-Si noti che $K_{Alice-Bob}\lbrace R\rbrace$ non può utilizzarsi come chiave di sessione perché è trasmessa da Alice nel terzo messaggio dell'handshake.
+Si noti che $K_{Alice-Bob}\lbrace R\rbrace$ non può essere utilizzata come chiave di sessione perché è trasmessa da Alice nel terzo messaggio dell'handshake.
 Si noti anche che $K_{Alice-Bob}\lbrace R+1\rbrace$ non è sicura per una ragione molto sottile (\figurename~\ref{fig:ImgS65bis}).
 \begin{figure}[htbp]
 	\centering%
@@ -338,10 +338,10 @@ Si noti anche che $K_{Alice-Bob}\lbrace R+1\rbrace$ non è sicura per una ragion
 	{\includegraphics[height=4cm, width=12cm, keepaspectratio]{Immagini/autenticazione/ImgS65bis.png}}
 	\caption{Trudy impersona Bob}\label{fig:ImgS65bis} 	
 \end{figure}
-Si supponga che Alice e Bob abbiano iniziato una conversazione e Bob abbia inviato $R$ come sfida; Trudy potrebbe aver registrato l'intera conversazione, cifrata con $K_{s} = K_{Alice-Bob}\lbrace R\rbrace$. In seguito, Trudy potrebbe impersonare l'indirizzo di rete di Bob in una successiva comunicazione con Alice e dichiarandosi Bob, potrebbe inviare $R+1$ come sfida, alla quale Alice risponderebbe con $K_{Alice-Bob}\lbrace R+1\rbrace$. A questo punto Trudy sarebbe in grado di decifrare la precedente conversazione (registrata) tra Alice e Bob.\\ \\
+Si supponga che Alice e Bob abbiano iniziato una conversazione e Bob abbia inviato $R$ come sfida; Trudy potrebbe aver registrato l'intera conversazione, cifrata con $K_{s} = K_{Alice-Bob}\lbrace R+1\rbrace$. In seguito, Trudy potrebbe impersonare l'indirizzo di rete di Bob in una successiva comunicazione con Alice e dichiarandosi Bob, potrebbe inviare $R+1$ come sfida, alla quale Alice risponderebbe con $K_{Alice-Bob}\lbrace R+1\rbrace$. A questo punto Trudy sarebbe in grado di decifrare la precedente conversazione (registrata) tra Alice e Bob.\\ \\
 In definitiva, Alice e Bob, dopo lo scambio di autenticazione, conoscono, oltre $K_{Alice-Bob}$, anche $R$: molte combinazioni di tali quantità permettono di ottenere una chiave di sessione sicura, ma ci sono anche combinazioni non accettabili, infatti si noti che una buona chiave di sessione deve variare da sessione a sessione, non essere indovinabile da un intercettatore e non deve ottenersi cifrando con $K_{Alice-Bob}$ una quantità $X$, dove $X$ è un valore che può essere predetto o estratto da un intruso (e.g. $X = R + 1$).
 \paragraph{Autenticazione a chiave pubblica}
-\subparagraph{(1) \textit{K\ped{S} = R} - Alice invia \textit{{R}\ped{Bob}}}
+\subparagraph{(1) \textit{K\ped{S} = R} - Alice invia \textit{\{R\}\ped{Bob}}}
 \label{subsec:caso1}
 Nel caso di autenticazione a chiave pubblica bidirezionale Alice e Bob conoscono la propria chiave privata e la chiave pubblica dell'altro. Per definire una chiave (segreta) di sessione condivisa $K_{s}$ esistono varie possibilità.\\ \\
 Nello schema in \figurename~\ref{fig:ImgS67bis} una parte, diciamo Alice, sceglie un numero random $R$ (che sarebbe la chiave di sessione), lo cifra con la chiave pubblica di Bob ed invia a Bob $\lbrace R\rbrace_{Bob}$.
@@ -380,7 +380,7 @@ Alice e Bob possono effettuare uno scambio Diffie-Hellman autenticato (\figurena
 	{\includegraphics[height=4cm, width=12cm, keepaspectratio]{Immagini/autenticazione/ImgS77bis.png}}
 	\caption{Autenticazione a chiave pubblica bidirezionale, uso di D-H con $K_{s} = K_{AB} = T_{B}^{s_{A}}modp = T_{A}^{s_{B}}modp = K_{BA}$}\label{fig:ImgS77bis} 	
 \end{figure}
-Usando Diffie-Hellman autenticato anche se Trudy riesce a violare sia Alice che Bob, ma non potrà comunque essere in grado di decifrare delle conversazioni registrate perché non è in grado di dedurre né $S_{A}$ né $S_{B}$.
+Usando Diffie-Hellman autenticato, anche se Trudy riesce a violare sia Alice che Bob, non potrà comunque essere in grado di decifrare delle conversazioni registrate perché non è in grado di dedurre né $s_{A}$ né $s_{B}$.
 \paragraph{Autenticazione a chiave pubblica unidirezionale}
 In alcuni casi solo una delle parti ha una coppia $<PU, PR>$. In particolare spesso si assume, come nel caso di SSL, che i server abbiano le chiavi pubbliche certificate, mentre i client no, pertanto l'autenticazione crittografica è unidirezionale. In questi casi il protocollo assicura il client (Alice) che sta contattando il server Bob giusto, ma terminato la scambio di autenticazione, che permette tra l'altro di definire una chiave di sessione, il server non ha ancora autenticato il client. Quest'ultimo si autentica dopo lo scambio di autenticazione inviando username e password, cifrati con la chiave di sessione $K_{s}$.\\ 
 Vediamo ora due possibili modi per stabilire una chiave di sessione condivisa $K_{s}$ durante lo scambio di autenticazione a chiave pubblica unidirezionale.\\ \\
@@ -391,7 +391,7 @@ Vediamo ora due possibili modi per stabilire una chiave di sessione condivisa $K
 	{\includegraphics[height=4cm, width=12cm, keepaspectratio]{Immagini/autenticazione/ImgS81bis.png}}
 	\caption{Autenticazione a chiave pubblica unidirezionale, $K_{s} = R$ e Alice invia $\lbrace R\rbrace_{Bob}$}\label{fig:ImgS81bis} 	
 \end{figure}
-Alice sceglie un numero random $R$, lo cifra con la chiave pubblica di Bob ed invia $\lbrace R\rbrace_{Bob}$. Si noti che tale schema presenta le debolezze viste nel caso (1) (vedi sezione \ref{subsec:caso1}), i.e. Trudy potrebbe sostituire un suo $\lbrace R\rbrace_{Bob}$ e dirottare la conversazione seguente. Oppure Trudy può registrare l'intera conversazione e in futuro decifrarla qualora riuscisse a violare Bob. Tale debolezza è meno critica in un contesto dove non è necessaria una mutua autenticazione.\\ \\
+Alice sceglie un numero random $R$, lo cifra con la chiave pubblica di Bob ed invia $\lbrace R\rbrace_{Bob}$. Si noti che tale schema presenta le debolezze viste nel caso (1) (vedi sezione \ref{subsec:caso1}), i.e. Trudy potrebbe sostituire un suo $\lbrace R\rbrace_{Bob}$ e dirottare la conversazione seguente. Tale debolezza è meno critica in un contesto dove non è necessaria una mutua autenticazione. Oppure Trudy può registrare l'intera conversazione e in futuro decifrarla qualora riuscisse a violare Bob.\\ \\
 \textbf{(b) scambio Diffie-Hellman} \\
 Bob e Alice possono effettuare uno scambio Diffie-Hellman dove Bob firma la sua quantità $T_{B}$ (\figurename~\ref{fig:ImgS82bis}).
 \begin{figure}[htbp]
@@ -409,8 +409,9 @@ Si è visto che non esiste un algoritmo standard per proteggere contemporaneamen
 	\item stabilire due chiavi di sessione nello scambio di autenticazione $K_{sc}$ (chiave di sessione per la confidenzialità) e $K_{si}$ (chiave i sessione per l'integrità)
 	\item derivare una chiave dall'altra, cambiando alcuni bit in modo deterministico $K_{si} = f(K_{sc})$
 	\item usare una sola chiave $K_{s}$, ma algoritmi crittografici distinti (e.g. confidenzialità tramite AES/CBC e integrità tramite HMAC)
-	\item includere un checksum debole per l'integrità all'interno di un algoritmo robusto per la protezione della confidenzialità: una volta stabilità una (o più) chiave di sessione, la conversazione, generalmente, consiste nello scambio di messaggi singolarmente cifrati e dei relativi MAC, quindi ogni volta che una parte riceve un messaggio lo decifra ed esegue il controllo di autenticità, poi, eventualmente, può proseguire la conversazione
+	\item includere un checksum debole per l'integrità all'interno di un algoritmo robusto per la protezione della confidenzialità. 
 \end{itemize}
+Una volta stabilità una (o più) chiave di sessione, la conversazione, generalmente, consiste nello scambio di messaggi singolarmente cifrati e dei relativi MAC, quindi ogni volta che una parte riceve un messaggio lo decifra ed esegue il controllo di autenticità, poi, eventualmente, può proseguire la conversazione.
 
 \subsection{Uso di intermediari fidati}
 \subsubsection{Distribuzione delle chiavi segrete}
@@ -494,7 +495,7 @@ Il protocollo di Needham-Schroeder (\figurename~\ref{fig:ImgS111bis}) in pratica
 \end{figure}
 
 \subparagraph{KDC: vantaggi e svantaggi}
-L'uso dei KDC presenta il seguente \textbf{vantaggio}: la gestione delle chiavi viene semplificata. In particolare, quando un nuovo utente deve essere aggiunto alla rete, o quando si sospetta che una chiave d'utente sia stata compromessa, c'è un singolo punto della rete, il KDC, la cui configurazione deve essere aggiornata. L'alternativa al KDC è installare le informazioni di un utente in ciascun server ove potrebbe accedere. \\ \\
+L'uso del KDC presenta il seguente \textbf{vantaggio}: la gestione delle chiavi viene semplificata. In particolare, quando un nuovo utente deve essere aggiunto alla rete, o quando si sospetta che una chiave d'utente sia stata compromessa, c'è un singolo punto della rete, il KDC, la cui configurazione deve essere aggiornata. L'alternativa al KDC è installare le informazioni di un utente in ciascun server ove potrebbe accedere. \\ \\
 L'uso dei KDC comporta però i seguenti \textbf{svantaggi}: 
 \begin{itemize}
 	\item contiene tutte le informazioni per impersonare un utente ad un qualsiasi altro utente, perciò, se compromesso, tutte le risorse di rete risultano vulnerabili
@@ -539,14 +540,13 @@ Un certificato è valido se:
 	\item la firma della CA è valida,
 	\item non è scaduto
 	\item non è inserito nella CRL più recente della CA che lo ha emesso
-	\item la CRL ha una data e ora di emissione
 \end{itemize}
-Se un'applicazione vuole assicurarsi che nessuno dei certificati che onora sia stato revocato entro un'ora prima della verifica, allora deve essere trascorsa al più un ora dal momento in cui la CRL, consultata da tale applicazione, è stata emessa; quindi, in questo caso, una nuova CRL deve essere pubblicata con una cadenza di un'ora.\\
+La CRL ha una data e ora di emissione. Se un'applicazione vuole assicurarsi che nessuno dei certificati che onora sia stato revocato entro un'ora prima della verifica, allora deve essere trascorsa al più un ora dal momento in cui la CRL, consultata da tale applicazione, è stata emessa; quindi, in questo caso, una nuova CRL deve essere pubblicata con una cadenza di un'ora.\\
 Un intruso potrebbe cancellare l'ultima CRL, in tal caso le applicazioni configurate per consultare esclusivamente CRL pubblicate nell'ultima ora si rifiuteranno di onorare tutti i certificati, ma l'intruso non può impersonare un utente valido distruggendo la CRL o sovrascrivendola con una CRL più vecchia.\\
 Lo standard X.509 ha definito anche il formato delle CRL, in base al quale una CRL deve includere:
 \begin{itemize}
 	\item una lista di numeri seriali di certificati revocati e non scaduti
-	\item e una data e ora di emissione della CRL
+	\item la data e ora di emissione della CRL
 	\item la firma dell'intera lista con la chiave privata della CA
 \end{itemize}
 \paragraph{Problema}

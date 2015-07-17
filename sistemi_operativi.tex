@@ -139,7 +139,7 @@ Il filesystem è un altro componente fondamentale di un OS, in quanto fornisce u
   \item \textbf{Permission}: azione possibile (e.g.: read, write, execute, list)
 \end{itemize}
 
-\subsubsection{Access Control Entities}
+\subsubsection{Access Control Entries}
 Una \textbf{Access Control Entry, ACE,} è una terna $\langle principal, type, permission \rangle$, che definisce esplicitamente cosa è possibile fare e cosa non per una specifica risorsa e per un dato principal. Il campo \textbf{type} può assumere due valori: \textbf{allow} o \textbf{deny}. \newline 
 
 Una \textbf{Access Control List} è invece una lista ordinata di terne \textbf{ACE}. Una possibile gestione per la sicurezza del filesystem prevede l'associazione di una ACL ad ogni file e directory in modo da definire la politica di accesso alla risorsa.
@@ -152,7 +152,7 @@ Il \textbf{DAC (Discretionary Access Control)} è un modello di assegnazione dei
 \end{itemize}
 
 \subsection{Sicurezza del filesystem Linux}
-Per la gestione dei permessi Linux utilizza una politica \textbf{DAC} con \textbf{default sicuro}. Inoltre l'accesso a un file dipende dall'ACL del file e di tutte le directory antenate: partendo dalla directory root, tutte le directory antenate devono avere il permesso \textbf{execute} (che per una directory significa il permesso di accedere alla stessa) per l'utente specificato. \newline
+Per la gestione dei permessi, Linux utilizza una politica \textbf{DAC} con \textbf{default sicuro}. Inoltre l'accesso a un file dipende dall'ACL del file e di tutte le directory antenate: partendo dalla directory root, tutte le directory antenate devono avere il permesso \textbf{execute} (che per una directory significa il permesso di accedere alla stessa) per l'utente specificato. \newline
 
 Linux utilizza una versione semplificata delle ACL: la \textbf{File permission matrix}, una matrice di permessi associata ad ogni file e directory (tale metodologia rappresenta uno standard per tutti i sistemi Unix-like). La matrice presenta tre principal: \textbf{owner}, \textbf{group} (utenti del gruppo a cui afferisce l'owner) e \textbf{others}. I permessi di ognuna delle 3 classi sono definiti da 3 bit:
 \begin{itemize}
@@ -170,7 +170,7 @@ Linux utilizza una versione semplificata delle ACL: la \textbf{File permission m
 
 Per visualizzare le permission matrix delle directory e dei file contenuti in una directory, basta accedere a tale cartella e utilizzare il comando \textbf{ls -l}. \newline \newline
 
-Oltre i tipi di permessi esaminati finora, esistono altri tipi di permessi cosidetti \textbf{speciali}, i quali consentono di impostare determinate funzioni avanzate sui file.
+Oltre ai tipi di permessi esaminati finora, esistono altri tipi di permessi cosiddetti \textbf{speciali}, i quali consentono di impostare determinate funzioni avanzate sui file.
 
 \begin{itemize}
   \item \textbf{Set-user-ID (suid o setuid) bit}: su file eseguibili, causa l'esecuzione del processo con i diritti dell'utente owner
@@ -194,7 +194,7 @@ Nei sistemi Linux i bit di permessi sono espressi in notazione ottale (con 3 o 4
 	\caption{Esempi di permission matrix in notazione ottale\label{fig:notazione_ottale}} 	
 \end{figure}
 \begin{itemize}
-  \item per i bit user/group/others, i bit sono nell'ordine r-w-x. Una terna $(100)_{2} = (4)_{8}$, ad esempio, significa permesso consentito in lettura, mentre una terna $(101)_{5} = (5)_{8}$, invece, permesso consentito in lettura ed esecuzione, ma non in scrittura.
+  \item per i bit user/group/others, i bit sono nell'ordine r-w-x. Una terna $(100)_{2} = (4)_{8}$, ad esempio, significa permesso consentito in lettura, mentre una terna $(101)_{2} = (5)_{8}$, invece, permesso consentito in lettura ed esecuzione, ma non in scrittura.
   \item per i speciali, i bit sono nell'ordine setuid - setgid - sticky. Quindi avrò $(100)_{2} = (4)_{8}$ se setuid, $(010)_{2} = (2)_{8}$ se setgid e $(001)_{2} = (1)_{8}$ se sticky (e ovviamente le varie combinazioni possibili)
 \end{itemize}
 
@@ -210,7 +210,7 @@ Per quanto riguarda il controllo dei permessi va notato che:
 \end{itemize}
   
 \subsubsection{File Descriptors e File Handles}
-Un \textbf{file descriptor}, per Unix, o \textbf{file handle}, per Windows, è un identificatore un file, una pipe o un socket aperto da un processo e sul quale il processo può effettuare operazioni di input/output. I file descriptor sono memorizzati in una tabella che li mappa con il percorso del file a cui si riferiscono, chiamata \textbf{file descriptor table}. L'accesso ai file e cartelle tramite System Calls passa quindi per questi costrutti. Le operazioni possibili sono:
+Un \textbf{file descriptor}, per Unix, o \textbf{file handle}, per Windows, è un identificatore per un file, una pipe o un socket aperto da un processo e sul quale il processo può effettuare operazioni di input/output. I file descriptor sono memorizzati in una tabella che li mappa con il percorso del file a cui si riferiscono, chiamata \textbf{file descriptor table}. L'accesso ai file e cartelle tramite System Calls passa quindi per questi costrutti. Le operazioni possibili sono:
 \begin{itemize}
   \item \textbf{open}: ritorna un file handle
   \item \textbf{read/write/execute} file
@@ -239,7 +239,7 @@ int main(int argc, char * argv[ ])
 }
 \end{lstlisting}
 \end{algorithm}
-Per rimuovere questa vulnerabilità la funzione \textbf{fclose()} va richiamata prima del comando .
+Per rimuovere questa vulnerabilità la funzione \textbf{fclose()} va richiamata prima del comando \textbf{execl()}.
 
 \section{Sicurezza della memoria}
 Un ulteriore servizio offerto dagli OS è l'organizzazione e l'allocazione della memoria primaria. Quando un processo viene lanciato l'OS alloca una regione di memoria detta \textbf{address space} del processo. La gestione della memoria è trasparente per il processo: il processo “vede” a sua disposizione l'intera memoria. Generalmente un processo non può avere accesso all'address space di un altro processo, se non per risorse esplicitamente condivise. \\ \\
@@ -268,7 +268,7 @@ Un \textbf{exploit} è un input che sfrutta una vulnerabilità, un bug o un guas
 \end{itemize}
 
 \subsection{Buffer Overflow}
-Generalmente, con \textbf{buffer}, si intende una porzione di memoria contenente più istanze dello stesso tipo. In C e in molti altri programmi i buffer sono chiamati array. I buffer più comuni sono gli array di caratteri (stringhe).
+Generalmente, con \textbf{buffer}, si intende una porzione contigua di memoria contenente più istanze dello stesso tipo. In C e in molti altri programmi i buffer sono chiamati array. I buffer più comuni sono gli array di caratteri (stringhe).
 In C i buffer, come tutte le variabili, possono essere dichiarati statici o dinamici. Le variabili statiche sono allocate al momento del caricamento del programma sul segmento \textbf{data}, mentre le variabili dinamiche sono allocate in fase di esecuzione sullo \textbf{stack}. \newline 
 
 \subsubsection{Scenario}
@@ -302,7 +302,7 @@ Gli indirizzi delle variabili locali di una routine sono specificati rispetto al
 	\caption{Esempio Stack di un programma in C\label{fig:esempio_stack}} 	
 \end{figure}
 \subsection{Esempio codice C}
-Prendiamo come esempio la funzione \textit{strcpy(dest,src)}. Tale funzione (appartenente alle librerie C standard) copia la stringa \textit{src} in \textit{dest} senza verificare se la dimensione di \textit{src} eccede quella di \textit{dest}. Per rimediare a questa vulnerabilità basta utilizzare la funzione \textit{strncpy(dest,src,n)}, che consente di specificare il numero di caratteri da copiare, e se la lunghezza di src supera tale soglia i caratteri in eccesso vengono scartati.
+Prendiamo come esempio la funzione \textit{strcpy(dest,src)}. Tale funzione (appartenente alle librerie standard del C) copia la stringa \textit{src} in \textit{dest} senza verificare se la dimensione di \textit{src} eccede quella di \textit{dest}. Per rimediare a questa vulnerabilità basta utilizzare la funzione \textit{strncpy(dest,src,n)}, che consente di specificare il numero di caratteri da copiare, e se la lunghezza di src supera tale soglia i caratteri in eccesso vengono scartati.
 \begin{algorithm}
 \begin{lstlisting}[caption={Esempio codice vulnerabile al buffer overflow in C}]
 Main(int argc, char *argv[])
@@ -356,7 +356,7 @@ Al fine di semplificare la stima dell'indirizzo del codice malevolo (da posizion
 \end{figure}
 Il NOP-Sledding aumenta le probabilità di riuscita per un attacco buffer overflow. E' un attacco molto utilizzato, anche se presenta ancora diverse difficoltà: è difficile da automatizzare, serve molto spazio per il payload e bisogna ancora stimare, in qualche misura, l'indirizzo dello shellcode.
 \subsection{Trampolining}
-Questo tipo di attacco sfrutta la previdibilità dell'allocazione nella memoria di librerie esterne. Al momento della loro inizializzazione molti processi caricano in zone protette del loro address space tali librerie. Un attaccante può sfruttare la conoscenza di una libreria di sistema per eseguire un attacco senza dover conoscere l'indirizzo dello shellcode. Ad esempio, se si è a conoscenza che una DLL di Windows richiede al processore di saltare all'indirizzo contenuto nel registro ESP che punta ad un buffer, si può inserire del codice malevolo nel buffer indirizzato dal registro e sovrascrivere il punto di ritorno della funzione corrente con quello dell'istruzione nota della DLL. E' un attacco abbastanza complesso, ma molto pericoloso in quanto automaizzabile.
+Questo tipo di attacco sfrutta la previdibilità dell'allocazione nella memoria di librerie esterne. Al momento della loro inizializzazione molti processi caricano in zone protette del loro address space tali librerie. Un attaccante può sfruttare la conoscenza di una libreria di sistema per eseguire un attacco senza dover conoscere l'indirizzo dello shellcode. Ad esempio, se si è a conoscenza che una DLL di Windows richiede al processore di saltare all'indirizzo contenuto nel registro ESP che punta ad un buffer, si può inserire del codice malevolo nel buffer indirizzato dal registro e sovrascrivere il punto di ritorno della funzione corrente con quello dell'istruzione nota della DLL. E' un attacco abbastanza complesso, ma molto pericoloso in quanto automatizzabile.
 \subsection{Return to libc}
 Anche questa tecnica sfrutta librerie esterne caricate in fase di esecuzione. In questo caso vengono utilizzate le librerie C, chiamate \textbf{libc}. L'idea consiste nel determinare l'indirizzo di una funzione presente nelle librerie C all'interno dell'address space da colpire e forzare il programma a chiamare questa funzione. Nelle librerie C esistono diverse funzioni vulnerabili a questo tipo di attacco (e.g. exec(), system()).
 L'attacco consiste nel:

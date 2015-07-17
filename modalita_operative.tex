@@ -57,7 +57,7 @@ due blocchi cifrati identici.
 \subsubsection{Idea base}
 Per comprendere CBC conviene prima considerare il seguente esempio, in riferimento alla \figurename ~\ref{fig:rand_ele_cb_enc} che ne condivide l'idea base:
 \begin{itemize}
-\item per ogni blocco di testo in chiaro mi viene generato un numero random a 64 bit $r_{i}$
+\item per ogni blocco di testo in chiaro $m_i$ viene generato un numero random a 64 bit $r_{i}$
 \item $m_{i}$ e $r_{i}$ vengono sommati ($\oplus$ XOR)
 \item il risultato viene cifrato con la chiave segreta
 \item i blocchi cifrati $c_{i}$ e i numeri random, in chiaro, $r_{i}$ vengono trasmessi
@@ -87,8 +87,8 @@ Inoltre, per evitare che due testi in chiaro inizialmente identici diano luogo a
 \newline \newline
 Quanto detto, rappresentato nelle figure~\ref{fig:CBC_enc} e ~\ref{fig:CBC_dec}, può essere espresso anche algebricamente:
 \begin{itemize}
-\item CIFRATURA\newline $c_{1} = E(K, (IV \oplus m_{1}))$\newline $c_{i} = E(K, (c_{i-1} \oplus m_{i})) \forall i > 1$
-\item DECIFRATURA\newline $m_{1} = D(K,c_{1})\oplus IV$\newline $m_{i} = D(K,c_{i})\oplus c_{i-1}$
+\item CIFRATURA\newline $c_{1} = E(K, (IV \oplus m_{1}))$\newline $c_{i} = E(K, (c_{i-1} \oplus m_{i})), \, \, \forall i > 1$
+\item DECIFRATURA\newline $m_{1} = D(K,c_{1})\oplus IV$\newline $m_{i} = D(K,c_{i})\oplus c_{i-1}, \, \, \forall i > 1$
 \end{itemize}
 \begin{figure}[htbp]
 	\centering%

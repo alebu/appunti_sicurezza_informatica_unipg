@@ -292,6 +292,34 @@ Per la \textbf{firma digitale} invece sia $PR$ la chiave privata del firmatario 
 \end{itemize}
 La dimostrazione dell'efficacia del procedimento è analoga a quella svolta per la cifratura/decifratura.
 
+\subsection{Firma e cifratura di grandi messaggi} Abbiamo visto che affinché i processi i cifratura/decifratura e di firma/verifica siano efficaci è necessario che sia soddisfatta l'ipotesi:
+\begin{equation}
+|m| < n
+\end{equation}
+Dove |m| è la lunghezza del messaggio da processare. Per poter processare quindi messaggi di lunghezza qualsiasi non posso utilizzare solo RSA.
+
+\paragraph{Firma di messaggi di lunghezza qualsiasi}
+Per poter rispettare l'ipotesi sulla lunghezza del messaggio si può firmare, anziché l'intero messaggio, una sua impronta, come mostrato in figura \ref{fig:pubblica_schema_firma_grandi}
+\begin{figure}[htbp]
+	\centering%
+	\subfigure%
+	{\includegraphics[height=15cm, width=15cm, keepaspectratio]{Immagini/chiave_pubblica/chiave_pubblica_firma_grandi.png}}
+	\caption{Schema a blocchi crittografia a chiave pubblica - firma di grandi messaggi \label{fig:pubblica_schema_firma_grandi}} 	
+\end{figure}
+
+\paragraph{Firma di messaggi di lunghezza qualsiasi}
+Per quanto riguarda la cifratura posso seguire la seguente procedura (figura \ref{fig:pubblica_schema_grandi}):
+\begin{itemize}
+\item cifrare il messaggio con una tecnologia a chiave segreta, in una delle modalità operative viste, utilizzando una chiave generata al momento
+\item cifrare la chiave segreta generata con la chiave pubblica del destinatario
+\item inviare la concatenazione delle due cifrature
+\end{itemize}
+\begin{figure}[htbp]
+	\centering%
+	\subfigure%
+	{\includegraphics[height=15cm, width=15cm, keepaspectratio]{Immagini/chiave_pubblica/chiave_pubblica_schema_grandi.png}}
+	\caption{Schema a blocchi crittografia a chiave pubblica - cifratura di grandi messaggi \label{fig:pubblica_schema_grandi}} 	
+\end{figure}
 \subsection{Sicurezza RSA}
 
 La sicurezza di RSA deriva dal fatto che fattorizzare interi molto grandi è impraticabile. Infatti, se esistesse un metodo per identificare i numeri primi $p$ e $q$ tali che $n = p \cdot q$ (fattorizzazione di n), si otterrebbe $\varphi(n) = (p-1)(q-1)$ e quindi si potrebbe calcolare $d$ come l'inverso moltiplicativo di $e \, mod \, \varphi(n)$, ottenendo la chiave privata $PR = <d,n>$ dalla chiave pubblica $PU = <e,n>$. 

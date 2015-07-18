@@ -42,7 +42,7 @@ Programmatori e analisti commettono errori, spesso né intenzionali né malevoli
 \end{itemize}
 
 \subsection{Mediazione Incompleta}
-Si ha una mediazione incompleta quando un programma espone alcuni dati sensibili in maniera incontrollata. Tale vulnerabilità si verifica principalmente nel caso degli URL web che espongono i dati sensibili al loro interno. \\ \\
+Si ha una mediazione incompleta quando un programma non controlla tipo, quantità e correttezza degli input dell'utente, ovvero la mediazione tra l'ottenimento degli input e l'utilizzo degli stessi è incompleta. Tale vulnerabilità si verifica principalmente nel caso degli URL web che espongono i dati sensibili al loro interno. \\ \\
 Prendiamo ad esempio un sito Web, il cui indirizzo è:
 \begin{center}
 \textcolor{blue}{http://www.somesite.com/subpage/userinput.asp?param1=(808)555-1212parm2} \textcolor{red}{=2009Jan17}
@@ -61,7 +61,7 @@ Normalmente un utente utilizza il sito di e-commerce dell'azienda e non genera u
 Tale esempio fa riferimento ad un attacco realmente sferrato. Per evitare questo tipo di vulnerabilità basta fare in modo che nella richiesta HTTP non debba venir specificato il prezzo unitario o il totale, ma solo il codice del prodotto e la quantità da acquistare, delegando il calcolo dell'importo alla web application.
 
 \subsection{Scarto fra tempo di controllo e tempo di utilizzo}
-Per migliorare l'efficienza i processori e sistemi operativi moderni possono cambiare l'ordine di esecuzioni di istruzioni e procedure. Ad esempio l'esecuzione di istruzioni consecutive di una procedura possono essere inframezzate da istruzioni di altre procedure (multi-tasking).
+Per migliorare l'efficienza i processori e sistemi operativi moderni possono cambiare l'ordine di esecuzione di istruzioni e procedure. Ad esempio l'esecuzione di istruzioni consecutive di una procedura possono essere inframezzate da istruzioni di altre procedure (multi-tasking).
 \newline \newline
 La falla \textbf{TOCTTOU}(Time Of Check To Time Of Use) è dovuta allo scarto di tempo tra la verifica dell'autorizzazione a compiere un azione e l'esecuzione dell'azione stessa. Se i dati di autorizzazione non vengono utilizzati direttamente e, nell'attesa di essere utilizzati sono disponibili per la modifica, allora si verifica la falla.
 \paragraph{Esempio 1} 
@@ -89,7 +89,7 @@ Quando si installa un pacchetto software si esegue un comando \textbf{Install} o
 
 \paragraph{Cosa può fare il codice malevolo}
 Il codice malevolo è di fatto un programma e può quindi fare qualsiasi cosa è in grado di fare un software (scrivere messaggi a schermo, terminare esecuzione di un altro programma, modificare/cancellare dati, etc.).
-Può anche insidiarsi e rimanere inattivo fino a che non si verifica una condizione di innesco (un orario, data, eventi interni, conteggio, etc.). Il codice malevolo viene eseguito sotto l'autorità dell'utente corrente e può venire a contatto con tutto ciò con cui è a contatto l'utente stesso e nel medesimo modo. Una volta avviato (momento in cui l'utente "garantisce" al software gli stessi suoi diritti) può quindi aggiungere, modificare o eliminare qualsiasidato dell’utente, senza che sia necessario il suo esplicito consenso.
+Può anche insidiarsi e rimanere inattivo fino a che non si verifica una condizione di innesco (un orario, data, eventi interni, conteggio, etc.). Il codice malevolo viene eseguito sotto l'autorità dell'utente corrente e può venire a contatto con tutto ciò con cui è a contatto l'utente stesso e nel medesimo modo. Una volta avviato (momento in cui l'utente "garantisce" al software gli stessi suoi diritti) può quindi aggiungere, modificare o eliminare qualsiasi dato dell'utente, senza che sia necessario il suo esplicito consenso.
 
 \subsection{Protezione da codice malevolo}
 Il rilascio di una patch per tappare una vulnerabilità avviene secondo le seguenti fasi:
@@ -100,7 +100,7 @@ Il rilascio di una patch per tappare una vulnerabilità avviene secondo le segue
 \item Il produttore sviluppa e distribuisce un rimedio (patch)
 \item Gli utenti implementano la difesa
 \end{enumerate}
-Qualcuno può sferrare un attacco effettivo estendendo la prova di concetto o la definizione della vulnerabilità. Fintanto che gli utenti implementano la difesa prima dell'attacco effettivo, non si registra alcun danno.
+Qualcuno può sferrare un attacco effettivo estendendo la prova di concetto o la definizione della vulnerabilità. Se gli utenti implementano la difesa prima dell'attacco effettivo, non si registra alcun danno.
 Viene definito \textbf{Giorno Zero} la data in cui il produttore viene a conoscenza della vulnerabilità.
 Un attacco che avvenga prima che il produttore conosca la vulnerabilità è detto \textbf{zero day attack} ma, in senso più generale, uno zero day attack avviene prima della disponibilità della patch relativa.
 
@@ -172,7 +172,7 @@ Una trapdoor (botola) è un \textbf{punto di accesso non documentato} ad un modu
 I sistemi informatici sono strutture complesse, per questa ragione i programmatori spesso sviluppano e provano i sistemi in modo metodico, organizzato e modulare. I moduli vengono prima verificati singolarmente nella fase di \textbf{verifica dell'unità}. Successivamente vengono verificati nel funzionamento integrato, la \textbf{verifica di integrazione}.
 Per la verifica dei singoli moduli e dei loro aggregati, potrebbero non essere disponibili i moduli che generano l'input o gestiscono l'output. Per questo motivo i programmatori realizzano delle routine aggiuntive che ricreano l'ambiente di esecuzione del modulo in esame chiamate \textbf{stub}. Gli stub verranno poi sostituiti, più avanti nella realizzazione, dai moduli di cui emulano le funzionalità. A volte, quando l'origine di un problema in un modulo non è evidente, il programmatore aggiunge codice di debug. Il codice serve per evidenziare cosa accade durante l'esecuzione, stampando valori di interesse o eseguendo speciali comandi.
 \newline
-Per controllare stub e codice di debug, il programmatore include sequenze di controllo speciali nella struttura del componente. Ad esempio, particolari valori dell’input potrebbero essere utilizzati come comandi per gestire il debug. L'inserimento dei comandi è una pratica di verifica riconosciuta, tuttavia se vengono lasciati in posizione dopo i test, i comandi aggiuntivi possono diventare un serio problema.
+Per controllare stub e codice di debug, il programmatore include sequenze di controllo speciali nella struttura del componente. Ad esempio, particolari valori dell'input potrebbero essere utilizzati come comandi per gestire il debug. L'inserimento dei comandi è una pratica di verifica riconosciuta, tuttavia se vengono lasciati in posizione dopo i test, i comandi aggiuntivi possono diventare un serio problema.
 \subsubsection{Controllo degli Errori}
 Un'altra fonte di trapdoor è uno scarso controllo degli errori. Un buon sviluppatore progetta il sistema in modo che qualsiasi valore dei dati sia controllato prima del suo utilizzo. Il controllo comporta la verifica della correttezza del dato e della appartenenza all'intervallo previsto.
 In sistemi progettati in modo scadente il controllo potrebbe non essere implementato e un dato fuori specifica potrebbe causare errori imprevisti.
@@ -195,8 +195,8 @@ Le trapdoor possono rimanere nei programmi di produzione perchè gli sviluppator
 \end{itemize}
 In generale le trapdoor rappresentano una vulnerabilità quando espongono il sistema a modifiche durate l'esecuzione. Un sistema non è sicuro neanche quando si ritiene che nessun altro possa rilevare il varco!
 \subsection{Salami Attack}
-Deriva il suo nome dal modo in cui i pezzettini di carne e grasso vengono mischiati in una salsiccia o salame. Con la stessa tecnica un salami attack unisce bit di dai apparentemente non sequenziali per ottenere risultati significativi.
-Il classico esempio di salami attack riguarda il calcolo di interessi bancari. Supposto che:
+Un salami attack può essere definito come una serie di piccole azioni che sommate tra loro producono un effetto che sarebbe difficile da perseguire tramite una singola azione.
+Deriva il suo nome dal modo in cui i pezzettini di carne e grasso vengono mischiati in una salsiccia o salame. Con la stessa tecnica un salami attack unisce bit di dati apparentemente non sequenziali per ottenere risultati significativi. Il classico esempio di salami attack riguarda il calcolo di interessi bancari. Supposto che:
 \begin{itemize}
 	\item la banca paghi il 6.5\% di interesse annuo
 	\item l'interesse viene calcolato su base mensile
@@ -206,7 +206,7 @@ Il classico esempio di salami attack riguarda il calcolo di interessi bancari. S
 Una popolare leggenda sulla sicurezza informatica narra di un programmatore che raccoglieva frazioni di centesimo e le accreditava sul suo conto.
 In realtà, poiché alcuni arrotondamenti avvengono per difetto mentre altri per eccesso il saldo complessivo non dovrebbe scostarsi molto dallo zero.
 \newline
-Una situazione differente e molto redditizia, potrebbe essere ottenuta scalando qualche centesimo da ogni conto e transazione. Il correntista vedrebbe accreditarsi 0.53\officialeuro a posto di 0.55\officialeuro, probabilmente lo imputerebbe ad un proprio errore di calcolo, è comunque una questione di poco conto.
+Una situazione differente e molto redditizia, potrebbe essere ottenuta scalando qualche centesimo da ogni conto e transazione. Il correntista vedrebbe accreditarsi 0.53\officialeuro al posto di 0.55\officialeuro, probabilmente lo imputerebbe ad un proprio errore di calcolo, è comunque una questione di poco conto.
 Oppure il programma potrebbe registrare un canone di 20\officialeuro, mentre in realtà il costo è solo di 15\officialeuro, e accreditare la differenza su un conto speciale nascosto.
 \subsubsection{Esistenza dei Salami Attack}
 Perché i salami attack esistono ancora? I calcoli informatici sono notoriamente soggetti a piccoli errori relativi ad arrotondamento e troncamento. Anziché documentare esattamente i numerosi errori è più semplice accettare una piccola percentuale di errore come naturale ed inevitabile. 

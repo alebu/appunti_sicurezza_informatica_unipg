@@ -310,7 +310,7 @@ $m^{*}$ del tipo specificato senza conoscere $K_{AB}$. Precisamente l'attaccante
 chance su $2^{64}$ di ottenere l'altra metà di $MD(K_{AB}|m)$. Si osservi inoltre che considerare solo 64 bit
 anziché i 128 del digest non comporta in pratica una perdita di sicurezza, poiché se l'attaccante non conosce $K_{AB}$ l'unica cosa che può fare è generare un MAC random a 64 bit e sperare che sia quello corretto.
 \newline \newline 
-Una terza soluzione è quella di inserire il segreto $K_{AB}$ sia in testa che in coda al messaggio m (il MAC è dato da $MD(K \mid m_1 \mid K)$). In questo modo $K_{AB}$ in testa fornisce resistenza alle collisioni e $K_{AB}$ in coda rende innocua la vulnerabilità insita negli algoritmi di hash.
+Una terza soluzione è quella di inserire il segreto $K_{AB}$ sia in testa che in coda al messaggio $m$ (il MAC è dato da $MD(K_{AB} \mid m \mid K_{AB})$). In questo modo $K_{AB}$ in testa fornisce resistenza alle collisioni e $K_{AB}$ in coda rende innocua la vulnerabilità insita negli algoritmi di hash.
 \newline \newline
 Infine un'ultima soluzione è rappresentata dall'algoritmo \textbf{HMAC} (keyed-Hash Message Authentication Code), che segue approssimativamente questo schema generale:
 \begin{itemize}
@@ -343,10 +343,10 @@ Questo principio è utilizzato (ad esempio) per la gestione delle password in UN
 \end{figure}
 \begin{itemize}
 \item Nella fase uno si determina una chiave segreta $K_{pwd}$ a partire dalla \textbf{password}
-\item Nella fase due si ottiene h(pwd) come segue
+\item Nella fase due si ottiene $h(pwd)$ come segue
 \begin{enumerate}
 	\item si considera una versione modificata di DES che dipende dal valore del \textbf{salt s} (numero di 12 bit generato in modo random, associato all'utente in esame). Il valore di s determina quali bit devono essere replicati nella fase di espansione di R da 32 a 48 bit
-	\item l'algoritmo DES modificato è usato, con la chiave segreta K pwd , per cifrare la costante 0 (a 64 bit). UNIX memorizza per ciascun utente la stringa $s \mid h(pwd)$ nel file \textit{passwd}
+	\item l'algoritmo DES modificato è usato, con la chiave segreta $K_{pwd}$ , per cifrare la costante 0 (a 64 bit). UNIX memorizza per ciascun utente la stringa $s \mid h(pwd)$ nel file \textit{passwd}
 \end{enumerate}
 \end{itemize}
 Ogni volta che una password \textbf{pwd} d'utente viene impostata viene generato il salt, \textbf{pwd} viene convertita in una chiave segreta $K_{pwd}$ a 64 bit, viene generato l'hash come descritto e il risultato e il salt vengono memorizzati nel file \textit{passwd}.

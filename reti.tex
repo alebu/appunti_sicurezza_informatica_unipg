@@ -12,6 +12,8 @@ Un protocollo definisce le regole di comunicazione tra le parti che prendono par
 \end{itemize}
 
 \section{Address Resolution Protocol Spoofing}
+\paragraph{Definizione}
+L'ARP spoofing consiste nell'avvelenamento delle cache ARP dei nodi della rete locale tramite l'invio di ARP reply, contenenti coppie <IP, MAC> false, senza che sia stata emessa una richiesta specifica. \\ \\
 L'address resolution protocol (\textbf{ARP}) connette lo strato di rete al data layer convertendo indirizzi IP in indirizzi MAC. Il principio di funzionamento del protocollo ARP consiste nell'inviare richieste in broadcast e memorizzare le risposte (anche quelle non utili nell'immediato instante), in modo da ottimizzare l'efficienza della risoluzione degli indirizzi. La richiesta che il protocollo manda in broadcast è nella forma: 
 \begin{lstlisting}
 who has <IP address1> tell <IP address2>
@@ -74,11 +76,11 @@ Il SYN Flood è tipicamente un attacco DOS che si avvale delle caratteristiche d
 \item il server comunica la disponibilità inviando un messaggio SYN-ACK, e aspetta il terzo messaggio di conferma
 \item il client invia un messaggio ACK per confermare la connessione
 \end{enumerate}
-Se il server alloca le risorse per la connessione prima della ricezione dell'ACK (eventualmente aspettando un determinato tempo) l'attacco può essere sferrato: L'attaccante crea un grande numero di messaggi SYN facendo Spoofing dell'indirizzo del mittente. Il server alloca un gran numero di risorse e risponde con dei messaggi SYN/ACK, ai quali non riceverà mai risposta. Una volta esaurite le risorse comincerà a rifiutare connessione: vi è una negazione del servizio. 
+Se il server alloca le risorse per la connessione prima della ricezione dell'ACK (eventualmente aspettando un determinato tempo) l'attacco può essere sferrato: l'attaccante crea un grande numero di messaggi SYN facendo Spoofing dell'indirizzo del mittente. Il server alloca un gran numero di risorse e risponde con dei messaggi SYN/ACK, ai quali non riceverà mai risposta. Una volta esaurite le risorse comincerà a rifiutare connessione: vi è una negazione del servizio. 
 \newline \newline
 Si tratta di un attacco ben noto, che non è generalmente efficace contro le reti moderne. Funziona se un server alloca delle risorse dopo aver ricevuto un SYN, ma prima di aver ricevuto un messaggio ACK. 
 \newline \newline
 Nel caso contrario il server dovrebbe tuttavia memorizzare lo stato della richiesta, utilizzando comunque delle risorse. Anche se l'attaccante ha bisogno di utilizzare un numero molto più grande di messaggi, l'attacco può ancora avvenire. Tra le contromisure esiste il sistema SYN cookies (disponibile su Linux o Solaris). Questa difesa usa il sequence number del pacchetto SYN-ACK per mandare un cookie al client e quindi riconoscere se quel client ha già mandato dei SYN in quella sessione, senza dover memorizzare nessuna informazione sul server. In questo modo il server non deve in alcun modo memorizzare l'arrivo dei SYN e lo stato delle richieste.
 
 \subsection{Optimistic ACK attack}
-L'attacco denominato optimistic ACK attack sfrutta il controllo di congestione del protocollo TCP. L'attaccante comincia ad inviare ACKs per segmenti di dati non ancora ricevuto, facendo credere al server che sia disponibile una grande quantità di banda disponibile, inducendolo ad aumentare la congestion window. Ciò può portare alla saturazione della banda dispobile per il server, rendendo il servizio di fatto non dispobile. Questo tipo di attacco può essere portato anche a server multipli, rendendo una porzione della rete non raggiungibile dal traffico legittimo. Ad oggi non sono disponibili rimedi efficaci contro questi attacchi.
+L'attacco denominato optimistic ACK attack sfrutta il controllo di congestione del protocollo TCP. L'attaccante comincia ad inviare ACKs per segmenti di dati non ancora ricevuti, facendo credere al server che sia disponibile una grande quantità di banda, inducendolo ad aumentare la congestion window. Ciò può portare alla saturazione della banda disponile per il server, rendendo il servizio di fatto non disponile. Questo tipo di attacco può essere esteso anche a server multipli, rendendo una porzione della rete non raggiungibile dal traffico legittimo. Ad oggi non sono disponibili rimedi efficaci contro questi attacchi.

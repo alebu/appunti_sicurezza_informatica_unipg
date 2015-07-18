@@ -555,12 +555,23 @@ K_{AB} = ({g^{s_{A}} \, mod \, p})^{s_{B}} \, mod \,p = T_{A}^{s_{B}} \, mod \, 
 	\caption{Diffie-Hellman: schema}
 \end{figure}
 
-\paragraph{Sicurezza}
-L'algoritmo non sarebbe sicuro se, dati $p$, $g$, $T_{A}$ e $T_{B}$ (trasmessi in chiaro), fosse possibile calcolare $s_{A}$, $s_{B}$ oppure $g^{s_{A}s_{B}}$. Al momento non sono note tecniche per calcolare $g^{s_{A}s_{B}}$ in tempo ragionevole, anche conoscendo $g^{s_{A}}$ e $g^{s_{B}}$. Di fatto si può ottenere $s_{A}$ da $g^{s_{A}}$ tramite logaritmo discreto:
+\subsection{Sicurezza}
+Un eventuale attaccante, se ha la possibilità di compiere un attacco anche solo passivo sulla rete, disporrebbe di $p$, $g$, $T_{A}$ e $T_{B}$ (trasmessi in chiaro). Analizzare la sicurezza di D-H significa quindi chiedersi se è possibile risalire alla chiave di sessione dispoendo di tali quantità.
+\newline \newline
+Per poter risalire alla chiave di sessione si devi disporre di una delle seguenti quantità:
+\begin{enumerate}
+\item $s_{A}$ $\Rightarrow$ $K_{AB}=T_{B}^{s_{A}} \, mod \,p$
+\item $s_{B}$ $\Rightarrow$ $K_{BA}=T_{B}^{s_{B}} \, mod \, p$
+\item $g^{s_{A}s_{B}}$ $\Rightarrow$  $K_{AB} = g^{s_{B}s_{A}} \, mod \, p$
+\end{enumerate}
+Per quanto riguarda $g^{s_{A}s_{B}}$, non sono note tecniche per calcolarlo in tempo ragionevole, anche conoscendo $g^{s_{A}}$ e $g^{s_{B}}$. 
+\newline \newline
+Di fatto si può ottenere $s_{A}$ da $g^{s_{A}}$ (e analogamente $s_{B}$ da $g^{s_{B}}$) tramite logaritmo discreto:
 \begin{equation}
 dlog_{g} \, g^{s_{A}}, \quad dlog_{g}: \mathbb{Z} \rightarrow \mathbb{N}
 \end{equation} 
 Tuttavia il calcolo di logaritmi discreti non è fattibile in tempi ragionevoli.
+
 \subsection{Man in the middle}
 La vulnerabilità di Diffie-Hellman è che tale algoritmo non fornisce alcuna prova di autenticazione: Alice non può essere certa che $T_{B}$ sia stato inviato da Bob e non da un impostore; allo stesso modo, Bob non può essere certo che $T_{A}$ sia stato inviato da Alice e non da un impostore. 
 
@@ -740,7 +751,11 @@ una chiave pubblica $k_{s}$, cioè una coppia $<s, k_{s}>$. Ovviamente, $k_{s}$ 
 
 Di seguito mostriamo un protocollo di autenticazione, estremamente efficiente, che sfrutta un problema difficile nell'ambito dell'aritmetica modulare. A rigore tale schema di autenticazione non è completamente a conoscenza zero, anche se nella pratica può considerarsi tale. 
 \newline \newline
-Il problema che viene sfruttato è il problema della \textbf{radice quadrata modulare} (\textbf{Modular Square Root, MSR}): dati un numero intero semiprimo grande $n=p \cdot q$, con $p$ e $q$ numeri primi grandi, $m<n$ intero assegnato (avente una radice quadrata ordinaria non intera), trovare un numero intero $s$ tale che $s^2 \, mod \, n=m$ è un problema difficile almeno quanto fattorizzare un numero intero. Dunque, tale protocollo consiste dei seguenti passi: 
+Il problema che viene sfruttato è il problema della \textbf{radice quadrata modulare} (\textbf{Modular Square Root, MSR}): 
+\newline \newline
+\textit{Dati un numero intero semiprimo grande $n=p \cdot q$, con $p$ e $q$ numeri primi grandi, $m<n$ intero assegnato (avente una radice quadrata ordinaria non intera), trovare un numero intero $s$ tale che $s^2 \, mod \, n=m$ è un problema difficile almeno quanto fattorizzare un numero intero. }
+\newline \newline
+Dunque, tale protocollo consiste dei seguenti passi: 
 \begin{enumerate}
 \item \textbf{Generazione delle chiavi}. Peggy (il dimostratore) calcola la chiave pubblica $<n,v>$, dove $n=p \cdot q$ come in RSA, $v$ è un numero di cui Peggy conosce la radice quadrata modulare (ottenere $v$ è semplice, basta scegliere un numero random $s$ e porre $v = s^2 \, mod \, n$); $s$ è la chiave privata di Peggy da non rivelare; $<n,v>$ va divulgata a tutto il mondo.
 \item \textbf{Autenticazione}. \begin{itemize}
@@ -757,6 +772,22 @@ Il problema che viene sfruttato è il problema della \textbf{radice quadrata mod
 	{\includegraphics[scale=0.6, keepaspectratio]{Immagini/chiave_pubblica/zkasmsr_auth.png}}
 	\caption{}
 \end{figure}
-Supponiamo che Fred voglia impersonare Peggy. L'etichettatura scelta in modo casuale da Victor implica che Fred ha una probabilità del 50\% di rispondere in modo corretto ad ogni $r_{i}^2$. Fred potrebbe generarsi autonomamente gli $r_{i}$, ma in tal caso non saprebbe rispondere agli $r_{i}^2$ con etichetta 1 oppure potrebbe usare un insieme di $r_{i}^2$ etichettati in passato con 1 in una precedente autenticazione, ma allora non conoscerebbe i corrispondenti $r_{i}$ e non saprebbe rispondere nel caso in cui l'etichetta è 0. Se $k$ è sufficientemente grande la probabilità che Fred impersoni correttamente Peggy tende a 0. \\ \\
+\subsection{Requisiti prova a conoscenza zero}
+\begin{itemize}
+\item[a.] \textbf{ad ogni entità è associato un segreto privato $s$ e una chiave pubblica $k_{s}$, cioè una coppia $<s, k_{s}>$. Ovviamente, $k_{s}$ non deve esporre il segreto.} Nel protocollo di Fiat-Shamir tale segreto è s, ovvero la radice quadrata modulare di v, scelta da Peggy, mentre $k_s = v$. A causa della difficoltà del problema della radice quadrata modulare, non è possibile risalire ad s a partire da v.
+\item[b.] \textbf{l'autenticazione consiste nel provare la conoscenza del segreto $s$.} Peggy dimostra di conoscere s fornendo a Victor $sr_{i} \, mod \, n$ per gli $r_{i}$ etichettati con 1.
+\item[c.] \textbf{la prova deve essere a conoscenza zero, cioè le informazioni addotte dal dimostratore non devono poter essere riutilizzate con successo (in seguito) da un impostore, quindi la prova non consente di rivelare $s$.} Supponiamo che Fred voglia impersonare Peggy. Per farlo intercetta conversazioni precedenti di autenticazione tra Peggy e Victor, collezionando una serie di coppie del tipo <$r_{i}^2$, <$sr_{i}$ mod n>, ovvero tali che, nella conversazione intercettata, Victor aveva etichettato $r_i$ con 1. A questo punto Fred fornisce a Victor k di questi $r_{i}$. Victor etichetta ognuno di essi. Fred, per ogni sfida, ha una probabilità del 50\% di saper rispondere. 
+	\begin{itemize}
+	\item Se possiede <$r_{i}^2$, <$r_{i}$ mod n> (ovvero ha generato lui $r_i$) e Bob etichetta $r_i$ con 0, sa rispondere, altrimenti no
+	\item Se possiede <$r_{i}^2$, <$sr_{i}$ mod n> e Bob etichetta $r_i$ con 1, sa rispondere, altrimenti no (non conoscendo, di fatto, $r_i$, che non viene mai trasmessa in chiaro)
+	\end{itemize} 
+Quindi fred ha una probabilità di successo pari a $\frac{1}{2^k}$. Aumentando k la probabilità che Fred possa riutilizzare vecchie informazioni tende a zero.
+\item[d.] \textbf{chi non conosce il segreto $s$ non deve poter eseguire la prova con successo.} Tale requisito è strettamente collegato al precedente. L'unico modo che ha Fred per poter rispondere è riutilizzare, infatti, messaggi relativi a conversazioni precedenti.
+\item[e.] \textbf{chi non conosce il segreto $s$ deve poter verificare la correttezza della prova utilizzando la chiave pubblica $k_{s}$ dell'entità che si sta autenticando (senza la chiave pubblica non deve essere possibile verificare la correttezza della prova)} Per costruzione è impossibile poter verificare la prova senza conoscere v.
+\end{itemize}
+ 
+
+
+Ricapitolando, l'etichettatura scelta in modo casuale da Victor implica che Fred ha una probabilità del 50\% di rispondere in modo corretto ad ogni $r_{i}^2$. Fred potrebbe generarsi autonomamente gli $r_{i}$, ma in tal caso non saprebbe rispondere agli $r_{i}^2$ con etichetta 1 oppure potrebbe usare un insieme di $r_{i}^2$ etichettati in passato con 1 in una precedente autenticazione, ma allora non conoscerebbe i corrispondenti $r_{i}$ e non saprebbe rispondere nel caso in cui l'etichetta è 0. Se $k$ è sufficientemente grande la probabilità che Fred impersoni correttamente Peggy tende a 0. \\ \\
 In assenza di etichette 0 il protocollo si semplificherebbe: Peggy si limiterebbe ad inviare delle coppie $<r_{i}^2, sr_{i} \, mod \, n>$, tuttavia non si avrebbe più un protocollo a conoscenza zero, poiché Fred potrebbe usare una precedente sequenza inviata di Peggy ed impersonarla con successo. \\ \\
 ZKAS basato su MSR è molto più efficiente di RSA. Infatti, assumendo $k = 30$, Peggy deve effettuare 45 operazioni modulari (30 quadrati più una media di 15 moltiplicazioni per $s$) e Victor deve effettuare lo stesso numero di operazioni di Peggy; usando RSA Peggy deve eseguire una esponenziazione modulare che consiste in una media di 768 moltiplicazioni modulari mentre Victor se la cava con 3 moltiplicazioni nel caso in cui $e = 3$.

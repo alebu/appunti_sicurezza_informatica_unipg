@@ -332,7 +332,26 @@ L'idea di usare $timestamp + 1$ è stata introdotta nel protocollo Needham-Schro
 	{\includegraphics[height=4cm, width=12cm, keepaspectratio]{Immagini/autenticazione/ImgS56bis.png}}
 	\caption{Mutua autenticazione basata sulla sincronizzazione degli orologi e su un segreto condiviso $K_{Alice-Bob}$}\label{fig:ImgS56bis} 	
 \end{figure}
-
+\begin{table}[]
+\centering
+\begin{tabular}{|l|l|l|l|}
+\hline
+      & TECNOLOGIA                                                             & VULNERABILITA'                                                                                                                                                                                                     & MESS. \\ \hline
+P1    & chiave segreta/hash                                                    & \begin{tabular}[c]{@{}l@{}}non ho mutua autenticazione\\ \\ attacco dictionary senza intercettazione \\ (sfida in chiaro)\\ \\ vulnerabile ad attacchi passivi sul server\end{tabular}                             & 3     \\ \hline
+P2    & chiave segreta                                                         & \begin{tabular}[c]{@{}l@{}}attacco dictionary senza intercettazione \\ se la sfida è riconoscibile\\ \\ vulnerabile ad attacchi passivi sul server\end{tabular}                                                    & 3     \\ \hline
+P3    & chiave segreta/hash                                                    & \begin{tabular}[c]{@{}l@{}}non ho mutua autenticazione\\ riutilizzo veloce del messaggio\\ sicurezza dipendente dall'ora\\ costoso se utilizzato con hash\\ vulnerabile a attacchi passivi sul server\end{tabular} & 1     \\ \hline
+P4    & hash                                                                   & \begin{tabular}[c]{@{}l@{}}non ho mutua autenticazione\\ riutilizzo veloce del messaggio\end{tabular}                                                                                                              & 1     \\ \hline
+P5    & \begin{tabular}[c]{@{}l@{}}chiave pubblica\\ (firma)\end{tabular}      & \begin{tabular}[c]{@{}l@{}}non ho mutua autenticazione\\ vulnerabili a attacchi attivi sul server\end{tabular}                                                                                                     & 3     \\ \hline
+P6    & \begin{tabular}[c]{@{}l@{}}chiave pubblica \\ (cifratura)\end{tabular} & \begin{tabular}[c]{@{}l@{}}non ho mutua autenticazione\\ \\ molti protocolli a chiave pubblica\\ permettono solo la firma\end{tabular}                                                                             & 3     \\ \hline
+P7    & chiave segreta/hash                                                    &                                                                                                                                                                                                                    & 5     \\ \hline
+P8    & chiave segreta/hash                                                    & \begin{tabular}[c]{@{}l@{}}reflection\\ \\ attacco dictionary senza intercettazione \\ (sfida in chiaro)\end{tabular}                                                                                              & 3     \\ \hline
+P9    & chiave segreta/hash                                                    & DOS verso il client (meno rilevante)                                                                                                                                                                               & 4     \\ \hline
+P10   & \begin{tabular}[c]{@{}l@{}}chiave pubblica \\ (cifratura)\end{tabular} & \begin{tabular}[c]{@{}l@{}}molti protocolli a chiave pubblica \\ permettono solo la firma\end{tabular}                                                                                                             & 3     \\ \hline
+P11   & \begin{tabular}[c]{@{}l@{}}chiave pubblica\\  (firma)\end{tabular}     &                                                                                                                                                                                                                    & 3     \\ \hline
+P11*  & chiave segreta/hash                                                    & riutilizzo veloce del messaggio                                                                                                                                                                                    & 2     \\ \hline
+P11** & \begin{tabular}[c]{@{}l@{}}chiave pubblica \\ (cifratura)\end{tabular} &                                                                                                                                                                                                                    & 2     \\ \hline
+\end{tabular}
+\end{table}
 \section{Cifratura e integrità dei dati}
 Al fine di fornire protezione dell'integrità e della confidenzialità dei dati da trasmettere dopo lo scambio di autenticazione, Alice e Bob devono necessariamente usare la crittografia a chiave segreta per cifrare e/o aggiungere dei controlli di integrità crittografici.\\
 L'esecuzione di tali operazioni richiede preliminarmente che le parti stabiliscano una chiave segreta di sessione (session key) anche se già condividono dei segreti a lungo termine che permetterebbero di cifrare o di eseguire dei controlli di integrità.\\
@@ -482,6 +501,7 @@ Nella pratica la mediazione del KDC avviene in modo simile a come illustrato in 
 	\caption{Operazioni svolte dal KDC (nella pratica)}\label{fig:ImgS97bis} 	
 \end{figure}
 Naturalmente Alice e Bob devono poi autenticarsi reciprocamente con una delle tecniche esaminate prima, i.e. ciascuno deve dimostrare all'altro di conoscere realmente $K_{AB}$.\\ \\
+\subsection{Attacco Reply}
 Il protocollo (P12) presenta la seguente vulnerabilità, anche se in pratica è improbabile che possa essere sfruttata da un attaccante. Si supponga che Trudy abbia rubato una vecchia chiave di Bob $K'_{Bob}$ (Bob scoprendolo potrebbe già aver provveduto a cambiarla) e che abbia anche rubato un vecchio messaggio di risposta del KDC ad Alice quando la chiave di Bob era ancora $K'_{Bob}$. Trudy attende che Alice richieda al KDC di parlare con Bob, poi sostituisce la risposta del KDC con quella vecchia in suo possesso, che appare ad Alice come una risposta ordinaria. Trudy può pertanto impersonare Bob, riesce a decifrare il ticket e ad ottenere la chiave di sessione.\\
 Questa vulnerabilità, prevalentemente teorica, può essere rimossa non permettendo a Trudy di riusare (\textbf{reply}) vecchie risposte del KDC (e.g. aggiungendo un nounce $N_{1}$ alla richiesta iniziale di Alice e chiedendo al KDC di cifrarlo insieme alla chiave $K_{AB}$).\\
 In \figurename~\ref{fig:ImgS103bis} è rappresentato il protocollo (P12.1), ottenuto rimuovendo la vulnerabilità appena illustrata.

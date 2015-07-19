@@ -47,18 +47,12 @@ Sia $h:\{0, 1\}^{*} \rightarrow \{0, 1\}^{b}$ una funzione di hash e siano $\{m_
 Una prima stima di N, per difetto, è la seguente. Posto:
 \begin{itemize}
 	\item $k = 2^{b}$: numero totale di possibili hash
-	\item $m>b$: lunghezza in bit del messaggio di cui si vuole calcolare l'hash
 \end{itemize}
- 
-Il numero di messaggi collidenti risulta essere:
+La probabilità che almeno due messaggi abbiano lo stesso digest è equivalente alla probabilità che scelti randomicamente due hash essi siano uguali, quindi:
 \[
-\text{\#messaggi collidenti} = \frac{2^{m}}{2^b} = 2^{m-b}
+Pr\{h(m_i)=h(m_j)\} = Pr\{h_i = h_j\} = \frac{\text{\#coppie di hash uguali}}{\text{\#coppie di hash totali}} = \frac{2^b}{2^b \cdot 2^b} = \frac{1}{2^b}
 \]
-La probabilità che una coppia di messaggi collida è quindi:
-\[
-P = \frac{\text{\#messaggi collidenti}}{\text{\#totale messaggi}} = \frac{2^{m-b}}{2^m} = 2^{-b} = \frac{1}{k}
-\]
-La probabilità che due messaggi abbiano lo stesso digest è:
+La probabilità che almeno due messaggi abbiano lo stesso hash è pari a:
 \begin{equation}
 P_{collision} = \Pr\{h(m_i) = h(m_j) \quad \mbox{ OR } \quad h(m_i) = h(m_q)\ \quad \mbox{ OR } ... \}  \quad \forall \quad i,j,q
 \end{equation}
@@ -111,19 +105,19 @@ e:
 \begin{equation}
 P \approx 1 - e^{-\frac{N(N-1)}{2k}}
 \end{equation}
-Ponendo, pertanto, $P \geq \frac{1}{2}$, si ottiene:
+Ponendo, pertanto, $P = \frac{1}{2}$, si ottiene:
 \begin{equation}
-e^{-\frac{N(N-1)}{2k}} \leq \frac{1}{2} = e^{-ln2}
+e^{-\frac{N(N-1)}{2k}} = \frac{1}{2} = e^{-ln2}
 \end{equation}
 \begin{equation}
-\frac{N(N-1)}{2} \geq k \cdot ln2
+\frac{N(N-1)}{2} = k \cdot ln2
 \end{equation}
 Ipotizzando, ancora una volta, $N \gg 1$:
 \begin{equation}
-\frac{N^2}{2} \geq k \cdot ln2 
+\frac{N^2}{2} = k \cdot ln2 
 \end{equation}
 \begin{equation}
-N \geq (2 \cdot k \cdot ln2)^{\frac{1}{2}} = 2^{\frac{b}{2}} \cdot (2ln2)^{\frac{1}{2}}
+N = (2 \cdot k \cdot ln2)^{\frac{1}{2}} = 2^{\frac{b}{2}} \cdot (2ln2)^{\frac{1}{2}}
 \end{equation}
 Analizziamo ora l'ipotesi di indipendenza statistica degli eventi. A rigore tale ipotesi non è soddisfatta, gli eventi non sono del tutto indipendenti quindi la stima ottenuta della probabilità P è per difetto ($\Pr\{E1 \mbox{ AND } E2\} = \Pr\{E1\} * \Pr\{E1|E2\}$). Ciò si traduce in una stima per eccesso di N. 
 

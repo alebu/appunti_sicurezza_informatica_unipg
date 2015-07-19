@@ -142,7 +142,7 @@ Per chi progetta protocolli crittografici sicuri, una modalità di cifratura ad 
 L'OFB è un cifrario a flusso: la cifratura consiste nel sommare ($\oplus$ XOR) il messaggio con il keystream (o one-time pad) generato da OFB stesso. Supponiamo che il keystream sia ottenuto generando singoli blocchi di 64 bit alla volta; un possibile modo per generarlo è il seguente:
 \begin{itemize}
 	\item viene generato un numero random $IV$ (Initialization Vector) di 64 bit
-	\item il primo blocco del keystream coincide con $IV$: $b_{0} = IV$
+	\item il primo blocco del keystream si ottiene cifrando l'$IV$ con la chiave segreta: $b_{0} = E(K,IV)$
 	\item i blocchi seguenti $b_{i}$ si ottengono cifrando $b_{i-1}$ con la chiave segreta: $b_{i} = E(K,b_{i-1})$
 \end{itemize}
 Il one-time pad (keystream) risultante è dato dalla sequenza $OTP = OTP(K, IV) = \{b_{0}|b_{1}|b_{2}|...|b_{i}|b_{i+1}|...\}$. La cifratura con \textbf{OFB} (\figurename ~\ref{fig:OFB_enc}) consiste nel sommare ($\oplus$ XOR) il messaggio $m$ con OTP: denotata con $l_{m}$ la lunghezza in bit di $m$, si considereranno soltanto $l_{m}$ bit di OTP.

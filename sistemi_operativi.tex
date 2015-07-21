@@ -130,7 +130,7 @@ chmod g-s <file_eseguibile> %disattiva setgid
 \end{algorithm}
 Molti programmi che accedono risorse di sistema hanno il bit setuid settato e sono detti \textbf{setuid programs} (es: passwd, su). Questo meccanismo può essere soggetto ad attacchi di scalata dei privilegi, che vedremo più avanti. \newline 
 
-Vediamo un esempio. Prendiamo un file eseguibile chiamato \textit{app}, con \textit{userA} e \textit{groupA} rispettivamente come UID e GID dell'utente proprietario del file e \textit{userB} e \textit{groupB} come UID e GID dell'utente che lancia app, producendo il processo \textit{P}. Se il bit SETUID di app è attivo, l'EUID di P è \textit{userA}, il EGID di P è \textit{groupA}. Se il bit SETUID di app non è attivo, EUID e UID coincidono con \textit{userB}, EGID e GID coincidono con \textit{groupB}. Supponiamo ora che il processo \textit{P} voglia accedere ad un file di nome \textit{info}. Se EUID di P coincide con il proprietario di \textit{info}, il processo acquisisce i diritti di accesso del proprietario di \textit{info}. Altrimenti se EGID di P e il gruppo di \textit{info} coincidono, P acquisisce i diritti di accesso del gruppo di utenti associato a \textit{info}. Se nessuna delle due precedenti condizioni è valida, valgono i normali diritti di accesso che vedremo più avanti (lettura/scrittura/esecuzione), l'accesso sarà consentito o meno a seconda della categoria di utenti nella quale ricadono UID e GID del processo P.
+Vediamo un esempio. Prendiamo un file eseguibile chiamato \textit{app}, con \textit{userA} e \textit{groupA} rispettivamente come UID e GID dell'utente proprietario del file e \textit{userB} e \textit{groupB} come UID e GID dell'utente che lancia app, producendo il processo \textit{P}. Se il bit SETUID di app è attivo, l'EUID di P è \textit{userA} e l'EGID di P è \textit{groupA}. Se il bit SETUID di app non è attivo, EUID e UID coincidono con \textit{userB}, EGID e GID coincidono con \textit{groupB}. Supponiamo ora che il processo \textit{P} voglia accedere ad un file di nome \textit{info}. Se EUID di P coincide con il proprietario di \textit{info}, il processo acquisisce i diritti di accesso del proprietario di \textit{info}. Altrimenti se EGID di P e il gruppo di \textit{info} coincidono, P acquisisce i diritti di accesso del gruppo di utenti associato a \textit{info}. Se nessuna delle due precedenti condizioni è valida, valgono i normali diritti di accesso che vedremo più avanti (lettura/scrittura/esecuzione), l'accesso sarà consentito o meno a seconda della categoria di utenti nella quale ricadono UID e GID del processo P.
 
 \section{Sicurezza del filesystem}
 Il filesystem è un altro componente fondamentale di un OS, in quanto fornisce un'astrazione sull'organizzazione della memoria secondaria del calcolatore. Gli OS organizzano tipicamente i file in una gerarchia: ogni cartella può contenere file e/o sottocartelle. In questo modo è possibile rappresentare la memoria secondaria attraverso una struttura ad albero radicato. Prima di affrontare il tema della sicurezza del filesystem, diamo due definizioni:
@@ -185,7 +185,8 @@ Se un attaccante riesce a forzare un \textbf{programma setuid} a eseguire codice
 
 \subsubsection{Notazione Ottale}
 Nei sistemi Linux i bit di permessi sono espressi in notazione ottale (con 3 o 4 cifre). Le cifre sono organizzate nel seguente modo: \newline
-\textbf{[special bits][user bits][group bits][others bits]}. Ogni sezione deve prevedere ovviamente tre bit: uno per la scrittura, uno per la lettura ed uno per l'esecuzione. 
+\textbf{[special bits][user bits][group bits][others bits]}. \\
+Ogni sezione deve prevedere ovviamente tre bit: uno per la scrittura, uno per la lettura ed uno per l'esecuzione. 
 
 \begin{figure}[htbp]
 	\centering%

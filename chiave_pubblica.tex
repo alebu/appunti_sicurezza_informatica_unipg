@@ -221,6 +221,9 @@ Dal precedente risultato segue che dato un numero $b = y + k\varphi(n)$ vale la 
 \[
 x^{b} \, mod \, n = x^{y} \, mod \, n = x^{b \, mod \, \varphi(n)} \, mod \, n
 \]
+\begin{prop} \label{prop:exp2}
+	$x^{b} \, mod \, n =  x^{b \, mod \, \varphi(n)} \, mod \, n$
+\end{prop}
 Nel caso in cui $ b \, mod \, \varphi(n) = 1 \, mod \, \varphi(n) $, ovvero se $b = 1 + k \varphi(n) $, con $k \in \mathbb{Z}$, si ha:
 \begin{equation}
 x^b \, mod \, n = x \, mod \, n
@@ -294,12 +297,12 @@ La dimostrazione dell'efficacia del procedimento è analoga a quella svolta per 
 
 \subsection{Firma e cifratura di grandi messaggi} Abbiamo visto che affinché i processi i cifratura/decifratura e di firma/verifica siano efficaci è necessario che sia soddisfatta l'ipotesi:
 \begin{equation}
-|m| < n
+m < n \implies |m|<|n|
 \end{equation}
-Dove |m| è la lunghezza del messaggio da processare. Per poter processare quindi messaggi di lunghezza qualsiasi non posso utilizzare solo RSA.
+Dove |m| è la lunghezza in bit del messaggio da processare. Per poter processare quindi messaggi di lunghezza qualsiasi non posso utilizzare solo RSA.
 
 \paragraph{Firma di messaggi di lunghezza qualsiasi}
-Per poter rispettare l'ipotesi sulla lunghezza del messaggio si può firmare, anziché l'intero messaggio, una sua impronta, come mostrato in figura \ref{fig:pubblica_schema_firma_grandi}
+Per poter rispettare l'ipotesi sulla lunghezza del messaggio si può firmare, anziché l'intero messaggio, una sua impronta, come mostrato in figura \ref{fig:pubblica_schema_firma_grandi}.
 \begin{figure}[htbp]
 	\centering%
 	\subfigure%

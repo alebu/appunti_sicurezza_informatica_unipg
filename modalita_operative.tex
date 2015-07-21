@@ -412,7 +412,7 @@ Per farlo si può:
 \begin{enumerate}
 \item Costruire una tabella $A$ con $2^{56}$ entry, di cui ogni entry è una coppia $<K_{i}, r = E(K_{i}, m_{1})>$ e ordinarla in base al valore numerico di $r$;
 \item Costruire una tabella $B$ con $2^{56}$ entry, di cui ogni entry è una coppia $<K_{i}, r = D(K_{i}, c_{1})>$ e ordinarla in base al valore numerico di $r$;
-\item Ricercare nelle due tabelle (ordinate) le entry con lo stesso valore di $r$. Ad esempio, se ho un'entry $<K_{A},r_A>$ dalla tabella $A$ e una $<K_{B},r_B>$ dalla tabella $B$, tali che $r_A = r_B $, ($K_{A}$ è la candidata per $K_{1}$ e $K_{B}$ è la candidata per $K_{2}$). Ciò in virtù del fatto che, essendo $r = E(K_{A}, m_{1})$ e $r = D(K_{i}, c_{1})$, allora $c_{1} = E(K_{B}, E(K_{A}, m_{1}))$;
+\item Ricercare nelle due tabelle (ordinate) le entry con lo stesso valore di $r$. Ad esempio, se ho un'entry $<K_{A},r_A>$ dalla tabella $A$ e una $<K_{B},r_B>$ dalla tabella $B$, tali che $r_A = r_B $, ($K_{A}$ è la candidata per $K_{1}$ e $K_{B}$ è la candidata per $K_{2}$). Ciò in virtù del fatto che, essendo $r = E(K_{A}, m_{1})$ e $r = D(K_{B}, c_{1})$, allora $c_{1} = E(K_{B}, E(K_{A}, m_{1}))$;
 \item Visto che, in generale, si otterrà più di una coppia candidata per $<m_{1},c_{1}>$, per ciascuna si esegue il test rispetto a $<m_{2},c_{2}>$ e, finché ci sono più coppie candidate, si eseguono i test con le successive coppie $<m_{i},c_{i}>$: la coppia corretta è quella che passa tutti i test, mentre quelle errate ne dovranno fallire qualcuno (dimostreremo che sono sufficienti tre tentativi per trovare una coppia corretta). 
 \end{enumerate} 
 L'attacco a DES doppio appena descritto è difficilmente praticabile (dover costruire una tabella di $2^{56}$ entry è sicuramente scoraggiante); tuttavia, l'esistenza di un attacco è una ragione sufficiente per decidere di usare DES triplo (DES doppio potrebbe essere sufficiente, ma DES triplo è più sicuro e non e molto più complesso da realizzare).
@@ -458,7 +458,7 @@ P_{e3} = 2^{48} / 2^{128} = 2^{-80}
 Quindi la probabilità di trovare un \textbf{falso positivo} dopo tre test è di fatto nulla $\Rightarrow$ dopo tre test si ottiene un'unica coppia candidata che è quella corretta.
 
 \subsubsection{Stima dei tentativi 2$^{\circ}$ versione}
-L'obiettivo è quello di stimare il numero di coppie candidate $cc_i$ dopo il test i-esimo . Definendo $c_{tot}$ come il numero delle coppie totali iniziali, tale valore è dato dalla seguente espressione:
+L'obiettivo è quello di stimare il numero $cc_i$ di coppie candidate $<K_i, K_j>$ dopo il test i-esimo. Definendo $c_{tot}$ come il numero delle coppie totali iniziali, tale valore è dato dalla seguente espressione:
 \[
 cc_{i} = c_{tot} \cdot \Pr\{\text{una coppia superi tutti i test fino all'i-simo compreso}\} 
 \]
@@ -479,7 +479,7 @@ Quindi riassumendo:
 \[
 cc_{i} = c_{tot} \cdot [\Pr\{\text{una coppia superi il test}\}]^{i}
 \]
-Superare il test significa prendere due stringhe random di 64 bit e constatare che sono uguali. La probabilità che tale evento si verifichi è pari a:
+Superare il test significa trovare una coppia $<K_A, K_B>$ tale che $E(K_{A}, m_{1}) = r_A = r_B = D(K_{B}, c_{1})$. Tale probabilità è equivalente alla probabilità di prendere una coppia di stringhe random  di 64 bit $<r_A, r_B>$ e constatare che $r_A = r_B$. La probabilità che tale evento si verifichi è pari a:
 \[
 \Pr\{\text{una coppia superi il test}\} = \frac{\text{\#coppie uguali}}{\text{\#numero di coppie totali}} = \frac{2^{64}}{2^{128}} = \frac{1}{2^{64}}
 \]

@@ -1,6 +1,7 @@
 \chapter{Firewalls, IDS and Web Security}
 \section{Firewalls}
-Un firewall è un componente passivo di difesa perimetrale di una rete informatica, che integra un insieme di misure progettate per prevenire l'accesso non autorizzato a tale rete. Letteralmente firewall significa \textit{muro tagliafuoco}, con riferimento ai muri refrattari costruiti nelle strutture per assicurarne l'isolamento.
+Un firewall è un componente di difesa perimetrale che integra un insieme di misure di sicurezza (policies) volte a proteggere reti private e
+singoli computer da accessi non autorizzati provenienti dalla rete esterna (tipicamente Internet). Letteralmente firewall significa \textit{muro tagliafuoco}, con riferimento ai muri refrattari costruiti nelle strutture per assicurarne l'isolamento.
 
 \subsection{Firewall Policies}
 Al fine di proteggere reti private o singole macchine dai pericoli di Internet, un firewall può essere utilizzato per filtrare il traffico in uscita o in entrata sulla base di un insieme di regole predefinite, denominate \textbf{firewall policies}.
@@ -53,7 +54,7 @@ I firewall stateful sono in grado di riconoscere i pacchetti che fanno parte di 
 \end{figure}
 
 \section{Tunnels}
-Il contenuto dei normali pacchetti TCP non è solitamente crittografato. Se qualcuno pratica eavesdropping sulla connessione può spesso vedere il completo contenuto dei payloads della sessione. Un modo per prevenire questo tipo di attacco alla confidenzialità senza modifificare lo strato applicativo coinvolto nella sessione è utilizzare un \textbf{protocollo di tunneling}. In questo tipo di protocolli la comunicazione tra client e server è automaticamente crittografata, in modo da rendere infattibile l'eavesdropping.
+Il contenuto dei normali pacchetti TCP non è solitamente crittografato. Se qualcuno pratica eavesdropping sulla connessione può spesso vedere il completo contenuto dei payloads della sessione. Un modo per prevenire questo tipo di attacco alla confidenzialità senza modificare lo strato applicativo coinvolto nella sessione è utilizzare un \textbf{protocollo di tunneling}. In questo tipo di protocolli la comunicazione tra client e server è automaticamente crittografata, in modo da rendere infattibile l'eavesdropping.
 
 \begin{figure}[htbp]
 	\centering%
@@ -148,7 +149,7 @@ WHERE name = 'user input name'
 \end{lstlisting}
 Un attacco di tipo SQL injection prevede l'inserimento di istruzioni SQL nell'input dell'utente.
 \subsubsection{Login Query: username and password} 
-Viene qui fornita una query standard per verificare se la correttezza della procedura di Login:
+Viene qui fornita una query standard per verificare la correttezza della procedura di Login:
 \begin{lstlisting}
 SELECT * 
 FROM users 
@@ -181,7 +182,7 @@ Per evitare questo tipo di attacco è necessario controllare 2 cose: il risultat
 \linebreak
 Consideriamo un altro tipo di input malevolo, se fosse:  
 \begin{lstlisting} 
-$usern="M' ; drop table user;"
+$usern="M' ; drop table users;"
 \end{lstlisting}
 Si potrebbe utilizzare un \textbf{metodo di Escape} che sostituisce tutti i caratteri "malevoli".
 Considerando ad esempio la seguente espressione:

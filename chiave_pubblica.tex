@@ -221,6 +221,9 @@ Dal precedente risultato segue che dato un numero $b = y + k\varphi(n)$ vale la 
 \[
 x^{b} \, mod \, n = x^{y} \, mod \, n = x^{b \, mod \, \varphi(n)} \, mod \, n
 \]
+\begin{prop} \label{prop:exp2}
+	$x^{b} \, mod \, n =  x^{b \, mod \, \varphi(n)} \, mod \, n$
+\end{prop}
 Nel caso in cui $ b \, mod \, \varphi(n) = 1 \, mod \, \varphi(n) $, ovvero se $b = 1 + k \varphi(n) $, con $k \in \mathbb{Z}$, si ha:
 \begin{equation}
 x^b \, mod \, n = x \, mod \, n
@@ -294,12 +297,12 @@ La dimostrazione dell'efficacia del procedimento è analoga a quella svolta per 
 
 \subsection{Firma e cifratura di grandi messaggi} Abbiamo visto che affinché i processi i cifratura/decifratura e di firma/verifica siano efficaci è necessario che sia soddisfatta l'ipotesi:
 \begin{equation}
-|m| < n
+m < n \implies |m|<|n|
 \end{equation}
-Dove |m| è la lunghezza del messaggio da processare. Per poter processare quindi messaggi di lunghezza qualsiasi non posso utilizzare solo RSA.
+Dove |m| è la lunghezza in bit del messaggio da processare. Per poter processare quindi messaggi di lunghezza qualsiasi non posso utilizzare solo RSA.
 
 \paragraph{Firma di messaggi di lunghezza qualsiasi}
-Per poter rispettare l'ipotesi sulla lunghezza del messaggio si può firmare, anziché l'intero messaggio, una sua impronta, come mostrato in figura \ref{fig:pubblica_schema_firma_grandi}
+Per poter rispettare l'ipotesi sulla lunghezza del messaggio si può firmare, anziché l'intero messaggio, una sua impronta, come mostrato in figura \ref{fig:pubblica_schema_firma_grandi}.
 \begin{figure}[htbp]
 	\centering%
 	\subfigure%
@@ -776,10 +779,10 @@ Dunque, tale protocollo consiste dei seguenti passi:
 \begin{itemize}
 \item[a.] \textbf{ad ogni entità è associato un segreto privato $s$ e una chiave pubblica $k_{s}$, cioè una coppia $<s, k_{s}>$. Ovviamente, $k_{s}$ non deve esporre il segreto.} Nel protocollo di Fiat-Shamir tale segreto è s, ovvero la radice quadrata modulare di v, scelta da Peggy, mentre $k_s = v$. A causa della difficoltà del problema della radice quadrata modulare, non è possibile risalire ad s a partire da v.
 \item[b.] \textbf{l'autenticazione consiste nel provare la conoscenza del segreto $s$.} Peggy dimostra di conoscere s fornendo a Victor $sr_{i} \, mod \, n$ per gli $r_{i}$ etichettati con 1.
-\item[c.] \textbf{la prova deve essere a conoscenza zero, cioè le informazioni addotte dal dimostratore non devono poter essere riutilizzate con successo (in seguito) da un impostore, quindi la prova non consente di rivelare $s$.} Supponiamo che Fred voglia impersonare Peggy. Per farlo intercetta conversazioni precedenti di autenticazione tra Peggy e Victor, collezionando una serie di coppie del tipo <$r_{i}^2$, <$sr_{i}$ mod n>, ovvero tali che, nella conversazione intercettata, Victor aveva etichettato $r_i$ con 1. A questo punto Fred fornisce a Victor k di questi $r_{i}$. Victor etichetta ognuno di essi. Fred, per ogni sfida, ha una probabilità del 50\% di saper rispondere. 
+\item[c.] \textbf{la prova deve essere a conoscenza zero, cioè le informazioni addotte dal dimostratore non devono poter essere riutilizzate con successo (in seguito) da un impostore, quindi la prova non consente di rivelare $s$.} Supponiamo che Fred voglia impersonare Peggy. Per farlo intercetta conversazioni precedenti di autenticazione tra Peggy e Victor, collezionando una serie di coppie del tipo <$r_{i}^2$, $sr_{i}$ mod n>, ovvero tali che, nella conversazione intercettata, Victor aveva etichettato $r_i$ con 1. A questo punto Fred fornisce a Victor k di questi $r_{i}$. Victor etichetta ognuno di essi. Fred, per ogni sfida, ha una probabilità del 50\% di saper rispondere. 
 	\begin{itemize}
-	\item Se possiede <$r_{i}^2$, <$r_{i}$ mod n> (ovvero ha generato lui $r_i$) e Bob etichetta $r_i$ con 0, sa rispondere, altrimenti no
-	\item Se possiede <$r_{i}^2$, <$sr_{i}$ mod n> e Bob etichetta $r_i$ con 1, sa rispondere, altrimenti no (non conoscendo, di fatto, $r_i$, che non viene mai trasmessa in chiaro)
+	\item Se possiede <$r_{i}^2$, $r_{i}$ mod n> (ovvero ha generato lui $r_i$) e Bob etichetta $r_i$ con 0, sa rispondere, altrimenti no
+	\item Se possiede <$r_{i}^2$, $sr_{i}$ mod n> e Bob etichetta $r_i$ con 1, sa rispondere, altrimenti no (non conoscendo, di fatto, $r_i$, che non viene mai trasmessa in chiaro)
 	\end{itemize} 
 Quindi fred ha una probabilità di successo pari a $\frac{1}{2^k}$. Aumentando k la probabilità che Fred possa riutilizzare vecchie informazioni tende a zero.
 \item[d.] \textbf{chi non conosce il segreto $s$ non deve poter eseguire la prova con successo.} Tale requisito è strettamente collegato al precedente. L'unico modo che ha Fred per poter rispondere è riutilizzare, infatti, messaggi relativi a conversazioni precedenti.

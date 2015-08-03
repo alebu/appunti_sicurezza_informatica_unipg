@@ -319,6 +319,10 @@ Infine un'ultima soluzione è rappresentata dall'algoritmo \textbf{HMAC} (keyed-
 \item concatena il segreto $K_{AB}$ in testa a tale digest
 \item calcola nuovamente il digest di quest'ultima combinazione
 \end{itemize}
+Ovvero:
+\begin{equation}
+HMAC(m) = MD(K || MD(K, m))
+\end{equation}
 Si noti che HMAC applica due volte l'algoritmo di digest, rendendo il calcolo meno efficiente delle altre soluzioni. Tuttavia, il secondo digest può essere calcolato rapidamente: essendo costituito da un segreto concatenato ad un digest ha una lunghezza contenuta.
 
 \subsection{Cifratura/Decifratura} 
@@ -352,11 +356,12 @@ Questo principio è utilizzato (ad esempio) per la gestione delle password in UN
 Ogni volta che una password \textbf{pwd} d'utente viene impostata viene generato il salt, \textbf{pwd} viene convertita in una chiave segreta $K_{pwd}$ a 64 bit, viene generato l'hash come descritto e il risultato e il salt vengono memorizzati nel file \textit{passwd}.
 \newline \newline
 Questo schema funziona bene, però, solamente per la cifratura di messaggi corti. Com'è possibile calcolare l'hash di un messaggio di lunghezza arbitraria utilizzando un algoritmo di cifratura a chiave segreta?
+
 \subsection{Hash di grandi messaggi tramite algoritmi di cifratura}
 Una possibile soluzione consiste nel suddividere il messaggio $m = m_{1},m_{2},m_{3},...,m_{n}$, e utilizzare ogni $m_{i}$ come input a un blocco in cascata. L'hash $h(m)$ sarà l'output della cascata. Tale schema è mostrato in figura \ref{fig:hash_lung_ar}.
 \begin{figure}
 	\begin{center}
-	{\includegraphics[height=5cm, width=5cm, keepaspectratio]{Immagini/hash/schema_des_come_hash_1.JPG}}
+	{\includegraphics[height=7cm, width=7cm, keepaspectratio]{Immagini/hash/schema_des_come_hash_1.JPG}}
 	\caption{Hash tramite cifratura per messaggi di lunghezza arbitraria \label{fig:hash_lung_ar}}
 	\end{center}
 \end{figure}
@@ -368,7 +373,7 @@ Tale schema ha però due debolezze:
 Il primo problema è facilmente risolvibile rendendo l'output di ogni blocco differente diverso dall'input del successivo (ad esempio sommando (XOR) l'input e l'output di ciascun round, come mostrato in figura \ref{fig:hash_lung_ar_2}). 
 \begin{figure}
 	\begin{center}
-	{\includegraphics[height=5cm, width=5cm, keepaspectratio]{Immagini/hash/schema_des_come_hash_2.JPG}}
+	{\includegraphics[height=7cm, width=7cm, keepaspectratio]{Immagini/hash/schema_des_come_hash_2.JPG}}
 	\caption{Hash tramite cifratura per messaggi di lunghezza arbitraria con protezione\label{fig:hash_lung_ar_2}}
 	\end{center}
 \end{figure}

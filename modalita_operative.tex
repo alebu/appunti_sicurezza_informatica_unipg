@@ -163,13 +163,13 @@ In decifratura (\figurename ~\ref{fig:OFB_dec}) il destinatario riceve $IV$ e co
 \subsubsection{Vantaggi e svantaggi di OFB}
 OFB presenta i seguenti vantaggi:
 \begin{itemize}
-\item visto che il one-time pad OTP può essere generato in anticipo, prima che sia noto il messaggio $m$ da cifrare, una volta ottenuto \textbf{m} è necessario soltanto effettuare la somma ($\oplus$ XOR) con il one-time pad (lo XOR è eseguibile in modo estremamente veloce)
-\item se qualche bit del testo cifrato dovesse corrompersi, soltanto i corrispondenti bit del testo in chiaro sarebbero corrotti, diversamente dalla modalità CBC, dove se $c_{n}$ fosse corrotto allora $m_{n}$ sarebbe completamente corrotto e $m_{n+1}$ sarebbe corrotto in corrispondenza dei medesimi bit di $c_{n}$
-\item un messaggio $m$ può arrivare a pezzi di lunghezza arbitraria, e, ogni volta che arriva un pezzo, il corrispondente testo cifrato può essere immediatamente trasmesso; in CBC invece, se il messaggio arriva un byte alla volta, per la cifratura è comunque necessario attendere che un blocco di 64 bit (o un multiplo intero di 8 byte) sia completo (ciò può comportare l'attesa di altri 7 byte o l'aggiunta di bit di riempimento, cosa che aumenta la quantità di dati da trasmettere)
+\item[v] visto che il one-time pad OTP può essere generato in anticipo, prima che sia noto il messaggio $m$ da cifrare, una volta ottenuto \textbf{m} è necessario soltanto effettuare la somma ($\oplus$ XOR) con il one-time pad (lo XOR è eseguibile in modo estremamente veloce)
+\item[v] se qualche bit del testo cifrato dovesse corrompersi, soltanto i corrispondenti bit del testo in chiaro sarebbero corrotti, diversamente dalla modalità CBC, dove se $c_{n}$ fosse corrotto allora $m_{n}$ sarebbe completamente corrotto e $m_{n+1}$ sarebbe corrotto in corrispondenza dei medesimi bit di $c_{n}$
+\item[v] un messaggio $m$ può arrivare a pezzi di lunghezza arbitraria, e, ogni volta che arriva un pezzo, il corrispondente testo cifrato può essere immediatamente trasmesso; in CBC invece, se il messaggio arriva un byte alla volta, per la cifratura è comunque necessario attendere che un blocco di 64 bit (o un multiplo intero di 8 byte) sia completo (ciò può comportare l'attesa di altri 7 byte o l'aggiunta di bit di riempimento, cosa che aumenta la quantità di dati da trasmettere)
 \end{itemize}
 OTP ha però anche il seguente svantaggio:
 \begin{itemize}
-\item se un avversario conoscesse il testo in chiaro m e quello cifrato c, potrebbe modificare il testo in
+\item[x] se un avversario conoscesse il testo in chiaro m e quello cifrato c, potrebbe modificare il testo in
 chiaro a piacimento semplicemente sommando il testo cifrato con il testo in chiaro noto, e sommando il risultato con un qualsiasi messaggio $m'$ che desidera sostituire ad m; cioè l'avversario dovrebbe modificare il testo cifrato come $c' = c \oplus m \oplus m'$ e verificare che decifrando $c'$ anziché $c$ si ottiene $m'$ anziché $m$.
 \end{itemize}
 \subsection{k-bit Output FeedBack Mode (k-OFB) (Opzionale)}
@@ -289,7 +289,7 @@ Come ultima alternativa, supponiamo di calcolare un checksum non crittografico (
 	{\includegraphics[height=4cm, width=12cm, keepaspectratio]{Immagini/modalita_operative/residuo_CBC_3.png}}
 	\caption{Assicurare confidenzialità e autenticità: soluzione 3 \label{fig:residuo_CBC_3}} 	
 \end{figure}
-Questa soluzione "quasi" funziona: è vulnerabile ad attacchi molto sottili se il CRC è corto, ma d'altra parte checksum non crittografici più lunghi sono "sospetti". (\textbf{scusamainchessenso?}) 
+Questa soluzione "quasi" funziona: è vulnerabile ad attacchi molto sottili se il CRC è corto. Si può quindi utilizzare un CRC lungo (e.g. 64 bit).
 \subsubsection{Soluzione sicura}
 Viene considerata una soluzione sicura quella che riesce a proteggere la confidenzialità di un messaggio $m$ cifrandolo con CBC, e l'integrità di $m$ con un residuo CBC, a patto che vengano usate due chiavi distinte, $K$ e $K'$:
 \begin{itemize}
@@ -339,23 +339,30 @@ La decifratura EDE è semplicemente il processo inverso (\figurename ~\ref{fig:D
 	{\includegraphics[height=2cm, width=10cm, keepaspectratio]{Immagini/modalita_operative/DED.png}}
 	\caption{Decifratura EDE \label{fig:DED}} 	
 \end{figure}
-\subsection{EDE con CBC Outside/Inside}
-Per ottenere un cifrario a flusso (i.e. la corrispondente modalità operativa di flusso) a partire dal cifrario a blocchi EDE, viene usata la modalità operativa \textbf{CBC outside}, i.e. le tre funzioni $E_{1}()-D_{2}()-E_{1}()$ vengono applicate a ciascun blocco, ma il concatenamento CBC viene eseguito soltanto una volta (\figurename~\ref{fig:EDE_CBC_Out}).\\ 
+\subsection{EDE con CBC Outside}
+Per ottenere un cifrario a flusso a partire dal cifrario a blocchi EDE, viene usata la modalità operativa \textbf{CBC outside}, in cui le tre funzioni $E_{1}()-D_{2}()-E_{1}()$ vengono applicate a ciascun blocco, ma il concatenamento CBC viene eseguito soltanto una volta (\figurename~\ref{fig:EDE_CBC_Out}).\\ 
 \begin{figure}[htbp]
 	\centering%
 	\subfigure%
 	{\includegraphics[height=3.5cm, width=10cm, keepaspectratio]{Immagini/modalita_operative/EDE_CBC_Out.png}}
 	\caption{EDE con CBC Outside \label{fig:EDE_CBC_Out}} 	
 \end{figure}
-Il cifrario a flusso è ottenibile anche con un concatenamento \textbf{CBC inside}, i.e. si considerano una cascata di tre concatenamenti CBC (semplificando alcuni passaggi): prima utilizzando $CBC-E_{1}()$, poi utilizzando $CBC-D_{2}()$ e infine utilizzando ancora $CBC-E_{1}()$ (\figurename ~\ref{fig:EDE_CBC_In}).
+Si è vista finora la una struttura standard per la definizione di un cifrario a flusso che sfrutta DES in una cifratura tripla. In questa struttura sono presenti tratti fondamentali che vale la pena giustificare:
+\begin{enumerate}
+\item si è optato per tre cifrature, ma potevano essere due o più; perché proprio tre?
+\item perché le tre funzioni sono E( )-D( )-E( ) e non ad esempio E( )-E( )-E( ) o E( )-E( )-D( )? 
+\item perché il concatenamento CBC viene fatto esternamente (outside) e non internamente (inside)?
+\end{enumerate}
+
+\subsection{CBC Outside vs Inside (Opzionale)}
+Il cifrario a flusso è ottenibile anche con un concatenamento \textbf{CBC inside}, in cui si considerano una cascata di tre concatenamenti CBC (semplificando alcuni passaggi): prima utilizzando $CBC-E_{1}()$, poi utilizzando $CBC-D_{2}()$ e infine utilizzando ancora $CBC-E_{1}()$ (\figurename ~\ref{fig:EDE_CBC_In}).
 \begin{figure}[htbp]
 	\centering%
 	\subfigure%
 	{\includegraphics[height=4cm, width=12cm, keepaspectratio]{Immagini/modalita_operative/EDE_CBC_In.png}}
 	\caption{EDE con CBC Inside \label{fig:EDE_CBC_In}} 	
 \end{figure}
-\subsubsection{CBC Outside vs Inside (Opzionale)}
-Il 3DES comunemente usato nelle applicazioni esegue un concatenamento CBC esterno: ad ogni blocco viene applicata la cifratura tripla e il concatenamento CBC viene fatto una sola volta sui blocchi cifrati. L'alternativa sarebbe cifrare completamente il messaggio con $K_{1}$ e CBC, poi decifrare il risultato con $K_{2}$ e CBC, e in fine cifrare di nuovo quanto ottenuto con $K_{1}$ (CBC interno). Quali sono le implicazioni di queste scelte?
+Il 3DES comunemente usato nelle applicazioni esegue tuttavia un concatenamento CBC esterno: ad ogni blocco viene applicata la cifratura tripla e il concatenamento CBC viene fatto una sola volta sui blocchi cifrati. L'alternativa sarebbe cifrare completamente il messaggio con $K_{1}$ e CBC, poi decifrare il risultato con $K_{2}$ e CBC, e in fine cifrare di nuovo quanto ottenuto con $K_{1}$ (CBC interno). Quali sono le implicazioni di queste scelte?
 \newline \newline
 Si è visto che con CBC è possibile fare una modifica predittiva sul testo in chiaro $m_{n}$ (ad esempio invertire il bit $x$) invertendo il bit $x$ nel blocco cifrato $c_{n-1}$; ciò comporta però l'effetto collaterale di modificare in modo imprevedibile il blocco $m_{n-1}$. La possibilità di sfruttare questa debolezza dipende dal tipo di applicazione.
 \newline \newline
@@ -365,6 +372,7 @@ Con CBC interno, una modifica ad un blocco cifrato $c_{n}$ altera in modo imprev
 Un altro vantaggio di CBC interno riguarda l'efficienza: triplicando l'uso di hardware e pipeline per le cifrature si può ottenere complessivamente una velocità pari a quella di una singola cifratura (con CBC esterno ciò non è possibile).\\
 CBC interno presenta comunque delle sottili vulnerabilità, nel caso in cui un avversario possa esaminare l'output e fornire del testo in chiaro selezionato e $IV$.\\ \\
 Una ragione per la quale CBC esterno è più usato nonostante i suoi svantaggi è che la cifratura EDE può considerarsi a tutti gli effetti un nuovo schema di cifratura (a chiave segreta) a blocchi che usa una chiave di 112 bit, perciò può essere utilizzata con ciascun metodo di concatenamento (OFB, ECB, CFB, CTR e CBC).
+
 \subsection{Cifrature multiple}
 Ovviamente, più volte un blocco è cifrato più elevata è la sua sicurezza, ma ogni cifratura è computazionalmente costosa, perciò è fondamentale che una schema di cifratura sia efficiente oltre che efficace: l'obiettivo è garantire un livello di sicurezza adeguato all'applicazione con il minimo sforzo computazionale. \\
 Proviamo allora a valutare il rapporto sicurezza / costo computazionale nei seguenti casi:
@@ -397,7 +405,7 @@ Supponiamo di eseguire una cifratura doppia, con due chiavi $K_{1}$ e $K_{2}$ (s
 	\caption{Schema di cifratura doppia con due chiavi diverse \label{fig:Cif_doppia_dueK}} 
 \end{figure}
 In apparenza sembra che l'uso di due chiavi diverse equivalga a raddoppiare la lunghezza della chiave (infatti un attacco brute force deve indovinare sia $K_{1}$ che $K_{2}$ per ottenere il testo in chiaro da quello cifrato). Tuttavia esiste un attacco più sofisticato (Meet in the Middle, che vedremo nel dettaglio in \ref{par:meetinthe}) che richiede approssimativamente soltanto un raddoppio del costo computazionale necessario a violare DES (singolo). Si tratta di un attacco difficilmente praticabile, ma il fatto che esista spinge a ricercare schemi di cifratura più sicuri: di fatto la cifratura DES con due chiavi non è considerata sicura. 
-\subsection{Cifratura tripla con solo due chiavi}
+\subsubsection{Cifratura tripla con solo due chiavi}
 3DES effettua una cifratura tripla, ma usa solo due chiavi. Ovviamente con tre chiavi distinte si ha una maggiore sicurezza, tuttavia è ormai opinione comune che usare $K_{1}$ due volte è sufficientemente sicuro, perciò non è necessario generare, trasmettere e memorizzare una terza chiave. Inoltre 112 bit di chiave mettono al riparo da attacchi di tipo brute force e nessun attacco diverso da quello a forza bruta è noto per EDE. Si noti che alcuni sistemi implementano 3DES con tre chiavi indipendenti, ma questo non è lo standard.
 \newline \newline
 Una ragione "esoterica" per l'uso di due sole chiavi è la seguente: in molte applicazioni (es. UNIX Password Hash) una proprietà importante di un sistema crittografico è che, data una coppia <plaintext, ciphertext>, deve essere impraticabile trovare qualche chiave che mappa il testo in chiaro in quello cifrato (con blocchi di 64 bit e chiavi di 112 bit ci saranno molte di queste chiavi); usando EDE con tre chiavi diverse, è semplice trovare una tripla di chiavi che mappa un dato testo in chiaro in un dato testo cifrato però, nel caso in cui $K_{1} = K_{3}$ il problema diventa impraticabile.

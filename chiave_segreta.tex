@@ -91,7 +91,7 @@ Quindi in effetti bastano $\frac{2^{70}}{2} = 2^{69}$ bit. Inoltre, così facend
 
 I sistemi di crittografia a chiave segreta sono concepiti per usare una chiave ragionevolmente lunga (ad esempio 64 bit) e generare una \textbf{biiezione} che appare, a chi non conosce la chiave, completamente \underline{random}. Se la biiezione fosse realmente random, gli output dovuti a due input $i$ e $i'$ nei quali cambia un solo bit (uno qualunque) sarebbero \textbf{statisticamente indipendenti}: non può succedere, ad esempio, che il terzo bit dell'output cambia \textbf{sempre} quando il dodicesimo bit dell'input cambia. Gli algoritmi crittografici sono pensati per \textbf{diffondere/spargere} il valore di ogni bit dell'input in tutti i bit dell'output: si cerca di fare in modo che ogni bit dell'output dipenda allo stesso modo da tutti i bit dell'input.
 
-\subsection{Sostituzione e Permutazione}
+\subsection{Sostituzione e Permutazione} \label{subsec:perm_sost}
 Sostituzioni e permutazioni sono due trasformazioni base applicabili ad un blocco di dati.\newline 
 
 Si assuma di dover cifrare un blocco di $k$ bit. Una \textbf{sostituzione} specifica, per ciascuno dei $2^k$ possibili valori dell'input, i $k$ bit dell'output. Per specificare una sostituzione \textbf{"completamente random"} sono necessari circa $k \cdot 2^k$ bit. E' quindi impraticabile implementare una sostituzione per blocchi di $64$ bit, mentre è fattibile per blocchi di lunghezza di $8$ bit. Esempio di crittografia per sostituzione è il \textbf{Cifrario di Cesare}.\newline 
@@ -199,11 +199,9 @@ L'ipotesi è che tali permutazioni siano state introdotte per rendere più compl
 	\centering%
 	\subfigure%
 	{\includegraphics[height=10cm, width=13cm, keepaspectratio]{Immagini/chiave_segreta/des_perm.png}}
-	\caption{Tabella permutazioni DES \label{fig:des_perm}} 	
+	\caption{Tabella permutazioni DES: nella prima tabella si vede che il bit 56 in input finisce nella posizione 26. Viceversa, nella seconda tabella (che rappresenta l'inverso della prima) si vede che il bit 26 finisce nella posizione 56. Come detto nella sezione \ref{subsec:perm_sost}, la memorizzazione di una di queste tabelle occupa $k\log_2 k$ bit, dove k è la lunghezza di un blocco. Infatti devo memorizzare 64 celle, ognuna delle quali occupa 8 bit \label{fig:des_perm}} 	
 \end{figure}
-Come sono state definite quindi le permutazioni iniziale e finale? E' di fatto una permutazione regolare, come è mostrato in \figurename ~\ref{fig:des_perm}. Le tabelle vanno interpretate nel seguente modo: i numeri, da 1 a 64, riportati in tabella rappresentano le posizioni dei bit in input alla permutazione, mentre l'ordine (per righe da sx verso dx) dei numeri nella tabella rappresenta la corrispondente posizione dei bit in output. \\
-
-Ad esempio, la permutazione iniziale sposta il 58-esimo bit in input nel primo bit in output, e il 50-esimo bit in input nel secondo bit in output. Non si tratta di permutazioni generate in modo random, in quanto presenta delle evidenti regolarità, come è evidenziato in \figurename ~\ref{fig:des_perm_2}.
+Come sono state definite quindi le permutazioni iniziale e finale? E' di fatto una permutazione regolare, come è mostrato in \figurename ~\ref{fig:des_perm}. Le tabelle vanno interpretate nel seguente modo: i numeri, da 1 a 64, riportati in tabella rappresentano le posizioni dei bit in input alla permutazione, mentre l'ordine (per righe da sx verso dx) dei numeri nella tabella rappresenta la corrispondente posizione dei bit in output. Non si tratta di permutazioni generate in modo random, in quanto presenta delle evidenti regolarità, come è evidenziato in \figurename ~\ref{fig:des_perm_2}.
 
 \begin{figure}[htbp]
 	\centering%
@@ -342,6 +340,7 @@ per la chiave: 128, 160, 192, 224, e 256 bit. La lunghezza di un blocco e quella
 Nel seguito si descriverà Rijndael, specificando di volta in volta i parametri di AES. A grandi linee, Rijndael somiglia a DES e a IDEA. Ci sono più round che "strapazzano" un blocco di testo in chiaro per ottenere il corrispondente cifrato, e c'è un algoritmo per l'espansione della chiave; a partire dalla chiave segreta genera le chiavi da usare nei vari round.
 
 \subsubsection{Rijndael/AES - parametri}
+
 Rijndael ha una struttura flessibile grazie all'uso di due parametri indipendenti, e di un terzo parametro derivato dai primi due:
 \begin{itemize}
   \item $N_{b}$ \textbf{dimensione di un blocco}: numero di parole (word) da 32 bit (colonne da 4 ottetti) in un blocco da cifrare. In AES $N_{b}$ = 4 $\Rightarrow$ un blocco ha lunghezza 128 bit, ovvero 4 parole da 32 bit (4 colonne da 4 ottetti).
@@ -350,6 +349,12 @@ Rijndael ha una struttura flessibile grazie all'uso di due parametri indipendent
 \end{itemize}
   
 \subsubsection{Array di stato}
+\begin{figure}[htbp]
+	\centering%
+	\subfigure%
+	{\includegraphics[height=10cm, width=10cm, keepaspectratio]{Immagini/chiave_segreta/rijndael_array_stato.png}}
+	\caption{Array di stato (in AES $N_b = 4$) \label{fig:Rij_array}} 	
+\end{figure}
 Rijndael mantiene un array di stato rettangolare durante il funzionamento. Ogni elemento dell'array è un ottetto. Complessivamente ci sono $N_{b}$ colonne da 4 ottetti. Lo stato iniziale è ottenuto popolando l'array, colonna per colonna, mediante le $N_{b}$ colonne da 4 ottetti che costituiscono il blocco di input. \\
 \newline
 Durante gli $N_{r}$ round lo stato viene modificato e il blocco di output dell'algoritmo si ottiene leggendo colonna per colonna lo stato finale. 

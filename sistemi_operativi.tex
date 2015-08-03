@@ -223,8 +223,7 @@ per rimuovere il file descriptor.
 Quando un processo crea un processo figlio (forking), quest'ultimo eredita una copia di tutti i file descriptors aperti dal processo padre. L'OS verifica i permessi soltanto al momento della creazione del file descriptor: al momento della lettura/scrittura sul file, i controlli effettuati si basano sui permessi associati al file descriptor (ad esempio un processo può sfruttare un file descriptor in lettura solo per leggere il file e non per scrivere). Un possibile scenario pericoloso potrebbe presentarsi nel caso che un processo con alti privilegi apra un file descriptor per un file protetto, prima di chiudere il file descriptor crei un nuovo processo con privilegi minori, il quale tuttavia erediterebbe comunque il file descriptor (in quanto ancora aperto). In tal caso, infatti, il processo figlio potrebbe usare il file descriptor pur non avendo i permessi necessari per operare sul file protetto.
 
 \begin{algorithm}
-\begin{lstlisting}
-[caption={Esempio codice vulnerabile al File Descriptors Leaks]
+\begin{lstlisting}[caption={Esempio codice vulnerabile al File Descriptors Leaks}]
 #include <stdio.h>
 #include <unistd.h>
 int main(int argc, char * argv[ ])
